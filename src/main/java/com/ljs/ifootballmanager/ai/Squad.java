@@ -36,6 +36,7 @@ public final class Squad {
             String[] split = StringUtils.split(line);
 
             String name = split[0];
+            Integer age = Integer.parseInt(split[1]);
 
             Ratings ratings = Ratings
                 .builder()
@@ -45,7 +46,7 @@ public final class Squad {
                 .shooting(Integer.parseInt(split[6]))
                 .build();
 
-            ps.add(Player.create(name, ratings));
+            ps.add(Player.create(name, age, ratings));
         }
 
         return new Squad(ps);

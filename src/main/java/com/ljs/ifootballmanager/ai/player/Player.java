@@ -18,10 +18,13 @@ public final class Player {
 
     private final String name;
 
+    private final Integer age;
+
     private final Ratings ratings;
 
-    private Player(String name, Ratings ratings) {
+    private Player(String name, Integer age, Ratings ratings) {
         this.name = name;
+        this.age = age;
         this.ratings = ratings;
     }
 
@@ -29,18 +32,8 @@ public final class Player {
         return name;
     }
 
-    public InRole inRole(Role r) {
-        return InRole.create(this, r);
-    }
-
-    public ImmutableSet<InRole> inAllRoles() {
-        Set<InRole> inRoles = Sets.newHashSet();
-
-        for (Role r : Role.values()) {
-            inRoles.add(inRole(r));
-        }
-
-        return ImmutableSet.copyOf(inRoles);
+    public Integer getAge() {
+        return age;
     }
 
     public RatingInRole getOverall() {
@@ -61,8 +54,8 @@ public final class Player {
         return Evaluator.create(ratings).evaluate(r);
     }
 
-    public static Player create(String name, Ratings ratings) {
-        return new Player(name, ratings);
+    public static Player create(String name, Integer age, Ratings ratings) {
+        return new Player(name, age, ratings);
     }
 
     public static Ordering<Player> byOverall() {
@@ -85,4 +78,13 @@ public final class Player {
             });
     }
 
+    public static Ordering<Player> byName() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Player, String>() {
+                public String apply(Player p) {
+                    return p.getName();
+                }
+            });
+    }
 }
