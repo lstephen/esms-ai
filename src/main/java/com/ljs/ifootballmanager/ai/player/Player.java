@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai.player;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
@@ -8,6 +9,7 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import com.ljs.ifootballmanager.ai.value.Evaluator;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -22,10 +24,20 @@ public final class Player {
 
     private final Ratings ratings;
 
+    private Integer fitness = 100;
+
     private Player(String name, Integer age, Ratings ratings) {
         this.name = name;
         this.age = age;
         this.ratings = ratings;
+    }
+
+    public Player atPercent(Integer percentage) {
+        return new Player(name, age, ratings.atPercent(percentage));
+    }
+
+    public Optional<Player> forSelection() {
+        return Optional.of(atPercent(fitness));
     }
 
     public String getName() {
@@ -34,6 +46,10 @@ public final class Player {
 
     public Integer getAge() {
         return age;
+    }
+
+    public void setFitness(Integer fitness) {
+        this.fitness = fitness;
     }
 
     public RatingInRole getOverall() {
@@ -54,6 +70,28 @@ public final class Player {
         return Evaluator.create(ratings).evaluate(r);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        Player rhs = Player.class.cast(obj);
+
+        return Objects.equals(name, rhs.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
     public static Player create(String name, Integer age, Ratings ratings) {
         return new Player(name, age, ratings);
     }
@@ -65,7 +103,8 @@ public final class Player {
                 public Integer apply(Player p) {
                     return p.getOverall().getRating();
                 }
-            });
+            })
+            .compound(byTieBreak());
     }
 
     public static Ordering<Player> byRating(final Role r) {
@@ -86,5 +125,19 @@ public final class Player {
                     return p.getName();
                 }
             });
+    }
+
+    public static Ordering<Player> byAge() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Player, Integer>() {
+                public Integer apply(Player p) {
+                    return p.getAge();
+                }
+            });
+    }
+
+    public static Ordering<Player> byTieBreak() {
+        return byAge().reverse().compound(byName());
     }
 }

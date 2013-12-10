@@ -1,41 +1,49 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import aima.core.agent.Action;
-import aima.core.search.framework.ActionsFunction;
-import aima.core.search.framework.GoalTest;
 import aima.core.search.framework.HeuristicFunction;
-import aima.core.search.framework.Problem;
-import aima.core.search.framework.ResultFunction;
-import aima.core.search.local.HillClimbingSearch;
-import com.google.common.base.Throwables;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.search.Action;
+import com.ljs.ifootballmanager.ai.search.ActionsFunction;
+import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
+import com.ljs.ifootballmanager.ai.search.State;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  *
  * @author lstephen
  */
-public final class Formation {
+public final class Formation implements State {
+
+    private final League league;
 
     private final ImmutableMultimap<Role, Player> positions;
 
-    private Formation(Multimap<Role, Player> positions) {
-        this.positions = ImmutableMultimap.copyOf(positions);
+    private final Map<Player, Role> players = Maps.newHashMap();
+
+    private Formation(League league, Multimap<Role, Player> in) {
+        this.league = league;
+        this.positions = ImmutableMultimap.copyOf(in);
+    }
+
+    public League getLeague() {
+        return league;
     }
 
     private Formation move(Role r, Player p) {
@@ -45,37 +53,54 @@ public final class Formation {
 
         f.put(r, p);
 
-        return Formation.create(f);
+        return Formation.create(league, f);
     }
 
-    private Role findRole(Player p) {
-        for (Role r : positions.keySet()) {
-            if (positions.get(r).contains(p)) {
-                return r;
+    public Role findRole(Player p) {
+        if (!players.containsKey(p)) {
+            for (Role r : positions.keySet()) {
+                if (positions.get(r).contains(p)) {
+                    players.put(p, r);
+                    break;
+                }
             }
         }
-
-        throw new IllegalStateException();
+        return players.get(p);
     }
 
-    private boolean contains(Player p) {
+    public boolean contains(Player p) {
         return positions.containsValue(p);
     }
 
-    private ImmutableCollection<Player> players() {
+    public ImmutableCollection<Player> players() {
         return positions.values();
     }
 
-    private Formation substitute(Player in, Role r, Player out) {
+    private Formation substitute(Substitution s) {
+        return substitute(s.getIn(), s.getRole(), s.getOut());
+    }
+
+    public Formation substitute(Player in, Role r, Player out) {
         Multimap<Role, Player> f = HashMultimap.create(positions);
 
         f.remove(findRole(out), out);
         f.put(r, in);
 
-        return Formation.create(f);
+        return Formation.create(league, f);
     }
 
-    private Integer score(League league) {
+    public boolean isValid(Substitution s) {
+        if (!contains(s.getOut())) {
+            return false;
+        }
+        if (s.getRole().equals(findRole(s.getOut()))) {
+            return true;
+        }
+        return substitute(s).isValid();
+    }
+
+
+    private Integer score() {
         Integer score = 0;
         Integer ageScore = 0;
 
@@ -87,7 +112,10 @@ public final class Formation {
         return score * 1000 + ageScore;
     }
 
-    private Boolean isValid(League league) {
+    public Boolean isValid() {
+        if (positions.size() != 11) {
+            return false;
+        }
         for (Role r : Role.values()) {
             if (count(r) < league.getMinimum(r)) {
                 return false;
@@ -118,69 +146,50 @@ public final class Formation {
         }
     }
 
-    private static Formation create(Multimap<Role, Player> players) {
-        return new Formation(players);
+    public static Formation create(League league, Multimap<Role, Player> players) {
+        return new Formation(league, players);
     }
 
     public static Formation select(League league, Iterable<Player> available) {
-        HillClimbingSearch search = new HillClimbingSearch(heuristic(league));
-
-        try {
-            search.search(problem(league, available));
-        } catch (Exception e) {
-            throw Throwables.propagate(e);
-        }
-
-        return Formation.class.cast(search.getLastSearchState());
+        return new RepeatedHillClimbing<Formation>(
+            Formation.class,
+            heuristic(),
+            initialState(league, available),
+            actionsFunction(league, available))
+            .search();
     }
 
-    private static HeuristicFunction heuristic(final League league) {
+    private static HeuristicFunction heuristic() {
         return new HeuristicFunction() {
             public double h(Object state) {
                 Formation f = Formation.class.cast(state);
 
-                return -f.score(league);
+                return -f.score();
             }
         };
     }
 
-    private static Problem problem(League league, Iterable<Player> available) {
-        return new Problem(
-            initialState(league, available),
-            actionsFunction(league, available),
-            resultFunction(),
-            goalTest(league));
-    }
+    private static Callable<Formation> initialState(final League league, final Iterable<Player> available) {
+        return new Callable<Formation>() {
+            public Formation call() {
+                List<Player> shuffled = Lists.newArrayList(available);
+                Collections.shuffle(shuffled);
 
-    private static Formation initialState(League league, Iterable<Player> available) {
-        List<Player> shuffled = Lists.newArrayList(available);
-        Collections.shuffle(shuffled);
-
-        Multimap<Role, Player> initialState = HashMultimap.create();
-        for (Player p : Iterables.limit(shuffled, 11)) {
-            initialState.put(p.getOverall().getRole(), p);
-        }
-        Formation f = create(initialState);
-
-        return f.isValid(league) ? f : initialState(league, available);
-    }
-
-    private static ActionsFunction actionsFunction(final League league, final Iterable<Player> available) {
-        return new ActionsFunction() {
-            public Set<Action> actions(Object s) {
-                return ImmutableSet.<Action>copyOf(actions(Formation.class.cast(s)));
-            }
-
-            public ImmutableSet<FormationAction> actions(Formation f) {
-                Set<FormationAction> actions = Sets.newHashSet();
-
-                for (FormationAction a : Iterables.concat(moves(f), substitutions(f))) {
-                    if (a.isValid(league, f)) {
-                        actions.add(a);
-                    }
+                Multimap<Role, Player> initialState = HashMultimap.create();
+                for (Player p : Iterables.limit(shuffled, 11)) {
+                    initialState.put(p.getOverall().getRole(), p);
                 }
+                Formation f = create(league, initialState);
 
-                return ImmutableSet.copyOf(actions);
+                return f.isValid() ? f : call();
+            }};
+    }
+
+    private static ActionsFunction<Formation> actionsFunction(final League league, final Iterable<Player> available) {
+        return new ActionsFunction<Formation>() {
+
+            public ImmutableSet<Action<Formation>> getActions(Formation f) {
+                return ImmutableSet.copyOf(Iterables.concat(moves(f), substitutions(f)));
             }
 
             private ImmutableSet<Move> moves(Formation f) {
@@ -215,41 +224,7 @@ public final class Formation {
         };
     }
 
-    private static ResultFunction resultFunction() {
-        return new ResultFunction() {
-            public Formation result(Object s, Action a) {
-                return FormationAction.class.cast(a).apply(Formation.class.cast(s));
-            }
-        };
-    }
-
-    private static GoalTest goalTest(final League league) {
-        return new GoalTest() {
-            public boolean isGoalState(Object state) {
-                return Formation.class.cast(state).isValid(league);
-            }
-        };
-    }
-
-    private abstract static class FormationAction implements Action {
-
-        @Override
-        public boolean isNoOp() {
-            return false;
-        }
-
-        public boolean isValid(League l, Formation f) {
-            return apply(f).isValid(l);
-        }
-
-        public Formation apply(Object state) {
-            return apply(Formation.class.cast(state));
-        }
-
-        public abstract Formation apply(Formation f);
-    }
-
-    private static class Move extends FormationAction {
+    private static class Move extends Action<Formation> {
 
         private final Player player;
         private final Role role;
@@ -265,7 +240,7 @@ public final class Formation {
         }
     }
 
-    private static class Substitute extends FormationAction {
+    private static class Substitute extends Action<Formation> {
 
         private final Player in;
         private final Role r;

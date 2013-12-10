@@ -28,6 +28,16 @@ public final class Ratings {
         return 50 * overall / sum;
     }
 
+    public Ratings atPercent(Integer percent) {
+        Builder builder = Builder.create();
+        
+        for (Rating r : ratings.keySet()) {
+            builder.ratings.put(r, (ratings.get(r) * percent) / 100);
+        }
+
+        return builder.build();
+    }
+
     public static Builder builder() {
         return Builder.create();
     }
