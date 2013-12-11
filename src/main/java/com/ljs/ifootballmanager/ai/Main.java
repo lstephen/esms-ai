@@ -68,7 +68,10 @@ public class Main {
 
         Formation firstXI = Formation.select(league, squad.players());
 
-        print(w, "Squad", SquadReport.create(squad.players()));
+        w.println("** Squad **");
+        for (Tactic t : Tactic.values()) {
+            print(w, SquadReport.create(t, squad.players()));
+        }
         print(w, "1st XI", firstXI);
 
         ImmutableSet<Player> remaining = ImmutableSet.copyOf(
@@ -80,7 +83,6 @@ public class Main {
             print(w, "2nd XI", Formation.select(league, remaining));
         }
 
-        print(w, "Selection", SquadReport.create(squad.forSelection()));
 
         Formation formation = Formation.select(league, squad.forSelection());
         ChangePlan cp =
@@ -88,6 +90,7 @@ public class Main {
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), squad.forSelection());
 
+        print(w, "Selection", SquadReport.create(formation.getTactic(), squad.forSelection()));
         print(w, formation, bench, cp);
 
         TeamSheet ts = TeamSheet.create(league, formation, cp, bench);

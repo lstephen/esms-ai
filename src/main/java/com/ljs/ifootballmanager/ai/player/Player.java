@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import com.ljs.ifootballmanager.ai.value.Evaluator;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
@@ -68,22 +69,22 @@ public final class Player {
     }
 
 
-    public RatingInRole getOverall() {
-        return RatingInRole.byRating().max(evaluateAll());
+    public RatingInRole getOverall(Tactic t) {
+        return RatingInRole.byRating().max(evaluateAll(t));
     }
 
-    public ImmutableSet<RatingInRole> evaluateAll() {
+    public ImmutableSet<RatingInRole> evaluateAll(Tactic t) {
         Set<RatingInRole> evaluations = Sets.newHashSet();
 
         for (Role r : Role.values()) {
-            evaluations.add(evaluate(r));
+            evaluations.add(evaluate(r, t));
         }
 
         return ImmutableSet.copyOf(evaluations);
     }
 
-    public RatingInRole evaluate(Role r) {
-        return Evaluator.create(ratings).evaluate(r);
+    public RatingInRole evaluate(Role r, Tactic t) {
+        return Evaluator.create(ratings).evaluate(r, t);
     }
 
     @Override
@@ -112,23 +113,23 @@ public final class Player {
         return new Player(name, age, ratings);
     }
 
-    public static Ordering<Player> byOverall() {
+    public static Ordering<Player> byOverall(final Tactic t) {
         return Ordering
             .natural()
             .onResultOf(new Function<Player, Integer>() {
                 public Integer apply(Player p) {
-                    return p.getOverall().getRating();
+                    return p.getOverall(t).getRating();
                 }
             })
             .compound(byTieBreak());
     }
 
-    public static Ordering<Player> byRating(final Role r) {
+    public static Ordering<Player> byRating(final Role r, final Tactic t) {
         return Ordering
             .natural()
             .onResultOf(new Function<Player, Integer>() {
                 public Integer apply(Player p) {
-                    return p.evaluate(r).getRating();
+                    return p.evaluate(r, t).getRating();
                 }
             });
     }

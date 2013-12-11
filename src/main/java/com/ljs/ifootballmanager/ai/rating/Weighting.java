@@ -36,9 +36,17 @@ public final class Weighting {
 
         private Builder() { }
 
+        public Builder st(Integer st) {
+            return stopping(st);
+        }
+
         public Builder stopping(Integer st) {
             weights.put(Rating.STOPPING, st);
             return this;
+        }
+
+        public Builder tk(Integer tk) {
+            return tackling(tk);
         }
 
         public Builder tackling(Integer tk) {
@@ -46,9 +54,17 @@ public final class Weighting {
             return this;
         }
 
+        public Builder ps(Integer ps) {
+            return passing(ps);
+        }
+
         public Builder passing(Integer ps) {
             weights.put(Rating.PASSING, ps);
             return this;
+        }
+
+        public Builder sh(Integer sh) {
+            return shooting(sh);
         }
 
         public Builder shooting(Integer sh) {

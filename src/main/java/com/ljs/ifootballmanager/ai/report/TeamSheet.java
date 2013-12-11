@@ -45,10 +45,10 @@ public class TeamSheet implements Report {
 
     public void print(PrintWriter w) {
         w.println(league.getTeam());
-        w.println("N");
+        w.println(formation.getTactic().getCode());
         w.println();
 
-        formation.print(w);
+        formation.printPlayers(w);
         w.println();
         bench.printPlayers(w);
         w.println();

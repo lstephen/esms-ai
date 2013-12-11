@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai.value;
 
 import com.google.common.collect.ImmutableMap;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import com.ljs.ifootballmanager.ai.rating.Weighting;
 
@@ -39,8 +40,8 @@ public final class Evaluator {
         this.ratings = ratings;
     }
 
-    public RatingInRole evaluate(Role r) {
-        return RatingInRole.create(r, ratings.overall(WEIGHTINGS.get(r)));
+    public RatingInRole evaluate(Role r, Tactic t) {
+        return RatingInRole.create(r, ratings.overall(t.getWeighting(r)));
     }
 
     public static Evaluator create(Ratings rs) {

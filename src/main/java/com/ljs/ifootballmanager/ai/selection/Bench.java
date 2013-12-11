@@ -47,7 +47,13 @@ public class Bench implements State, Report {
         Integer score = 0;
 
         for (Role r : formation.getRoles()) {
-            score += Player.byRating(r).max(bench).evaluate(r).getRating();
+            score += Player.byRating(r, formation.getTactic()).max(bench).evaluate(r, formation.getTactic()).getRating();
+        }
+
+        score *= 10000;
+
+        for (Player p : bench) {
+            score += p.getOverall(formation.getTactic()).getRating();
         }
 
         return score;
@@ -58,7 +64,7 @@ public class Bench implements State, Report {
             .natural()
             .onResultOf(new Function<Player, Role>() {
                 public Role apply(Player p) {
-                    return p.getOverall().getRole();
+                    return p.getOverall(formation.getTactic()).getRole();
                 }
             })
             .compound(Player.byName());
@@ -71,20 +77,20 @@ public class Bench implements State, Report {
 
         w.println();
 
-        for (Role r : Ordering.natural().sortedCopy(formation.getRoles())) {
-            w.format("SUB %1$s %2$s %1$s IF INJURED %1$s%n", r, Player.byRating(r).max(bench).getName());
+        for (Role r : Role.values()) {
+            w.format("SUB %1$s %2$s %1$s IF INJURED %1$s%n", r, Player.byRating(r, formation.getTactic()).max(bench).getName());
         }
     }
 
     public void printPlayers(PrintWriter w) {
         for (Player p : players()) {
-            w.format("%s %s%n", p.getOverall().getRole(), p.getName());
+            w.format("%s %s%n", p.getOverall(formation.getTactic()).getRole(), p.getName());
         }
     }
 
     public void printInjuryTactics(PrintWriter w, Function<Player, Integer> playerIdx) {
-        for (Role r : Ordering.natural().sortedCopy(formation.getRoles())) {
-            w.format("SUB %1$s %2$d %1$s IF INJURED %1$s%n", r, playerIdx.apply(Player.byRating(r).max(bench)));
+        for (Role r : Role.values()) {
+            w.format("SUB %1$s %2$d %1$s IF INJURED %1$s%n", r, playerIdx.apply(Player.byRating(r, formation.getTactic()).max(bench)));
         }
     }
 

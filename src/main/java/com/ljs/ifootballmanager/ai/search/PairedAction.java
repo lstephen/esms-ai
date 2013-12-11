@@ -27,8 +27,12 @@ public class PairedAction<S extends State> extends Action<S> {
         return second.apply(first.apply(state));
     }
 
+    private static <S extends State> PairedAction<S> create(Action<S> first, Action<S> second) {
+        return new PairedAction<S>(first, second);
+    }
+
     private static <S extends State> PairedAction<S> create(Iterable<Action<S>> actions) {
-        return new PairedAction<S>(Iterables.get(actions, 0), Iterables.get(actions, 1));
+        return create(Iterables.get(actions, 0), Iterables.get(actions, 1));
     }
 
     public static <S extends State> ImmutableSet<PairedAction<S>> all(Iterable<? extends Action<S>> actions) {
@@ -43,6 +47,21 @@ public class PairedAction<S extends State> extends Action<S> {
         }
 
         return ImmutableSet.copyOf(result);
+    }
+
+    public static <S extends State> ImmutableSet<PairedAction<S>> merged(
+        Iterable<? extends Action<S>> firsts,
+        Iterable<? extends Action<S>> seconds) {
+
+        Set<PairedAction<S>> actions = Sets.newHashSet();
+
+        for (Action<S> first : firsts) {
+            for (Action<S> second : seconds) {
+                actions.add(PairedAction.create(first, second));
+            }
+        }
+
+        return ImmutableSet.copyOf(actions);
     }
 
 

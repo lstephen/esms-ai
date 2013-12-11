@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.selection;
 
+import com.google.common.base.Function;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
@@ -11,6 +12,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -38,8 +40,11 @@ public final class Formation implements State, Report {
 
     private final Map<Player, Role> players = Maps.newHashMap();
 
-    private Formation(League league, Multimap<Role, Player> in) {
+    private final Tactic tactic;
+
+    private Formation(League league, Tactic tactic, Multimap<Role, Player> in) {
         this.league = league;
+        this.tactic = tactic;
         this.positions = ImmutableMultimap.copyOf(in);
     }
 
@@ -47,22 +52,26 @@ public final class Formation implements State, Report {
         return league;
     }
 
+    public Tactic getTactic() {
+        return tactic;
+    }
+
     public Player getPenaltyKicker() {
-        return Player.byRating(Role.FW).max(players());
+        return Player.byRating(Role.FW, tactic).max(players());
     }
 
     public ImmutableSet<Role> getRoles() {
         return positions.keySet();
     }
 
-    private Formation move(Role r, Player p) {
+    public Formation move(Role r, Player p) {
         Multimap<Role, Player> f = HashMultimap.create(positions);
 
         f.remove(findRole(p), p);
 
         f.put(r, p);
 
-        return Formation.create(league, f);
+        return Formation.create(league, tactic, f);
     }
 
     public Role findRole(Player p) {
@@ -103,7 +112,7 @@ public final class Formation implements State, Report {
         f.remove(findRole(out), out);
         f.put(r, in);
 
-        return Formation.create(league, f);
+        return Formation.create(league, tactic, f);
     }
 
     public boolean isValid(Substitution s) {
@@ -117,11 +126,15 @@ public final class Formation implements State, Report {
     }
 
     public Integer score() {
+        return score(tactic);
+    }
+
+    private Integer score(Tactic tactic) {
         Integer score = 0;
         Integer ageScore = 0;
 
         for (Map.Entry<Role, Player> entry : positions.entries()) {
-            score += entry.getValue().evaluate(entry.getKey()).getRating();
+            score += entry.getValue().evaluate(entry.getKey(), tactic).getRating();
             ageScore += 50 - entry.getValue().getAge();
         }
 
@@ -155,36 +168,63 @@ public final class Formation implements State, Report {
     }
 
     public void print(PrintWriter w) {
+        w.format("%s%n", getTactic());
+        printPlayers(w);
+    }
+
+    public void printPlayers(PrintWriter w) {
         for (Player p : players()) {
             w.format("%s %s%n", findRole(p), p.getName());
         }
     }
 
-    public static Formation create(League league, Multimap<Role, Player> players) {
-        return new Formation(league, players);
+    public static Formation create(League league, Tactic tactic, Multimap<Role, Player> players) {
+        return new Formation(league, tactic, players);
     }
 
     public static Formation select(League league, Iterable<Player> available) {
+        Set<Formation> formations = Sets.newHashSet();
+        for (Tactic t : Tactic.values()) {
+            formations.add(select(league, t, available));
+        }
+
+        return byScore().max(formations);
+    }
+
+    public static Formation select(League league, Tactic tactic, Iterable<Player> available) {
         return new RepeatedHillClimbing<Formation>(
             Formation.class,
-            initialState(league, available),
+            initialState(league, tactic, available),
             actionsFunction(league, available))
             .search();
     }
 
-    private static Callable<Formation> initialState(final League league, final Iterable<Player> available) {
+    private static Ordering<Formation> byScore() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Formation, Integer>() {
+                public Integer apply(Formation f) {
+                    return f.score();
+                }
+            });
+    }
+
+    private static Callable<Formation> initialState(final League league, final Tactic tactic, final Iterable<Player> available) {
         return new Callable<Formation>() {
             public Formation call() {
                 List<Player> shuffled = Lists.newArrayList(available);
                 Collections.shuffle(shuffled);
 
                 Multimap<Role, Player> initialState = HashMultimap.create();
-                for (Player p : Iterables.limit(shuffled, 11)) {
-                    initialState.put(p.getOverall().getRole(), p);
-                }
-                Formation f = create(league, initialState);
 
-                return f.isValid() ? f : call();
+                initialState.put(Role.GK, shuffled.get(0));
+                initialState.putAll(Role.DF, shuffled.subList(1, 5));
+                initialState.putAll(Role.MF, shuffled.subList(5, 9));
+                initialState.putAll(Role.FW, shuffled.subList(9, 11));
+
+                Formation f = create(league, tactic, initialState);
+
+                return f;
             }};
     }
 
@@ -192,10 +232,12 @@ public final class Formation implements State, Report {
         return new ActionsFunction<Formation>() {
 
             public ImmutableSet<Action<Formation>> getActions(Formation f) {
-                return ImmutableSet.copyOf(Iterables.concat(moves(f), substitutions(f)));
+                ImmutableSet<Move> moves = moves(f);
+                ImmutableSet<Substitute> subs = substitutions(f);
+                return ImmutableSet.copyOf(Iterables.concat(moves, subs, PairedAction.all(moves), PairedAction.merged(moves, subs)));
             }
 
-            private ImmutableSet<Action<Formation>> moves(Formation f) {
+            private ImmutableSet<Move> moves(Formation f) {
                 Set<Move> moves = Sets.newHashSet();
 
                 for (Player p : f.players()) {
@@ -208,7 +250,7 @@ public final class Formation implements State, Report {
                     }
                 }
 
-                return ImmutableSet.copyOf(Iterables.concat(moves, PairedAction.all(moves)));
+                return ImmutableSet.copyOf(moves);
             }
 
             private ImmutableSet<Substitute> substitutions(Formation f) {
