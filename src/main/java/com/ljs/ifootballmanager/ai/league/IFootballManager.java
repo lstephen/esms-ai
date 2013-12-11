@@ -1,9 +1,10 @@
 package com.ljs.ifootballmanager.ai.league;
 
 import com.ljs.ifootballmanager.ai.Role;
+import java.util.Collections;
 
 /**
- *
+ http://ifootballmanager.webs.com/liv.txt*
  * @author lstephen
  */
 public class IFootballManager implements League {
@@ -42,8 +43,13 @@ public class IFootballManager implements League {
         throw new IllegalStateException();
     }
 
+    public Iterable<String> getAdditionalPlayerFiles() {
+        return Collections.emptySet();
+    }
+
     public static IFootballManager get() {
         return INSTANCE;
     }
+
 
 }

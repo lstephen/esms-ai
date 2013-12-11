@@ -1,8 +1,11 @@
 package com.ljs.ifootballmanager.ai.league;
 
+import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.Role;
 
 /**
+ *
+ * http://www.pbemff.co.uk/transfers/euro_released.txt
  *
  * @author lstephen
  */
@@ -43,6 +46,11 @@ public final class Pbemff implements League {
         }
 
         throw new IllegalStateException();
+    }
+
+    @Override
+    public Iterable<String> getAdditionalPlayerFiles() {
+        return ImmutableList.of("/euro_released.txt");
     }
 
     public static Pbemff get() {

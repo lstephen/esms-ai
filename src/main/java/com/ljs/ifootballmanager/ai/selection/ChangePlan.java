@@ -190,23 +190,17 @@ public final class ChangePlan implements State, Report {
             }
 
             private Set<Substitution> availableSubstitutions(ChangePlan cp) {
-                Set<Player> toConsider = Sets.newHashSet();
+                Set<Substitution> ss = Sets.newHashSet();
 
                 for (Role r : Role.values()) {
-                    for (Player p : Player.byRating(r, cp.formation.getTactic()).reverse().sortedCopy(available)) {
-                        if (!cp.isUsed(p)) {
-                            toConsider.add(p);
-                            break;
+                    for (Player in : Player.byRating(r, cp.formation.getTactic()).reverse().sortedCopy(available)) {
+                        if (cp.isUsed(in)) {
+                            continue;
                         }
-                    }
-                }
 
-                Set<Substitution> ss = Sets.newHashSet();
-                for (Player in : toConsider) {
-                    for (Integer minute = 1; minute <= 90; minute++) {
-                        Formation currentFormation = cp.getFormationAt(minute);
-                        for (Player out : currentFormation.players()) {
-                            for (Role r : Role.values()) {
+                        for (Integer minute = 1; minute <= 90; minute++) {
+                            Formation currentFormation = cp.getFormationAt(minute);
+                            for (Player out : currentFormation.players()) {
                                 Substitution s = Substitution
                                     .builder()
                                     .in(in, r)
@@ -217,6 +211,7 @@ public final class ChangePlan implements State, Report {
                                 ss.add(s);
                             }
                         }
+                        break;
                     }
                 }
 

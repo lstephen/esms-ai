@@ -56,6 +56,14 @@ public final class Player {
         return age;
     }
 
+    public Integer getValue() {
+        Integer ovr = getOverall(Tactic.NORMAL).getRating();
+
+        Integer age = (46 - getAge());
+
+        return (ovr * ovr * age) / 10000;
+    }
+
     public void setFitness(Integer fitness) {
         this.fitness = fitness;
     }
@@ -132,6 +140,17 @@ public final class Player {
                     return p.evaluate(r, t).getRating();
                 }
             });
+    }
+
+    public static Ordering<Player> byValue() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Player, Integer>() {
+                public Integer apply(Player p) {
+                    return p.getValue();
+                }
+            })
+            .compound(byTieBreak());
     }
 
     public static Ordering<Player> byName() {

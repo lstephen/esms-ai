@@ -69,9 +69,9 @@ public class Main {
         Formation firstXI = Formation.select(league, squad.players());
 
         w.println("** Squad **");
-        for (Tactic t : Tactic.values()) {
-            print(w, SquadReport.create(t, squad.players()));
-        }
+        print(w, SquadReport.create(Tactic.NORMAL, squad.players()));
+        print(w, SquadReport.create(firstXI.getTactic(), squad.players()));
+
         print(w, "1st XI", firstXI);
 
         ImmutableSet<Player> remaining = ImmutableSet.copyOf(
@@ -79,10 +79,20 @@ public class Main {
                 ImmutableSet.copyOf(squad.players()),
                 ImmutableSet.copyOf(firstXI.players())));
 
+        Formation secondXI = null;
         if (remaining.size() > 11) {
-            print(w, "2nd XI", Formation.select(league, remaining));
+            secondXI = Formation.select(league, remaining);
+            print(w, "2nd XI", secondXI);
+            remaining = ImmutableSet.copyOf(
+                Sets.difference(
+                    remaining, ImmutableSet.copyOf(secondXI.players())));
         }
 
+        print(w, "1st XI", SquadReport.create(Tactic.NORMAL, firstXI.players()).sortByValue());
+        if (secondXI != null) {
+            print(w, "Second XI", SquadReport.create(Tactic.NORMAL, secondXI.players()).sortByValue());
+        }
+        print(w, "Remaining", SquadReport.create(Tactic.NORMAL, remaining).sortByValue());
 
         Formation formation = Formation.select(league, squad.forSelection());
         ChangePlan cp =
@@ -93,10 +103,15 @@ public class Main {
         print(w, "Selection", SquadReport.create(formation.getTactic(), squad.forSelection()));
         print(w, formation, bench, cp);
 
-        TeamSheet ts = TeamSheet.create(league, formation, cp, bench);
-        print(w, ts);
+        TeamSheet.create(league, formation, cp, bench).print(sheet);
 
-        ts.print(sheet);
+        print(w, "Value", SquadReport.create(Tactic.NORMAL, squad.players()).sortByValue());
+
+        for (String f : league.getAdditionalPlayerFiles()) {
+            Squad additional = Squad.load(Resources.asCharSource(getClass().getResource(f), Charsets.ISO_8859_1));
+
+            print(w, f, SquadReport.create(Tactic.NORMAL, additional.players()).sortByValue());
+        }
     }
 
     private void print(PrintWriter w, String title, Report report) {

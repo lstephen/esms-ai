@@ -13,4 +13,6 @@ public interface League {
     Integer getMaximum(Role r);
     Integer getMinimum(Role r);
 
+    Iterable<String> getAdditionalPlayerFiles();
+
 }

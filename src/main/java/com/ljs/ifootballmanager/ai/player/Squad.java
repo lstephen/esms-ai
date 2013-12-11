@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai.player;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSource;
@@ -39,7 +40,7 @@ public final class Squad {
         Set<Player> ps = Sets.newHashSet();
 
         for (String line : source.readLines()) {
-            if (line.startsWith("Name") || line.startsWith("----")) {
+            if (Strings.isNullOrEmpty(line) || line.startsWith("Name") || line.startsWith("----")) {
                 continue;
             }
 
