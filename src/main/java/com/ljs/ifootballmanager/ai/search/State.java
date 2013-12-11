@@ -8,4 +8,6 @@ public interface State {
 
     Boolean isValid();
 
+    Integer score();
+
 }

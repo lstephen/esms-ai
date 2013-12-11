@@ -26,6 +26,10 @@ public final class Player {
 
     private Integer fitness = 100;
 
+    private Boolean injured = Boolean.FALSE;
+
+    private Boolean suspended = Boolean.FALSE;
+
     private Player(String name, Integer age, Ratings ratings) {
         this.name = name;
         this.age = age;
@@ -37,6 +41,9 @@ public final class Player {
     }
 
     public Optional<Player> forSelection() {
+        if (injured || suspended) {
+            return Optional.absent();
+        }
         return Optional.of(atPercent(fitness));
     }
 
@@ -51,6 +58,15 @@ public final class Player {
     public void setFitness(Integer fitness) {
         this.fitness = fitness;
     }
+
+    public void injured() {
+        this.injured = Boolean.TRUE;
+    }
+
+    public void suspended() {
+        this.suspended = Boolean.TRUE;
+    }
+
 
     public RatingInRole getOverall() {
         return RatingInRole.byRating().max(evaluateAll());

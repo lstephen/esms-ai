@@ -28,6 +28,10 @@ public final class Substitution {
         w.format("SUB %s %s %s IF MIN = %d%n", in.getName(), out.getName(), role, minute);
     }
 
+    public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
+        w.format("SUB %s %s %s IF MIN = %d%n", playerIdx.apply(in), playerIdx.apply(out), role, minute);
+    }
+
     public Player getIn() {
         return in;
     }

@@ -1,6 +1,6 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import aima.core.search.framework.HeuristicFunction;
+import com.google.common.base.Function;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.search.Action;
 import com.ljs.ifootballmanager.ai.search.ActionsFunction;
 import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
@@ -20,7 +21,7 @@ import java.util.concurrent.Callable;
  *
  * @author lstephen
  */
-public final class ChangePlan implements State {
+public final class ChangePlan implements State, Report {
 
     private final Formation formation;
 
@@ -35,6 +36,23 @@ public final class ChangePlan implements State {
         for (Substitution s : Substitution.byMinute().sortedCopy(substitutions)) {
             s.print(w);
         }
+    }
+
+    public void printTactics(PrintWriter w, Function<Player, Integer> playerIdx) {
+        for (Substitution s : Substitution.byMinute().sortedCopy(substitutions)) {
+            s.print(w, playerIdx);
+        }
+
+    }
+
+    public ImmutableSet<Player> getSubstitutes() {
+        Set<Player> subs = Sets.newHashSet();
+
+        for (Substitution s : substitutions) {
+            subs.add(s.getIn());
+        }
+
+        return ImmutableSet.copyOf(subs);
     }
 
     private ChangePlan withSubstitution(Substitution s) {
@@ -139,7 +157,6 @@ public final class ChangePlan implements State {
     public static ChangePlan select(League league, final Formation f, Iterable<Player> squad) {
         return new RepeatedHillClimbing<ChangePlan>(
             ChangePlan.class,
-            heuristic(),
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
                     return new ChangePlan(f, ImmutableSet.<Substitution>of());
@@ -147,15 +164,6 @@ public final class ChangePlan implements State {
             },
             actionsFunction(league, squad))
             .search();
-    }
-
-    private static HeuristicFunction heuristic() {
-        return new HeuristicFunction() {
-            @Override
-            public double h(Object state) {
-                return -ChangePlan.class.cast(state).score();
-            }
-        };
     }
 
     private static ActionsFunction<ChangePlan> actionsFunction(final League league, final Iterable<Player> available) {

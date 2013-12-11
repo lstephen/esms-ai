@@ -1,8 +1,7 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import aima.core.search.framework.HeuristicFunction;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -14,8 +13,10 @@ import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.search.Action;
 import com.ljs.ifootballmanager.ai.search.ActionsFunction;
+import com.ljs.ifootballmanager.ai.search.PairedAction;
 import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
 import com.ljs.ifootballmanager.ai.search.State;
 import java.io.PrintWriter;
@@ -29,7 +30,7 @@ import java.util.concurrent.Callable;
  *
  * @author lstephen
  */
-public final class Formation implements State {
+public final class Formation implements State, Report {
 
     private final League league;
 
@@ -44,6 +45,14 @@ public final class Formation implements State {
 
     public League getLeague() {
         return league;
+    }
+
+    public Player getPenaltyKicker() {
+        return Player.byRating(Role.FW).max(players());
+    }
+
+    public ImmutableSet<Role> getRoles() {
+        return positions.keySet();
     }
 
     private Formation move(Role r, Player p) {
@@ -72,8 +81,16 @@ public final class Formation implements State {
         return positions.containsValue(p);
     }
 
-    public ImmutableCollection<Player> players() {
-        return positions.values();
+    public ImmutableList<Player> players() {
+        List<Player> players = Lists.newArrayList();
+
+        for (Role r : Ordering.natural().sortedCopy(positions.keySet())) {
+            for (Player p : Player.byName().sortedCopy(positions.get(r))) {
+                players.add(p);
+            }
+        }
+
+        return ImmutableList.copyOf(players);
     }
 
     private Formation substitute(Substitution s) {
@@ -99,8 +116,7 @@ public final class Formation implements State {
         return substitute(s).isValid();
     }
 
-
-    private Integer score() {
+    public Integer score() {
         Integer score = 0;
         Integer ageScore = 0;
 
@@ -139,10 +155,8 @@ public final class Formation implements State {
     }
 
     public void print(PrintWriter w) {
-        for (Role r : Ordering.natural().sortedCopy(positions.keySet())) {
-            for (Player p : Player.byName().sortedCopy(positions.get(r))) {
-                w.format("%s %s%n", r, p.getName());
-            }
+        for (Player p : players()) {
+            w.format("%s %s%n", findRole(p), p.getName());
         }
     }
 
@@ -153,20 +167,9 @@ public final class Formation implements State {
     public static Formation select(League league, Iterable<Player> available) {
         return new RepeatedHillClimbing<Formation>(
             Formation.class,
-            heuristic(),
             initialState(league, available),
             actionsFunction(league, available))
             .search();
-    }
-
-    private static HeuristicFunction heuristic() {
-        return new HeuristicFunction() {
-            public double h(Object state) {
-                Formation f = Formation.class.cast(state);
-
-                return -f.score();
-            }
-        };
     }
 
     private static Callable<Formation> initialState(final League league, final Iterable<Player> available) {
@@ -192,7 +195,7 @@ public final class Formation implements State {
                 return ImmutableSet.copyOf(Iterables.concat(moves(f), substitutions(f)));
             }
 
-            private ImmutableSet<Move> moves(Formation f) {
+            private ImmutableSet<Action<Formation>> moves(Formation f) {
                 Set<Move> moves = Sets.newHashSet();
 
                 for (Player p : f.players()) {
@@ -205,7 +208,7 @@ public final class Formation implements State {
                     }
                 }
 
-                return ImmutableSet.copyOf(moves);
+                return ImmutableSet.copyOf(Iterables.concat(moves, PairedAction.all(moves)));
             }
 
             private ImmutableSet<Substitute> substitutions(Formation f) {

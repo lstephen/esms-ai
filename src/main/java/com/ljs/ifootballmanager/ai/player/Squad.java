@@ -1,10 +1,9 @@
-package com.ljs.ifootballmanager.ai;
+package com.ljs.ifootballmanager.ai.player;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSource;
-import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import java.io.IOException;
 import java.util.Set;
@@ -58,6 +57,13 @@ public final class Squad {
                 .build();
 
             Player p = Player.create(name, age, ratings);
+
+            if (!split[24].equals("0")) {
+                p.injured();
+            }
+            if (!split[25].equals("0")) {
+                p.suspended();
+            }
 
             if (split.length > 26) {
                 p.setFitness(Integer.parseInt(split[26]));

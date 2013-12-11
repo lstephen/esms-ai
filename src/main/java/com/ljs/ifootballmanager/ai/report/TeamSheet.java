@@ -1,7 +1,12 @@
 package com.ljs.ifootballmanager.ai.report;
 
-import com.ljs.ifootballmanager.ai.Squad;
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.selection.Bench;
+import com.ljs.ifootballmanager.ai.selection.ChangePlan;
 import com.ljs.ifootballmanager.ai.selection.Formation;
 import java.io.PrintWriter;
 
@@ -13,11 +18,29 @@ public class TeamSheet implements Report {
 
     private final League league;
 
-    private final Squad squad;
+    private final Formation formation;
 
-    private TeamSheet(League league, Squad squad) {
+    private final ChangePlan changePlan;
+
+    private final Bench bench;
+
+    private TeamSheet(League league, Formation formation, ChangePlan cp, Bench bench) {
         this.league = league;
-        this.squad = squad;
+        this.formation = formation;
+        this.changePlan = cp;
+        this.bench = bench;
+    }
+
+    private ImmutableList<Player> players() {
+        return ImmutableList.copyOf(Iterables.concat(formation.players(), bench.players()));
+    }
+
+    private Function<Player, Integer> getPlayerIndex() {
+        return new Function<Player, Integer>() {
+            public Integer apply(Player p) {
+                return players().indexOf(p) + 1;
+            }
+        };
     }
 
     public void print(PrintWriter w) {
@@ -25,30 +48,19 @@ public class TeamSheet implements Report {
         w.println("N");
         w.println();
 
-        Formation.select(league, squad.players()).print(w);
-
-        /*Starters starters = Starters.select(squad.players());
-
-        for (InRole p : InRole.byRole().sortedCopy(Formation.select(starters))) {
-            w.format("%s %s%n", p.getRole(), p.getName());
-        }
-
+        formation.print(w);
         w.println();
-
-        for (Player p : Bench.select(Sets.difference(ImmutableSet.copyOf(squad.players()), ImmutableSet.copyOf(starters)))) {
-            w.format("%s %s%n", p.getOverall().getRole(), p.getName());
-        }
-
+        bench.printPlayers(w);
         w.println();
-
-        w.format("PK: %s%n", Selections.select(Role.FW, starters).getName());*/
-
-
+        w.format("PK: %s%n", formation.getPenaltyKicker().getName());
+        w.println();
+        bench.printInjuryTactics(w, getPlayerIndex());
+        changePlan.printTactics(w, getPlayerIndex());
     }
 
 
-    public static TeamSheet create(League league, Squad squad) {
-        return new TeamSheet(league, squad);
+    public static TeamSheet create(League league, Formation formation, ChangePlan cp, Bench bench) {
+        return new TeamSheet(league, formation, cp, bench);
     }
 
 }

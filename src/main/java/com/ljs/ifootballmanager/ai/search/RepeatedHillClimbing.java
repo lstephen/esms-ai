@@ -26,26 +26,22 @@ public class RepeatedHillClimbing<S extends State> {
 
     private final Class<S> stateClass;
 
-    private final HeuristicFunction heuristic;
-
     private final Callable<S> initialStateFactory;
 
     private final ActionsFunction<S> actionsFunction;
 
     public RepeatedHillClimbing(
         Class<S> stateClass,
-        HeuristicFunction heuristic,
         Callable<S> initialStateFactory,
         ActionsFunction<S> actionsFunction) {
 
         this.stateClass = stateClass;
-        this.heuristic = heuristic;
         this.initialStateFactory = initialStateFactory;
         this.actionsFunction = actionsFunction;
     }
 
     public S search() {
-        System.out.print("Searching...");
+        System.out.print("Searching (" + stateClass.getSimpleName() + ") ...");
 
         ListeningExecutorService executor = MoreExecutors.listeningDecorator(
             Executors.newFixedThreadPool(REPEATS));
@@ -73,7 +69,7 @@ public class RepeatedHillClimbing<S extends State> {
         return new Callable<S>() {
             public S call() {
                 System.out.print(">-");
-                HillClimbingSearch search = new HillClimbingSearch(heuristic);
+                HillClimbingSearch search = new HillClimbingSearch(heuristic());
 
                 try {
                     search.search(problem());
@@ -100,12 +96,21 @@ public class RepeatedHillClimbing<S extends State> {
         }
     }
 
+    private HeuristicFunction heuristic() {
+        return new HeuristicFunction() {
+            @Override
+            public double h(Object state) {
+                return -stateClass.cast(state).score();
+            }
+        };
+    }
+
     private Ordering<S> byHeuristic() {
         return Ordering
             .natural()
             .onResultOf(new Function<S, Double>() {
                 public Double apply(S state) {
-                    return heuristic.h(state);
+                    return heuristic().h(state);
                 }
             });
     }
