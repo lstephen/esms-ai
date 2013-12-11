@@ -28,20 +28,14 @@ public final class ChangePlan implements State, Report {
 
     private final ImmutableSet<Substitution> substitutions;
 
-    private final ImmutableSet<PositionChange> positionChanges;
-
-    private ChangePlan(Formation formation, Iterable<Substitution> subs, Iterable<PositionChange> changes) {
+    private ChangePlan(Formation formation, Iterable<Substitution> subs) {
         this.formation = formation;
         this.substitutions = ImmutableSet.copyOf(subs);
-        this.positionChanges = ImmutableSet.copyOf(changes);
     }
 
     public void print(PrintWriter w) {
         for (Substitution s : Substitution.byMinute().sortedCopy(substitutions)) {
             s.print(w);
-        }
-        for (PositionChange c : PositionChange.byMinute().sortedCopy(positionChanges)) {
-            c.print(w);
         }
     }
 
@@ -67,7 +61,7 @@ public final class ChangePlan implements State, Report {
 
         ss.add(s);
 
-        return new ChangePlan(formation, ss, positionChanges);
+        return new ChangePlan(formation, ss);
     }
 
     private ChangePlan removeSubstitution(Substitution s) {
@@ -75,19 +69,7 @@ public final class ChangePlan implements State, Report {
 
         ss.remove(s);
 
-        return new ChangePlan(formation, ss, positionChanges);
-    }
-
-    private ChangePlan withPositionChange(PositionChange c) {
-        Set<PositionChange> pcs = Sets.newHashSet(positionChanges);
-        pcs.add(c);
-        return new ChangePlan(formation, substitutions, pcs);
-    }
-
-    private ChangePlan removePositionChange(PositionChange c) {
-        Set<PositionChange> pcs = Sets.newHashSet(positionChanges);
-        pcs.remove(c);
-        return new ChangePlan(formation, substitutions, pcs);
+        return new ChangePlan(formation, ss);
     }
 
     public Boolean isValid() {
@@ -108,14 +90,7 @@ public final class ChangePlan implements State, Report {
             out.add(s.getOut());
         }
 
-        for (PositionChange c : positionChanges) {
-            if (!getFormationAt(c.getMinute()).contains(c.getPlayer())) {
-                return false;
-            }
-        }
-
         return true;
-
     }
 
     public Integer score() {
@@ -135,7 +110,6 @@ public final class ChangePlan implements State, Report {
             score += p.evaluate(current.findRole(p), current.getTactic()).getRating();
         }
         return score;
-
     }
 
     public Boolean isUsed(Player p) {
@@ -172,14 +146,6 @@ public final class ChangePlan implements State, Report {
             }
         }
 
-        for (PositionChange c : PositionChange.byMinute().sortedCopy(positionChanges)) {
-            boolean isMade = c.getMinute() < minute;
-
-            if (isMade) {
-                f = f.move(c.getRole(), c.getPlayer());
-            }
-        }
-
         return f;
     }
 
@@ -192,7 +158,7 @@ public final class ChangePlan implements State, Report {
             ChangePlan.class,
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
-                    return new ChangePlan(f, ImmutableSet.<Substitution>of(), ImmutableSet.<PositionChange>of());
+                    return new ChangePlan(f, ImmutableSet.<Substitution>of());
                 }
             },
             actionsFunction(league, squad))
@@ -274,33 +240,6 @@ public final class ChangePlan implements State, Report {
 
                 return adds;
             }
-
-            private Set<AddPositionChange> addPositionChanges(ChangePlan cp) {
-                Set<AddPositionChange> adds = Sets.newHashSet();
-
-                for (Substitution s : cp.substitutions) {
-                    Formation f = cp.getFormationAt(s.getMinute());
-
-                    for (Player p : f.players()) {
-                        for (Role r : Role.values()) {
-                            if (r != f.findRole(p)) {
-                                adds.add(new AddPositionChange(PositionChange.create(p, r, s.getMinute())));
-                            }
-                        }
-                    }
-                }
-                return adds;
-            }
-
-            private Set<RemovePositionChange> removePositionChanges(ChangePlan cp) {
-                Set<RemovePositionChange> removes = Sets.newHashSet();
-
-                for (PositionChange c : cp.positionChanges) {
-                    removes.add(new RemovePositionChange(c));
-                }
-
-                return removes;
-            }
         };
     }
 
@@ -330,32 +269,5 @@ public final class ChangePlan implements State, Report {
             return cp.removeSubstitution(remove);
         }
     }
-
-    private static class AddPositionChange extends Action<ChangePlan> {
-        private final PositionChange add;
-
-        public AddPositionChange(PositionChange add) {
-            this.add = add;
-        }
-
-        public ChangePlan apply(ChangePlan cp) {
-            return cp.withPositionChange(add);
-        }
-    }
-
-    private static class RemovePositionChange extends Action<ChangePlan> {
-        private final PositionChange remove;
-
-        public RemovePositionChange(PositionChange remove) {
-            this.remove = remove;
-        }
-
-        public ChangePlan apply(ChangePlan cp) {
-            return cp.removePositionChange(remove);
-        }
-    }
-
-
-
 
 }
