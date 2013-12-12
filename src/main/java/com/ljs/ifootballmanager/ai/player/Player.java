@@ -76,6 +76,14 @@ public final class Player {
         this.suspended = Boolean.TRUE;
     }
 
+    // TODO: Move this logic in to League. These values are hardcoded to PBEMFF
+    public boolean isReserveElgible() {
+        return getAge() <= 21 && ratings.getMaximumSkill() < (isGk() ? 28 : 24);
+    }
+
+    public boolean isGk() {
+        return getOverall(Tactic.NORMAL).getRole() == Role.GK;
+    }
 
     public RatingInRole getOverall(Tactic t) {
         return RatingInRole.byRating().max(evaluateAll(t));
@@ -93,6 +101,10 @@ public final class Player {
 
     public RatingInRole evaluate(Role r, Tactic t) {
         return Evaluator.create(ratings).evaluate(r, t);
+    }
+
+    public Integer getRating(Role r, Tactic t) {
+        return evaluate(r, t).getRating();
     }
 
     @Override

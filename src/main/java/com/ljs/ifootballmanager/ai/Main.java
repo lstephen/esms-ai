@@ -15,6 +15,7 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.report.SquadReport;
+import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
@@ -105,7 +106,10 @@ public class Main {
 
         TeamSheet.create(league, formation, cp, bench).print(sheet);
 
+
         print(w, "Value", SquadReport.create(Tactic.NORMAL, squad.players()).sortByValue());
+
+        print(w, SquadSummaryReport.create(squad, firstXI, secondXI));
 
         for (String f : league.getAdditionalPlayerFiles()) {
             Squad additional = Squad.load(Resources.asCharSource(getClass().getResource(f), Charsets.ISO_8859_1));

@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai.rating;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
 import java.util.Map;
 
 /**
@@ -36,6 +37,10 @@ public final class Ratings {
         }
 
         return builder.build();
+    }
+
+    public Integer getMaximumSkill() {
+        return Ordering.natural().max(ratings.values());
     }
 
     public static Builder builder() {

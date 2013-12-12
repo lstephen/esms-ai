@@ -33,6 +33,7 @@ public class SquadReport implements Report {
 
     public void print(PrintWriter w) {
         Role[] roles = Role.values();
+        Tactic[] tactics = Tactic.values();
 
         w.format("%-15s ", tactic);
 
@@ -42,6 +43,12 @@ public class SquadReport implements Report {
             w.format("%5s ", r.name());
         }
 
+        w.format(" (%5s) ", "VALUE");
+
+        for (Tactic t : tactics) {
+            w.format("%5s ", t.getCode());
+        }
+
         w.println();
 
         for (Player p : ordering.immutableSortedCopy(squad)) {
@@ -49,13 +56,17 @@ public class SquadReport implements Report {
 
             RatingInRole best = p.getOverall(tactic);
 
-            w.format(" %2d %2s %5d ", p.getAge(), best.getRole(), best.getRating());
+            w.format("%1s%2d %2s %5d ", p.isReserveElgible() ? "R" : "", p.getAge(), best.getRole(), best.getRating());
 
             for (Role r : roles) {
                 w.format("%5d ", p.evaluate(r, tactic).getRating());
             }
 
             w.format(" (%5d) ", p.getValue());
+
+            for (Tactic t : tactics) {
+                w.format("%5d ", p.getOverall(t).getRating());
+            }
 
             w.println();
         }

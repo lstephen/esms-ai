@@ -90,6 +90,10 @@ public final class Formation implements State, Report {
         return positions.containsValue(p);
     }
 
+    public ImmutableSet<Player> players(Role r) {
+        return ImmutableSet.copyOf(positions.get(r));
+    }
+
     public ImmutableList<Player> players() {
         List<Player> players = Lists.newArrayList();
 

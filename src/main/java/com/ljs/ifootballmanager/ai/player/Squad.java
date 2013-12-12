@@ -5,6 +5,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSource;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import java.io.IOException;
 import java.util.Set;
@@ -22,8 +24,19 @@ public final class Squad {
         this.players = ImmutableSet.copyOf(ps);
     }
 
-    public Iterable<Player> players() {
+    public ImmutableSet<Player> players() {
         return players;
+    }
+
+    public ImmutableSet<Player> players(Role r, Tactic t) {
+        Set<Player> ps = Sets.newHashSet();
+
+        for (Player p : players()) {
+            if (p.getOverall(t).getRole() == r) {
+                ps.add(p);
+            }
+        }
+        return ImmutableSet.copyOf(ps);
     }
 
     public Iterable<Player> forSelection() {
@@ -34,6 +47,16 @@ public final class Squad {
         }
 
         return Optional.presentInstances(ps);
+    }
+
+    public Integer count(Role r) {
+        Integer count = 0;
+        for (Player p : players()) {
+            if (p.getOverall(Tactic.NORMAL).getRole().equals(r)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public static Squad load(CharSource source) throws IOException {
