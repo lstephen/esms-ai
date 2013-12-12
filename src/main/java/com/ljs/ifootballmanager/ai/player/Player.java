@@ -41,6 +41,10 @@ public final class Player {
         return new Player(name, age, ratings.atPercent(percentage));
     }
 
+    public Player afterMinutes(Integer minutes) {
+        return atPercent(100 - minutes / 3);
+    }
+
     public Optional<Player> forSelection() {
         if (injured || suspended) {
             return Optional.absent();

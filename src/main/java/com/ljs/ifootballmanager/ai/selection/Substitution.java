@@ -1,7 +1,7 @@
 package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Ordering;
+import com.google.common.collect.ImmutableSet;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
@@ -10,7 +10,7 @@ import java.io.PrintWriter;
  *
  * @author lstephen
  */
-public final class Substitution {
+public final class Substitution implements Change {
 
     private final Player in;
     private final Player out;
@@ -32,6 +32,29 @@ public final class Substitution {
         w.format("SUB %s %s %s IF MIN = %d%n", playerIdx.apply(in), playerIdx.apply(out), role, minute);
     }
 
+    public ImmutableSet<Player> getPlayersInvolved() {
+        return ImmutableSet.of(in, out);
+    }
+
+    public Boolean isValid(ChangePlan cp) {
+        if (!cp.getFormationAt(minute - 1).isValid(this)) {
+            return false;
+        }
+        for (Substitution s : cp.changesMadeAt(minute, Substitution.class)) {
+            if (s == this) {
+                continue;
+            }
+            if (s.getIn().equals(getIn())) {
+                return false;
+            }
+            if (s.getOut().equals(getIn())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public Player getIn() {
         return in;
     }
@@ -48,22 +71,16 @@ public final class Substitution {
         return minute;
     }
 
+    public Formation apply(Formation f, Integer minute) {
+        return f.substitute(in.afterMinutes(minute - getMinute()), role, out);
+    }
+
     public static Builder builder() {
         return Builder.create();
     }
 
     private static Substitution build(Builder builder) {
         return new Substitution(builder);
-    }
-
-    public static Ordering<Substitution> byMinute() {
-        return Ordering
-            .natural()
-            .onResultOf(new Function<Substitution, Integer>() {
-                public Integer apply(Substitution s) {
-                    return s.getMinute();
-                }
-            });
     }
 
     public static final class Builder {

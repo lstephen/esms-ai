@@ -2,7 +2,9 @@ package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
@@ -15,6 +17,7 @@ import com.ljs.ifootballmanager.ai.search.PairedAction;
 import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
 import com.ljs.ifootballmanager.ai.search.State;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -26,70 +29,99 @@ public final class ChangePlan implements State, Report {
 
     private final Formation formation;
 
-    private final ImmutableSet<Substitution> substitutions;
+    private final ImmutableSet<Change> changes;
 
-    private ChangePlan(Formation formation, Iterable<Substitution> subs) {
+    private ChangePlan(Formation formation, Iterable<Change> cs) {
         this.formation = formation;
-        this.substitutions = ImmutableSet.copyOf(subs);
+        this.changes = ImmutableSet.copyOf(cs);
+    }
+
+    private ImmutableList<Change> changes() {
+        return Change.Meta.byMinute().immutableSortedCopy(changes);
+    }
+
+    public <C extends Change> ImmutableList<C> changes(Class<C> clazz) {
+        List<C> cs = Lists.newArrayList();
+
+        for (Change c : changes()) {
+            if (clazz.isInstance(c)) {
+                cs.add(clazz.cast(c));
+            }
+        }
+
+        return ImmutableList.copyOf(cs);
+    }
+
+    public ImmutableList<Change> changesMadeAt(Integer minute) {
+        List<Change> cs = Lists.newArrayList();
+
+        for (Change c : changes()) {
+            if (c.getMinute() <= minute) {
+                cs.add(c);
+            }
+        }
+
+        return ImmutableList.copyOf(cs);
+    }
+
+    public <C extends Change> ImmutableList<C> changesMadeAt(Integer minute, Class<C> clazz) {
+        List<C> cs = Lists.newArrayList();
+
+        for (Change c : changesMadeAt(minute)) {
+            if (clazz.isInstance(c)) {
+                cs.add(clazz.cast(c));
+            }
+
+        }
+
+        return ImmutableList.copyOf(cs);
     }
 
     public void print(PrintWriter w) {
-        for (Substitution s : Substitution.byMinute().sortedCopy(substitutions)) {
-            s.print(w);
+        for (Change c : changes()) {
+            c.print(w);
         }
     }
 
-    public void printTactics(PrintWriter w, Function<Player, Integer> playerIdx) {
-        for (Substitution s : Substitution.byMinute().sortedCopy(substitutions)) {
-            s.print(w, playerIdx);
+    public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
+        for (Change c : changes()) {
+            c.print(w, playerIdx);
         }
-
     }
 
     public ImmutableSet<Player> getSubstitutes() {
         Set<Player> subs = Sets.newHashSet();
 
-        for (Substitution s : substitutions) {
+        for (Substitution s : changes(Substitution.class)) {
             subs.add(s.getIn());
         }
 
         return ImmutableSet.copyOf(subs);
     }
 
-    private ChangePlan withSubstitution(Substitution s) {
-        Set<Substitution> ss = Sets.newHashSet(substitutions);
-
-        ss.add(s);
-
-        return new ChangePlan(formation, ss);
+    private ChangePlan with(Change c) {
+        Set<Change> cs = Sets.newHashSet(changes);
+        cs.add(c);
+        return new ChangePlan(formation, cs);
     }
 
-    private ChangePlan removeSubstitution(Substitution s) {
-        Set<Substitution> ss = Sets.newHashSet(substitutions);
-
-        ss.remove(s);
-
-        return new ChangePlan(formation, ss);
+    private ChangePlan remove(Change c) {
+        Set<Change> cs = Sets.newHashSet(changes);
+        cs.remove(c);
+        return new ChangePlan(formation, cs);
     }
 
     public Boolean isValid() {
-        Set<Player> in = Sets.newHashSet();
-        Set<Player> out = Sets.newHashSet();
 
-        for (Substitution s : substitutions) {
-            if (!getFormationAt(s.getMinute() - 1).isValid(s)) {
-                return false;
-            }
-            if (out.contains(s.getOut())) {
-                return false;
-            }
-            if (in.contains(s.getIn())) {
-                return false;
-            }
-            in.add(s.getIn());
-            out.add(s.getOut());
+        if (changes(Substitution.class).size() > 3) {
+            return false;
         }
 
+        for (Change c : changes) {
+            if (!c.isValid(this)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -100,7 +132,7 @@ public final class ChangePlan implements State, Report {
             score += score(minute);
         }
 
-        return score + substitutions.size();
+        return score - changes.size();
     }
 
     public Integer score(Integer minute) {
@@ -112,45 +144,20 @@ public final class ChangePlan implements State, Report {
         return score;
     }
 
-    public Boolean isUsed(Player p) {
-        if (formation.contains(p)) {
-            return true;
-        }
-
-        for (Substitution s : substitutions) {
-            if (s.getIn().equals(p)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private Formation getFormationAt(Integer minute) {
+    public Formation getFormationAt(Integer minute) {
         Multimap<Role, Player> players = HashMultimap.create();
 
         for (Player p : formation.players()) {
-            players.put(formation.findRole(p), p.atPercent(getFitnessAfterMinutesPlayed(minute)));
+            players.put(formation.findRole(p), p.afterMinutes(minute));
         }
 
         Formation f = Formation.create(formation.getLeague(), formation.getTactic(), players);
 
-        for (Substitution s : Substitution.byMinute().sortedCopy(substitutions)) {
-            boolean isMade = s.getMinute() < minute;
-
-            if (isMade) {
-                f = f.substitute(
-                    s.getIn().atPercent(getFitnessAfterMinutesPlayed(minute - s.getMinute())),
-                    s.getRole(),
-                    s.getOut());
-            }
+        for (Change c : changesMadeAt(minute)) {
+            f = c.apply(f, minute);
         }
 
         return f;
-    }
-
-    private Integer getFitnessAfterMinutesPlayed(Integer minutesPlayed) {
-        return 100 - minutesPlayed / 3;
     }
 
     public static ChangePlan select(League league, final Formation f, Iterable<Player> squad) {
@@ -158,7 +165,7 @@ public final class ChangePlan implements State, Report {
             ChangePlan.class,
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
-                    return new ChangePlan(f, ImmutableSet.<Substitution>of());
+                    return new ChangePlan(f, ImmutableSet.<Change>of());
                 }
             },
             actionsFunction(league, squad))
@@ -172,19 +179,12 @@ public final class ChangePlan implements State, Report {
             public Set<Action<ChangePlan>> getActions(ChangePlan cp) {
                 Set<Action<ChangePlan>> actions = Sets.newHashSet();
 
-                ImmutableSet<AddSubstitution> adds = ImmutableSet.copyOf(addSubsitution(cp));
-                ImmutableSet<RemoveSubstitution> removes = ImmutableSet.copyOf(removeSubstitution(cp));
+                ImmutableSet<AddChange> adds = ImmutableSet.copyOf(adds(cp));
+                ImmutableSet<RemoveChange> removes = ImmutableSet.copyOf(removes(cp));
 
-                if (cp.substitutions.size() < 3) {
-                    actions.addAll(adds);
-                }
-
+                actions.addAll(adds);
                 actions.addAll(removes);
                 actions.addAll(PairedAction.merged(removes, adds));
-                /*actions.addAll(addPositionChanges(cp));
-                actions.addAll(removePositionChanges(cp));
-
-                actions.addAll(PairedAction.merged(removePositionChanges(cp), addPositionChanges(cp)));*/
 
                 return actions;
             }
@@ -193,14 +193,20 @@ public final class ChangePlan implements State, Report {
                 Set<Substitution> ss = Sets.newHashSet();
 
                 for (Role r : Role.values()) {
-                    for (Player in : Player.byRating(r, cp.formation.getTactic()).reverse().sortedCopy(available)) {
-                        if (cp.isUsed(in)) {
-                            continue;
-                        }
+                    for (Integer minute = 1; minute <= 90; minute++) {
+                        Formation currentFormation = cp.getFormationAt(minute);
+                        Integer psConsidered = 0;
+                        for (Player in : Player.byRating(r, currentFormation.getTactic()).reverse().sortedCopy(available)) {
+                            if (cp.formation.contains(in)) {
+                                continue;
+                            }
 
-                        for (Integer minute = 1; minute <= 90; minute++) {
-                            Formation currentFormation = cp.getFormationAt(minute);
                             for (Player out : currentFormation.players()) {
+                                if (out.evaluate(r, currentFormation.getTactic()).getRating()
+                                    > in.evaluate(r, currentFormation.getTactic()).getRating()) {
+                                    continue;
+                                }
+
                                 Substitution s = Substitution
                                     .builder()
                                     .in(in, r)
@@ -210,27 +216,30 @@ public final class ChangePlan implements State, Report {
 
                                 ss.add(s);
                             }
+                            psConsidered++;
+                            if (psConsidered >= 3) {
+                                break;
+                            }
                         }
-                        break;
                     }
                 }
 
                 return ss;
             }
 
-            private Set<RemoveSubstitution> removeSubstitution(ChangePlan cp) {
-                Set<RemoveSubstitution> removes = Sets.newHashSet();
-                for (Substitution s : cp.substitutions) {
-                    removes.add(new RemoveSubstitution(s));
+            private Set<RemoveChange> removes(ChangePlan cp) {
+                Set<RemoveChange> removes = Sets.newHashSet();
+                for (Change c : cp.changes()) {
+                    removes.add(new RemoveChange(c));
                 }
                 return removes;
             }
 
-            private Set<AddSubstitution> addSubsitution(ChangePlan cp) {
-                Set<AddSubstitution> adds = Sets.newHashSet();
+            private Set<AddChange> adds(ChangePlan cp) {
+                Set<AddChange> adds = Sets.newHashSet();
 
                 for (Substitution s : availableSubstitutions(cp)) {
-                    adds.add(new AddSubstitution(s));
+                    adds.add(new AddChange(s));
                 }
 
                 return adds;
@@ -238,30 +247,30 @@ public final class ChangePlan implements State, Report {
         };
     }
 
-    private static class AddSubstitution extends Action<ChangePlan> {
+    private static class AddChange extends Action<ChangePlan> {
 
-        private final Substitution substitution;
+        private final Change add;
 
-        public AddSubstitution(Substitution substitution) {
+        public AddChange(Change add) {
             super();
-            this.substitution = substitution;
+            this.add = add;
         }
 
         public ChangePlan apply(ChangePlan cp) {
-            return cp.withSubstitution(substitution);
+            return cp.with(add);
         }
     }
 
-    private static class RemoveSubstitution extends Action<ChangePlan> {
-        private final Substitution remove;
+    private static class RemoveChange extends Action<ChangePlan> {
+        private final Change remove;
 
-        public RemoveSubstitution(Substitution remove) {
+        public RemoveChange(Change remove) {
             super();
             this.remove = remove;
         }
 
         public ChangePlan apply(ChangePlan cp) {
-            return cp.removeSubstitution(remove);
+            return cp.remove(remove);
         }
     }
 

@@ -149,6 +149,9 @@ public final class Formation implements State, Report {
         if (positions.size() != 11) {
             return false;
         }
+        if (ImmutableSet.copyOf(positions.values()).size() != 11) {
+            return false;
+        }
         for (Role r : Role.values()) {
             if (count(r) < league.getMinimum(r)) {
                 return false;

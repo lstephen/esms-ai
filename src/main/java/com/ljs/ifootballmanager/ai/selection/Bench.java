@@ -47,7 +47,7 @@ public class Bench implements State, Report {
         Integer score = 0;
 
         for (Role r : formation.getRoles()) {
-            score += Player.byRating(r, formation.getTactic()).max(bench).evaluate(r, formation.getTactic()).getRating();
+            score += Player.byRating(r, formation.getTactic()).max(bench).getRating(r, formation.getTactic());
         }
 
         score *= 10000;
@@ -152,7 +152,7 @@ public class Bench implements State, Report {
                 for (Player in : remaining) {
                     for (Player out : state.bench) {
                         if (Iterables.contains(subsitutes, out)) {
-                            break;
+                            continue;
                         }
 
                         actions.add(new ChangePlayer(in, out));
