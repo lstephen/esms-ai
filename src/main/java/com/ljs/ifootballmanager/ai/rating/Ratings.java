@@ -3,6 +3,8 @@ package com.ljs.ifootballmanager.ai.rating;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
 import java.util.Map;
 
 /**
@@ -37,6 +39,14 @@ public final class Ratings {
         }
 
         return builder.build();
+    }
+
+    public Integer getSkill(Rating rt) {
+        return ratings.get(rt) * 100;
+    }
+
+    public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {
+        return tc.getWeighting(rl).get(rt) * ratings.get(rt);
     }
 
     public Integer getMaximumSkill() {

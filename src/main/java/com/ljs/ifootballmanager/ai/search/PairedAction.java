@@ -27,7 +27,7 @@ public class PairedAction<S extends State> extends Action<S> {
         return second.apply(first.apply(state));
     }
 
-    private static <S extends State> PairedAction<S> create(Action<S> first, Action<S> second) {
+    public static <S extends State> PairedAction<S> create(Action<S> first, Action<S> second) {
         return new PairedAction<S>(first, second);
     }
 

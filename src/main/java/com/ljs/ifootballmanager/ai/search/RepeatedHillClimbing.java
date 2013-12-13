@@ -54,7 +54,7 @@ public class RepeatedHillClimbing<S extends State> {
 
         try {
             S result = byHeuristic().min(Futures.allAsList(candidatesF).get());
-            System.out.println(" Done.");
+            System.out.println(" Done. ");
             return result;
         } catch (InterruptedException e) {
             throw Throwables.propagate(e);
@@ -100,7 +100,7 @@ public class RepeatedHillClimbing<S extends State> {
         return new HeuristicFunction() {
             @Override
             public double h(Object state) {
-                return -stateClass.cast(state).score();
+                return - (stateClass.cast(state).score().doubleValue());
             }
         };
     }

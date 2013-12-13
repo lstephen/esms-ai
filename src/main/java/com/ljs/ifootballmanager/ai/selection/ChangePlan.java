@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -17,7 +18,10 @@ import com.ljs.ifootballmanager.ai.search.PairedAction;
 import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
 import com.ljs.ifootballmanager.ai.search.State;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -31,7 +35,7 @@ public final class ChangePlan implements State, Report {
 
     private final ImmutableSet<Change> changes;
 
-    private ChangePlan(Formation formation, Iterable<Change> cs) {
+    private ChangePlan(Formation formation, Iterable<? extends Change> cs) {
         this.formation = formation;
         this.changes = ImmutableSet.copyOf(cs);
     }
@@ -77,6 +81,15 @@ public final class ChangePlan implements State, Report {
         return ImmutableList.copyOf(cs);
     }
 
+    public Boolean isChangeAt(Integer minute) {
+        for (Change c : changes()) {
+            if (c.getMinute().equals(minute)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void print(PrintWriter w) {
         for (Change c : changes()) {
             c.print(w);
@@ -112,16 +125,28 @@ public final class ChangePlan implements State, Report {
     }
 
     public Boolean isValid() {
+        // Max is 15, but we reserve 6 for injury backups
+        if (changes().size() > 9) {
+            return false;
+        }
 
         if (changes(Substitution.class).size() > 3) {
             return false;
         }
 
+        Set<Integer> minutes = Sets.newHashSet();
+
         for (Change c : changes) {
             if (!c.isValid(this)) {
                 return false;
             }
+            minutes.add(c.getMinute());
         }
+
+        if (minutes.size() != changes.size()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -160,16 +185,59 @@ public final class ChangePlan implements State, Report {
         return f;
     }
 
-    public static ChangePlan select(League league, final Formation f, Iterable<Player> squad) {
+    public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
         return new RepeatedHillClimbing<ChangePlan>(
             ChangePlan.class,
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
-                    return new ChangePlan(f, ImmutableSet.<Change>of());
+                    return randomChangePlan(f, squad);
                 }
             },
             actionsFunction(league, squad))
             .search();
+    }
+
+    private static ChangePlan randomChangePlan(Formation f, Iterable<Player> squad) {
+        Random rng = new Random();
+
+        Set<Change> changes = Sets.newHashSet();
+
+        List<Player> starters = Lists.newArrayList(f.players());
+        List<Player> all = Lists.newArrayList(squad);
+
+        Collections.shuffle(starters);
+        Collections.shuffle(all);
+
+        List<Integer> minutes = Lists.newArrayList();
+        for(int minute = 1; minute < 90; minute++) {
+            minutes.add(minute);
+        }
+
+        Collections.shuffle(minutes);
+
+        for (int i = 0; i < 3; i++) {
+            Player out = starters.get(i);
+            Player in = all.remove(0);
+            while (starters.contains(in)) {
+                in = all.remove(0);
+            }
+            Substitution s = Substitution
+                .builder()
+                .in(in, f.findRole(out))
+                .out(out)
+                .minute(minutes.remove(0))
+                .build();
+
+            changes.add(s);
+        }
+
+        List<Tactic> tactics = Lists.newArrayList(Arrays.asList(Tactic.values()));
+        Collections.shuffle(tactics);
+        changes.add(TacticChange.create(tactics.remove(0), minutes.remove(0)));
+        changes.add(TacticChange.create(tactics.remove(0), minutes.remove(0)));
+        changes.add(TacticChange.create(tactics.remove(0), minutes.remove(0)));
+
+        return new ChangePlan(f, changes);
     }
 
     private static ActionsFunction<ChangePlan> actionsFunction(final League league, final Iterable<Player> available) {
@@ -179,7 +247,7 @@ public final class ChangePlan implements State, Report {
             public Set<Action<ChangePlan>> getActions(ChangePlan cp) {
                 Set<Action<ChangePlan>> actions = Sets.newHashSet();
 
-                ImmutableSet<AddChange> adds = ImmutableSet.copyOf(adds(cp));
+                ImmutableSet<Action<ChangePlan>> adds = ImmutableSet.copyOf(adds(cp));
                 ImmutableSet<RemoveChange> removes = ImmutableSet.copyOf(removes(cp));
 
                 actions.addAll(adds);
@@ -194,6 +262,9 @@ public final class ChangePlan implements State, Report {
 
                 for (Role r : Role.values()) {
                     for (Integer minute = 1; minute <= 90; minute++) {
+                        if (cp.isChangeAt(minute)) {
+                            continue;
+                        }
                         Formation currentFormation = cp.getFormationAt(minute);
                         Integer psConsidered = 0;
                         for (Player in : Player.byRating(r, currentFormation.getTactic()).reverse().sortedCopy(available)) {
@@ -235,11 +306,31 @@ public final class ChangePlan implements State, Report {
                 return removes;
             }
 
-            private Set<AddChange> adds(ChangePlan cp) {
-                Set<AddChange> adds = Sets.newHashSet();
+            private Set<Action<ChangePlan>> adds(ChangePlan cp) {
+                Set<Action<ChangePlan>> adds = Sets.newHashSet();
 
                 for (Substitution s : availableSubstitutions(cp)) {
                     adds.add(new AddChange(s));
+                }
+
+                for (Integer minute = 1; minute < 90; minute++) {
+                    if (cp.isChangeAt(minute)) {
+                        continue;
+                    }
+                    Formation f = cp.getFormationAt(minute);
+                    for (Tactic t : Tactic.values()) {
+                        if (t != f.getTactic()) {
+                            adds.add(new AddChange(TacticChange.create(t, minute)));
+                        }
+                    }
+
+                    for (Player p : f.players()) {
+                        for (Role r : Role.values()) {
+                            if (r != f.findRole(p)) {
+                                adds.add(new AddChange(ChangePosition.create(p, r, minute)));
+                            }
+                        }
+                    }
                 }
 
                 return adds;

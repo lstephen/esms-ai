@@ -1,13 +1,15 @@
 package com.ljs.ifootballmanager.ai.selection;
 
+import com.google.common.base.Function;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
 
 /**
  *
  * @author lstephen
  */
-public class TacticChange {
+public final class TacticChange implements Change {
 
     private final Tactic tactic;
 
@@ -28,6 +30,18 @@ public class TacticChange {
 
     public void print(PrintWriter w) {
         w.format("TACTIC %s IF MIN = %d%n", tactic.getCode(), minute);
+    }
+
+    public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
+        print(w);
+    }
+
+    public Boolean isValid(ChangePlan cp) {
+        return true;
+    }
+
+    public Formation apply(Formation f, Integer minute) {
+        return f.withTactic(tactic);
     }
 
     public static TacticChange create(Tactic t, Integer m) {

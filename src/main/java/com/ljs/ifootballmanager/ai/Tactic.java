@@ -11,7 +11,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(100).ps(50).sh(30).build();
                 case MF:
@@ -31,7 +31,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(125).ps(25).sh(0).build();
                 case MF:
@@ -51,7 +51,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(100).ps(50).sh(50).build();
                 case MF:
@@ -71,7 +71,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(100).ps(50).sh(25).build();
                 case MF:
@@ -91,7 +91,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(110).ps(60).sh(10).build();
                 case MF:
@@ -111,7 +111,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(100).ps(75).sh(30).build();
                 case MF:
@@ -131,7 +131,7 @@ public enum Tactic {
         public Weighting getWeighting(Role r) {
             switch (r) {
                 case GK:
-                    return Weighting.builder().st(1).build();
+                    return Weighting.builder().st(100).build();
                 case DF:
                     return Weighting.builder().tk(100).ps(30).sh(40).build();
                 case MF:

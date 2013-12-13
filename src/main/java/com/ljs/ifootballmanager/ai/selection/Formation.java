@@ -15,6 +15,7 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.search.Action;
 import com.ljs.ifootballmanager.ai.search.ActionsFunction;
@@ -56,6 +57,10 @@ public final class Formation implements State, Report {
         return tactic;
     }
 
+    public Formation withTactic(Tactic tactic) {
+        return new Formation(league, tactic, positions);
+    }
+
     public Player getPenaltyKicker() {
         return Player.byRating(Role.FW, tactic).max(players());
     }
@@ -67,9 +72,15 @@ public final class Formation implements State, Report {
     public Formation move(Role r, Player p) {
         Multimap<Role, Player> f = HashMultimap.create(positions);
 
-        f.remove(findRole(p), p);
+        if (contains(p)) {
+            Player inFormation = findInFormation(p);
 
-        f.put(r, p);
+            f.remove(findRole(inFormation), inFormation);
+
+            f.put(r, inFormation);
+        } else {
+            f.put(r, p);
+        }
 
         return Formation.create(league, tactic, f);
     }
@@ -84,6 +95,18 @@ public final class Formation implements State, Report {
             }
         }
         return players.get(p);
+    }
+
+    private Player findInFormation(Player p) {
+        Role r = findRole(p);
+
+        for (Player inFormation : positions.get(r)) {
+            if (p.equals(inFormation)) {
+                return inFormation;
+            }
+        }
+
+        throw new IllegalStateException();
     }
 
     public boolean contains(Player p) {
@@ -129,12 +152,23 @@ public final class Formation implements State, Report {
         return substitute(s).isValid();
     }
 
-    public Integer score() {
+    public Long score() {
         return score(tactic);
     }
 
-    private Integer score(Tactic tactic) {
-        Integer score = 0;
+    private Long score(Tactic tactic) {
+        Integer tk = skillRating(tactic, Rating.TACKLING);
+        Integer ps = skillRating(tactic, Rating.PASSING);
+        Integer sh = skillRating(tactic, Rating.SHOOTING);
+
+        Integer def = tk;
+
+        Integer att = (ps + ps + sh) / 3;
+
+        return def * att + gkQuality();
+
+        //return scoring(tactic) * defending(tactic);
+        /*Integer score = 0;
         Integer ageScore = 0;
 
         for (Map.Entry<Role, Player> entry : positions.entries()) {
@@ -142,7 +176,58 @@ public final class Formation implements State, Report {
             ageScore += 50 - entry.getValue().getAge();
         }
 
-        return score * 1000 + ageScore;
+        return score * 1000 + ageScore;*/
+    }
+
+    public Long scoring() {
+        return scoring(tactic);
+    }
+
+    private Long scoring(Tactic tactic) {
+        Long shooting = skillRating(tactic, Rating.SHOOTING);
+        Long passing = skillRating(tactic, Rating.PASSING);
+
+        // TODO: include aggression
+
+        Long shotChance = (shooting + 2 * passing) / 3;
+        Long preventTackleChance = (shooting + 2 * passing) / 3;
+
+        return (long) (shotChance * shotChance * (.36 * preventTackleChance) * (.1 * shotQuality(tactic)));
+    }
+
+    public Long defending() {
+        return defending(tactic);
+    }
+
+    public Long defending(Tactic tactic) {
+        Long tackling = skillRating(tactic, Rating.TACKLING);
+
+        return (long) (tackling * tackling * (.36 * tackling) * (.1 * gkQuality(tactic)));
+    }
+
+    private Long shotQuality(Tactic t) {
+        Long score = 0L;
+
+        Long shooting = skillRating(t, Rating.SHOOTING);
+
+        for (Player p : players()) {
+            Double chance = (double) p.getSkillRating(findRole(p), t, Rating.SHOOTING) / shooting;
+            score += Math.round(chance * p.getSkill(Rating.SHOOTING));
+        }
+
+        return Math.round((double) score / 100.0);
+    }
+
+    private Integer gkQuality() {
+        return positions.get(Role.GK).iterator().next().getSkill(Rating.STOPPING);
+    }
+
+    public Long skillRating(Tactic t, Rating r) {
+        Long score = 0L;
+        for (Map.Entry<Role, Player> entry : positions.entries()) {
+            score += entry.getValue().getSkillRating(entry.getKey(), t, r);
+        }
+        return Math.round((double) score / 11.0);
     }
 
     public Boolean isValid() {
@@ -177,6 +262,45 @@ public final class Formation implements State, Report {
     public void print(PrintWriter w) {
         w.format("%s%n", getTactic());
         printPlayers(w);
+
+        Tactic[] tactics = Tactic.values();
+
+        w.format("%10s ", "");
+        for (Tactic t : tactics) {
+            w.format("%7s ", t.getCode());
+        }
+        w.println();
+
+        for (Rating rt : Rating.values()) {
+            w.format("%10s ", rt);
+            for (Tactic t : tactics) {
+                w.format("%7d ", skillRating(t, rt));
+            }
+            w.println();
+        }
+
+        w.format("%10s ", "SH Qual");
+        for (Tactic t : tactics) {
+            w.format("%7d ", shotQuality(t));
+        }
+        w.println();
+
+        w.format("%10s ", "GK Qual");
+        for (Tactic t : tactics) {
+            w.format("%7d ", gkQuality(t));
+        }
+        w.println();
+
+        w.format("%10s ", "Scoring");
+        for (Tactic t : tactics) {
+            w.format("%7d ", scoring(t));
+        }
+        w.println();
+        w.format("%10s ", "Defending");
+        for (Tactic t : tactics) {
+            w.format("%7d ", defending(t));
+        }
+        w.println();
     }
 
     public void printPlayers(PrintWriter w) {
@@ -209,8 +333,8 @@ public final class Formation implements State, Report {
     private static Ordering<Formation> byScore() {
         return Ordering
             .natural()
-            .onResultOf(new Function<Formation, Integer>() {
-                public Integer apply(Formation f) {
+            .onResultOf(new Function<Formation, Long>() {
+                public Long apply(Formation f) {
                     return f.score();
                 }
             });

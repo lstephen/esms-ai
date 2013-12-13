@@ -7,6 +7,7 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import com.ljs.ifootballmanager.ai.value.Evaluator;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
@@ -42,7 +43,7 @@ public final class Player {
     }
 
     public Player afterMinutes(Integer minutes) {
-        return atPercent(100 - minutes / 3);
+        return atPercent((int) (100.0 * Math.pow(0.9969, minutes)));
     }
 
     public Optional<Player> forSelection() {
@@ -109,6 +110,14 @@ public final class Player {
 
     public Integer getRating(Role r, Tactic t) {
         return evaluate(r, t).getRating();
+    }
+
+    public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {
+        return ratings.getSkillRating(rl, tc, rt);
+    }
+
+    public Integer getSkill(Rating rt) {
+        return ratings.getSkill(rt);
     }
 
     @Override
