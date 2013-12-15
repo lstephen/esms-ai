@@ -152,82 +152,85 @@ public final class Formation implements State, Report {
         return substitute(s).isValid();
     }
 
-    public Long score() {
+    public Double score() {
         return score(tactic);
     }
 
-    private Long score(Tactic tactic) {
-        Integer tk = skillRating(tactic, Rating.TACKLING);
-        Integer ps = skillRating(tactic, Rating.PASSING);
-        Integer sh = skillRating(tactic, Rating.SHOOTING);
+    private Double score(Tactic tactic) {
+        Double a = scoring(tactic).doubleValue() + shotQuality(tactic) / 10;
+        Double d = defending(tactic).doubleValue() + gkQuality() / 10;
 
-        Integer def = tk;
+        Double avg = 900.0; //(a + d) / 2;
 
-        Integer att = (ps + ps + sh) / 3;
+        return a / (avg + 1) - avg / (d + 1);
 
-        return def * att + gkQuality();
+        /*return skillRating(tactic, Rating.STOPPING)
+            + 3 * skillRating(tactic, Rating.TACKLING)
+            + 2 * skillRating(tactic, Rating.PASSING)
+            + 2 * skillRating(tactic, Rating.SHOOTING);*/
 
-        //return scoring(tactic) * defending(tactic);
+        /*Double score = 0.0;
+        for (Rating r : Rating.values()) {
+            score += Math.pow(skillRating(tactic, r).doubleValue(), 0.5);
+        }
+        return score.intValue();*/
+
+
         /*Integer score = 0;
-        Integer ageScore = 0;
+        Integer age = 0;
 
         for (Map.Entry<Role, Player> entry : positions.entries()) {
             score += entry.getValue().evaluate(entry.getKey(), tactic).getRating();
-            ageScore += 50 - entry.getValue().getAge();
+            age += entry.getValue().getAge();
         }
 
-        return score * 1000 + ageScore;*/
+        return score * 1000 - age;*/
     }
 
-    public Long scoring() {
+    public Integer scoring() {
         return scoring(tactic);
     }
 
-    private Long scoring(Tactic tactic) {
-        Long shooting = skillRating(tactic, Rating.SHOOTING);
-        Long passing = skillRating(tactic, Rating.PASSING);
+    private Integer scoring(Tactic tactic) {
+        Integer shooting = skillRating(tactic, Rating.SHOOTING);
+        Integer passing = skillRating(tactic, Rating.PASSING);
 
-        // TODO: include aggression
-
-        Long shotChance = (shooting + 2 * passing) / 3;
-        Long preventTackleChance = (shooting + 2 * passing) / 3;
-
-        return (long) (shotChance * shotChance * (.36 * preventTackleChance) * (.1 * shotQuality(tactic)));
+        return (passing + passing + shooting) / 3;
     }
 
-    public Long defending() {
+    public Integer defending() {
         return defending(tactic);
     }
 
-    public Long defending(Tactic tactic) {
-        Long tackling = skillRating(tactic, Rating.TACKLING);
+    public Integer defending(Tactic tactic) {
+        Integer tackling = skillRating(tactic, Rating.TACKLING);
 
-        return (long) (tackling * tackling * (.36 * tackling) * (.1 * gkQuality(tactic)));
+        return tackling;
     }
 
-    private Long shotQuality(Tactic t) {
+    private Integer shotQuality(Tactic t) {
         Long score = 0L;
 
-        Long shooting = skillRating(t, Rating.SHOOTING);
+        Integer shooting = skillRating(t, Rating.SHOOTING);
 
         for (Player p : players()) {
             Double chance = (double) p.getSkillRating(findRole(p), t, Rating.SHOOTING) / shooting;
             score += Math.round(chance * p.getSkill(Rating.SHOOTING));
         }
 
-        return Math.round((double) score / 100.0);
+        return (int) Math.round((double) score / 100.0);
     }
 
     private Integer gkQuality() {
-        return positions.get(Role.GK).iterator().next().getSkill(Rating.STOPPING);
+        return positions.get(Role.GK).iterator().next().getSkill(Rating.STOPPING) / 10;
     }
 
-    public Long skillRating(Tactic t, Rating r) {
-        Long score = 0L;
+    public Integer skillRating(Tactic t, Rating r) {
+        Integer score = 0;
         for (Map.Entry<Role, Player> entry : positions.entries()) {
             score += entry.getValue().getSkillRating(entry.getKey(), t, r);
         }
-        return Math.round((double) score / 11.0);
+        return (int) Math.round((double) score / 10.0);
     }
 
     public Boolean isValid() {
@@ -287,7 +290,7 @@ public final class Formation implements State, Report {
 
         w.format("%10s ", "GK Qual");
         for (Tactic t : tactics) {
-            w.format("%7d ", gkQuality(t));
+            w.format("%7d ", gkQuality());
         }
         w.println();
 
@@ -296,6 +299,7 @@ public final class Formation implements State, Report {
             w.format("%7d ", scoring(t));
         }
         w.println();
+
         w.format("%10s ", "Defending");
         for (Tactic t : tactics) {
             w.format("%7d ", defending(t));
@@ -333,8 +337,8 @@ public final class Formation implements State, Report {
     private static Ordering<Formation> byScore() {
         return Ordering
             .natural()
-            .onResultOf(new Function<Formation, Long>() {
-                public Long apply(Formation f) {
+            .onResultOf(new Function<Formation, Double>() {
+                public Double apply(Formation f) {
                     return f.score();
                 }
             });

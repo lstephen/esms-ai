@@ -21,14 +21,12 @@ public final class Ratings {
 
     public Integer overall(Weighting w) {
         Integer overall = 0;
-        Integer sum = 0;
 
         for (Rating r : ratings.keySet()) {
             overall += w.get(r) * ratings.get(r);
-            sum += w.get(r);
         }
 
-        return 50 * overall / sum;
+        return 100 * overall / w.sum();
     }
 
     public Ratings atPercent(Integer percent) {
@@ -43,6 +41,10 @@ public final class Ratings {
 
     public Integer getSkill(Rating rt) {
         return ratings.get(rt) * 100;
+    }
+
+    public Integer getWeightedSkill(Weighting w, Rating rt) {
+        return w.get(rt) * getSkill(rt);
     }
 
     public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {

@@ -22,6 +22,14 @@ public final class Weighting {
             : 0;
     }
 
+    public Integer sum() {
+        Integer sum = 0;
+        for (Integer weight : weights.values()) {
+            sum += weight;
+        }
+        return sum;
+    }
+
     public static Builder builder() {
         return Builder.create();
     }
