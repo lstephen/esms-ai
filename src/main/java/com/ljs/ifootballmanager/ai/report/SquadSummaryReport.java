@@ -5,7 +5,7 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
-import com.ljs.ifootballmanager.ai.selection.Formation;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import java.io.PrintWriter;
 
 /**

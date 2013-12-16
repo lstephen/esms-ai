@@ -1,6 +1,11 @@
 package com.ljs.ifootballmanager.ai.league;
 
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.CountingFormationValidator;
+import com.ljs.ifootballmanager.ai.formation.FormationValidator;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Weightings;
+import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
 import java.util.Collections;
 
 /**
@@ -17,34 +22,30 @@ public class IFootballManager implements League {
         return "liv";
     }
 
-    public Integer getMinimum(Role r) {
-        switch (r) {
-            case GK: return 1;
-            case DF: return 3;
-            case DM: return 0;
-            case MF: return 2;
-            case AM: return 0;
-            case FW: return 0;
-        }
+    public FormationValidator getFormationValidator() {
+        return CountingFormationValidator
+            .builder()
+            .exactly(1, Role.GK)
+            .range(3, 6, Role.DF)
+            .min(2, Role.MF)
+            .max(3, Role.DM)
+            .max(3, Role.AM)
+            .max(5, Role.DM, Role.MF, Role.AM)
+            .max(5, Role.FW)
+            .build();
 
-        throw new IllegalStateException();
-    }
-
-    public Integer getMaximum(Role r) {
-        switch (r) {
-            case GK: return 1;
-            case DF: return 6;
-            case DM: return 3;
-            case MF: return 5;
-            case AM: return 3;
-            case FW: return 5;
-        }
-
-        throw new IllegalStateException();
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
         return Collections.emptySet();
+    }
+
+    public Weightings getWeightings() {
+        return WeightingsFactory.ssl();
+    }
+
+    public Boolean isReserveEligible(Player p) {
+        return Boolean.FALSE;
     }
 
     public static IFootballManager get() {

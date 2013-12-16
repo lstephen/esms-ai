@@ -1,14 +1,18 @@
 package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicates;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -102,6 +106,44 @@ public final class ChangePlan implements State, Report {
         }
     }
 
+    public Tactic getBestScoringTactic() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Tactic, Integer>() {
+                public Integer apply(Tactic t) {
+                    return scoring(t);
+                }
+            })
+            .max(Arrays.asList(Tactic.values()));
+    }
+
+    public Tactic getBestDefensiveTactic() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Tactic, Integer>() {
+                public Integer apply(Tactic t) {
+                    return defending(t);
+                }
+            })
+            .max(Arrays.asList(Tactic.values()));
+    }
+
+    private Integer scoring(Tactic t) {
+        Integer score = 0;
+        for (Integer minute = 1; minute <= 90; minute++) {
+            score += (getFormationAt(minute).scoring(t) * minute / 90);
+        }
+        return score;
+    }
+
+    private Integer defending(Tactic t) {
+        Integer score = 0;
+        for (Integer minute = 1; minute <= 90; minute++) {
+            score += (getFormationAt(minute).defending(t) * minute / 90);
+        }
+        return score;
+    }
+
     public ImmutableSet<Player> getSubstitutes() {
         Set<Player> subs = Sets.newHashSet();
 
@@ -125,8 +167,8 @@ public final class ChangePlan implements State, Report {
     }
 
     public Boolean isValid() {
-        // Max is 15, but we reserve 6 for injury backups
-        if (changes().size() > 9) {
+        // Max is 15, but we reserve 6 for injury backups, and 3 for score based tactics
+        if (changes().size() > 6) {
             return false;
         }
 
@@ -150,23 +192,18 @@ public final class ChangePlan implements State, Report {
         return true;
     }
 
-    public Integer score() {
-        Integer score = 0;
+    public Double score() {
+        Double score = 0.0;
 
         for (Integer minute = 0; minute <= 90; minute++) {
-            score += score(minute);
+            score += (score(minute) * minute / 90);
         }
 
         return score - changes.size();
     }
 
-    public Integer score(Integer minute) {
-        Integer score = 0;
-        Formation current = getFormationAt(minute);
-        for (Player p : current.players()) {
-            score += p.evaluate(current.findRole(p), current.getTactic()).getRating();
-        }
-        return score;
+    public Double score(Integer minute) {
+        return getFormationAt(minute).score();
     }
 
     public Formation getFormationAt(Integer minute) {
@@ -252,7 +289,8 @@ public final class ChangePlan implements State, Report {
 
                 actions.addAll(adds);
                 actions.addAll(removes);
-                actions.addAll(PairedAction.merged(removes, adds));
+
+                actions.addAll(PairedAction.merged(removes, Iterables.filter(adds, Predicates.instanceOf(Substitution.class))));
 
                 return actions;
             }
@@ -261,23 +299,23 @@ public final class ChangePlan implements State, Report {
                 Set<Substitution> ss = Sets.newHashSet();
 
                 for (Role r : Role.values()) {
+                    if (r == Role.GK) {
+                        continue;
+                    }
                     for (Integer minute = 1; minute <= 90; minute++) {
                         if (cp.isChangeAt(minute)) {
                             continue;
                         }
                         Formation currentFormation = cp.getFormationAt(minute);
-                        Integer psConsidered = 0;
-                        for (Player in : Player.byRating(r, currentFormation.getTactic()).reverse().sortedCopy(available)) {
+                        for (Player in : available) {
                             if (cp.formation.contains(in)) {
                                 continue;
                             }
 
                             for (Player out : currentFormation.players()) {
-                                if (out.evaluate(r, currentFormation.getTactic()).getRating()
-                                    > in.evaluate(r, currentFormation.getTactic()).getRating()) {
+                                if (currentFormation.findRole(out) == Role.GK) {
                                     continue;
                                 }
-
                                 Substitution s = Substitution
                                     .builder()
                                     .in(in, r)
@@ -286,10 +324,6 @@ public final class ChangePlan implements State, Report {
                                     .build();
 
                                 ss.add(s);
-                            }
-                            psConsidered++;
-                            if (psConsidered >= 3) {
-                                break;
                             }
                         }
                     }
@@ -313,7 +347,7 @@ public final class ChangePlan implements State, Report {
                     adds.add(new AddChange(s));
                 }
 
-                for (Integer minute = 1; minute < 90; minute++) {
+                for (Integer minute = 1; minute <= 90; minute++) {
                     if (cp.isChangeAt(minute)) {
                         continue;
                     }

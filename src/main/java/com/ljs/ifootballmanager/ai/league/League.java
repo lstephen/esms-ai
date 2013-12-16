@@ -1,6 +1,8 @@
 package com.ljs.ifootballmanager.ai.league;
 
-import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.FormationValidator;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Weightings;
 
 /**
  *
@@ -10,9 +12,12 @@ public interface League {
 
     String getTeam();
 
-    Integer getMaximum(Role r);
-    Integer getMinimum(Role r);
+    FormationValidator getFormationValidator();
 
     Iterable<String> getAdditionalPlayerFiles();
+
+    Weightings getWeightings();
+
+    Boolean isReserveEligible(Player p);
 
 }

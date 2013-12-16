@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.selection;
 
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.google.common.base.Function;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.player.Player;

@@ -30,6 +30,10 @@ public final class Weighting {
         return sum;
     }
 
+    public static Weighting create(Integer tk, Integer ps, Integer sh) {
+        return builder().tk(tk).ps(ps).sh(sh).build();
+    }
+
     public static Builder builder() {
         return Builder.create();
     }

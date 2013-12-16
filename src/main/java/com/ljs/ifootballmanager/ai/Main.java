@@ -8,9 +8,10 @@ import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
+import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
-import com.ljs.ifootballmanager.ai.league.Pbemff;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -19,7 +20,6 @@ import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
-import com.ljs.ifootballmanager.ai.selection.Formation;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +37,7 @@ public class Main {
 
     public void run() throws IOException {
         run(IFootballManager.get());
-        run(Pbemff.get());
+        run(Jafl.get());
     }
 
     private void run(League league) throws IOException {
@@ -60,18 +60,18 @@ public class Main {
         System.out.println("Running for: " + league.getTeam());
         CharSource team =
             Resources
-                .asByteSource(Main.class.getResource("/" + league.getTeam() + ".txt"))
+                .asByteSource(Main.class.getResource("/" + league.getClass().getSimpleName() + "/" + league.getTeam() + ".txt"))
                 .asCharSource(Charsets.ISO_8859_1);
 
         CharStreams.copy(team, Files.asCharSink(new File("c:/esms", league.getTeam() + ".txt"), Charsets.ISO_8859_1));
 
-        Squad squad = Squad.load(team);
+        Squad squad = Squad.load(league, team);
 
         Formation firstXI = Formation.select(league, squad.players());
 
         w.println("** Squad **");
-        print(w, SquadReport.create(Tactic.NORMAL, squad.players()));
-        print(w, SquadReport.create(firstXI.getTactic(), squad.players()));
+        print(w, SquadReport.create(league, Tactic.NORMAL, squad.players()));
+        print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()));
 
         print(w, "1st XI", firstXI);
 
@@ -81,7 +81,7 @@ public class Main {
                 ImmutableSet.copyOf(firstXI.players())));
 
         Formation secondXI = null;
-        if (remaining.size() > 11) {
+        if (remaining.size() >= 11) {
             secondXI = Formation.select(league, remaining);
             print(w, "2nd XI", secondXI);
             remaining = ImmutableSet.copyOf(
@@ -89,11 +89,11 @@ public class Main {
                     remaining, ImmutableSet.copyOf(secondXI.players())));
         }
 
-        print(w, "1st XI", SquadReport.create(Tactic.NORMAL, firstXI.players()).sortByValue());
+        print(w, "1st XI", SquadReport.create(league, Tactic.NORMAL, firstXI.players()).sortByValue());
         if (secondXI != null) {
-            print(w, "Second XI", SquadReport.create(Tactic.NORMAL, secondXI.players()).sortByValue());
+            print(w, "Second XI", SquadReport.create(league, Tactic.NORMAL, secondXI.players()).sortByValue());
         }
-        print(w, "Remaining", SquadReport.create(Tactic.NORMAL, remaining).sortByValue());
+        print(w, "Remaining", SquadReport.create(league, Tactic.NORMAL, remaining).sortByValue());
 
         Formation formation = Formation.select(league, squad.forSelection());
         ChangePlan cp =
@@ -101,20 +101,27 @@ public class Main {
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), squad.forSelection());
 
-        print(w, "Selection", SquadReport.create(formation.getTactic(), squad.forSelection()));
+        print(w, "Selection", SquadReport.create(league, formation.getTactic(), squad.forSelection()));
         print(w, formation, bench, cp);
+
+        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
+        w.format("TACTIC %s IF SCORE < 0%n", cp.getBestScoringTactic().getCode());
+        w.format("TACTIC %s IF SCORE > 0%n", cp.getBestDefensiveTactic().getCode());
+        w.println();
 
         TeamSheet.create(league, formation, cp, bench).print(sheet);
 
-
-        print(w, "Value", SquadReport.create(Tactic.NORMAL, squad.players()).sortByValue());
+        print(w, "Value", SquadReport.create(league, Tactic.NORMAL, squad.players()).sortByValue());
 
         print(w, SquadSummaryReport.create(squad, firstXI, secondXI));
 
         for (String f : league.getAdditionalPlayerFiles()) {
-            Squad additional = Squad.load(Resources.asCharSource(getClass().getResource(f), Charsets.ISO_8859_1));
+            String resource = "/" + league.getClass().getSimpleName() + f;
 
-            print(w, f, SquadReport.create(Tactic.NORMAL, additional.players()).sortByValue());
+            System.out.println("Loading:" + resource);
+            Squad additional = Squad.load(league, Resources.asCharSource(getClass().getResource(resource), Charsets.ISO_8859_1));
+
+            print(w, f, SquadReport.create(league, Tactic.NORMAL, additional.players()).sortByValue());
         }
     }
 

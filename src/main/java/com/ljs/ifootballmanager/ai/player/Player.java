@@ -32,6 +32,8 @@ public final class Player {
 
     private Boolean suspended = Boolean.FALSE;
 
+    private String comment = "";
+
     private Player(String name, Integer age, Ratings ratings) {
         this.name = name;
         this.age = age;
@@ -81,9 +83,12 @@ public final class Player {
         this.suspended = Boolean.TRUE;
     }
 
-    // TODO: Move this logic in to League. These values are hardcoded to PBEMFF
-    public boolean isReserveElgible() {
-        return getAge() <= 21 && ratings.getMaximumSkill() < (isGk() ? 28 : 24);
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public boolean isGk() {
@@ -120,7 +125,10 @@ public final class Player {
         return ratings.getSkill(rt);
     }
 
-    @Override
+    public Integer getMaximumSkill() {
+        return ratings.getMaximumSkill();
+    }
+
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -139,7 +147,7 @@ public final class Player {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return name.hashCode();
     }
 
     public static Player create(String name, Integer age, Ratings ratings) {

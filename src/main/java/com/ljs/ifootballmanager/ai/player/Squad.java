@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import com.google.common.io.CharSource;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import java.io.IOException;
 import java.util.Set;
@@ -59,11 +60,11 @@ public final class Squad {
         return count;
     }
 
-    public static Squad load(CharSource source) throws IOException {
+    public static Squad load(League league, CharSource source) throws IOException {
         Set<Player> ps = Sets.newHashSet();
 
         for (String line : source.readLines()) {
-            if (Strings.isNullOrEmpty(line) || line.startsWith("Name") || line.startsWith("----")) {
+            if (Strings.isNullOrEmpty(line) || line.startsWith("Name") || line.startsWith("----") || line.startsWith("#")) {
                 continue;
             }
 
@@ -74,6 +75,7 @@ public final class Squad {
 
             Ratings ratings = Ratings
                 .builder()
+                .league(league)
                 .stopping(Integer.parseInt(split[3]))
                 .tackling(Integer.parseInt(split[4]))
                 .passing(Integer.parseInt(split[5]))
@@ -82,16 +84,18 @@ public final class Squad {
 
             Player p = Player.create(name, age, ratings);
 
-            if (!split[24].equals("0")) {
+            if (split.length > 24 && !split[24].equals("0")) {
                 p.injured();
             }
-            if (!split[25].equals("0")) {
+            if (split.length > 25 && !split[25].equals("0")) {
                 p.suspended();
             }
 
             if (split.length > 26) {
                 p.setFitness(Integer.parseInt(split[26]));
             }
+
+            p.setComment(StringUtils.substringAfter(line, "#"));
 
             ps.add(p);
         }

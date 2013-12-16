@@ -3,11 +3,11 @@ package com.ljs.ifootballmanager.ai.report;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
-import com.ljs.ifootballmanager.ai.selection.Formation;
 import java.io.PrintWriter;
 
 /**
@@ -56,6 +56,10 @@ public class TeamSheet implements Report {
         w.println();
         bench.printInjuryTactics(w, getPlayerIndex());
         changePlan.print(w, getPlayerIndex());
+
+        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
+        w.format("TACTIC %s IF SCORE < 0%n", changePlan.getBestScoringTactic().getCode());
+        w.format("TACTIC %s IF SCORE > 0%n", changePlan.getBestDefensiveTactic().getCode());
     }
 
 

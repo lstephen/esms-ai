@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.League;
 import java.util.Map;
 
 /**
@@ -13,10 +14,17 @@ import java.util.Map;
  */
 public final class Ratings {
 
+    private final League league;
+
     private final ImmutableMap<Rating, Integer> ratings;
 
     private Ratings(Builder builder) {
+        this.league = builder.league;
         ratings = ImmutableMap.copyOf(builder.ratings);
+    }
+
+    public Integer overall(Role r, Tactic t) {
+        return overall(league.getWeightings().get(r, t));
     }
 
     public Integer overall(Weighting w) {
@@ -26,11 +34,12 @@ public final class Ratings {
             overall += w.get(r) * ratings.get(r);
         }
 
-        return 100 * overall / w.sum();
+        return overall;
     }
 
     public Ratings atPercent(Integer percent) {
         Builder builder = Builder.create();
+        builder.league(league);
         
         for (Rating r : ratings.keySet()) {
             builder.ratings.put(r, (ratings.get(r) * percent) / 100);
@@ -48,7 +57,7 @@ public final class Ratings {
     }
 
     public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {
-        return tc.getWeighting(rl).get(rt) * ratings.get(rt);
+        return league.getWeightings().get(rl, tc).get(rt) * ratings.get(rt);
     }
 
     public Integer getMaximumSkill() {
@@ -65,9 +74,16 @@ public final class Ratings {
 
     public static final class Builder {
 
+        private League league;
+
         private final Map<Rating, Integer> ratings = Maps.newHashMap();
 
         private Builder() { }
+
+        public Builder league(League league) {
+            this.league = league;
+            return this;
+        }
 
         private Builder rating(Rating r, Integer v) {
             ratings.put(r, v);

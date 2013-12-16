@@ -1,9 +1,8 @@
-package com.ljs.ifootballmanager.ai.selection;
+package com.ljs.ifootballmanager.ai.formation;
 
 import com.google.common.base.Function;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -22,6 +21,7 @@ import com.ljs.ifootballmanager.ai.search.ActionsFunction;
 import com.ljs.ifootballmanager.ai.search.PairedAction;
 import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
 import com.ljs.ifootballmanager.ai.search.State;
+import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +37,7 @@ public final class Formation implements State, Report {
 
     private final League league;
 
-    private final ImmutableMultimap<Role, Player> positions;
+    private final Multimap<Role, Player> positions;
 
     private final Map<Player, Role> players = Maps.newHashMap();
 
@@ -46,7 +46,7 @@ public final class Formation implements State, Report {
     private Formation(League league, Tactic tactic, Multimap<Role, Player> in) {
         this.league = league;
         this.tactic = tactic;
-        this.positions = ImmutableMultimap.copyOf(in);
+        this.positions = in;
     }
 
     public League getLeague() {
@@ -66,7 +66,7 @@ public final class Formation implements State, Report {
     }
 
     public ImmutableSet<Role> getRoles() {
-        return positions.keySet();
+        return ImmutableSet.copyOf(positions.keySet());
     }
 
     public Formation move(Role r, Player p) {
@@ -129,6 +129,10 @@ public final class Formation implements State, Report {
         return ImmutableList.copyOf(players);
     }
 
+    private Iterable<Player> unsortedPlayers() {
+        return positions.values();
+    }
+
     private Formation substitute(Substitution s) {
         return substitute(s.getIn(), s.getRole(), s.getOut());
     }
@@ -157,41 +161,43 @@ public final class Formation implements State, Report {
     }
 
     private Double score(Tactic tactic) {
-        Double a = scoring(tactic).doubleValue() + shotQuality(tactic) / 10;
-        Double d = defending(tactic).doubleValue() + gkQuality() / 10;
+        Double a = scoring(tactic).doubleValue();
+        Double d = defending(tactic).doubleValue();
 
-        Double avg = 900.0; //(a + d) / 2;
+        Double avg = (a + d) / 2.0;
 
-        return a / (avg + 1) - avg / (d + 1);
+        Double aterm = a / (avg + 1);
+        Double dterm = avg / (d + 1);
 
-        /*return skillRating(tactic, Rating.STOPPING)
-            + 3 * skillRating(tactic, Rating.TACKLING)
-            + 2 * skillRating(tactic, Rating.PASSING)
-            + 2 * skillRating(tactic, Rating.SHOOTING);*/
-
-        /*Double score = 0.0;
-        for (Rating r : Rating.values()) {
-            score += Math.pow(skillRating(tactic, r).doubleValue(), 0.5);
-        }
-        return score.intValue();*/
-
-
-        /*Integer score = 0;
-        Integer age = 0;
-
-        for (Map.Entry<Role, Player> entry : positions.entries()) {
-            score += entry.getValue().evaluate(entry.getKey(), tactic).getRating();
-            age += entry.getValue().getAge();
+        Integer ageScore = 0;
+        for (Player p : unsortedPlayers()) {
+            ageScore += p.getAge();
         }
 
-        return score * 1000 - age;*/
+        Double pct = 1 + aterm - dterm;
+
+        return ((a + d) * pct + gkQuality() + shotQuality(tactic)) / 2 - ((double) ageScore / 1000.0);
+    }
+
+    /**
+     * Like this formula, but can't get it to prioritize total value as well as this value
+     * @param tactic
+     * @param oppScoring
+     * @param oppDefending
+     * @return
+     */
+    private Double score(Tactic tactic, Double oppScoring, Double oppDefending) {
+        Double a = scoring(tactic).doubleValue();
+        Double d = defending(tactic).doubleValue();
+
+        return a / (oppDefending + 1) - oppScoring / (d + 1);
     }
 
     public Integer scoring() {
         return scoring(tactic);
     }
 
-    private Integer scoring(Tactic tactic) {
+    public Integer scoring(Tactic tactic) {
         Integer shooting = skillRating(tactic, Rating.SHOOTING);
         Integer passing = skillRating(tactic, Rating.PASSING);
 
@@ -213,12 +219,15 @@ public final class Formation implements State, Report {
 
         Integer shooting = skillRating(t, Rating.SHOOTING);
 
-        for (Player p : players()) {
+        for (Player p : unsortedPlayers()) {
+            if (findRole(p) == Role.GK) {
+                continue;
+            }
             Double chance = (double) p.getSkillRating(findRole(p), t, Rating.SHOOTING) / shooting;
-            score += Math.round(chance * p.getSkill(Rating.SHOOTING));
+            score += Math.round(chance * p.getSkill(Rating.SHOOTING) / 10);
         }
 
-        return (int) Math.round((double) score / 100.0);
+        return (int) Math.round((double) score) / 10;
     }
 
     private Integer gkQuality() {
@@ -240,26 +249,20 @@ public final class Formation implements State, Report {
         if (ImmutableSet.copyOf(positions.values()).size() != 11) {
             return false;
         }
-        for (Role r : Role.values()) {
-            if (count(r) < league.getMinimum(r)) {
-                return false;
-            }
 
-            if (count(r) > league.getMaximum(r)) {
-                return false;
-            }
-        }
-
-        if (count(Role.DM) + count(Role.MF) + count(Role.AM)
-            > league.getMaximum(Role.MF)) {
-            return false;
-        }
-
-        return Boolean.TRUE;
+        return league.getFormationValidator().isValid(this);
     }
 
-    private Integer count(Role r) {
+    public Integer count(Role r) {
         return positions.get(r).size();
+    }
+
+    public Integer count(Iterable<Role> rs) {
+        Integer count = 0;
+        for (Role r : rs) {
+            count += count(r);
+        }
+        return count;
     }
 
     public void print(PrintWriter w) {
@@ -303,6 +306,12 @@ public final class Formation implements State, Report {
         w.format("%10s ", "Defending");
         for (Tactic t : tactics) {
             w.format("%7d ", defending(t));
+        }
+        w.println();
+
+        w.format("%10s ", "Overall");
+        for (Tactic t : tactics) {
+            w.format("%7d ", score(t).intValue());
         }
         w.println();
     }
@@ -375,7 +384,7 @@ public final class Formation implements State, Report {
             private ImmutableSet<Move> moves(Formation f) {
                 Set<Move> moves = Sets.newHashSet();
 
-                for (Player p : f.players()) {
+                for (Player p : f.unsortedPlayers()) {
                     Role current = f.findRole(p);
 
                     for (Role r : Role.values()) {
@@ -392,7 +401,7 @@ public final class Formation implements State, Report {
                 Set<Substitute> actions = Sets.newHashSet();
                 for (Player in : available) {
                     if (!f.contains(in)) {
-                        for (Player out : f.players()) {
+                        for (Player out : f.unsortedPlayers()) {
                             for (Role r : Role.values()) {
                                 actions.add(new Substitute(in, r, out));
                             }
@@ -416,7 +425,8 @@ public final class Formation implements State, Report {
         }
 
         public Formation apply(Formation f) {
-            return f.move(role, player);
+            Formation next = f.move(role, player);
+            return next;
         }
     }
 
@@ -434,7 +444,8 @@ public final class Formation implements State, Report {
         }
 
         public Formation apply(Formation f) {
-            return f.substitute(in, r, out);
+            Formation next = f.substitute(in, r, out);
+            return next;
         }
     }
 

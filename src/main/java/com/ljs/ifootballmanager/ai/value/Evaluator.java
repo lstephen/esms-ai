@@ -17,7 +17,7 @@ public final class Evaluator {
     }
 
     public RatingInRole evaluate(Role r, Tactic t) {
-        return RatingInRole.create(r, ratings.overall(t.getWeighting(r)));
+        return RatingInRole.create(r, ratings.overall(r, t));
     }
 
     public static Evaluator create(Ratings rs) {

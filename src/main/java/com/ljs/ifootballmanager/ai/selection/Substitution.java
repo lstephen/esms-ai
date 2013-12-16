@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.selection;
 
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.ljs.ifootballmanager.ai.Role;
@@ -25,11 +26,11 @@ public final class Substitution implements Change {
     }
 
     public void print(PrintWriter w) {
-        w.format("SUB %s %s %s IF MIN = %d%n", in.getName(), out.getName(), role, minute);
+        w.format("SUB %s %s %s IF MIN = %d%n", out.getName(), in.getName(), role, minute);
     }
 
     public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
-        w.format("SUB %s %s %s IF MIN = %d%n", playerIdx.apply(in), playerIdx.apply(out), role, minute);
+        w.format("SUB %s %s %s IF MIN = %d%n", playerIdx.apply(out), playerIdx.apply(in), role, minute);
     }
 
     public ImmutableSet<Player> getPlayersInvolved() {
