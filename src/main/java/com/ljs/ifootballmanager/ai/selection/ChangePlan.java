@@ -10,17 +10,17 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
+import com.ljs.ai.search.Action;
+import com.ljs.ai.search.ActionsFunction;
+import com.ljs.ai.search.RepeatedHillClimbing;
+import com.ljs.ai.search.SequencedAction;
+import com.ljs.ai.search.State;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
-import com.ljs.ifootballmanager.ai.search.Action;
-import com.ljs.ifootballmanager.ai.search.ActionsFunction;
-import com.ljs.ifootballmanager.ai.search.PairedAction;
-import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
-import com.ljs.ifootballmanager.ai.search.State;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,7 +57,7 @@ public final class ChangePlan implements State, Report {
             }
         }
 
-        return ImmutableList.copyOf(cs);
+        return ImmutableList.copyOf(Change.Meta.byMinute().immutableSortedCopy(cs));
     }
 
     public ImmutableList<Change> changesMadeAt(Integer minute) {
@@ -299,7 +299,9 @@ public final class ChangePlan implements State, Report {
                 actions.addAll(adds);
                 actions.addAll(removes);
 
-                actions.addAll(PairedAction.merged(removes, Iterables.filter(adds, Predicates.instanceOf(Substitution.class))));
+                actions.addAll(SequencedAction.merged(removes, Iterables.filter(adds, Predicates.instanceOf(Substitution.class))));
+
+                actions.addAll(combines(cp));
 
                 return actions;
             }
@@ -380,6 +382,47 @@ public final class ChangePlan implements State, Report {
                 }
 
                 return adds;
+            }
+
+            private Set<Action<ChangePlan>> combines(ChangePlan cp) {
+                Set<Action<ChangePlan>> actions = Sets.newHashSet();
+
+                ImmutableList<Substitution> subs = ImmutableList.copyOf(cp.changes(Substitution.class));
+
+                for (int i = 0; i < subs.size(); i++) {
+                    for (int j = i + 1; j < subs.size(); j++) {
+                        Substitution lhs = subs.get(i);
+                        Substitution rhs = subs.get(j);
+
+                        if (lhs.getIn().equals(rhs.getOut())) {
+                            SequencedAction removes =
+                                SequencedAction.create(
+                                    new RemoveChange(lhs),
+                                    new RemoveChange(rhs));
+
+                            Substitution atLhs = Substitution
+                                .builder()
+                                .in(rhs.getIn(), rhs.getRole())
+                                .out(lhs.getOut())
+                                .minute(lhs.getMinute())
+                                .build();
+
+                            Substitution atRhs = Substitution
+                                .builder()
+                                .in(rhs.getIn(), rhs.getRole())
+                                .out(rhs.getOut())
+                                .minute(rhs.getMinute())
+                                .build();
+
+
+                            actions.add(SequencedAction.create(removes, new AddChange(atLhs)));
+                            actions.add(SequencedAction.create(removes, new AddChange(atRhs)));
+                        }
+
+                    }
+                }
+
+                return actions;
             }
         };
     }

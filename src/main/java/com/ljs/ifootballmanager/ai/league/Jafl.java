@@ -28,7 +28,7 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of("Luigi", "H_Byakkotai");
+        return ImmutableList.of("Luigi", "H_Byakkotai", "Ramazinho");
     }
 
     public FormationValidator getFormationValidator() {

@@ -24,3 +24,6 @@ P_Mascali     20 ita  1  5  7 19 26 726 596 898 436   0   0    0   0   0   0   0
 
 Luigi         22 ita  2 21 20 15 28 156 734 685 542 # Loan - 90m
 H_Byakkotai   21 jap  2 11 22 18 12 153 997  82 249 # Loan - 90m
+Ramazinho     20 bra  1 20 11 20 22 662 998 126 226 # Loan - 90m
+
+A_Matheson    21 sco  1 20  5 13 19 732 415 196  47 # Purchased - Midland - $5m

@@ -10,17 +10,17 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
+import com.ljs.ai.search.Action;
+import com.ljs.ai.search.ActionsFunction;
+import com.ljs.ai.search.RepeatedHillClimbing;
+import com.ljs.ai.search.SequencedAction;
+import com.ljs.ai.search.State;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
-import com.ljs.ifootballmanager.ai.search.Action;
-import com.ljs.ifootballmanager.ai.search.ActionsFunction;
-import com.ljs.ifootballmanager.ai.search.PairedAction;
-import com.ljs.ifootballmanager.ai.search.RepeatedHillClimbing;
-import com.ljs.ifootballmanager.ai.search.State;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -387,7 +387,7 @@ public final class Formation implements State, Report {
             public ImmutableSet<Action<Formation>> getActions(Formation f) {
                 ImmutableSet<Move> moves = moves(f);
                 ImmutableSet<Substitute> subs = substitutions(f);
-                return ImmutableSet.copyOf(Iterables.concat(moves, subs, PairedAction.all(moves), PairedAction.merged(moves, subs)));
+                return ImmutableSet.copyOf(Iterables.concat(moves, subs, SequencedAction.allPairs(moves), SequencedAction.merged(moves, subs)));
             }
 
             private ImmutableSet<Move> moves(Formation f) {
