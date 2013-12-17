@@ -32,6 +32,8 @@ public final class Player {
 
     private Boolean suspended = Boolean.FALSE;
 
+    private Boolean reserves = Boolean.FALSE;
+
     private String comment = "";
 
     private Player(String name, Integer age, Ratings ratings) {
@@ -49,7 +51,14 @@ public final class Player {
     }
 
     public Optional<Player> forSelection() {
-        if (injured || suspended) {
+        if (injured || suspended || reserves) {
+            return Optional.absent();
+        }
+        return Optional.of(atPercent(fitness));
+    }
+
+    public Optional<Player> forReservesSelection() {
+        if (injured || suspended || !reserves) {
             return Optional.absent();
         }
         return Optional.of(atPercent(fitness));
@@ -81,6 +90,22 @@ public final class Player {
 
     public void suspended() {
         this.suspended = Boolean.TRUE;
+    }
+
+    public void reserves() {
+        this.reserves = Boolean.TRUE;
+    }
+
+    public Boolean isReserves() {
+        return reserves;
+    }
+
+    public String getRosterStatus() {
+        return String.format(
+            "%1s%1s%1s",
+            injured ? "I" : "",
+            suspended ? "S" : "",
+            reserves ? "R" : "");
     }
 
     public String getComment() {

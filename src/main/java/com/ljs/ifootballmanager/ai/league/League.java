@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.league;
 
+import com.google.common.base.Optional;
 import com.ljs.ifootballmanager.ai.formation.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
@@ -11,6 +12,10 @@ import com.ljs.ifootballmanager.ai.rating.Weightings;
 public interface League {
 
     String getTeam();
+
+    Optional<String> getReserveTeam();
+
+    Iterable<String> getForcedPlay();
 
     FormationValidator getFormationValidator();
 

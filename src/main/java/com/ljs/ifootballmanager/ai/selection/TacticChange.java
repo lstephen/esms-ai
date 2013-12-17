@@ -1,8 +1,8 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.google.common.base.Function;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
 
@@ -30,7 +30,7 @@ public final class TacticChange implements Change {
     }
 
     public void print(PrintWriter w) {
-        w.format("TACTIC %s IF MIN = %d%n", tactic.getCode(), minute);
+        w.format("TACTIC %s IF MIN > %d AND SCORE = 0%n", tactic.getCode(), minute - 1);
     }
 
     public void print(PrintWriter w, Function<Player, Integer> playerIdx) {

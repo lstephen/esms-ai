@@ -5,16 +5,25 @@ G_LaSalle     22 fra  1  6 22 12 16 516 661 112 381 # CSS
 P_Vart        20 usa  1 12 15 19 22 912  45 283 256 # CSS
 
 
-Luigi         22 ita  2 21 20 15 28 156 734 685 542 # Tigers
+Luigi         22 ita  2 21 20 15 28 156 734 685 542 # Tigers - To me
 B_Hurrican    21 usa  1 21 14  5 60 534  67 484 147 # Tigers
-Flisty        21 bra  1 18 21  8 20 804 399  39 850 # Tigers
+Flisty        21 bra  1 18 21  8 20 804 399  39 850 # Tigers - Loaned
 Shere_Kahn    23 swe  1  8  8 22 22 464 779 779 482 # Tigers
 
 Y_Kashiwano   20 jap  1 21 16  7 29 894  42  49 919 # LOK
-H_Byakkotai   21 jap  2 11 22 18 12 153 997  82 249 # LOK
+H_Byakkotai   21 jap  2 11 22 18 12 153 997  82 249 # LOK - To me
 H_Tomozuka    21 jap  1 17 21  9 16 984 552 491 696 # LOK
 S_Tomizawa    22 jap  2  7 15 23 18  75 239 699 260 # LOK
 J_Takahata    20 jap  1  7 15 21 37 768 378  68  47 # LOK
 
 R_Pasveer     23 hol 25  1  1  1 11  47 803 803 803 # Leicester
 S_Varsek      25 ukr  1  7 19 23 20 843 742  81 498 # Leicester
+
+D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 #KPK - Loan/Sale
+Avinho        21 bra  1 20 18  7 23 516 591 993 489 #KPK- Loan/Sale
+Ramazinho     20 bra  1 20 11 20 22 662 998 126 226 #KPK - Loan
+Neo_Nate      20 eng  1 20 12  8 23 770 110 495 737 #KPK - Loan/Sale
+AJ_Maradona   21 arg  1  9 20 19  9 516 757 989 586 #KPK - Loan
+Babybinho     20 bra  1  3 20 15  8 806 963 217 299 #KPK - Loan
+J_Applewhite  21 usa  1  5 15 21 43 914  37 781 254 #KPK - Loan/Sale
+A_Vasofia     20 eng  1  4 13 20 34 704 430 777 406 #KPK - Loan

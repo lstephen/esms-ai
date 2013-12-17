@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.report;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
@@ -41,7 +42,7 @@ public class SquadReport implements Report {
 
         w.format("%-15s ", tactic);
 
-        w.format(" %2s %2s %5s ", "", "", "OVR");
+        w.format("%2s %2s %5s ", "", "", "OVR");
 
         for (Role r : roles) {
             w.format("%3s ", r.name());
@@ -60,8 +61,7 @@ public class SquadReport implements Report {
 
             RatingInRole best = p.getOverall(tactic);
 
-            w.format("%1s%2d %2s %5d ",
-                league.isReserveEligible(p) ? "R" : "",
+            w.format("%2d %2s %5d ",
                 p.getAge(),
                 best.getRole(),
                 Math.round((double) best.getRating() / 100));
@@ -75,6 +75,12 @@ public class SquadReport implements Report {
             for (Tactic t : tactics) {
                 w.format("%3d ", Math.round((double) p.getOverall(t).getRating() / 100));
             }
+
+            w.format(
+                "%s%1s%1s ",
+                p.getRosterStatus(),
+                Iterables.contains(league.getForcedPlay(), p.getName()) ? "F" : "",
+                league.isReserveEligible(p) ? "r" : "");
 
             w.format("%s", p.getComment());
 

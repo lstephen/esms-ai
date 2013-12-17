@@ -160,7 +160,7 @@ public final class Formation implements State, Report {
         return score(tactic);
     }
 
-    private Double score(Tactic tactic) {
+    public Double score(Tactic tactic) {
         Double a = scoring(tactic).doubleValue();
         Double d = defending(tactic).doubleValue();
 
@@ -177,20 +177,6 @@ public final class Formation implements State, Report {
         Double pct = 1 + aterm - dterm;
 
         return ((a + d) * pct + gkQuality() + shotQuality(tactic)) / 2 - ((double) ageScore / 1000.0);
-    }
-
-    /**
-     * Like this formula, but can't get it to prioritize total value as well as this value
-     * @param tactic
-     * @param oppScoring
-     * @param oppDefending
-     * @return
-     */
-    private Double score(Tactic tactic, Double oppScoring, Double oppDefending) {
-        Double a = scoring(tactic).doubleValue();
-        Double d = defending(tactic).doubleValue();
-
-        return a / (oppDefending + 1) - oppScoring / (d + 1);
     }
 
     public Integer scoring() {
@@ -327,19 +313,24 @@ public final class Formation implements State, Report {
     }
 
     public static Formation select(League league, Iterable<Player> available) {
+        return select(league, Collections.<String>emptySet(), available);
+    }
+
+    public static Formation select(League league, Iterable<String> forced, Iterable<Player> available) {
         Set<Formation> formations = Sets.newHashSet();
         for (Tactic t : Tactic.values()) {
-            formations.add(select(league, t, available));
+            formations.add(select(league, t, ImmutableSet.copyOf(forced), available));
         }
 
         return byScore().max(formations);
+
     }
 
-    public static Formation select(League league, Tactic tactic, Iterable<Player> available) {
+    private static Formation select(League league, Tactic tactic, Iterable<String> forced, Iterable<Player> available) {
         return new RepeatedHillClimbing<Formation>(
             Formation.class,
-            initialState(league, tactic, available),
-            actionsFunction(league, available))
+            initialState(league, tactic, forced, available),
+            actionsFunction(league, forced, available))
             .search();
     }
 
@@ -353,26 +344,44 @@ public final class Formation implements State, Report {
             });
     }
 
-    private static Callable<Formation> initialState(final League league, final Tactic tactic, final Iterable<Player> available) {
+    private static Callable<Formation> initialState(final League league, final Tactic tactic, final Iterable<String> forced, final Iterable<Player> available) {
         return new Callable<Formation>() {
             public Formation call() {
                 List<Player> shuffled = Lists.newArrayList(available);
                 Collections.shuffle(shuffled);
 
-                Multimap<Role, Player> initialState = HashMultimap.create();
+                for (Player p : available) {
+                    if (Iterables.contains(forced, p.getName())) {
+                        shuffled.remove(p);
+                        shuffled.add(0, p);
+                    }
+                }
 
-                initialState.put(Role.GK, shuffled.get(0));
-                initialState.putAll(Role.DF, shuffled.subList(1, 5));
-                initialState.putAll(Role.MF, shuffled.subList(5, 9));
-                initialState.putAll(Role.FW, shuffled.subList(9, 11));
+                if (shuffled.size() >= 11) {
 
-                Formation f = create(league, tactic, initialState);
+                    Multimap<Role, Player> initialState = HashMultimap.create();
 
-                return f;
+                    initialState.put(Role.GK, shuffled.get(0));
+                    initialState.putAll(Role.DF, shuffled.subList(1, 5));
+                    initialState.putAll(Role.MF, shuffled.subList(5, 9));
+                    initialState.putAll(Role.FW, shuffled.subList(9, 11));
+
+                    return create(league, tactic, initialState);
+                } else {
+                    Multimap<Role, Player> initialState = HashMultimap.create();
+
+                    for (Player p : shuffled) {
+                        initialState.put(p.getOverall(tactic).getRole(), p);
+                    }
+
+                    return create(league, tactic, initialState);
+                }
+
+
             }};
     }
 
-    private static ActionsFunction<Formation> actionsFunction(final League league, final Iterable<Player> available) {
+    private static ActionsFunction<Formation> actionsFunction(final League league, final Iterable<String> forced, final Iterable<Player> available) {
         return new ActionsFunction<Formation>() {
 
             public ImmutableSet<Action<Formation>> getActions(Formation f) {
@@ -402,6 +411,9 @@ public final class Formation implements State, Report {
                 for (Player in : available) {
                     if (!f.contains(in)) {
                         for (Player out : f.unsortedPlayers()) {
+                            if (Iterables.contains(forced, out.getName())) {
+                                continue;
+                            }
                             for (Role r : Role.values()) {
                                 actions.add(new Substitute(in, r, out));
                             }

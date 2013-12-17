@@ -1,15 +1,23 @@
 package com.ljs.ifootballmanager.ai.player;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSource;
+import com.google.common.io.CharStreams;
+import com.google.common.io.Files;
+import com.google.common.io.Resources;
+import com.ljs.ifootballmanager.ai.Main;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
+import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,11 +48,33 @@ public final class Squad {
         return ImmutableSet.copyOf(ps);
     }
 
+    public ImmutableSet<Player> reserves() {
+        Set<Player> rs = Sets.newHashSet();
+
+        for (Player p : players()) {
+            if (p.isReserves()) {
+                rs.add(p);
+            }
+        }
+
+        return ImmutableSet.copyOf(rs);
+    }
+
     public Iterable<Player> forSelection() {
         Set<Optional<Player>> ps = Sets.newHashSet();
 
         for (Player p : players) {
             ps.add(p.forSelection());
+        }
+
+        return Optional.presentInstances(ps);
+    }
+
+    public Iterable<Player> forReservesSelection() {
+        Set<Optional<Player>> ps = Sets.newHashSet();
+
+        for (Player p : players) {
+            ps.add(p.forReservesSelection());
         }
 
         return Optional.presentInstances(ps);
@@ -60,7 +90,45 @@ public final class Squad {
         return count;
     }
 
+    private static Squad merge(Squad... sqs) {
+        Iterable<Player> ps = Collections.emptyList();
+
+        for (Squad s : sqs) {
+            ps = Iterables.concat(ps, s.players());
+        }
+
+        return new Squad(ps);
+    }
+
+    public static Squad load(League league) throws IOException {
+        Squad first =  load(league, league.getTeam(), Boolean.FALSE);
+
+
+        if (league.getReserveTeam().isPresent()) {
+            Squad reserves = load(league, league.getReserveTeam().get(), Boolean.TRUE);
+
+            return Squad.merge(first, reserves);
+        } else {
+            return first;
+        }
+    }
+
     public static Squad load(League league, CharSource source) throws IOException {
+        return load(league, source, Boolean.FALSE);
+    }
+
+    private static Squad load(League league, String team, Boolean reserves) throws IOException {
+        CharSource teamFile =
+            Resources
+                .asByteSource(Main.class.getResource("/" + league.getClass().getSimpleName() + "/" + team + ".txt"))
+                .asCharSource(Charsets.ISO_8859_1);
+
+        CharStreams.copy(teamFile, Files.asCharSink(new File("c:/esms", team + ".txt"), Charsets.ISO_8859_1));
+
+        return load(league, teamFile, reserves);
+    }
+
+    private static Squad load(League league, CharSource source, Boolean reserves) throws IOException {
         Set<Player> ps = Sets.newHashSet();
 
         for (String line : source.readLines()) {
@@ -96,6 +164,10 @@ public final class Squad {
             }
 
             p.setComment(StringUtils.substringAfter(line, "#"));
+
+            if (reserves) {
+                p.reserves();
+            }
 
             ps.add(p);
         }

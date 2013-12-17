@@ -129,19 +129,21 @@ public final class ChangePlan implements State, Report {
     }
 
     private Integer scoring(Tactic t) {
-        Integer score = 0;
+        Double score = 0.0;
         for (Integer minute = 1; minute <= 90; minute++) {
-            score += (getFormationAt(minute).scoring(t) * minute / 90);
+            Formation f = getFormationAt(minute);
+            score += ((f.scoring(t) + f.score(t)) * minute / 90);
         }
-        return score;
+        return score.intValue();
     }
 
     private Integer defending(Tactic t) {
-        Integer score = 0;
+        Double score = 0.0;
         for (Integer minute = 1; minute <= 90; minute++) {
-            score += (getFormationAt(minute).defending(t) * minute / 90);
+            Formation f = getFormationAt(minute);
+            score += ((f.defending(t) + f.score(t)) * minute / 90);
         }
-        return score;
+        return score.intValue();
     }
 
     public ImmutableSet<Player> getSubstitutes() {
@@ -222,19 +224,19 @@ public final class ChangePlan implements State, Report {
         return f;
     }
 
-    public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
+    public static ChangePlan select(League league, final Formation f, final Iterable<String> forced, final Iterable<Player> squad) {
         return new RepeatedHillClimbing<ChangePlan>(
             ChangePlan.class,
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
-                    return randomChangePlan(f, squad);
+                    return randomChangePlan(f, forced, squad);
                 }
             },
-            actionsFunction(league, squad))
+            actionsFunction(league, forced, squad))
             .search();
     }
 
-    private static ChangePlan randomChangePlan(Formation f, Iterable<Player> squad) {
+    private static ChangePlan randomChangePlan(Formation f, Iterable<String> forced, Iterable<Player> squad) {
         Random rng = new Random();
 
         Set<Change> changes = Sets.newHashSet();
@@ -253,7 +255,14 @@ public final class ChangePlan implements State, Report {
         Collections.shuffle(minutes);
 
         for (int i = 0; i < 3; i++) {
+            if (all.isEmpty() || all.size() <= starters.size()) {
+                break;
+            }
             Player out = starters.get(i);
+            if (Iterables.contains(forced, out.getName())) {
+                continue;
+            }
+
             Player in = all.remove(0);
             while (starters.contains(in)) {
                 in = all.remove(0);
@@ -277,7 +286,7 @@ public final class ChangePlan implements State, Report {
         return new ChangePlan(f, changes);
     }
 
-    private static ActionsFunction<ChangePlan> actionsFunction(final League league, final Iterable<Player> available) {
+    private static ActionsFunction<ChangePlan> actionsFunction(final League league, final Iterable<String> forced, final Iterable<Player> available) {
         return new ActionsFunction<ChangePlan>() {
 
             @Override
@@ -314,6 +323,9 @@ public final class ChangePlan implements State, Report {
 
                             for (Player out : currentFormation.players()) {
                                 if (currentFormation.findRole(out) == Role.GK) {
+                                    continue;
+                                }
+                                if (Iterables.contains(forced, out.getName())) {
                                     continue;
                                 }
                                 Substitution s = Substitution

@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.league;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.CountingFormationValidator;
@@ -20,6 +21,14 @@ public class Jafl implements League {
 
     public String getTeam() {
         return "gli";
+    }
+
+    public Optional<String> getReserveTeam() {
+        return Optional.of("gly");
+    }
+
+    public Iterable<String> getForcedPlay() {
+        return ImmutableList.of("Luigi", "H_Byakkotai");
     }
 
     public FormationValidator getFormationValidator() {

@@ -1,6 +1,5 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -9,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.search.Action;
@@ -45,6 +45,10 @@ public class Bench implements State, Report {
 
     @Override
     public Integer score() {
+        if (bench.isEmpty()) {
+            return 0;
+        }
+
         Integer score = 0;
 
         for (Role r : formation.getRoles()) {
@@ -74,6 +78,10 @@ public class Bench implements State, Report {
     }
 
     public void print(PrintWriter w) {
+        if (bench.isEmpty()) {
+            return;
+        }
+
         printPlayers(w);
 
         w.println();
@@ -90,6 +98,9 @@ public class Bench implements State, Report {
     }
 
     public void printInjuryTactics(PrintWriter w, Function<Player, Integer> playerIdx) {
+        if (bench.isEmpty()) {
+            return;
+        }
         for (Role r : Role.values()) {
             w.format("SUB %1$s %2$d %1$s IF INJURED %1$s%n", r, playerIdx.apply(Player.byRating(r, formation.getTactic()).max(bench)));
         }

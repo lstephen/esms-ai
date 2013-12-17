@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.league;
 
+import com.google.common.base.Optional;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.CountingFormationValidator;
 import com.ljs.ifootballmanager.ai.formation.FormationValidator;
@@ -20,6 +21,14 @@ public class IFootballManager implements League {
 
     public String getTeam() {
         return "liv";
+    }
+
+    public Optional<String> getReserveTeam() {
+        return Optional.absent();
+    }
+
+    public Iterable<String> getForcedPlay() {
+        return Collections.emptySet();
     }
 
     public FormationValidator getFormationValidator() {

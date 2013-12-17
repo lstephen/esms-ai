@@ -33,3 +33,15 @@ Eliezio       20 bra  1 19 10  7 24 876 681  47  59 # Gareth James
 M_Zare        20 per  1 19 18  5 18 732 922 583 666 # Gareth James
 J_Enriquez    20 mex  1 11 19  5 17 560 698 427 983 # Gareth James
 
+K_Bellion     21 fra 19  1  1  1 21 155 976 976 976 #KPK - Sale
+D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 #KPK - Loan/Sale
+Avinho        21 bra  1 20 18  7 23 516 591 993 489 #KPK - Loan/Sale
+Neo_Nate      20 eng  1 20 12  8 23 770 110 495 737 #KPK - Loan/Sale
+Ji_Sun_Wo     21 kor  1 13 20  9 26 734 299 938 598 #KPK - Sale
+P_Masiker     20 sen  1  9 19  6  9 680 665 174 279 #KPK - Sale
+H_Rodriguez   20 mex  1 13 17  4 16 554 685  72 312 #KPK - Sale
+J_Applewhite  21 usa  1  5 15 21 43 914  37 781 254 #KPK - Loan/Sale
+T_Redington   20 eng  1 15  5 17 32 626 259  54 266 #KPK - Sale
+
+N_Lamptey     33 gha  1  8 23 13 30 480 406 169 501 # Simon Brown
+

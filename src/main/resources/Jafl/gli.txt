@@ -22,4 +22,5 @@ R_Cervone     21 ita  1  5 11 21 44 696 450 227  96   0   0    0   0   0   0   0
 G_Hamar       23 wal  1  8  9 21  1 450 633 936 215   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 P_Mascali     20 ita  1  5  7 19 26 726 596 898 436   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 
-Luigi         22 ita  2 21 20 15 28 156 734 685 542 # Loan - start every game
+Luigi         22 ita  2 21 20 15 28 156 734 685 542 # Loan - 90m
+H_Byakkotai   21 jap  2 11 22 18 12 153 997  82 249 # Loan - 90m
