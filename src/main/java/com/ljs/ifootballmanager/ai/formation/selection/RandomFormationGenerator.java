@@ -6,8 +6,9 @@ import com.google.common.collect.Multimap;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
-import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
+import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
+import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.util.Collections;
 import java.util.List;
@@ -17,9 +18,11 @@ import java.util.concurrent.Callable;
  *
  * @author lstephen
  */
-public class RandomFormationGenerator implements Callable<Formation> {
+public final class RandomFormationGenerator implements Callable<Formation> {
 
     private final FormationValidator validator;
+
+    private final FormationScorer scorer;
 
     private final Tactic tactic;
 
@@ -27,10 +30,12 @@ public class RandomFormationGenerator implements Callable<Formation> {
 
     private RandomFormationGenerator(
         FormationValidator validator,
+        FormationScorer scorer,
         Tactic tactic,
         SelectionCriteria criteria) {
 
         this.validator = validator;
+        this.scorer = scorer;
         this.tactic = tactic;
         this.criteria = criteria;
     }
@@ -50,7 +55,7 @@ public class RandomFormationGenerator implements Callable<Formation> {
             initialState.putAll(Role.MF, shuffled.subList(5, 9));
             initialState.putAll(Role.FW, shuffled.subList(9, 11));
 
-            return Formation.create(validator, tactic, initialState);
+            return Formation.create(validator, scorer, tactic, initialState);
         } else {
             Multimap<Role, Player> initialState = HashMultimap.create();
 
@@ -58,12 +63,12 @@ public class RandomFormationGenerator implements Callable<Formation> {
                 initialState.put(p.getOverall(tactic).getRole(), p);
             }
 
-            return Formation.create(validator, tactic, initialState);
+            return Formation.create(validator, scorer, tactic, initialState);
         }
     }
 
-    public static RandomFormationGenerator create(FormationValidator validator, Tactic tactic, SelectionCriteria criteria) {
-        return new RandomFormationGenerator(validator, tactic, criteria);
+    public static RandomFormationGenerator create(FormationValidator validator, FormationScorer scorer, Tactic tactic, SelectionCriteria criteria) {
+        return new RandomFormationGenerator(validator, scorer, tactic, criteria);
     }
 
 

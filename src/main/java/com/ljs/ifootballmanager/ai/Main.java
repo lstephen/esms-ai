@@ -100,6 +100,7 @@ public class Main {
         print(w, "Remaining", SquadReport.create(league, Tactic.NORMAL, remaining).sortByValue());
 
         CharSink sheet = Files.asCharSink(new File("c:/esms", league.getTeam() + "sht.txt"), Charsets.ISO_8859_1);
+
         printSelection(w, league, "Selection", squad.forSelection(), sheet);
 
         if (league.getReserveTeam().isPresent()) {
@@ -140,7 +141,7 @@ public class Main {
 
         Formation formation = Formation.select(league, available);
         ChangePlan cp =
-            ChangePlan.select(league, formation, forced, available);
+            ChangePlan.select(league, formation, available);
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 
@@ -153,6 +154,18 @@ public class Main {
         w.println();
 
         Reports.print(TeamSheet.create(league, formation, cp, bench)).to(sheet);
+    }
+
+    private void printSelection(PrintWriter w, League league, Formation formation, ChangePlan cp, Bench bench, CharSink sheet) {
+        print(w, formation, bench, cp);
+
+        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
+        w.format("TACTIC %s IF SCORE < 0%n", cp.getBestScoringTactic().getCode());
+        w.format("TACTIC %s IF SCORE > 0%n", cp.getBestDefensiveTactic().getCode());
+        w.println();
+
+        Reports.print(TeamSheet.create(league, formation, cp, bench)).to(sheet);
+
     }
 
     private void print(PrintWriter w, String title, Report report) {

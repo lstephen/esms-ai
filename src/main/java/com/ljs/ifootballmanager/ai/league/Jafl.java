@@ -23,10 +23,6 @@ public class Jafl implements League {
         return "gli";
     }
 
-    public Optional<String> getNextOpponent() {
-        return Optional.absent();
-    }
-
     public Optional<String> getReserveTeam() {
         return Optional.of("gly");
     }

@@ -18,6 +18,7 @@ import com.ljs.ai.search.State;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -224,25 +225,29 @@ public final class ChangePlan implements State, Report {
         return f;
     }
 
-    public static ChangePlan select(League league, final Formation f, final Iterable<String> forced, final Iterable<Player> squad) {
+    public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
+        return select(league, f, SelectionCriteria.create(league, squad));
+
+    }
+    public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria) {
         return new RepeatedHillClimbing<ChangePlan>(
             ChangePlan.class,
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
-                    return randomChangePlan(f, forced, squad);
+                    return randomChangePlan(f, criteria);
                 }
             },
-            actionsFunction(league, forced, squad))
+            actionsFunction(league, criteria))
             .search();
     }
 
-    private static ChangePlan randomChangePlan(Formation f, Iterable<String> forced, Iterable<Player> squad) {
+    private static ChangePlan randomChangePlan(Formation f, SelectionCriteria criteria) {
         Random rng = new Random();
 
         Set<Change> changes = Sets.newHashSet();
 
         List<Player> starters = Lists.newArrayList(f.players());
-        List<Player> all = Lists.newArrayList(squad);
+        List<Player> all = Lists.newArrayList(criteria.getAll());
 
         Collections.shuffle(starters);
         Collections.shuffle(all);
@@ -259,7 +264,7 @@ public final class ChangePlan implements State, Report {
                 break;
             }
             Player out = starters.get(i);
-            if (Iterables.contains(forced, out.getName())) {
+            if (criteria.isRequired(out)) {
                 continue;
             }
 
@@ -286,7 +291,7 @@ public final class ChangePlan implements State, Report {
         return new ChangePlan(f, changes);
     }
 
-    private static ActionsFunction<ChangePlan> actionsFunction(final League league, final Iterable<String> forced, final Iterable<Player> available) {
+    private static ActionsFunction<ChangePlan> actionsFunction(final League league, final SelectionCriteria criteria) {
         return new ActionsFunction<ChangePlan>() {
 
             @Override
@@ -318,7 +323,7 @@ public final class ChangePlan implements State, Report {
                             continue;
                         }
                         Formation currentFormation = cp.getFormationAt(minute);
-                        for (Player in : available) {
+                        for (Player in : criteria.getAll()) {
                             if (cp.formation.contains(in)) {
                                 continue;
                             }
@@ -327,7 +332,7 @@ public final class ChangePlan implements State, Report {
                                 if (currentFormation.findRole(out) == Role.GK) {
                                     continue;
                                 }
-                                if (Iterables.contains(forced, out.getName())) {
+                                if (criteria.isRequired(out)) {
                                     continue;
                                 }
                                 Substitution s = Substitution

@@ -13,8 +13,6 @@ public interface League {
 
     String getTeam();
 
-    Optional<String> getNextOpponent();
-
     Optional<String> getReserveTeam();
 
     Iterable<String> getForcedPlay();

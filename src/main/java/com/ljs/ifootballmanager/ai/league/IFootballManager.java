@@ -23,10 +23,6 @@ public class IFootballManager implements League {
         return "liv";
     }
 
-    public Optional<String> getNextOpponent() {
-        return Optional.absent();
-    }
-
     public Optional<String> getReserveTeam() {
         return Optional.absent();
     }

@@ -15,11 +15,14 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
+import com.ljs.ifootballmanager.ai.formation.score.VsFormation;
+import com.ljs.ifootballmanager.ai.formation.score.VsSquad;
 import com.ljs.ifootballmanager.ai.formation.selection.Actions;
 import com.ljs.ifootballmanager.ai.formation.selection.RandomFormationGenerator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
@@ -209,8 +212,12 @@ public final class Formation implements State, Report {
         }
     }
 
+    public static Formation create(FormationValidator validator, FormationScorer scorer, Tactic tactic, Multimap<Role, Player> players) {
+        return new Formation(validator, scorer, tactic, players);
+    }
+
     public static Formation create(FormationValidator validator, Tactic tactic, Multimap<Role, Player> players) {
-        return new Formation(validator, new DefaultScorer(), tactic, players);
+        return create(validator, DefaultScorer.get(), tactic, players);
     }
 
     private static Formation create(League league, Tactic tactic, Multimap<Role, Player> players) {
@@ -218,23 +225,31 @@ public final class Formation implements State, Report {
     }
 
     public static Formation select(League league, Iterable<Player> available) {
-        return select(league, SelectionCriteria.create(league, available));
+        return select(league, SelectionCriteria.create(league, available), DefaultScorer.get());
     }
 
-    public static Formation select(League league, SelectionCriteria criteria) {
+    public static Formation selectVs(League league, Iterable<Player> available, Formation vs) {
+        return select(league, SelectionCriteria.create(league, available), VsFormation.create(vs));
+    }
+
+    public static Formation selectVs(League league, Iterable<Player> available, Squad vs) {
+        return select(league, SelectionCriteria.create(league, available), VsSquad.create(league, vs.forSelection()));
+    }
+
+    private static Formation select(League league, SelectionCriteria criteria, FormationScorer scorer) {
         Set<Formation> formations = Sets.newHashSet();
         for (Tactic t : Tactic.values()) {
-            formations.add(select(league, t, criteria));
+            formations.add(select(league, t, criteria, scorer));
         }
 
         return byScore().max(formations);
 
     }
 
-    private static Formation select(League league, Tactic tactic, SelectionCriteria criteria) {
+    private static Formation select(League league, Tactic tactic, SelectionCriteria criteria, FormationScorer scorer) {
         return new RepeatedHillClimbing<Formation>(
             Formation.class,
-            RandomFormationGenerator.create(league.getFormationValidator(), tactic, criteria),
+            RandomFormationGenerator.create(league.getFormationValidator(), scorer, tactic, criteria),
             Actions.create(criteria))
             .search();
     }

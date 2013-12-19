@@ -117,6 +117,10 @@ public final class Squad {
         return load(league, source, Boolean.FALSE);
     }
 
+    public static Squad load(League league, String team) throws IOException {
+        return load(league, team, Boolean.FALSE);
+    }
+
     private static Squad load(League league, String team, Boolean reserves) throws IOException {
         CharSource teamFile =
             Resources

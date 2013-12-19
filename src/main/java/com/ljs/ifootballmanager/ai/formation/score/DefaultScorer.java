@@ -11,7 +11,11 @@ import java.io.PrintWriter;
  *
  * @author lstephen
  */
-public class DefaultScorer implements FormationScorer {
+public final class DefaultScorer implements FormationScorer {
+
+    private static final DefaultScorer INSTANCE = new DefaultScorer();
+
+    private DefaultScorer() { }
 
     public Double score(Formation f, Tactic tactic) {
 
@@ -44,7 +48,7 @@ public class DefaultScorer implements FormationScorer {
         return skillRating(f, tactic, Rating.TACKLING);
     }
 
-    private Integer shotQuality(Formation f, Tactic t) {
+    public Integer shotQuality(Formation f, Tactic t) {
         Long score = 0L;
 
         Integer shooting = skillRating(f, t, Rating.SHOOTING);
@@ -60,7 +64,7 @@ public class DefaultScorer implements FormationScorer {
         return (int) Math.round((double) score) / 10;
     }
 
-    private Integer gkQuality(Formation f) {
+    public Integer gkQuality(Formation f) {
         return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING) / 10;
     }
 
@@ -118,6 +122,10 @@ public class DefaultScorer implements FormationScorer {
             w.format("%7d ", score(f, t).intValue());
         }
         w.println();
+    }
+
+    public static DefaultScorer get() {
+        return INSTANCE;
     }
 
 
