@@ -1,9 +1,10 @@
-package com.ljs.ifootballmanager.ai.formation;
+package com.ljs.ifootballmanager.ai.formation.validate;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import java.util.Map;
 
 /**

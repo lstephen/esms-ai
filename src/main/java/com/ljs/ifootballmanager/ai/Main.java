@@ -138,7 +138,7 @@ public class Main {
             }
         }
 
-        Formation formation = Formation.select(league, forced, available);
+        Formation formation = Formation.select(league, available);
         ChangePlan cp =
             ChangePlan.select(league, formation, forced, available);
         Bench bench =

@@ -215,7 +215,7 @@ public final class ChangePlan implements State, Report {
             players.put(formation.findRole(p), p.afterMinutes(minute));
         }
 
-        Formation f = Formation.create(formation.getLeague(), formation.getTactic(), players);
+        Formation f = Formation.create(formation.getValidator(), formation.getTactic(), players);
 
         for (Change c : changesMadeAt(minute)) {
             f = c.apply(f, minute);
