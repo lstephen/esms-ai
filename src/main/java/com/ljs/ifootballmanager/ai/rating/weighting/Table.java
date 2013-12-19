@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.rating.TacticWeightings;
 import com.ljs.ifootballmanager.ai.rating.Weighting;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import java.util.Map;
@@ -15,16 +16,18 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public class Table implements Weightings {
 
-    private ImmutableMap<Pair<Role, Tactic>, Weighting> table;
+    private final ImmutableMap<Pair<Role, Tactic>, Weighting> table;
 
     private Table(Builder builder) {
         this.table = ImmutableMap.copyOf(builder.table);
     }
 
     public Weighting get(Role r, Tactic t) {
-        //Assertions.assertThat(table).containsKey(Pair.of(r, t));
-
         return table.get(Pair.of(r, t));
+    }
+
+    public TacticWeightings forTactic(final Tactic t) {
+        return ForTactic.create(this, t);
     }
 
     public static Builder builder() {
@@ -60,6 +63,31 @@ public class Table implements Weightings {
         private static Builder create() {
             return new Builder();
         }
+    }
+
+    private static final class ForTactic implements TacticWeightings {
+
+        private final Table table;
+
+        private final Tactic tactic;
+
+        private ForTactic(Table table, Tactic tactic) {
+            this.table = table;
+            this.tactic = tactic;
+        }
+
+        public Weighting inRole(Role r) {
+            return table.get(r, tactic);
+        }
+
+        public TacticWeightings vs(Tactic t) {
+            return this;
+        }
+
+        public static ForTactic create(Table table, Tactic tactic) {
+            return new ForTactic(table, tactic);
+        }
+
     }
 
 }

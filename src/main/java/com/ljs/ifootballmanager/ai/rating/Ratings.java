@@ -24,7 +24,7 @@ public final class Ratings {
     }
 
     public Integer overall(Role r, Tactic t) {
-        return overall(league.getWeightings().get(r, t));
+        return overall(league.getWeightings().forTactic(t).inRole(r));
     }
 
     public Integer overall(Weighting w) {
@@ -57,7 +57,7 @@ public final class Ratings {
     }
 
     public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {
-        return league.getWeightings().get(rl, tc).get(rt) * ratings.get(rt);
+        return league.getWeightings().forTactic(tc).inRole(rl).get(rt) * ratings.get(rt);
     }
 
     public Integer getMaximumSkill() {

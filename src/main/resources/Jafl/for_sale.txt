@@ -44,3 +44,25 @@ T_Redington   20 eng  1 15  5 17 32 626 259  54 266 #KPK - Sale
 
 N_Lamptey     33 gha  1  8 23 13 30 480 406 169 501 # Simon Brown
 
+K_Thurling    29 gha  2  9 27  6  8 391 345  51  94 # Scranii
+N_Chater      27 saf  2  7 25 17  8 514 603 229   6 # Scranii
+
+U_Demuro      27 arg  2 24 12  7 26 216 330 439 823 # Dezbru - for FW
+Q_Gendreau    27 rom  2 24 13  5  8 181 501 331 428 # Dezbru - for FW
+S_Butz        27 hun  2 24  7  5 14 212 105 854 371 # Dezbru - for FW
+L_Sharkey     27 wal  2 23  6 10 28 249 695  17 769 # Dezbru - for FW
+I_Scrooby     23 usa  1 23  4 10 29 804   7 650 440 # Dezbru - for FW
+H_Pefley      22 sco  1 23 14  6 28 732 299 411 297 # Dezbru - for FW
+
+R_Marshall    22 eng 21  1  1  1 38 783 391 391 391 #CSS
+S_Albert      22 fra  1 22 11  5 32 570 341 208 948 #CSS
+E_Ogren       21 nir  1 20 14  6  8 786 651 913 669 #CSS
+G_LaSalle     22 fra  1  6 22 12 16 516 661 112 381 #CSS
+J_Kendter     21 hol  1  9 13 20  8 822 355  65 504 #CSS
+P_Vart        20 usa  1 12 15 19 22 912  45 283 256 #CSS
+
+H_Tomozuka 21 jap 1 17 21 9 16 984 552 491 696 #LOK
+
+P_Mortimer    19 eng  1  4 19 11 17 786 317 180  30 # Ian Clark
+
+

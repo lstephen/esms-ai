@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai.rating.weighting;
 
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.rating.TacticWeightings;
 import com.ljs.ifootballmanager.ai.rating.Weighting;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 
@@ -63,8 +64,8 @@ public class EliteFootballLeague implements Weightings {
 
     private EliteFootballLeague() { }
 
-    public Weighting get(Role r, Tactic t) {
-        return TABLE.get(r, t);
+    public TacticWeightings forTactic(Tactic t) {
+        return TABLE.forTactic(t);
     }
 
     public static EliteFootballLeague get() {
