@@ -72,6 +72,19 @@ public final class Ratings {
         return new Ratings(builder);
     }
 
+    public static Ratings combine(Ratings rts, Ratings abs) {
+        Ratings.Builder builder = builder().league(rts.league);
+
+        for (Rating r : Rating.values()) {
+            Integer rt = rts.getSkill(r);
+            Integer ab = abs.getSkill(r);
+
+            builder.rating(r, rt + ab / 1000);
+        }
+
+        return builder.build();
+    }
+
     public static final class Builder {
 
         private League league;

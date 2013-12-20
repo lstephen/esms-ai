@@ -78,30 +78,48 @@ public final class Player {
     }
 
     public Integer getValue() {
-        List<Double> overalls = Lists.newArrayList();
+        List<Integer> overalls = Lists.newArrayList();
 
         for (Role r : Role.values()) {
             for (Tactic t : Tactic.values()) {
-                Integer rt = Evaluator.create(ratings).evaluate(r, t).getRating();
-                Integer ab = Evaluator.create(abilities).evaluate(r, t).getRating();
-
-                overalls.add(rt + (double) ab / 1000);
+                Integer rt = Evaluator.create(Ratings.combine(ratings, abilities)).evaluate(r, t).getRating();
+                overalls.add(rt);
             }
         }
 
-        Double ovr = Ordering.natural().max(overalls);
+        Integer ovr = Ordering.natural().max(overalls);
 
         Double ageFactor = 4.0 - (getAge() - 22) * .1;
 
         if (getAge() < 22) {
-            ageFactor *= 1.0 + (22 - getAge()) / 6;
+            ageFactor *= (1.0 + (22 - getAge()) / 6);
         }
 
         if (getAge() > 30) {
             ageFactor *= 1.0 - (getAge() - 30) / 6;
         }
 
-        return (int) ((ovr * getOverall(Tactic.NORMAL).getRating() * ageFactor) / 1000);
+        return (int) ((ovr * getOverall(Tactic.NORMAL).getRating() * ageFactor) / 100000);
+
+        /*List<Double> skills = Lists.newArrayList();
+
+        for (Rating r : Rating.values()) {
+            skills.add(getSkillWithAbility(r));
+        }
+
+        skills = Ordering.natural().reverse().sortedCopy(skills);
+
+        Double p = skills.get(0) / 100;
+        Double s = skills.get(1) / 100;
+        Double t = skills.get(2) / 100;
+
+        Double first = p * p * (p + 3) * 2.52;
+        Double second = s * s * p * 2.1;
+        Double third = t * t * s * 2.1;
+
+        Double salary = first + second + third;
+
+        return (int) Math.round((salary * 22 * (getAge() - 41) * -0.075) / 100);*/
     }
 
     public void setFitness(Integer fitness) {

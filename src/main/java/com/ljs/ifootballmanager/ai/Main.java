@@ -8,7 +8,6 @@ import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.ljs.ifootballmanager.ai.formation.Formation;
-import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
@@ -37,7 +36,7 @@ public class Main {
     }
 
     public void run() throws IOException {
-        run(IFootballManager.get());
+        //run(IFootballManager.get());
         run(Jafl.get());
     }
 

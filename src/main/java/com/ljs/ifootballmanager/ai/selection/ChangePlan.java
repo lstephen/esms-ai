@@ -366,7 +366,7 @@ public final class ChangePlan implements State, Report {
                     adds.add(new AddChange(s));
                 }
 
-                for (Integer minute = 1; minute <= 90; minute++) {
+                for (Integer minute = 45; minute <= 90; minute++) {
                     if (cp.isChangeAt(minute)) {
                         continue;
                     }
