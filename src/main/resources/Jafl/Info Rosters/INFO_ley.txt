@@ -1,0 +1,17 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Elisha_Scott     19  GK 20  1  1  1 $27,000  OK   30M     N/A
+K_Muldoon        19  GK 16  1  1  1 $9,500   OK   5.3M    N/A
+M_Albertson      19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
+P_Jarboe         19  DF  1 19 11  8 $32,200  OK   42.25M  N/A
+C_Zeller         19  DF  1 19  3 12 $30,100  OK   39.5M   N/A
+Ethan            19  DF  1 18 14 10 $27,299  OK   34M     N/A
+D_Kempa          19  DF  1 17  5  4 $14,493  OK   13.75M  N/A
+Kaz_Harman       18  DF  1 16 11 10 $18,049  OK   16.5M   N/A
+J_McVeigh        17  DF  1 14  4  7 $9,085   OK   8.3M    N/A
+S_Marsden        19  MF  1  2 18 15 $24,266  OK   30.25M  N/A
+Lucas            19  MF  1 11 18 14 $27,766  OK   34.5M   N/A
+P_Rzeznik        19  MF  1 11 17  4 $17,987  OK   17M     N/A
+S_Gonzalez       19  MF  1  2 15 10 $12,640  OK   6.7M    N/A
+D_Pediford       19  FW  1  7  3 16 $13,418  OK   8.8M    N/A
+M_Gerhart        19  FW  1 11  5 15 $14,080  OK   7.4M    N/A

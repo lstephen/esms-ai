@@ -1,0 +1,22 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+M_Census         25  GK 25  2  2  2 $88,000  OK   64.25M  N/A
+X_Schu           23  GK 20  1  1  1 $27,000  OK   900K    N/A
+E_Beeden         25  DF  2 22 18 14 $98,399  OK   45.75M  N/A
+R_Degge          26  DF  2 22 14  5 $78,763  OK   31.5M   N/A
+I_Bend           22  DF  1 22 12  7 $77,454  OK   51.5M   N/A
+Luizinho         32  DF  2 22  9 17 $89,890  OK   3.6M    N/A
+V_Schutts        25  DF  1 21  7 14 $65,685  OK   12M     N/A
+M_Hartas         23  DF  2 20  6 17 $50,490  OK   2.1M    N/A
+O_Castarana      20  DF  1 20 10  6 $41,985  OK   31M     N/A
+I_Wazenegger     20  DF  1 19 13  8 $34,000  OK   8.9M    N/A
+CJ_McCollum      28  MF  1 14 24 17 $150,150 SUS  66M     N/A
+OMG_C_Aiken      26  MF  2  4 23 13 $89,773  OK   53.75M  N/A
+B_Reash          24  MF  2  6 22 13 $78,108  OK   41.5M   N/A
+K_Lashbrook      24  MF  2 18 22 11 $94,471  OK   50.25M  N/A
+K_Aktabowski     22  MF  1 14 21  6 $64,599  OK   16.75M  N/A
+G_Pelis          21  MF  1  6 21 10 $58,085  OK   48M     N/A
+Q_Latchu         24  MF  2  6 19 17 $36,400  OK   0K      N/A
+O_Albort         20  MF  1  6 19 12 $31,900  OK   8.3M    N/A
+P_Pearia         25  FW  2 11  8 21 $61,885  OK   11.25M  N/A
+H_Sugajima       21  FW  1  5 10 21 $56,999  OK   47.25M  N/A

@@ -16,7 +16,7 @@ public final class Ssl implements Weightings {
 
     private static final Table TABLE = Table
         .builder()
-        .forAllTactics(Role.GK, Weighting.builder().st(175).build())
+        .forAllTactics(Role.GK, Weighting.builder().st(150).build())
         .add(Role.DF, Tactic.NORMAL, Weighting.create(100, 43, 43))
         .add(Role.MF, Tactic.NORMAL, Weighting.create(43, 100, 43))
         .add(Role.FW, Tactic.NORMAL, Weighting.create(43, 43, 100))

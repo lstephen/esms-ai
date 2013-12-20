@@ -16,7 +16,7 @@ public class EliteFootballLeague implements Weightings {
 
     private static final Table TABLE = Table
         .builder()
-        .forAllTactics(Role.GK, Weighting.builder().st(175).build())
+        .forAllTactics(Role.GK, Weighting.builder().st(150).build())
 
         .add(Role.DF, Tactic.ATTACKING, Weighting.create(100, 50, 50))
         .add(Role.DM, Tactic.ATTACKING, Weighting.create(50, 90, 50))

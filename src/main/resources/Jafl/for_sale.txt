@@ -65,4 +65,16 @@ H_Tomozuka 21 jap 1 17 21 9 16 984 552 491 696 #LOK
 
 P_Mortimer    19 eng  1  4 19 11 17 786 317 180  30 # Ian Clark
 
+N_Tidline     28 aus  2 14 24  8 25 518 443 399 485  # Jazzy Woo - $39M
+Julio_Geordio 28 col  2  8 24 14 31 430 806  77 384  # Jazzy Woo - $39M
+C_Quarm       22 usa  1 12 20  4 15 876 963 679 858  # Jazzy Woo - $1.5m
+P_Tyro        20 ire  1 19  4  7 48 588 193 563 234  # Jazzy Woo - $2m
+
+G_Facchetti   32 ita  2 22  3  9  1 515 919 639 228 # Wayne Laudon - $2m
+
+
+M_Bellissimo  21 ita  1 10  6 20 24 642   8 648 821 # Southern Corss
+J_DeRemer     29 fra  2 22  6 14 31 733 661 988  71 # Southern Cross
+V_Peedin      20 rom  1 19  6  4 22 642 353 598 402 # Southern Cross
+D_Kubista     20 cze  1  8  3 19 21 534  68 391 114 # Southern Cross
 

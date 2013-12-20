@@ -1,0 +1,18 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+N_Turo           19  GK 18  1  1  1 $14,000  OK   14.75M  N/A
+O_Hunting        17  GK 14  1  1  1 $6,000   OK   4.6M    N/A
+M_Reid           19  DF  1 18  4  8 $20,299  OK   25.25M  N/A
+Y_Busbee         19  DF  1 16  2  6 $12,527  OK   8.2M    N/A
+K_Kellum         19  DF  1 15 10  4 $13,279  OK   7M      N/A
+L_Gunnette       17  DF  1 15  2  6 $10,720  OK   9.6M    N/A
+G_Oyervides      17  DF  1 14  6  5 $8,956   OK   8.2M    N/A
+P_Kubli          17  DF  1 13  3  6 $5,753   OK   4.8M    N/A
+E_Dwire          19  MF  1  6 15  5 $11,680  OK   6.2M    N/A
+T_Kikutani       17  MF  1  8 15  4 $12,319  OK   11M     N/A
+P_Prusski        18  MF  1  7 14  2 $8,571   OK   6.5M    N/A
+X_Cruse          18  MF  1  2 14  6 $8,185   OK   6.2M    N/A
+U_Mylar          19  MF  1  4 14 11 $10,628  OK   5.7M    N/A
+K_Gunn           19  FW  1  7  5 17 $16,046  OK   15.25M  N/A
+S_Vozar          19  FW  1  2  6 15 $10,720  OK   5.6M    N/A
+E_Aulph          17  FW  1  8  3 13 $6,307   OK   5.3M    N/A

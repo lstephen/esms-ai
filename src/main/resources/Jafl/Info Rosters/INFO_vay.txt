@@ -1,0 +1,18 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Y_Kydney         19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
+J_Overend        19  GK 14  1  1  1 $6,000   OK   2.7M    N/A
+N_Schuemann      19  DF  1 17  4 14 $19,734  OK   18.75M  N/A
+W_Beauch         19  DF  1 17  8  5 $16,628  OK   15.75M  N/A
+O_Evemy          18  DF  1 16  9  4 $14,843  OK   13.5M   N/A
+P_Buls           17  DF  1 15  5  4 $10,879  OK   9.8M    N/A
+W_Huskisson      19  DF  1 15  5 11 $14,080  OK   7.4M    N/A
+O_Sutphin        18  DF  1 15  5  3 $10,560  OK   7.8M    N/A
+I_Furniss        18  DF  1 14  5  3 $8,056   OK   6.1M    N/A
+H_Kuch           18  MF  1 10 16  5 $15,734  OK   14.25M  N/A
+D_Szasz          18  MF  1  1 16  6 $12,171  OK   11M     N/A
+Q_Dunch          17  MF  1  4 15  3 $10,080  OK   9.1M    N/A
+Q_Overcash       18  MF  1  4 14  3 $7,671   OK   5.8M    N/A
+P_Lurette        18  MF  1  3 12  6 $4,425   OK   1M      N/A
+L_Lapratte       19  FW  1  5  6 15 $11,680  OK   6.2M    N/A
+W_Cutshaw        19  FW  1  8 10 15 $14,560  OK   7.7M    N/A

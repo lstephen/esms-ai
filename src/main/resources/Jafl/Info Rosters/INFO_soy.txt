@@ -1,0 +1,15 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+N_Bunks          18  GK 17  1  1  1 $11,000  OK   12.25M  N/A
+T_Morita         18  GK 14  1  1  1 $6,000   OK   3.8M    N/A
+N_Kodama         18  DF  1 16  7  6 $14,487  OK   13.25M  N/A
+H_Guntly         18  DF  1 16 10  4 $15,377  SUS  14M     N/A
+P_Nowakowski     19  DF  1 15  9 12 $15,840  OK   8.4M    N/A
+V_Gerhard        19  MF  1  6 17  8 $17,017  OK   16M     N/A
+H_Fuerst         18  MF  1  9 16  3 $14,487  OK   13.25M  N/A
+J_Mulkey         19  MF  1  2 15 10 $12,640  OK   6.7M    N/A
+U_Felzinger      19  MF  1  4 15  7 $11,839  OK   6.2M    N/A
+N_Currington     17  MF  1  9 15  3 $12,480  OK   11.25M  N/A
+S_Hynes          19  FW  1 16  8 17 $22,452  OK   21.25M  N/A
+U_Croyle         17  FW  1 11  3 15 $13,440  OK   12M     N/A
+X_Dwy            17  FW  1  4  7 15 $11,839  OK   10.5M   N/A

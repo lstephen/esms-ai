@@ -1,0 +1,13 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+A_Fuiner         18  GK 14  1  1  1 $6,000   OK   3.8M    N/A
+M_Guest          19  DF  1 17  7  4 $15,658  OK   14.75M  N/A
+B_Von_Ville      19  DF  1 17  2  6 $14,299  OK   13.5M   N/A
+Y_Von_Briel      18  DF  1 17  6  5 $15,463  OK   20.5M   N/A
+Abuda            19  MF  1  7 18 15 $26,599  OK   33M     N/A
+W_Tycehurst      19  MF  1  7 16  6 $14,487  OK   9.5M    N/A
+K_Aldrige        19  MF  1 10 15  3 $12,960  OK   6.8M    N/A
+F_Russi          19  MF  1 11 15  6 $14,400  OK   7.6M    N/A
+W_Hussie         17  MF  1  6 14  4 $8,699   OK   8M      N/A
+O_Gwinnup        17  MF  1  2 14  5 $7,799   OK   7.1M    N/A
+P_Runyon         17  MF  1  3 13  7 $6,030   OK   5.1M    N/A

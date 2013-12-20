@@ -1,0 +1,13 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+N_Pue            19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
+P_Hushour        18  GK 14  1  1  1 $6,000   OK   3.8M    N/A
+A_Guiney         18  DF  1 14  2 11 $10,114  OK   7.6M    N/A
+G_Reigh          19  MF  1  6 18  5 $19,366  OK   24M     N/A
+J_Wozny          19  MF  1  6 16  4 $13,239  OK   8.7M    N/A
+N_Cutchen        19  MF  1  6 16 10 $16,090  OK   10.5M   N/A
+L_Bussen         19  MF  1  8 15  4 $12,319  OK   6.5M    N/A
+T_Munstedt       19  MF  1  8 15  2 $11,680  OK   6.2M    N/A
+P_Buthala        17  FW  1  8  3 15 $12,000  OK   10.75M  N/A
+O_Kuchta         19  FW  1  6  4 15 $11,359  OK   6M      N/A
+C_Gerling        19  FW  1  5  7 15 $12,160  OK   6.4M    N/A

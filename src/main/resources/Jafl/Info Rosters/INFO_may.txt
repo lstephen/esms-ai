@@ -1,0 +1,24 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+S_Bulling        19  GK 16  1  1  1 $10,000  OK   5.3M    N/A
+De_Lapper        17  GK 15  1  1  1 $8,000   OK   6.1M    N/A
+A_Mummey         18  GK 13  1  1  1 $4,000   OK   2.3M    N/A
+E_Seath          18  DF  1 17  3  5 $14,105  OK   18.75M  N/A
+E_Fuhrer         18  DF  1 16  3  2 $11,500  OK   10M     N/A
+K_Bukay          18  DF  1 16  3  8 $14,687  OK   12.75M  N/A
+E_Recinos        19  DF  1 16  4  6 $13,937  OK   8.7M    N/A
+V_Mumma          19  DF  1 14  5  8 $9,728   OK   5.2M    N/A
+B_Nowelle        19  DF  1 14  7  5 $9,342   OK   5M      N/A
+H_Dyke           19  MF  1  5 17  9 $17,210  OK   16.25M  N/A
+V_Punzi          19  MF  1  7 16  5 $14,875  OK   9.2M    N/A
+U_Rychetsky      18  MF  1  4 15  4 $10,399  OK   7.7M    N/A
+O_Moziy          18  MF  1  6 14  4 $8,699   OK   6.5M    N/A
+Y_Augustine      18  MF  1  3 14 12 $10,756  OK   8.1M    N/A
+W_Butze          17  MF  1  2 14  5 $7,799   OK   7.1M    N/A
+J_Cunerty        18  MF  1  3 13  5 $5,476   OK   3.8M    N/A
+J_Azzara         17  MF  1  2 12  6 $4,275   OK   1.2M    N/A
+T_Redington      19  FW  1 14  4 16 $18,437  OK   11.5M   N/A
+R_Cunius         17  FW  1  9  3 15 $12,480  OK   11.25M  N/A
+S_Karasev        16  FW  1  6  6 15 $12,000  OK   12.75M  N/A
+S_Rumford        17  FW  1  4  4 14 $7,928   OK   7.3M    N/A
+Y_Luttman        17  FW  1  3  2 12 $3,600   OK   1M      N/A

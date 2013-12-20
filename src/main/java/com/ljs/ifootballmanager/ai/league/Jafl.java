@@ -42,7 +42,7 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_loan.txt", "/for_sale.txt");
+        return ImmutableList.of("/for_loan.txt", "/for_sale.txt", "/fre.txt");
     }
 
     public Weightings getWeightings() {

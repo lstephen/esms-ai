@@ -1,0 +1,27 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Reg_Holdswoth    28  GK 26  1  1  2 $98,000  OK   43.5M   N/A
+Herr_Flick       29  GK 21  2  2  2 $38,000  OK   2.5M    N/A
+O_Peguero        22  GK 21  1  1  1 $38,000  OK   8.5M    N/A
+V_Berthoty       27  GK 20  2  2  2 $27,000  OK   550K    N/A
+Mendoza          30  DF  2 27 13 18 $197,999 OK   82.25M  N/A
+G_DeMontigny     30  DF  2 26 20  9 $180,545 OK   66.25M  N/A
+A_Urquhart       28  DF  2 25 14 11 $150,304 OK   73.75M  N/A
+K_Ogawa          28  DF  2 22 18  7 $89,235  OK   23.75M  N/A
+P_Penneagn       29  DF  2 22 17  9 $89,890  OK   17.75M  N/A
+U_Cendejas       22  DF  1 22  7 14 $81,381  OK   54.25M  N/A
+T_Gerisch        22  DF  1 20 15  9 $50,490  OK   2.4M    N/A
+K_Feigi          20  DF  1 18  4  9 $20,999  OK   1.9M    N/A
+C_Burandt        20  DF  1 16  7  5 $14,131  OK   0K      N/A
+M_Riu            30  MF  2  2 27 18 $171,600 OK   71.5M   N/A
+X_Sallade        31  MF  2 16 26 12 $173,760 OK   51M     N/A
+F_Spearman       31  MF  1  1 25 19 $145,024 OK   34.25M  N/A
+L_Paeroa         25  MF  2 20 24  6 $143,325 OK   110.5M   N/A
+Sesos_Fritas     26  MF  1  9 23 17 $106,417 OK   63.75M  N/A
+D_Nester         26  MF  2 14 21  9 $67,856  OK   10.5M   N/A
+K_Gerend         22  MF  1 12 21  8 $63,514  OK   16.5M   N/A
+E_Kenderdine     20  MF  1  4 18 13 $23,799  OK   2.2M    N/A
+O_Leapson        29  FW  2 15  6 27 $170,400 OK   72.25M  N/A
+AJ_Campbell      25  FW  2 15 11 23 $104,903 OK   73.25M  N/A
+P_O'Gravy        31  FW  2  2  8 20 $36,315  OK   0K      N/A
+W_Laurenz        20  FW  1  6  9 18 $21,933  OK   2M      N/A

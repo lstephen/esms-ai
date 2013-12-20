@@ -1,0 +1,26 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Hot_Hans         30  GK 27  1  1  1 $45,000  OK   5.1M    N/A
+Pagodeiro        27  GK 20  2  2  2 $27,000  OK   5.1M    N/A
+Y_McAnelly       29  DF  2 24  6 10 $48,749  OK   8.4M    N/A
+P_Kercheval      23  DF  1 22  6 11 $42,750  SUS  20.75M  N/A
+M_Selberg        25  DF  2 22 12  8 $44,400  OK   16.75M  N/A
+A_Vantage        32  DF  2 21  6 15 $42,142  OK   1.5M    N/A
+Luigi            22  DF  2 21 20 15 $49,571  OK   24.75M  N/A
+L_Cecka          25  DF  2 20  6  4 $31,589  OK   9.8M    N/A
+A_Matheson       21  DF  1 20  5 13 $36,720  OK   19M     N/A
+Ramazinho        20  DF  1 20 11 20 $43,875  OK   30.25M  N/A
+Y_Kiyoshi        21  DF  1 19 11  6 $32,209  OK   11M     N/A
+H_Emmens         20  DF  1 19  6  4 $28,293  OK   12.75M  N/A
+L_Yuiska         20  DF  1 18 12  3 $28,116  OK   8M      N/A
+B_Schwegel       21  DF  1 18 14 11 $32,083  OK   6.8M    N/A
+K_Hagenbach      30  MF  2  7 23 11 $46,643  OK   4.3M    N/A
+H_Byakkotai      21  MF  2 11 22 18 $50,250  OK   29.75M  N/A
+X_DeGarmo        21  MF  1  8 21  4 $36,285  OK   20.25M  N/A
+E_Jones          23  MF  1  9 21 14 $42,713  OK   19M     N/A
+O_Chinault       28  MF  2  5 21  8 $36,714  OK   7.3M    N/A
+P_Algee          23  MF  1  9 20 14 $39,015  OK   15.5M   N/A
+B_Davies         28  FW  1 16  3 25 $55,608  OK   13M     N/A
+R_Cervone        21  FW  1  5 11 21 $38,856  OK   21.75M  N/A
+G_Hamar          23  FW  1  8  9 21 $38,714  OK   17.25M  N/A
+P_Mascali        20  FW  1  5  7 19 $29,304  OK   13.25M  N/A

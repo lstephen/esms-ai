@@ -140,7 +140,7 @@ public final class Squad {
                 continue;
             }
 
-            String[] split = StringUtils.split(line);
+            String[] split = StringUtils.split(StringUtils.substringBefore(line, "#"));
 
             String name = split[0];
             Integer age = Integer.parseInt(split[1]);
@@ -154,7 +154,16 @@ public final class Squad {
                 .shooting(Integer.parseInt(split[6]))
                 .build();
 
-            Player p = Player.create(name, age, ratings);
+            Ratings abilities = Ratings
+                .builder()
+                .league(league)
+                .stopping(Integer.parseInt(split[8]))
+                .tackling(Integer.parseInt(split[9]))
+                .passing(Integer.parseInt(split[10]))
+                .shooting(Integer.parseInt(split[11]))
+                .build();
+
+            Player p = Player.create(name, age, ratings, abilities);
 
             if (split.length > 24 && !split[24].equals("0")) {
                 p.injured();

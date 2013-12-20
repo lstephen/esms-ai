@@ -1,0 +1,22 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+B_Wall           27  GK 27  1  1  1 $108,000 OK   65M     N/A
+D_Quartus        24  GK 20  1  1  1 $27,000  OK   800K    N/A
+F_Fenge          25  GK 20  2  2  2 $27,000  OK   700K    N/A
+N_De_Goon        20  GK 20  1  1  1 $27,000  OK   17M     N/A
+Shiva            27  DF  1 26 14  7 $155,669 OK   101.5M   N/A
+Tigger           28  DF  1 25 14  3 $133,408 OK   65.25M  N/A
+L_Countach       28  DF  2 24 16  9 $137,475 OK   60.5M   N/A
+Hobbes           24  DF  1 23 17  2 $95,826  OK   76.5M   N/A
+H_Beil           25  DF  2 22 17  5 $84,654  OK   39.5M   N/A
+Y_Scisley        26  DF  2 22 14  8 $82,690  OK   33M     N/A
+B_Hurrican       21  DF  1 21 14  5 $63,513  OK   52.5M   N/A
+W_Ilg            24  DF  2 20 11  5 $42,390  OK   1.6M    N/A
+A_Abdale         31  MF  2 10 27  7 $154,799 OK   51.5M   N/A
+Sam_Fox          27  MF  2 14 24 16 $147,225 OK   81M     N/A
+D_Deleuw         24  MF  1  6 23 13 $92,799  OK   74M     N/A
+Z_Roberts        29  MF  2  7 21 13 $64,056  OK   5M      N/A
+E_Wallert        27  FW  2  7 10 26 $142,099 OK   92.75M  N/A
+J_Hoilett        25  FW  1 10 20 23 $114,738 OK   80.25M  N/A
+Shere_Kahn       23  FW  1  8  8 22 $70,908  OK   42.5M   N/A
+F_Feirn          24  FW  2  5 12 21 $60,256  OK   12.5M   N/A

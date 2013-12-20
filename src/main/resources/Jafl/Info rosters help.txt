@@ -1,0 +1,8 @@
+Before starting I suggest you create a new folder just for the Info Rosters.
+
+1 Unzip Info_Rosters.exe teams.DIR & value_settings.dat into that folder.
+2 Copy or unzip all 64 SSL normal rosters to that folder.
+3 Run Info_Rosters.exe and it will produce 64 Info Rosters.
+ 
+To update the Info Rosters at any time just overwrite the 64 normal rosters with the latest
+updates and run Info_Rosters.exe again.

@@ -1,0 +1,20 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+W_Memphis        19  GK 17  1  1  1 $11,000  OK   8.9M    N/A
+K_Gullick        19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
+X_Mattern        19  GK 14  1  1  1 $6,000   OK   2.7M    N/A
+M_Sunley         19  DF  1 18  5  4 $18,199  OK   22.5M   N/A
+C_Pumphrey       19  DF  1 16  3 10 $15,021  OK   9.8M    N/A
+M_Busshe         18  DF  1 15  3  6 $11,040  OK   8.2M    N/A
+E_Mundey         17  DF  1 15  5  6 $11,680  OK   10.5M   N/A
+S_Muzzio         17  DF  1 13  6  1 $5,384   OK   4.5M    N/A
+U_Fuglin         18  MF  1  7 17  3 $15,270  OK   20.25M  N/A
+A_Luckow         18  MF  1  6 17  7 $16,435  OK   21.75M  N/A
+P_Fulenwider     18  MF  1  8 16  4 $14,308  OK   13M     N/A
+H_Wort           19  MF  1  6 15  8 $12,960  OK   6.8M    N/A
+U_Cudd           18  MF  1  6 15 12 $14,880  OK   11M     N/A
+L_Kyte           18  MF  1  8 15  5 $12,640  OK   9.4M    N/A
+Q_Bullier        17  MF  1  5 14  3 $8,056   OK   7.4M    N/A
+A_Dussault       18  MF  1  5 14  4 $8,313   OK   6.3M    N/A
+R_Bull           19  FW  1 10  6 18 $22,633  OK   28.25M  N/A
+E_Suija          19  FW  1  8  4 16 $14,308  OK   9.4M    N/A

@@ -1,0 +1,11 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+E_Kytchen        19  GK 16  1  1  1 $9,500   OK   5.3M    N/A
+M_Eveleigh       19  DF  1 17  4  5 $14,493  OK   13.75M  N/A
+P_Kussmaul       19  DF  1 16  8  4 $14,308  OK   9.4M    N/A
+A_Burnam         17  DF  1 15  8  4 $12,319  OK   11M     N/A
+J_Rydel          19  MF  1 13 17  4 $19,152  OK   18.25M  N/A
+H_Ryttergods     19  MF  1  6 15  3 $11,040  OK   5.8M    N/A
+Y_Gumpman        19  FW  1 11  9 17 $19,928  OK   19M     N/A
+X_Kuippers       17  FW  1  2 10 14 $9,728   OK   8.9M    N/A
+A_Guidetti       17  FW  1  4  5 14 $8,313   OK   7.6M    N/A

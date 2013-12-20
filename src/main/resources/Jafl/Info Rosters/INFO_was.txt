@@ -1,0 +1,26 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Treadstone       32  GK 25  1  1  1 $88,000  OK   14.25M  N/A
+T_Theoharris     22  GK 24  1  1  1 $78,000  OK   73M     N/A
+V_Altieri        29  GK 21  2  2  2 $38,000  OK   2.5M    N/A
+J_Beardmore      20  GK 16  1  1  1 $9,500   OK   0K      N/A
+D_Raike          30  DF  2 26 17  5 $161,322 OK   59.25M  N/A
+N_Base           33  DF  1 23 12  1 $82,965  OK   5.7M    N/A
+L_Ryan           23  DF  2 22 21 19 $110,835 OK   66.5M   N/A
+K_Fereneaba      26  DF  2 22 10  6 $72,217  OK   28.75M  N/A
+M_Seder          22  DF  1 22 20 10 $97,090  OK   64.5M   N/A
+W_Keifer         21  DF  1 18 17  8 $28,466  OK   1.9M    N/A
+P_Maslonka       20  DF  1 16 15 11 $20,543  OK   0K      N/A
+N_Melary         32  MF  2 18 26  7 $169,238 OK   40.25M  N/A
+K_Raikkonen      26  MF  1 19 25  9 $161,920 OK   119M     N/A
+R_Kelly          28  MF  1 16 23  4 $96,582  OK   38.5M   N/A
+T_Hawley         24  MF  1 21 22  5 $92,508  OK   49.25M  N/A
+E_Beisch         24  MF  2  7 22  5 $65,017  OK   34.5M   N/A
+T_Miyamura       22  MF  1 10 20  4 $40,364  OK   1.9M    N/A
+P_Buswell        20  MF  1  7 20  2 $35,100  OK   26M     N/A
+G_Beening        22  MF  1  7 19 19 $38,800  OK   0K      N/A
+L_Schoppe        20  MF  1  6 19 12 $31,900  OK   8.3M    N/A
+K_Felan          25  FW  1  7 20 24 $145,275 OK   112M     N/A
+Papa_Lazarou     22  FW  1  5 20 23 $107,173 OK   107M     N/A
+L_Vaz_Te         26  FW  2  6 11 21 $59,713  OK   9.4M    N/A
+R_Gelman         20  FW  1 12 18 19 $40,900  OK   10.75M  N/A

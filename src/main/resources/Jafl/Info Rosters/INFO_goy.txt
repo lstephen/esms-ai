@@ -1,0 +1,17 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+L_Feifarek       19  GK 20  1  1  1 $27,000  OK   30M     N/A
+N_Nunlist        19  GK 16  1  1  1 $9,500   OK   5.3M    N/A
+J_Subatin        17  GK 13  1  1  1 $4,000   OK   2.8M    N/A
+L_Hushbeck       19  DF  1 18 14  9 $26,833  OK   33.5M   N/A
+L_Aldai          19  DF  1 17  6 14 $20,511  OK   19.5M   N/A
+C_Burda          19  DF  1 17  6  3 $14,687  OK   14M     N/A
+O_Gwathney       18  DF  1 16 12  2 $15,734  OK   14.25M  N/A
+P_Gruissem       17  DF  1 15 11  3 $13,440  OK   12M     N/A
+K_Ehrlich        19  MF  1 14 18 11 $27,766  OK   34.5M   N/A
+L_Hussie         19  MF  1  3 18  9 $20,533  OK   25.5M   N/A
+S_Fenham         19  MF  1  6 15  4 $11,359  OK   6M      N/A
+I_Mullinax       19  MF  1  5 15 14 $15,520  OK   8.2M    N/A
+X_Moutrie        19  FW  1  4 10 18 $21,699  OK   27M     N/A
+U_Cumming        19  FW  1  7  8 17 $17,405  OK   16.5M   N/A
+N_Lundeen        17  FW  1  6  3 14 $8,442   OK   7.7M    N/A

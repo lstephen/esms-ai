@@ -1,0 +1,11 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+A_Stromberg      19  GK 19  1  1  1 $19,000  OK   21.25M  N/A
+E_Yowell         18  GK 15  1  1  1 $8,000   OK   5M      N/A
+F_Buskey         19  DF  1 17  4  3 $13,523  OK   12.75M  N/A
+X_Crye           19  DF  1 17  4  3 $13,523  OK   12.75M  N/A
+Y_Dehoyos        19  MF  1  6 18 14 $25,433  OK   31.75M  N/A
+L_Wytch          19  MF  1  3 18  9 $20,533  OK   25.5M   N/A
+Marcos_Junior    19  FW  1 10  7 17 $18,570  OK   17.5M   N/A
+O_Evemy          19  FW  1  9 10 17 $19,346  OK   18.25M  N/A
+A_Ruse           18  FW  1 10  3 15 $12,960  OK   9.6M    N/A

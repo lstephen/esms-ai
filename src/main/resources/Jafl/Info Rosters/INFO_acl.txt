@@ -1,0 +1,25 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Juan_Toro        33  GK 24  2  2  2 $78,000  OK   6.3M    N/A
+N_Sandberg       33  GK 21  2  2  2 $38,000  OK   200K    N/A
+S_da_Bahia       26  DF  1 25 17  3 $142,912 OK   105M     N/A
+C_Balzli         31  DF  2 24  7 20 $145,275 OK   22.25M  N/A
+J_Bond           23  DF  2 23 13 22 $123,816 OK   111.25M  N/A
+C_Senor          30  DF  2 23  9 15 $101,877 OK   14M     N/A
+Akihito          22  DF  2 23 18 20 $126,842 OK   126.75M  N/A
+X_Engemann       33  DF 13 21  9  4 $54,285  OK   350K    N/A
+J_Kersten        27  DF  2 21 15  5 $65,142  OK   8.5M    N/A
+P_Cece           22  DF  1 21  9  4 $54,285  OK   14.25M  N/A
+S_Zyph           20  DF  1 18  6  4 $18,899  OK   1.7M    N/A
+N_Kempher        20  DF  1 18  7  6 $20,533  OK   1.9M    N/A
+O_Federspiel     20  DF  1 18  6  8 $21,233  OK   1.9M    N/A
+M_Shankel        29  MF  2 14 25 10 $148,191 OK   54.5M   N/A
+U_Kelsheimer     24  MF  2 18 23 14 $116,251 OK   93M     N/A
+S_McDuck         28  MF  1 10 23  9 $90,530  OK   36M     N/A
+J_Kelp           22  MF  2 19 23 11 $113,982 OK   113.75M  N/A
+Stin_Ki_Poo      23  MF  1 15 22 11 $88,580  OK   53M     N/A
+F_Massimini      27  MF  2 14 20  4 $45,224  OK   1M      N/A
+Kleber           29  FW  2  8 14 24 $129,675 OK   42.75M  N/A
+A_Agadoo         32  FW  2  7 12 23 $92,043  OK   8.2M    N/A
+E_Kennefick      25  FW  2 14  5 21 $63,513  OK   11.5M   N/A
+A_Albertie       20  FW  1 15  4 18 $25,199  OK   2.3M    N/A

@@ -3,6 +3,7 @@ package com.ljs.ifootballmanager.ai.player;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
@@ -11,6 +12,7 @@ import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import com.ljs.ifootballmanager.ai.value.Evaluator;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,6 +28,8 @@ public final class Player {
 
     private final Ratings ratings;
 
+    private final Ratings abilities;
+
     private Integer fitness = 100;
 
     private Boolean injured = Boolean.FALSE;
@@ -36,14 +40,15 @@ public final class Player {
 
     private String comment = "";
 
-    private Player(String name, Integer age, Ratings ratings) {
+    private Player(String name, Integer age, Ratings ratings, Ratings abilities) {
         this.name = name;
         this.age = age;
         this.ratings = ratings;
+        this.abilities = abilities;
     }
 
     public Player atPercent(Integer percentage) {
-        return new Player(name, age, ratings.atPercent(percentage));
+        return new Player(name, age, ratings.atPercent(percentage), abilities);
     }
 
     public Player afterMinutes(Integer minutes) {
@@ -73,11 +78,30 @@ public final class Player {
     }
 
     public Integer getValue() {
-        Integer ovr = getOverall(Tactic.NORMAL).getRating();
+        List<Double> overalls = Lists.newArrayList();
 
-        Integer age = (46 - getAge());
+        for (Role r : Role.values()) {
+            for (Tactic t : Tactic.values()) {
+                Integer rt = Evaluator.create(ratings).evaluate(r, t).getRating();
+                Integer ab = Evaluator.create(abilities).evaluate(r, t).getRating();
 
-        return (ovr * ovr * age) / 10000;
+                overalls.add(rt + (double) ab / 1000);
+            }
+        }
+
+        Double ovr = Ordering.natural().max(overalls);
+
+        Double ageFactor = 4.0 - (getAge() - 22) * .1;
+
+        if (getAge() < 22) {
+            ageFactor *= 1.0 + (22 - getAge()) / 6;
+        }
+
+        if (getAge() > 30) {
+            ageFactor *= 1.0 - (getAge() - 30) / 6;
+        }
+
+        return (int) ((ovr * getOverall(Tactic.NORMAL).getRating() * ageFactor) / 1000);
     }
 
     public void setFitness(Integer fitness) {
@@ -150,6 +174,10 @@ public final class Player {
         return ratings.getSkill(rt);
     }
 
+    public Double getSkillWithAbility(Rating rt) {
+        return (double) abilities.getSkill(rt) / 1000 + ratings.getSkill(rt);
+    }
+
     public Integer getMaximumSkill() {
         return ratings.getMaximumSkill();
     }
@@ -175,8 +203,8 @@ public final class Player {
         return name.hashCode();
     }
 
-    public static Player create(String name, Integer age, Ratings ratings) {
-        return new Player(name, age, ratings);
+    public static Player create(String name, Integer age, Ratings ratings, Ratings abilities) {
+        return new Player(name, age, ratings, abilities);
     }
 
     public static Ordering<Player> byOverall(final Tactic t) {

@@ -16,7 +16,7 @@ public class Pbemff implements Weightings {
 
     private static final Table TABLE = Table
         .builder()
-        .forAllTactics(Role.GK, Weighting.builder().st(175).build())
+        .forAllTactics(Role.GK, Weighting.builder().st(150).build())
         .add(Role.DF, Tactic.NORMAL, Weighting.create(100, 50, 30))
         .add(Role.MF, Tactic.NORMAL, Weighting.create(30, 100, 30))
         .add(Role.FW, Tactic.NORMAL, Weighting.create(30, 30, 100))
