@@ -11,7 +11,6 @@ K_Von_Ulm        32  DF  3 23 19  9 $110,956 OK   9.9M    N/A
 B_Cassotto       22  DF  1 23 13 15 $107,929 OK   107.75M  N/A
 M_de_Cesare      32  DF  2 22 11  7 $75,490  OK   3M      N/A
 I_Haward         23  DF  2 22  5 10 $70,908  OK   42.5M   N/A
-P_Psmith         21  DF  1 20  8 14 $48,465  OK   26.75M  N/A
 J_Eisenhuth      26  MF  2  6 24 18 $137,475 SUS  90.75M  N/A
 A_Eikamp         26  MF  2 17 24  7 $136,500 OK   90.25M  N/A
 L_Pera           32  MF  3 18 24  9 $143,325 OK   17.75M  N/A

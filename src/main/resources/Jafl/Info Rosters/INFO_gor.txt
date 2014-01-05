@@ -1,6 +1,6 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
-M_Census         25  GK 25  2  2  2 $88,000  OK   64.25M  N/A
+M_Census         25  GK 25  2  2  2 $88,000  OK   64.25M  On_Loan(MID)
 X_Schu           23  GK 20  1  1  1 $27,000  OK   900K    N/A
 E_Beeden         25  DF  2 22 18 14 $98,399  OK   45.75M  N/A
 R_Degge          26  DF  2 22 14  5 $78,763  OK   31.5M   N/A
@@ -18,5 +18,6 @@ K_Aktabowski     22  MF  1 14 21  6 $64,599  OK   16.75M  N/A
 G_Pelis          21  MF  1  6 21 10 $58,085  OK   48M     N/A
 Q_Latchu         24  MF  2  6 19 17 $36,400  OK   0K      N/A
 O_Albort         20  MF  1  6 19 12 $31,900  OK   8.3M    N/A
+L_Selders        22  FW  1  9 20 22 $95,781  OK   63.75M  On_Loan(MID)
 P_Pearia         25  FW  2 11  8 21 $61,885  OK   11.25M  N/A
 H_Sugajima       21  FW  1  5 10 21 $56,999  OK   47.25M  N/A

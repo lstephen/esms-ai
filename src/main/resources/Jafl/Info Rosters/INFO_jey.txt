@@ -1,12 +1,15 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 M_Pugliese       18  GK 16  1  1  1 $9,500   OK   7.4M    N/A
+V_Hutzel         18  GK 15  1  1  1 $8,000   OK   5M      N/A
 P_Lvcall         18  GK 13  1  1  1 $4,000   OK   2.3M    N/A
 R_Bures          18  DF  1 16  3  8 $13,952  OK   12.75M  N/A
 G_Curle          19  DF  1 16  2  5 $11,993  OK   7.8M    N/A
 E_Szadowski      19  DF  1 16  4  6 $13,239  OK   8.7M    N/A
 G_Nulph          19  DF  1 15  6  4 $11,359  OK   6M      N/A
+R_Burhyte        18  DF  1 15  4  8 $12,319  OK   9.1M    N/A
 Y_Pummill        18  DF  1 14  6  5 $8,956   OK   6.7M    N/A
+D_Swickard       17  DF  1 14  4 13 $11,399  OK   10.25M  N/A
 U_Guidetti       19  MF  1  6 17  4 $15,075  OK   14.25M  N/A
 P_Cseh           19  MF  1  4 16  7 $13,774  OK   9M      N/A
 F_Aumend         18  MF  1  4 16  9 $14,843  OK   13.5M   N/A
@@ -15,4 +18,5 @@ L_Bundren        17  MF  1  6 15  2 $10,720  OK   9.6M    N/A
 C_Bunyea         18  MF  1 12 14  6 $11,527  OK   8.7M    N/A
 C_Owen           17  FW  1  5  2 15 $10,240  OK   9.2M    N/A
 L_Bullard        17  FW  1  7  3 15 $11,520  OK   10.25M  N/A
+L_Puoci          17  FW  1  2  6 15 $10,720  OK   9.6M    N/A
 W_Cefai          19  FW  1  5 11 14 $10,885  OK   5.8M    N/A

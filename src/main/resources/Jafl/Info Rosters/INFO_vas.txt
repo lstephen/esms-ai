@@ -8,6 +8,7 @@ J_Cunerty        20  GK 17  1  1  1 $11,000  OK   0K      N/A
 V_Habel          28  DF  1 25 11  7 $132,351 OK   64.75M  N/A
 G_Jerrett        24  DF  1 23 15 13 $107,929 OK   86.25M  N/A
 M_Katsumoto      25  DF  2 22 15  8 $84,653  OK   39.5M   N/A
+Dede             22  DF  1 22 19  8 $92,508  OK   61.5M   On_Loan(FCB)
 V_Laundry        23  DF  1 21 10  6 $58,085  OK   13.75M  N/A
 Q_Thetreau       22  DF  1 21  6 10 $58,085  OK   15.25M  N/A
 B_DeForest       23  DF  1 21  4  9 $54,285  OK   12.75M  N/A

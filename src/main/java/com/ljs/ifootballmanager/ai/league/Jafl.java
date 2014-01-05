@@ -8,6 +8,8 @@ import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
+import com.ljs.ifootballmanager.ai.value.PlayerValue;
+import com.ljs.ifootballmanager.ai.value.player.JaflPlayerValue;
 
 /**
  *
@@ -52,6 +54,10 @@ public class Jafl implements League {
     @Override
     public Boolean isReserveEligible(Player p) {
         return p.getAge() <= 19 && p.getMaximumSkill() <= 18;
+    }
+
+    public PlayerValue getPlayerValue() {
+        return JaflPlayerValue.create();
     }
 
     public static Jafl get() {

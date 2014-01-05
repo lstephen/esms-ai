@@ -10,7 +10,6 @@ J_DeRemer        29  DF  2 22  6 14 $80,072  OK   16M     N/A
 O_Marrs          22  DF  1 22 20  7 $93,163  OK   62M     N/A
 B_DelFierro      23  DF  2 21 13  5 $61,884  OK   14.5M   N/A
 V_Peedin         20  DF  1 19  6  4 $25,300  OK   6.6M    N/A
-K_Fehlmann       20  DF  1 17 10  7 $18,570  OK   0K      N/A
 G_Hecke          30  MF  2 12 23 17 $110,956 OK   15.25M  N/A
 J_LeBron         25  MF  1  9 23 14 $99,608  OK   69.5M   N/A
 C_Matheral       24  MF  1 13 23  7 $94,312  OK   75.25M  N/A
@@ -21,11 +20,8 @@ Thiago_Silva     22  MF  1 15 21  5 $65,142  OK   17M     N/A
 P_Genth          22  MF  1  4 20 17 $48,869  OK   2.3M    N/A
 S_Aune           20  MF  1  6 18  5 $19,366  OK   1.7M    N/A
 J_Schubmehl      21  MF  1 10 17 13 $21,482  OK   0K      N/A
-X_Rechcygl       20  MF  1  5 17 12 $18,957  OK   0K      N/A
-J_Mahony         31  FW  2  6  9 23 $83,721  OK   9.2M    N/A
+J_Mahony         31  FW  2  6  9 24 $111,150 OK   17M     N/A
 A_Sharpe         29  FW  2  5 16 22 $82,690  OK   16.5M   N/A
-J_Offerle        27  FW  2  8  4 21 $52,657  OK   6.9M    N/A
 I_Kerchhoff      22  FW  1  9 16 21 $71,113  OK   18.5M   N/A
 M_Bellissimo     21  FW  1 10  6 20 $41,985  OK   23.25M  N/A
 D_Kubista        20  FW  1  8  3 19 $26,500  OK   6.9M    N/A
-B_Delhomme       20  FW  1  8  3 17 $15,852  OK   0K      N/A

@@ -13,7 +13,6 @@ D_Mastowski      25  DF  2 21  6  9 $56,456  OK   10.25M  N/A
 F_Peaks          20  DF  1 20 19  5 $52,110  OK   38.5M   N/A
 A_Eger           20  DF  1 19  9 16 $37,300  OK   9.8M    N/A
 M_Sveda          20  DF  1 19  9  3 $27,400  OK   7.2M    N/A
-X_Alderfer       20  DF  1 16  3  7 $13,418  OK   0K      N/A
 K_Saulteaux      30  MF  2 14 27  8 $171,600 OK   71.5M   N/A
 A_Radisch        31  MF  3 15 27 12 $184,800 OK   61.5M   N/A
 I_McAlinden      29  MF  3  7 26 22 $182,807 OK   71.5M   N/A
@@ -23,8 +22,7 @@ S_Cacnio         32  MF  3  9 22  5 $68,945  OK   2.8M    N/A
 H_Ulery          23  MF  2 10 22  7 $73,526  OK   44M     N/A
 L_Rebic          25  MF  2  9 21  5 $55,370  OK   10M     N/A
 P_Lastley        21  MF  1  5 20  8 $38,745  OK   21.5M   N/A
-Q_Cavallaro      20  MF  1 11 18  6 $23,333  OK   2.1M    N/A
 A_Glick          32  FW  3  6 10 27 $152,400 OK   41.25M  N/A
 A_Kardek         28  FW  2 14  8 27 $171,600 OK   97M     N/A
+H_Pederson       24  FW  1 23  6 24 $152,100 OK   134M     N/A
 I_Lebree         28  FW  2 10  7 20 $42,794  OK   800K    N/A
-V_Weibmann       20  FW  1  7 12 16 $17,515  OK   0K      N/A

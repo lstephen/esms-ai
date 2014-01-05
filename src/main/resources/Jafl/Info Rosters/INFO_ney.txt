@@ -1,11 +1,22 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 E_Kytchen        19  GK 16  1  1  1 $9,500   OK   5.3M    N/A
+F_Cudmore        18  GK 15  1  1  1 $8,000   OK   5M      N/A
 M_Eveleigh       19  DF  1 17  4  5 $14,493  OK   13.75M  N/A
 P_Kussmaul       19  DF  1 16  8  4 $14,308  OK   9.4M    N/A
 A_Burnam         17  DF  1 15  8  4 $12,319  OK   11M     N/A
+N_Auty           18  DF  1 14  3  6 $8,442   OK   6.4M    N/A
+D_Luscher        18  DF  1 14  6  3 $8,442   OK   6.4M    N/A
+Q_Fundis         16  DF  1 14  3  7 $8,828   OK   9.5M    N/A
+T_Duvernay       16  DF  1 12  3  2 $3,600   OK   1.2M    N/A
 J_Rydel          19  MF  1 13 17  4 $19,152  OK   18.25M  N/A
+I_Rush           18  MF  1  4 16  3 $11,815  OK   10.75M  N/A
 H_Ryttergods     19  MF  1  6 15  3 $11,040  OK   5.8M    N/A
-Y_Gumpman        19  FW  1 11  9 17 $19,928  OK   19M     N/A
+E_Kueker         17  MF  1  4 15  3 $10,080  OK   9.1M    N/A
+S_Gonzalez       19  MF  1  2 15 10 $12,640  OK   6.7M    N/A
+I_Zurkuhlen      18  MF  1  5 14  3 $8,056   OK   6.1M    N/A
+P_Dyrland        17  MF  1  8 13  3 $6,307   OK   5.3M    N/A
+H_Fuselier       19  FW  1  5  3 15 $10,560  OK   5.6M    N/A
+M_Duplanty       18  FW  1  4  5 14 $8,313   OK   6.3M    N/A
 X_Kuippers       17  FW  1  2 10 14 $9,728   OK   8.9M    N/A
 A_Guidetti       17  FW  1  4  5 14 $8,313   OK   7.6M    N/A

@@ -14,7 +14,6 @@ A_Bradshaw       20  DF  1 20  5 12 $43,605  OK   32.25M  N/A
 E_Murphy         20  DF  1 20  3  6 $34,695  OK   25.5M   N/A
 W_Reava          20  DF  1 18  9 12 $25,433  OK   2.3M    N/A
 K_Thurling       29  MF  2  9 27  6 $148,800 OK   63M     N/A
-N_Chater         27  MF  2  7 25 17 $151,359 OK   92.75M  N/A
 S_E_Hillary      26  MF  1  2 25 20 $150,304 OK   110.5M   N/A
 T_Wilson         30  MF  2 17 25  5 $147,136 OK   43.25M  N/A
 A_Pausner        23  MF  1 11 23  7 $89,773  OK   80.75M  N/A

@@ -4,7 +4,6 @@ T_Ravelli        24  GK 26  2  2  2 $98,000  OK   87M     N/A
 U_Yarish         27  GK 20  2  2  2 $27,000  OK   550K    N/A
 Diego_C          31  GK 19  2  2  2 $19,000  OK   0K      N/A
 F_Mahar          31  DF  2 27  6 12 $159,600 OK   53M     N/A
-L_Kanaga         31  DF  1 27  6 10 $152,400 OK   50.75M  N/A
 M_Papineau       26  DF  2 26  3 12 $139,838 OK   109.5M   N/A
 C_Davies         23  DF  1 24 21 18 $169,650 OK   168.25M  N/A
 C_Sharper        29  DF  2 23  5  9 $82,208  OK   24.5M   N/A

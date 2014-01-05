@@ -6,6 +6,7 @@ AJ_Babaflex      20  GK 20  1  1  1 $27,000  OK   17M     N/A
 K_Bellion        21  GK 19  1  1  1 $19,000  OK   3.1M    N/A
 Y_Cadarette      30  DF  2 26  8 13 $154,537 OK   56.75M  N/A
 T_Campbell       22  DF  1 24 15 11 $138,450 OK   152.5M   N/A
+N_Base           33  DF  1 24 12  1 $110,175 OK   10.5M   N/A
 Q_Perelman       27  DF  2 23 14  7 $96,582  OK   48.25M  N/A
 AJ_Jackson       25  DF  1 23 11 14 $102,634 SUS  71.75M  N/A
 S_Taylor         24  DF  2 23  8 14 $98,095  OK   78.25M  N/A
@@ -13,7 +14,6 @@ G_Jasnau         28  DF  2 22  4  8 $65,672  OK   17.5M   N/A
 A_Foote          26  DF  2 20  6  5 $36,315  OK   1M      N/A
 A_Rat            24  DF  2 20 10  6 $41,985  OK   1.6M    N/A
 D_Tepe           21  DF  1 20  8 17 $52,110  OK   28.75M  N/A
-Avinho           21  DF  1 20 18  7 $52,514  OK   29M     N/A
 Neo_Nate         20  DF  1 20 12  8 $46,035  OK   34M     N/A
 AJ_N_Zone        24  MF  2 10 24 20 $151,124 OK   133.25M  N/A
 Cando_Santos     28  MF  2 16 24  5 $129,675 OK   57M     N/A

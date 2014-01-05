@@ -7,6 +7,8 @@ import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
+import com.ljs.ifootballmanager.ai.value.OverallValue;
+import com.ljs.ifootballmanager.ai.value.PlayerValue;
 import java.util.Collections;
 
 /**
@@ -59,6 +61,10 @@ public class IFootballManager implements League {
 
     public static IFootballManager get() {
         return INSTANCE;
+    }
+
+    public PlayerValue getPlayerValue() {
+        return OverallValue.create();
     }
 
 

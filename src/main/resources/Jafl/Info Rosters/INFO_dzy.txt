@@ -1,16 +1,25 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 D_Routier        17  GK 16  1  1  1 $9,500   OK   9M      N/A
+I_Cubbage        17  GK 15  1  1  1 $8,000   OK   6.1M    N/A
 A_Mummey         19  GK 14  1  1  1 $6,000   OK   2.7M    N/A
 P_Awig           19  DF  1 16  5  5 $13,062  OK   8.5M    N/A
+P_Wostianziz     18  DF  1 16  3  2 $10,924  OK   10M     N/A
 Q_Runciman       18  DF  1 15  7 10 $14,239  OK   10.5M   N/A
+Y_Bundy          17  DF  1 15  4  4 $10,399  OK   9.3M    N/A
+Carlos_Ruiz      16  DF  1 14 11  5 $10,885  OK   11.75M  On_Loan(FCB)
+E_Luisao         17  DF  1 13  3  3 $4,922   OK   4.1M    N/A
+P_Zygo           16  DF  1 13  5  4 $5,660   OK   5.6M    N/A
 U_Rychetsky      19  MF  1  5 16  4 $12,705  OK   8.3M    N/A
 T_Mroz           17  MF  1  4 16 11 $15,911  OK   17.75M  N/A
+Y_Augustine      19  MF  1  3 16 13 $16,624  OK   10.75M  N/A
 O_Moziy          19  MF  1  7 15  5 $12,160  OK   6.4M    N/A
 W_Butze          18  MF  1  2 15  6 $10,720  OK   7.9M    N/A
-Y_Augustine      19  MF  1  3 15 13 $14,400  OK   7.6M    N/A
 J_Cunerty        19  MF  1  3 14  6 $8,442   OK   4.5M    N/A
+D_Jurcievic      17  MF  1  7 14  4 $9,085   OK   8.3M    N/A
+Tyrone_Peters    16  MF  1 12 14  2 $10,499  OK   11.25M  On_Loan(FCB)
 J_Azzara         18  MF  1  2 13  7 $5,845   OK   4M      N/A
+U_Azopardi       16  MF  1 11 12  4 $5,699   OK   1.8M    N/A
 Kiko             17  FW  1  6  7 16 $14,487  OK   16M     N/A
 T_Parka          18  FW  1 10  3 16 $15,021  OK   13.75M  N/A
 Y_Luttman        18  FW  1  4  2 13 $5,014   OK   3.5M    N/A

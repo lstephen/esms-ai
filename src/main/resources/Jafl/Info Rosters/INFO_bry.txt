@@ -2,16 +2,24 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 M_Rypski         19  GK 17  1  1  1 $11,000  OK   8.9M    N/A
 C_Kutassy        18  GK 15  1  1  1 $8,000   OK   5M      N/A
+O_Swinn          16  GK 14  1  1  1 $6,000   OK   5.5M    N/A
 J_Helppi         19  DF  1 18  3  7 $19,133  OK   23.75M  N/A
 J_Mercier        18  DF  1 16  9  2 $14,131  OK   13M     N/A
 S_Trickett       18  DF  1 15  1  6 $10,400  OK   7.7M    N/A
 J_Koon           19  DF  1 15  5  4 $10,879  OK   5.7M    N/A
 Q_Curryer        18  DF  1 14  7  4 $9,085   OK   6.8M    N/A
+S_Muenchau       18  DF  1 14  3  6 $8,442   OK   6.4M    N/A
+Q_Nyas           17  DF  1 14  5  4 $8,313   OK   7.6M    N/A
+M_Rukin          16  DF  1 14  3  3 $7,285   OK   7.8M    N/A
 K_Suchar         18  DF  1 13  8  2 $6,122   OK   4.2M    N/A
 M_Dyssel         18  DF  1 13  8  5 $6,676   OK   4.6M    N/A
+D_Hugeback       16  DF  1 13  6  3 $5,753   OK   5.7M    N/A
+U_Workley        17  DF  1 13  6  2 $5,568   OK   4.7M    N/A
 I_Sahamies       18  MF  1 10 17 12 $20,899  OK   27.75M  N/A
 M_Ho             19  MF  1  4 17 15 $20,316  OK   19.25M  N/A
 R_Puhn           18  MF  1  4 16  6 $13,239  OK   12M     N/A
 P_Wranik         18  MF  1  8 14 10 $11,271  OK   8.5M    N/A
+A_Dushaw         17  MF  1  2 13  8 $6,122   OK   5.2M    N/A
 Q_Fyrk           19  FW  1  5  6 17 $15,463  OK   14.75M  N/A
 Y_Fennel         19  FW  1  9  3 15 $12,480  OK   6.6M    N/A
+A_Pugliese       16  FW  1  2  9 14 $9,342   OK   10M     N/A

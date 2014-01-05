@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai.report;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -30,6 +31,10 @@ public class SquadSummaryReport implements Report {
         this.reservesXI = builder.reservesXI;
     }
 
+    private Long getMax(Role r, Tactic t, Iterable<Player> ps) {
+        return Math.round((double) Player.byRating(r, t).max(ps).getRating(r, t) / 100);
+    }
+
     private Long getMin(Role r, Iterable<Player> ps) {
         return getMin(r, Tactic.NORMAL, ps);
     }
@@ -56,7 +61,7 @@ public class SquadSummaryReport implements Report {
 
         w.format("%28s ", "Max");
         for (Role r : roles) {
-            w.format("%5s ", Math.round((double) Player.byRating(r, Tactic.NORMAL).max(squad.players()).getRating(r, Tactic.NORMAL) / 100));
+           w.format("%5s ", getMax(r, Tactic.NORMAL, squad.players()));
         }
         w.println();
 
@@ -73,6 +78,19 @@ public class SquadSummaryReport implements Report {
             ImmutableSet<Player> ps = firstXI.players(r);
 
             w.format("%5s ", ps.isEmpty() ? "" : getMin(r, firstXI.getTactic(), ps));
+        }
+        w.println();
+
+        ImmutableSet<Player> replacements = ImmutableSet.copyOf(Sets.difference(squad.players(), ImmutableSet.copyOf(firstXI.players())));
+        w.format("%28s ", "Replacement (N)");
+        for (Role r : roles) {
+            w.format("%5s ", getMax(r, Tactic.NORMAL, replacements));
+        }
+        w.println();
+
+        w.format("%27s ", "Replacement (" + firstXI.getTactic().getCode() + ")");
+        for (Role r : roles) {
+            w.format("%5s ", getMax(r, firstXI.getTactic(), replacements));
         }
         w.println();
 

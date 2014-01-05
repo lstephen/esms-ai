@@ -1,6 +1,6 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
-R_Pasveer        23  GK 25  1  1  1 $88,000  OK   82.5M   N/A
+R_Pasveer        23  GK 25  1  1  1 $88,000  OK   82.5M   On_Loan(LEI)
 Y_Weems          25  GK 20  2  2  2 $27,000  OK   700K    N/A
 V_Bechger        20  GK 19  1  1  1 $19,000  OK   4.2M    N/A
 J_Cecil          21  GK 17  1  1  1 $11,000  OK   0K      N/A
