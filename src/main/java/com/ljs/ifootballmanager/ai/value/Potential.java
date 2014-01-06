@@ -6,8 +6,8 @@ import com.ljs.ifootballmanager.ai.player.Player;
  *
  * @author lstephen
  */
-public interface PlayerValue {
+public interface Potential {
 
-    Integer getValue(Player p);
+    Player atPotential(Player p);
 
 }

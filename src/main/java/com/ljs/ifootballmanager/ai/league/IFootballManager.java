@@ -8,7 +8,9 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
 import com.ljs.ifootballmanager.ai.value.OverallValue;
-import com.ljs.ifootballmanager.ai.value.PlayerValue;
+import com.ljs.ifootballmanager.ai.value.Potential;
+import com.ljs.ifootballmanager.ai.value.Value;
+import com.ljs.ifootballmanager.ai.value.impl.NullPotential;
 import java.util.Collections;
 
 /**
@@ -63,8 +65,12 @@ public class IFootballManager implements League {
         return INSTANCE;
     }
 
-    public PlayerValue getPlayerValue() {
+    public Value getPlayerValue() {
         return OverallValue.create();
+    }
+
+    public Potential getPlayerPotential() {
+        return NullPotential.create();
     }
 
 

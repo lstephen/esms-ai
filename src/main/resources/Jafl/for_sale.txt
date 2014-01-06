@@ -1,80 +1,18 @@
-Shere_Kahn    23 swe  1  8  8 22 22 464 779 779 482  # Tigers
-J_Jordan      31 sco  2 16 25 10 11 582 378  79 848 # Tigers
-B_Shadick     29 saf  2  5 11 26 17 982 977 397 439 # Tigers
-A_Wysinger    18 aus  1 17 10  2 13 552 366 583 772 # Tigers
-S_Hebden      17 eng  1 11  5 15 20 426 274 741 835 # Tigers
+S_Ryder       18 eng 16  1  1  1 51  65 552 552 552 # Tiger
 
-L_Selders     22 den  1  9 20 22 57 893  56 881 343 # Midland
-A_Matheson    21 sco  1 20  5 13 19 732 415 196  47 # To me -Midland - $5m
-L_Maul        21 eng  1 20  7  5 11 876 319 929 741 # Midland - $3m
+A_Wysinger    18 aus  1 17 12  2 13 552 366 583 772 # Tiger
+Q_Burruel     18 xxx  1 16  3  2 24 300 177 117 315 #Tiger
+O_Ewing       19 usa  1 15  8  2  8 426 247 435 983 #Tiger -300k
+M_Pue         16 xxx  1 13  6  6 23 300 803 663 217 #Tiger -500k
 
-S_Aldarelli   19 ita  1 15  5  8 23 684 709 982 415 # Midlane - $2m
-Q_Curtsinger  18 ger  1  5 15  3 37 588 407 437 431 # Midland - $2m
-Q_Kubbernuss  19 ger  1  4 15  8 35 444 837 255 510 # Midland - $2m
-K_Gemme       19 ire  1  8 14  5 70 636 233 879 746 # Midland - $1m
-H_Bishop      19 aus  1 13  3 14 50 676 360 861 266 # To me - Midland - $1m
+P_Buskala     17 xxx  1  9 14  1 13 300 158 622 102 #Tiger
 
-N_Tidline     28 aus  2 14 24  8 25 518 443 399 485 # Studley
-Julio_Geordio 28 col  2  8 24 14 31 430 806  77 384 # Studley
-S_Johnson     31 eng  1 25 12 10 14 364 399 401 795 # Studley
+Diego         17 spa  1  6  2 15 25 300 176 311 168 #Tiger
 
-R_Felisky     24 rus  1 12 23  5 18 998 145 763 619 # Coogee
-Thiago_Silva  22 bra  1 15 21  5  9 702 958 830   8 # Coogee - $28m
-C_Bronson     20 eng  1 20 10  6 14 840   9 159 914 # Coogee - $25m
-J_Dos_Santos  20 aus  1  5 10 19 11 588  37 773 389 # Coogee - $10m
+Po_Kurr       16 jap  1  5 14  4 20 300 131 121 166 # £5.0M - Leicester
 
-O_Yarney      20 usa  1 18  8  5 35 618 640 757   6 # Leicester - £1m
-M_Albertson   19 saf 15  1  1  1 14 627 642 642 642 # Leicester - £1.5m
-
-Carlinhos     20 bra  1 20  8  5  8 876  86 927 929 #  Gareth James
-Eliezio       20 bra  1 19 10  7 24 876 681  47  59 # Gareth James
-M_Zare        20 per  1 19 18  5 18 732 922 583 666 # Gareth James
-J_Enriquez    20 mex  1 11 19  5 17 560 698 427 983 # Gareth James
-F_Egerton     24 nir  1 21 23  5 19 912  27  15 370
-
-K_Bellion     21 fra 19  1  1  1 21 155 976 976 976 #KPK - Sale
-D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 #KPK - Loan/Sale
-Avinho        21 bra  1 20 18  7 23 516 591 993 489 #KPK - Loan/Sale
-Neo_Nate      20 eng  1 20 12  8 23 770 110 495 737 #KPK - Loan/Sale
-Ji_Sun_Wo     21 kor  1 13 20  9 26 734 299 938 598 #KPK - Sale
-P_Masiker     20 sen  1  9 19  6  9 680 665 174 279 #KPK - Sale
-H_Rodriguez   20 mex  1 13 17  4 16 554 685  72 312 #KPK - Sale
-J_Applewhite  21 usa  1  5 15 21 43 914  37 781 254 #KPK - Loan/Sale
-T_Redington   20 eng  1 15  5 17 32 626 259  54 266 #KPK - Sale
-
-N_Lamptey     33 gha  1  8 23 13 30 480 406 169 501 # Simon Brown
-
-K_Thurling    29 gha  2  9 27  6  8 391 345  51  94 # Scranii
-N_Chater      27 saf  2  7 25 17  8 514 603 229   6 # Scranii
-
-U_Demuro      27 arg  2 24 12  7 26 216 330 439 823 # Dezbru - for FW
-Q_Gendreau    27 rom  2 24 13  5  8 181 501 331 428 # Dezbru - for FW
-S_Butz        27 hun  2 24  7  5 14 212 105 854 371 # Dezbru - for FW
-L_Sharkey     27 wal  2 23  6 10 28 249 695  17 769 # Dezbru - for FW
-I_Scrooby     23 usa  1 23  4 10 29 804   7 650 440 # Dezbru - for FW
-H_Pefley      22 sco  1 23 14  6 28 732 299 411 297 # Dezbru - for FW
-
-R_Marshall    22 eng 21  1  1  1 38 783 391 391 391 #CSS
-S_Albert      22 fra  1 22 11  5 32 570 341 208 948 #CSS
-E_Ogren       21 nir  1 20 14  6  8 786 651 913 669 #CSS
-G_LaSalle     22 fra  1  6 22 12 16 516 661 112 381 #CSS
-J_Kendter     21 hol  1  9 13 20  8 822 355  65 504 #CSS
-P_Vart        20 usa  1 12 15 19 22 912  45 283 256 #CSS
-
-H_Tomozuka 21 jap 1 17 21 9 16 984 552 491 696 #LOK
-
-P_Mortimer    19 eng  1  4 19 11 17 786 317 180  30 # Ian Clark
-
-N_Tidline     28 aus  2 14 24  8 25 518 443 399 485  # Jazzy Woo - $39M
-Julio_Geordio 28 col  2  8 24 14 31 430 806  77 384  # Jazzy Woo - $39M
-C_Quarm       22 usa  1 12 20  4 15 876 963 679 858  # Jazzy Woo - $1.5m
-P_Tyro        20 ire  1 19  4  7 48 588 193 563 234  # Jazzy Woo - $2m
-
-G_Facchetti   32 ita  2 22  3  9  1 515 919 639 228 # Wayne Laudon - $2m
-
-
-M_Bellissimo  21 ita  1 10  6 20 24 642   8 648 821 # Southern Corss
-J_DeRemer     29 fra  2 22  6 14 31 733 661 988  71 # Southern Cross
-V_Peedin      20 rom  1 19  6  4 22 642 353 598 402 # Southern Cross
-D_Kubista     20 cze  1  8  3 19 21 534  68 391 114 # Southern Cross
+P_Rynne       18 xxx  1 12  6 16  9 300 593 102 307 # 15m - Midland
+M_Fullbrook   18 xxx  1 16  3  3 15 300 128 421 275 # 6m - Midland
+X_Oxer        18 xxx  1 15  4  6 10 300 286 302 119 # 1m - Midland
+T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland
 

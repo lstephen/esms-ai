@@ -4,7 +4,8 @@ import com.google.common.base.Optional;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
-import com.ljs.ifootballmanager.ai.value.PlayerValue;
+import com.ljs.ifootballmanager.ai.value.Potential;
+import com.ljs.ifootballmanager.ai.value.Value;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface League {
 
     Boolean isReserveEligible(Player p);
 
-    PlayerValue getPlayerValue();
+    Value getPlayerValue();
+
+    Potential getPlayerPotential();
 
 }

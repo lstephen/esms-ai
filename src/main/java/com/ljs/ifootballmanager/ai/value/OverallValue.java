@@ -7,7 +7,7 @@ import com.ljs.ifootballmanager.ai.player.Player;
  *
  * @author lstephen
  */
-public final class OverallValue implements PlayerValue {
+public final class OverallValue implements Value {
 
     private OverallValue() { }
 

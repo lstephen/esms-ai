@@ -7,6 +7,7 @@ import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
+import com.ljs.ifootballmanager.ai.value.Value;
 import java.io.PrintWriter;
 
 /**
@@ -23,16 +24,25 @@ public class SquadReport implements Report {
 
     private Ordering<Player> ordering;
 
+    private Value value;
+
     private SquadReport(League league, Tactic tactic, Iterable<Player> squad) {
         this.league = league;
         this.tactic = tactic;
         this.squad = squad;
 
         ordering = Player.byOverall(tactic).reverse();
+        value = league.getPlayerValue();
     }
 
     public SquadReport sortByValue() {
-        ordering = Player.byValue().reverse();
+        ordering = Player.byValue(league).reverse();
+        return this;
+    }
+
+    public SquadReport sortByValue(Value value) {
+        this.value = value;
+        ordering = Player.byValue(value).reverse();
         return this;
     }
 
@@ -70,7 +80,7 @@ public class SquadReport implements Report {
                 w.format("%3d ", Math.round((double) p.evaluate(r, tactic).getRating() / 100));
             }
 
-            w.format(" (%3d) ", Math.round((double) p.getValue() / 100));
+            w.format(" (%3d) ", Math.round((double) value.getValue(p) / 100));
 
             for (Tactic t : tactics) {
                 w.format("%3d ", Math.round((double) p.getOverall(t).getRating() / 100));

@@ -88,7 +88,7 @@ public class SquadSummaryReport implements Report {
         }
         w.println();
 
-        w.format("%27s ", "Replacement (" + firstXI.getTactic().getCode() + ")");
+        w.format("%28s ", "Replacement (" + firstXI.getTactic().getCode() + ")");
         for (Role r : roles) {
             w.format("%5s ", getMax(r, firstXI.getTactic(), replacements));
         }

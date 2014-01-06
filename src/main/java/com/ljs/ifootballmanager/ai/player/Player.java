@@ -3,16 +3,16 @@ package com.ljs.ifootballmanager.ai.player;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import com.ljs.ifootballmanager.ai.value.Evaluator;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
-import java.util.List;
+import com.ljs.ifootballmanager.ai.value.Value;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,6 +51,18 @@ public final class Player {
         return new Player(name, age, ratings.atPercent(percentage), abilities);
     }
 
+    public Player withAbilityAdded(Rating rt, Integer amount) {
+        Ratings newAbilities = abilities.add(rt, amount);
+        Ratings newSkills = ratings;
+
+        while (newAbilities.getSkill(rt) > 100000) {
+            newSkills = newSkills.add(rt, 1);
+            newAbilities = newAbilities.subtract(rt, 1000);
+        }
+
+        return new Player(name, age, newSkills, newAbilities);
+    }
+
     public Player afterMinutes(Integer minutes) {
         return atPercent((int) (100.0 * Math.pow(0.9969, minutes)));
     }
@@ -75,51 +87,6 @@ public final class Player {
 
     public Integer getAge() {
         return age;
-    }
-
-    public Integer getValue() {
-        List<Integer> overalls = Lists.newArrayList();
-
-        for (Role r : Role.values()) {
-            for (Tactic t : Tactic.values()) {
-                Integer rt = Evaluator.create(Ratings.combine(ratings, abilities)).evaluate(r, t).getRating();
-                overalls.add(rt);
-            }
-        }
-
-        Integer ovr = Ordering.natural().max(overalls);
-
-        Double ageFactor = 4.0 - (getAge() - 22) * .1;
-
-        if (getAge() < 22) {
-            ageFactor *= (1.0 + (22 - getAge()) / 6);
-        }
-
-        if (getAge() > 30) {
-            ageFactor *= 1.0 - (getAge() - 30) / 6;
-        }
-
-        return (int) ((ovr * getOverall(Tactic.NORMAL).getRating() * ageFactor) / 100000);
-
-        /*List<Double> skills = Lists.newArrayList();
-
-        for (Rating r : Rating.values()) {
-            skills.add(getSkillWithAbility(r));
-        }
-
-        skills = Ordering.natural().reverse().sortedCopy(skills);
-
-        Double p = skills.get(0) / 100;
-        Double s = skills.get(1) / 100;
-        Double t = skills.get(2) / 100;
-
-        Double first = p * p * (p + 3) * 2.52;
-        Double second = s * s * p * 2.1;
-        Double third = t * t * s * 2.1;
-
-        Double salary = first + second + third;
-
-        return (int) Math.round((salary * 22 * (getAge() - 41) * -0.075) / 100);*/
     }
 
     public void setFitness(Integer fitness) {
@@ -192,12 +159,20 @@ public final class Player {
         return ratings.getSkill(rt);
     }
 
-    public Double getSkillWithAbility(Rating rt) {
-        return (double) abilities.getSkill(rt) / 1000 + ratings.getSkill(rt);
-    }
-
     public Integer getMaximumSkill() {
         return ratings.getMaximumSkill();
+    }
+
+    public Rating getPrimarySkill() {
+        return ratings.getSkillPriority().get(0);
+    }
+
+    public Rating getSecondarySkill() {
+        return ratings.getSkillPriority().get(1);
+    }
+
+    public Rating getTertiarySkill() {
+        return ratings.getSkillPriority().get(2);
     }
 
     public boolean equals(Object obj) {
@@ -246,12 +221,16 @@ public final class Player {
             });
     }
 
-    public static Ordering<Player> byValue() {
+    public static Ordering<Player> byValue(final League league) {
+        return byValue(league.getPlayerValue());
+    }
+
+    public static Ordering<Player> byValue(final Value value) {
         return Ordering
             .natural()
             .onResultOf(new Function<Player, Integer>() {
                 public Integer apply(Player p) {
-                    return p.getValue();
+                    return value.getValue(p);
                 }
             })
             .compound(byTieBreak());

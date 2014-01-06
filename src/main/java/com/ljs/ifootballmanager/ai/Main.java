@@ -20,6 +20,8 @@ import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
+import com.ljs.ifootballmanager.ai.value.OverallValue;
+import com.ljs.ifootballmanager.ai.value.Potentials;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +85,9 @@ public class Main {
 
         Formation reservesXI = null;
         if (league.getReserveTeam().isPresent()) {
-            reservesXI = Formation.select(league, squad.reserves());
+            reservesXI = Formation.select(
+                league,
+                Potentials.atPotential(league.getPlayerPotential(), squad.reserves()));
             print(w, "Reserves XI", reservesXI);
             remaining = ImmutableSet.copyOf(
                 Sets.difference(
@@ -95,7 +99,7 @@ public class Main {
             print(w, "Second XI", SquadReport.create(league, Tactic.NORMAL, secondXI.players()).sortByValue());
         }
         if (reservesXI != null) {
-            print(w, "Reserves XI", SquadReport.create(league, Tactic.NORMAL, reservesXI.players()).sortByValue());
+            print(w, "Reserves XI", SquadReport.create(league, Tactic.NORMAL, reservesXI.players()).sortByValue(OverallValue.create()));
         }
         print(w, "Remaining", SquadReport.create(league, Tactic.NORMAL, remaining).sortByValue());
 
@@ -105,7 +109,7 @@ public class Main {
 
         if (league.getReserveTeam().isPresent()) {
             CharSink rsheet = Files.asCharSink(new File("c:/esms", league.getReserveTeam().get() + "sht.txt"), Charsets.ISO_8859_1);
-            printSelection(w, league, "Reserves Selection", squad.forReservesSelection(), rsheet);
+            printSelection(w, league, "Reserves Selection", Potentials.atPotential(league.getPlayerPotential(), squad.forReservesSelection()), rsheet);
         }
 
         print(w, "Value", SquadReport.create(league, Tactic.NORMAL, squad.players()).sortByValue());
@@ -145,7 +149,7 @@ public class Main {
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 
-        print(w, "Selection", SquadReport.create(league, formation.getTactic(), available));
+        print(w, "Selection", SquadReport.create(league, formation.getTactic(), available).sortByValue(OverallValue.create()));
         print(w, formation, bench, cp);
 
         w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());

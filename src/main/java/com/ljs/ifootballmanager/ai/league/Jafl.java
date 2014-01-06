@@ -8,8 +8,10 @@ import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
-import com.ljs.ifootballmanager.ai.value.PlayerValue;
-import com.ljs.ifootballmanager.ai.value.player.JaflPlayerValue;
+import com.ljs.ifootballmanager.ai.value.Potential;
+import com.ljs.ifootballmanager.ai.value.Value;
+import com.ljs.ifootballmanager.ai.value.impl.JaflPotential;
+import com.ljs.ifootballmanager.ai.value.impl.JaflValue;
 
 /**
  *
@@ -44,7 +46,7 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_loan.txt", "/for_sale.txt", "/fre.txt");
+        return ImmutableList.of("/for_auction.txt", "/for_loan.txt", "/for_sale.txt", "/fre.txt");
     }
 
     public Weightings getWeightings() {
@@ -56,8 +58,12 @@ public class Jafl implements League {
         return p.getAge() <= 19 && p.getMaximumSkill() <= 18;
     }
 
-    public PlayerValue getPlayerValue() {
-        return JaflPlayerValue.create();
+    public Value getPlayerValue() {
+        return JaflValue.create();
+    }
+
+    public Potential getPlayerPotential() {
+        return JaflPotential.create();
     }
 
     public static Jafl get() {

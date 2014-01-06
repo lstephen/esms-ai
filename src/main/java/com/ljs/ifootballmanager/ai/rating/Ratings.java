@@ -1,6 +1,9 @@
 package com.ljs.ifootballmanager.ai.rating;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
@@ -38,14 +41,25 @@ public final class Ratings {
     }
 
     public Ratings atPercent(Integer percent) {
-        Builder builder = Builder.create();
-        builder.league(league);
+        Builder builder = Builder.create(this);
         
         for (Rating r : ratings.keySet()) {
             builder.ratings.put(r, (ratings.get(r) * percent) / 100);
         }
 
         return builder.build();
+    }
+
+    public Ratings add(Rating r, Integer value) {
+        Builder builder = Builder.create(this);
+
+        builder.rating(r, ratings.get(r) + value);
+
+        return builder.build();
+    }
+
+    public Ratings subtract(Rating r, Integer value) {
+        return add(r, -value);
     }
 
     public Integer getSkill(Rating rt) {
@@ -62,6 +76,17 @@ public final class Ratings {
 
     public Integer getMaximumSkill() {
         return Ordering.natural().max(ratings.values());
+    }
+
+    public ImmutableList<Rating> getSkillPriority() {
+        return Ordering
+            .natural()
+            .reverse()
+            .onResultOf(new Function<Rating, Integer>() {
+                public Integer apply(Rating r) {
+                    return getSkill(r);
+                }
+            }).immutableSortedCopy(ImmutableSet.copyOf(Rating.values()));
     }
 
     public static Builder builder() {
@@ -125,6 +150,13 @@ public final class Ratings {
 
         private static Builder create() {
             return new Builder();
+        }
+
+        private static Builder create(Ratings ratings) {
+            Builder b = create();
+            b.league(ratings.league);
+            b.ratings.putAll(ratings.ratings);
+            return b;
         }
 
     }
