@@ -61,7 +61,7 @@ public class SquadReport implements Report {
         w.format(" (%3s) ", "VAL");
 
         for (Tactic t : tactics) {
-            w.format("%3s ", t.getCode());
+            w.format("%3s    ", t.getCode());
         }
 
         w.println();
@@ -83,7 +83,11 @@ public class SquadReport implements Report {
             w.format(" (%3d) ", Math.round((double) value.getValue(p) / 100));
 
             for (Tactic t : tactics) {
-                w.format("%3d ", Math.round((double) p.getOverall(t).getRating() / 100));
+                RatingInRole rir = p.getOverall(t);
+                w.format(
+                    "%3d%3s ",
+                    Math.round((double) rir.getRating() / 100),
+                    rir.getRole() == best.getRole() ? "" : "-" + rir.getRole());
             }
 
             w.format(

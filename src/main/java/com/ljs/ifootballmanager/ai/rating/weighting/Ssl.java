@@ -42,7 +42,7 @@ public final class Ssl implements Weightings {
         .add(Role.AM, Tactic.COUNTER_ATTACK, Weighting.create(60, 85, 60))
 
         .add(Role.DF, Tactic.LONG_BALL, Weighting.create(113, 25, 80))
-        .add(Role.MF, Tactic.LONG_BALL, Weighting.create(70, 70, 80))
+        .add(Role.MF, Tactic.LONG_BALL, Weighting.create(70, 50, 80))
         .add(Role.FW, Tactic.LONG_BALL, Weighting.create(25, 25, 130))
         .add(Role.DM, Tactic.LONG_BALL, Weighting.create(90, 40, 50))
         .add(Role.AM, Tactic.LONG_BALL, Weighting.create(30, 40, 110))

@@ -38,6 +38,10 @@ public final class SelectionCriteria {
         return ImmutableSet.copyOf(Sets.difference(all, forced));
     }
 
+    public SelectionCriteria withForced(Iterable<Player> ps) {
+        return create(Iterables.concat(forced, ps), all);
+    }
+
     public static SelectionCriteria create(League league, Iterable<Player> all) {
         Set<Player> forced = Sets.newHashSet();
 
@@ -47,6 +51,10 @@ public final class SelectionCriteria {
             }
         }
 
+        return create(forced, all);
+    }
+
+    private static SelectionCriteria create(Iterable<Player> forced, Iterable<Player> all) {
         return new SelectionCriteria(forced, all);
     }
 

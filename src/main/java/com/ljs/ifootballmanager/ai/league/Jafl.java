@@ -55,7 +55,7 @@ public class Jafl implements League {
 
     @Override
     public Boolean isReserveEligible(Player p) {
-        return p.getAge() <= 19 && p.getMaximumSkill() <= 18;
+        return p.getAge() <= 19;
     }
 
     public Value getPlayerValue() {

@@ -1,20 +1,21 @@
 package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicates;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import com.ljs.ai.search.Action;
-import com.ljs.ai.search.ActionsFunction;
-import com.ljs.ai.search.RepeatedHillClimbing;
-import com.ljs.ai.search.SequencedAction;
-import com.ljs.ai.search.State;
+import com.ljs.ai.search.hillclimbing.HillClimbing;
+import com.ljs.ai.search.hillclimbing.RepeatedHillClimbing;
+import com.ljs.ai.search.hillclimbing.Validator;
+import com.ljs.ai.search.hillclimbing.action.Action;
+import com.ljs.ai.search.hillclimbing.action.ActionGenerator;
+import com.ljs.ai.search.hillclimbing.action.SequencedAction;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -26,6 +27,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -34,15 +36,18 @@ import java.util.concurrent.Callable;
  *
  * @author lstephen
  */
-public final class ChangePlan implements State, Report {
+public final class ChangePlan implements Report {
 
     private final Formation formation;
 
     private final ImmutableSet<Change> changes;
 
-    private ChangePlan(Formation formation, Iterable<? extends Change> cs) {
+    private final Map<Integer, Double> scores;
+
+    private ChangePlan(Formation formation, Iterable<? extends Change> cs, Map<Integer, Double> scores) {
         this.formation = formation;
         this.changes = ImmutableSet.copyOf(cs);
+        this.scores = Maps.newHashMap(scores);
     }
 
     private ImmutableList<Change> changes() {
@@ -160,13 +165,26 @@ public final class ChangePlan implements State, Report {
     private ChangePlan with(Change c) {
         Set<Change> cs = Sets.newHashSet(changes);
         cs.add(c);
-        return new ChangePlan(formation, cs);
+
+        return new ChangePlan(formation, cs, scoresBefore(c.getMinute()));
     }
 
     private ChangePlan remove(Change c) {
         Set<Change> cs = Sets.newHashSet(changes);
         cs.remove(c);
-        return new ChangePlan(formation, cs);
+        return new ChangePlan(formation, cs, scoresBefore(c.getMinute()));
+    }
+
+    private Map<Integer, Double> scoresBefore(Integer minute) {
+        Map<Integer, Double> scores = Maps.newHashMap();
+
+        for (int i = 0; i < minute; i++) {
+            if (scores.containsKey(i)) {
+                scores.put(i, this.scores.get(i));
+            }
+        }
+
+        return scores;
     }
 
     public Boolean isValid() {
@@ -206,7 +224,15 @@ public final class ChangePlan implements State, Report {
     }
 
     public Double score(Integer minute) {
-        return getFormationAt(minute).score();
+        if (scores.containsKey(minute)) {
+            return scores.get(minute);
+        }
+
+        Double score = getFormationAt(minute).score();
+
+        scores.put(minute, score);
+
+        return score;
     }
 
     public Formation getFormationAt(Integer minute) {
@@ -230,14 +256,30 @@ public final class ChangePlan implements State, Report {
 
     }
     public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria) {
+        HillClimbing.Builder<ChangePlan> builder = HillClimbing
+            .<ChangePlan>builder()
+            .validator(new Validator<ChangePlan>() {
+                public Boolean apply(ChangePlan cp) {
+                    return cp.isValid();
+                }
+            })
+            .heuristic(Ordering
+                .natural()
+                .onResultOf(new Function<ChangePlan, Double>() {
+                    public Double apply(ChangePlan cp) {
+                        return cp.score();
+                    }
+                }))
+            .actionGenerator(actionsFunction(league, criteria));
+
+
         return new RepeatedHillClimbing<ChangePlan>(
-            ChangePlan.class,
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
                     return randomChangePlan(f, criteria);
                 }
             },
-            actionsFunction(league, criteria))
+            builder)
             .search();
     }
 
@@ -282,29 +324,23 @@ public final class ChangePlan implements State, Report {
             changes.add(s);
         }
 
-        List<Tactic> tactics = Lists.newArrayList(Arrays.asList(Tactic.values()));
-        Collections.shuffle(tactics);
-        changes.add(TacticChange.create(tactics.remove(0), minutes.remove(0)));
-        changes.add(TacticChange.create(tactics.remove(0), minutes.remove(0)));
-        changes.add(TacticChange.create(tactics.remove(0), minutes.remove(0)));
-
-        return new ChangePlan(f, changes);
+        return new ChangePlan(f, changes, ImmutableMap.<Integer, Double>of());
     }
 
-    private static ActionsFunction<ChangePlan> actionsFunction(final League league, final SelectionCriteria criteria) {
-        return new ActionsFunction<ChangePlan>() {
+    private static ActionGenerator<ChangePlan> actionsFunction(final League league, final SelectionCriteria criteria) {
+        return new ActionGenerator<ChangePlan>() {
 
             @Override
-            public Set<Action<ChangePlan>> getActions(ChangePlan cp) {
-                Set<Action<ChangePlan>> actions = Sets.newHashSet();
+            public Iterable<Action<ChangePlan>> apply(ChangePlan cp) {
+                List<Action<ChangePlan>> actions = Lists.newArrayList();
 
-                ImmutableSet<Action<ChangePlan>> adds = ImmutableSet.copyOf(adds(cp));
                 ImmutableSet<RemoveChange> removes = ImmutableSet.copyOf(removes(cp));
+                ImmutableSet<Action<ChangePlan>> adds = ImmutableSet.copyOf(adds(cp));
 
                 actions.addAll(adds);
                 actions.addAll(removes);
 
-                actions.addAll(SequencedAction.merged(removes, Iterables.filter(adds, Predicates.instanceOf(Substitution.class))));
+                actions.addAll(SequencedAction.merged(removes, adds));
 
                 actions.addAll(combines(cp));
 
@@ -379,7 +415,7 @@ public final class ChangePlan implements State, Report {
 
                     for (Player p : f.players()) {
                         for (Role r : Role.values()) {
-                            if (r != f.findRole(p)) {
+                            if (r != f.findRole(p) && r != Role.GK) {
                                 adds.add(new AddChange(ChangePosition.create(p, r, minute)));
                             }
                         }
@@ -432,7 +468,7 @@ public final class ChangePlan implements State, Report {
         };
     }
 
-    private static class AddChange extends Action<ChangePlan> {
+    private static class AddChange implements Action<ChangePlan> {
 
         private final Change add;
 
@@ -446,7 +482,7 @@ public final class ChangePlan implements State, Report {
         }
     }
 
-    private static class RemoveChange extends Action<ChangePlan> {
+    private static class RemoveChange implements Action<ChangePlan> {
         private final Change remove;
 
         public RemoveChange(Change remove) {

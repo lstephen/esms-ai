@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai.league;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.validate.CountingFormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
@@ -50,7 +51,7 @@ public class IFootballManager implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return Collections.emptySet();
+        return ImmutableList.<String>of();
     }
 
     public Weightings getWeightings() {
