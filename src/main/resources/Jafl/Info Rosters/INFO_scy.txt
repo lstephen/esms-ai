@@ -7,6 +7,7 @@ J_Juul           19  DF  1 16  7  3 $13,418  OK   8.8M    N/A
 Shukokai         18  DF  1 16  7  5 $14,131  OK   13M     N/A
 K_Hatakeyama     17  DF  1 15  9 12 $15,840  OK   14.25M  N/A
 U_Jurrens        17  DF  1 15  3  6 $11,040  OK   9.9M    N/A
+Gothmog          16  DF  1 15 10  3 $12,960  OK   13.75M  N/A
 X_Prozzo         17  DF  1 14  7  4 $9,085   OK   8.3M    N/A
 K_Fuga           17  DF  1 13  1  6 $5,384   OK   4.5M    N/A
 D_Mure           16  DF  1 13  6  3 $5,753   OK   5.7M    N/A
@@ -16,9 +17,8 @@ Bao_Zhi          19  MF  1  9 17 15 $22,257  OK   21M     N/A
 Cyr              19  MF  1  6 17  5 $15,463  OK   14.75M  N/A
 Y_Lytur          17  MF  1  4 16  4 $12,171  OK   13.5M   N/A
 L_Mutter         18  MF  1  1 16  9 $13,775  OK   12.5M   N/A
-G_Mumby          17  MF  1  2 15  5 $10,240  OK   9.2M    N/A
 Daniel           19  FW  1  9  5 18 $21,466  OK   26.75M  N/A
 Fyodor           18  FW  1  5 14 17 $20,122  OK   26.75M  N/A
 P_Fullman        17  FW  1  3  6 15 $11,040  OK   9.9M    N/A
-X_Purgason       18  FW  1  5  5 14 $8,570   OK   6.5M    N/A
 K_Dutro          18  FW  1  3  4 14 $7,671   OK   5.8M    N/A
+X_Purgason       18  FW  1  5  5 14 $8,570   OK   6.5M    N/A

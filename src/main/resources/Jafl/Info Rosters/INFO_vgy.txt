@@ -1,5 +1,6 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
+R_Burlington     19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
 A_Fuiner         18  GK 14  1  1  1 $6,000   OK   3.8M    N/A
 M_Guest          19  DF  1 17  7  4 $15,658  OK   14.75M  N/A
 B_Von_Ville      19  DF  1 17  2  6 $14,299  OK   13.5M   N/A
@@ -8,7 +9,6 @@ H_Munce          18  DF  1 15  8  5 $12,640  OK   9.4M    N/A
 D_Pyne           17  DF  1 15  3  9 $12,480  OK   11.25M  N/A
 Q_Sutphin        16  DF  1 12  3  5 $4,200   OK   1.4M    N/A
 W_Tycehurst      19  MF  1  7 16  6 $14,487  OK   9.5M    N/A
-K_Aldrige        19  MF  1 10 15  3 $12,960  OK   6.8M    N/A
 F_Russi          19  MF  1 11 15  6 $14,400  OK   7.6M    N/A
 I_Huntoon        17  MF  1  7 15  5 $12,160  OK   10.75M  N/A
 W_Hussie         17  MF  1  6 14  4 $8,699   OK   8M      N/A

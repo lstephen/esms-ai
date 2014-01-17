@@ -4,7 +4,6 @@ W_Memphis        19  GK 17  1  1  1 $11,000  OK   8.9M    N/A
 K_Gullick        19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
 X_Mattern        19  GK 14  1  1  1 $6,000   OK   2.7M    N/A
 M_Sunley         19  DF  1 18  5  4 $18,199  OK   22.5M   N/A
-C_Pumphrey       19  DF  1 16  3 10 $15,021  OK   9.8M    N/A
 M_Busshe         18  DF  1 15  3  6 $11,040  OK   8.2M    N/A
 E_Mundey         17  DF  1 15  5  6 $11,680  OK   10.5M   N/A
 F_Turange        18  DF  1 15 14  2 $14,560  OK   10.75M  N/A

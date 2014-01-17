@@ -19,22 +19,23 @@ public final class Ratings {
 
     private final League league;
 
-    private final ImmutableMap<Rating, Integer> ratings;
+    private final ImmutableMap<Rating, Double> ratings;
 
     private Ratings(Builder builder) {
         this.league = builder.league;
         ratings = ImmutableMap.copyOf(builder.ratings);
     }
 
-    public Integer overall(Role r, Tactic t) {
-        return overall(league.getWeightings().forTactic(t).inRole(r));
+    public Double overall(Role r, Tactic t) {
+        TacticWeightings tw = league.getWeightings().forTactic(t);
+        return overall(tw.inRole(r), tw);
     }
 
-    public Integer overall(Weighting w) {
-        Integer overall = 0;
+    public Double overall(Weighting w, TacticWeightings tw) {
+        Double overall = 0.0;
 
         for (Rating r : ratings.keySet()) {
-            overall += w.get(r) * ratings.get(r);
+            overall += getWeightedSkill(w, r);
         }
 
         return overall;
@@ -44,37 +45,42 @@ public final class Ratings {
         Builder builder = Builder.create(this);
         
         for (Rating r : ratings.keySet()) {
-            builder.ratings.put(r, (ratings.get(r) * percent) / 100);
+            Double newValue = ratings.get(r) * percent / 100;
+
+            builder = builder.rating(r, newValue);
         }
 
         return builder.build();
     }
 
     public Ratings add(Rating r, Integer value) {
-        Builder builder = Builder.create(this);
-
-        builder.rating(r, ratings.get(r) + value);
-
-        return builder.build();
+        return Builder
+            .create(this)
+            .rating(r, getSkill(r) + value)
+            .build();
     }
 
     public Ratings subtract(Rating r, Integer value) {
         return add(r, -value);
     }
 
-    public Integer getSkill(Rating rt) {
-        return ratings.get(rt) * 100;
+    public Double getSkill(Rating rt) {
+        return ratings.get(rt);
     }
 
-    public Integer getWeightedSkill(Weighting w, Rating rt) {
-        return w.get(rt) * getSkill(rt);
+    public Double getWeightedSkill(Weighting w, Rating rt) {
+        return getSkill(rt) * w.get(rt) / 100;
     }
 
-    public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {
-        return league.getWeightings().forTactic(tc).inRole(rl).get(rt) * ratings.get(rt);
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
+        return getWeightedSkill(league.getWeightings().forTactic(tc).inRole(rl), rt);
     }
 
-    public Integer getMaximumSkill() {
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt, Tactic vs) {
+        return getWeightedSkill(league.getWeightings().forTactic(tc).vs(vs).inRole(rl), rt);
+    }
+
+    public Double getMaximumSkill() {
         return Ordering.natural().max(ratings.values());
     }
 
@@ -82,8 +88,8 @@ public final class Ratings {
         return Ordering
             .natural()
             .reverse()
-            .onResultOf(new Function<Rating, Integer>() {
-                public Integer apply(Rating r) {
+            .onResultOf(new Function<Rating, Double>() {
+                public Double apply(Rating r) {
                     return getSkill(r);
                 }
             }).immutableSortedCopy(ImmutableSet.copyOf(Rating.values()));
@@ -101,10 +107,10 @@ public final class Ratings {
         Ratings.Builder builder = builder().league(rts.league);
 
         for (Rating r : Rating.values()) {
-            Integer rt = rts.getSkill(r);
-            Integer ab = abs.getSkill(r);
+            Double rt = rts.getSkill(r);
+            Double ab = abs.getSkill(r);
 
-            builder.rating(r, rt + ab / 1000);
+            builder = builder.rating(r, rt + ab / 1000);
         }
 
         return builder.build();
@@ -114,7 +120,7 @@ public final class Ratings {
 
         private League league;
 
-        private final Map<Rating, Integer> ratings = Maps.newHashMap();
+        private final Map<Rating, Double> ratings = Maps.newHashMap();
 
         private Builder() { }
 
@@ -124,6 +130,10 @@ public final class Ratings {
         }
 
         private Builder rating(Rating r, Integer v) {
+            return rating(r, v.doubleValue());
+        }
+
+        private Builder rating(Rating r, Double v) {
             ratings.put(r, v);
             return this;
         }

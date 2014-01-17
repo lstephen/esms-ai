@@ -8,9 +8,9 @@ import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
-import com.ljs.ifootballmanager.ai.value.OverallValue;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
+import com.ljs.ifootballmanager.ai.value.impl.IFootballManagerValue;
 import com.ljs.ifootballmanager.ai.value.impl.NullPotential;
 import java.util.Collections;
 
@@ -18,14 +18,23 @@ import java.util.Collections;
  http://ifootballmanager.webs.com/liv.txt*
  * @author lstephen
  */
-public class IFootballManager implements League {
+public final class IFootballManager implements League {
 
-    private static final IFootballManager INSTANCE = new IFootballManager();
+    private final String team;
 
-    private IFootballManager() { }
+    private final Optional<String> vs;
+
+    private IFootballManager(String team, Optional<String> vs) {
+        this.team = team;
+        this.vs = vs;
+    }
 
     public String getTeam() {
-        return "liv";
+        return team;
+    }
+
+    public Optional<String> getVs() {
+        return vs;
     }
 
     public Optional<String> getReserveTeam() {
@@ -41,10 +50,9 @@ public class IFootballManager implements League {
             .builder()
             .exactly(1, Role.GK)
             .range(3, 6, Role.DF)
-            .min(2, Role.MF)
+            .range(2, 5, Role.DM, Role.MF, Role.AM)
             .max(3, Role.DM)
             .max(3, Role.AM)
-            .max(5, Role.DM, Role.MF, Role.AM)
             .max(5, Role.FW)
             .build();
 
@@ -62,12 +70,20 @@ public class IFootballManager implements League {
         return Boolean.FALSE;
     }
 
-    public static IFootballManager get() {
-        return INSTANCE;
+    public static IFootballManager create(String team) {
+        return create(team, Optional.<String>absent());
+    }
+
+    public static IFootballManager create(String team, String vs) {
+        return create(team, Optional.of(vs));
+    }
+
+    private static IFootballManager create(String team, Optional<String> vs) {
+        return new IFootballManager(team, vs);
     }
 
     public Value getPlayerValue() {
-        return OverallValue.create();
+        return IFootballManagerValue.create();
     }
 
     public Potential getPlayerPotential() {

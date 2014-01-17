@@ -1,7 +1,7 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 G_Heavlin        26  GK 25  2  2  2 $88,000  OK   55M     N/A
-Y_Beckmyer       21  GK 21  1  1  1 $38,000  OK   26.75M  N/A
+M_Pawling        25  GK 20  2  2  2 $27,000  OK   700K    N/A
 S_DeHerrera      27  DF  2 24 14  5 $123,825 OK   68.25M  N/A
 W_Chamorro       28  DF  2 24  7 15 $130,650 OK   57.5M   N/A
 Kennedy          27  DF  2 23 16 12 $108,686 OK   54.25M  N/A

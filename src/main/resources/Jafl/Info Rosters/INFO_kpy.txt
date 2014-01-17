@@ -2,6 +2,7 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 J_Beadlehands    18  GK 16  1  1  1 $9,500   OK   7.4M    N/A
 AJ_Miniflex      17  GK 15  1  1  1 $8,000   OK   6.1M    N/A
+player_3         16  GK 15  1  1  1 $8,000   OK   7.2M    N/A
 Sid_Slider       19  DF  1 17  5 10 $17,793  OK   16.75M  N/A
 J_Beresford      19  DF  1 17  8 11 $19,540  OK   18.5M   N/A
 AJ_Viking        18  DF  1 17  9 10 $19,346  OK   25.75M  N/A
@@ -13,8 +14,8 @@ G_Hurston        16  DF  1 13  4  5 $5,660   OK   5.6M    N/A
 Cyril_Speed      19  MF  1  6 17  3 $14,687  OK   14M     N/A
 Campbundo        19  MF  1 13 17 11 $21,870  OK   20.75M  N/A
 AJ_Primrose      17  MF  1  4 16  7 $13,774  OK   15.25M  N/A
+Player_11        17  MF  1  9 16 11 $17,693  OK   19.75M  N/A
 Kiko_Pogona      18  MF  1  6 15 14 $15,840  OK   11.75M  N/A
-Al_Endinov       19  MF  1  6 15 12 $14,880  OK   7.9M    N/A
 F_Txertudi       18  MF  1  3 15  4 $10,080  OK   7.4M    N/A
 V_Burgoyne       18  MF  1  5 15  6 $11,680  OK   8.6M    N/A
 P_Crumbley       18  MF  1  7 14  4 $9,085   OK   6.8M    N/A

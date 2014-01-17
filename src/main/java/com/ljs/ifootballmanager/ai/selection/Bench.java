@@ -44,12 +44,12 @@ public class Bench implements State, Report {
     }
 
     @Override
-    public Integer score() {
+    public Double score() {
         if (bench.isEmpty()) {
-            return 0;
+            return 0.0;
         }
 
-        Integer score = 0;
+        Double score = 0.0;
 
         for (Role r : formation.getRoles()) {
             score += Player.byRating(r, formation.getTactic()).max(bench).getRating(r, formation.getTactic());

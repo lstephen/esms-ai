@@ -1,5 +1,6 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
+Brick_Wall       31  GK 27  1  1  1 $108,000 OK   30.5M   N/A
 Juan_Toro        33  GK 24  2  2  2 $78,000  OK   6.3M    N/A
 S_da_Bahia       26  DF  1 25 17  3 $142,912 OK   105M     N/A
 C_Balzli         31  DF  2 24  7 20 $145,275 OK   22.25M  N/A

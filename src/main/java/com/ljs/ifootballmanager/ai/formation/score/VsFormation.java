@@ -3,6 +3,7 @@ package com.ljs.ifootballmanager.ai.formation.score;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import java.io.PrintWriter;
 
 /**
@@ -18,34 +19,48 @@ public final class VsFormation implements FormationScorer {
     }
 
     public Double score(Formation f, Tactic t) {
-        Double a = scoring(f, t).doubleValue();
-        Double d = defending(f, t).doubleValue();
+        Double a = scoring(f, t);
+        Double d = defending(f, t);
 
-        Double oppA = scoring(vs, t).doubleValue();
-        Double oppD = defending(vs, t).doubleValue();
+        Double oppA = vs.scoring();
+        Double oppD = vs.defending();
 
         Double aterm = a / (oppD + 1);
         Double dterm = oppA / (d + 1);
 
-        Integer ageScore = 0;
+        return aterm - dterm;
+    }
+
+    public Double scoring(Formation f, Tactic t) {
+        Double shooting = skillRating(f, t, Rating.SHOOTING);
+        Double passing = skillRating(f, t, Rating.PASSING);
+
+        return (passing + passing + shooting) / 3;
+    }
+
+    public Double defending(Formation f, Tactic t) {
+        return skillRating(f, t, Rating.TACKLING);
+    }
+
+    public Double gkQuality(Formation f) {
+        return DefaultScorer.get().gkQuality(f);
+    }
+    
+    public Double shotQuality(Formation f, Tactic t) {
+        return DefaultScorer.get().shotQuality(f, t);
+    }
+
+    private Double skillRating(Formation f, Tactic t, Rating r) {
+        Double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
-            ageScore += p.getAge();
+            score += p.getSkillRating(f.findRole(p), t, r, vs.getTactic());
         }
-
-        Double pct = 1 + aterm - dterm;
-
-        return ((a + d) * pct + DefaultScorer.get().gkQuality(f) + DefaultScorer.get().shotQuality(f, t)) / 2 - ((double) ageScore / 1000.0);
+        return score;
     }
 
-    public Integer scoring(Formation f, Tactic t) {
-        return DefaultScorer.get().scoring(f, t);
+    public void print(Formation f, PrintWriter w) {
+        DefaultScorer.get().print(f, w);
     }
-
-    public Integer defending(Formation f, Tactic t) {
-        return DefaultScorer.get().defending(f, t);
-    }
-
-    public void print(Formation f, PrintWriter w) { }
 
     public static VsFormation create(Formation f) {
         return new VsFormation(f);

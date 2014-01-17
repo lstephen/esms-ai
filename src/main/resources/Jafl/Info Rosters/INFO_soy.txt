@@ -14,10 +14,9 @@ H_Fuerst         18  MF  1  9 16  3 $14,487  OK   13.25M  N/A
 J_Mulkey         19  MF  1  2 15 10 $12,640  OK   6.7M    N/A
 U_Felzinger      19  MF  1  4 15  7 $11,839  OK   6.2M    N/A
 N_Currington     17  MF  1  9 15  3 $12,480  OK   11.25M  N/A
-M_Gurr           16  MF  1  5 14  3 $8,056   OK   8.7M    N/A
+X_Burnaime       18  MF  1  8 15  8 $13,600  OK   10M     N/A
 A_Butina         16  MF  1  3 11  7 $3,999   OK   0K      N/A
 S_Hynes          19  FW  1 16  8 17 $22,452  OK   21.25M  N/A
 U_Croyle         17  FW  1 11  3 15 $13,440  OK   12M     N/A
 X_Dwy            17  FW  1  4  7 15 $11,839  OK   10.5M   N/A
-K_Bylow          18  FW  1  5  9 15 $13,120  OK   9.7M    N/A
 D_Swertfager     16  FW  1  6  8 14 $9,985   OK   10.75M  N/A

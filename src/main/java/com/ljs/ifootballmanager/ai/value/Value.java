@@ -8,6 +8,6 @@ import com.ljs.ifootballmanager.ai.player.Player;
  */
 public interface Value {
 
-    Integer getValue(Player p);
+    Double getValue(Player p);
 
 }

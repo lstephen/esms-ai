@@ -21,7 +21,6 @@ P_DeLara         21  MF  1  6 20  9 $40,770  OK   22.5M   N/A
 P_Nuno           20  MF  1  6 19  4 $25,300  OK   6.6M    N/A
 G_Freeeeek       23  FW  1  7 20 24 $145,275 OK   144M     N/A
 Y_Becher         24  FW  1  8 12 24 $123,825 OK   109M     N/A
-T_McClaren       27  FW  1  5 10 22 $70,908  OK   23.5M   N/A
 H_Bias           30  FW  2  5  9 21 $55,370  OK   700K    N/A
 F_Yearsley       28  FW  2  5  9 20 $39,960  OK   700K    N/A
 N_Massey         21  FW  1  8  6 19 $28,300  OK   5.5M    N/A

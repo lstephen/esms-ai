@@ -3,7 +3,6 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 G_Stopper        25  GK 25  1  1  1 $88,000  OK   64.25M  N/A
 H_Geordio        29  GK 22  2  2  2 $48,000  OK   8.1M    N/A
 Mandragoran      26  DF  1 25 14 12 $152,416 OK   112M     N/A
-L_Meserve        32  DF  2 23  6 16 $99,608  OK   8.9M    N/A
 P_Delzell        30  DF  2 23 14  7 $96,582  OK   13.25M  N/A
 H_Brubaker       25  DF  2 23 13  6 $92,799  OK   64.75M  N/A
 R_Gobert         25  DF  1 22 10 10 $77,453  OK   36M     N/A
@@ -17,8 +16,6 @@ D_Chiumento      31  MF  2  8 22 12 $78,763  OK   3.9M    N/A
 X_Remschel       28  MF  2  8 20  4 $37,934  OK   700K    N/A
 W_Yarney         20  MF  1  5 19  8 $27,700  OK   7.2M    N/A
 Z_Drako          24  FW  1  7  3 24 $99,450  OK   87.5M   N/A
-E_Ibbott         29  FW  1  3  8 24 $102,375 OK   33.75M  N/A
-A_Pato           30  FW  2 15  7 23 $98,851  OK   13.5M   N/A
 U_Bolt           23  FW  1 11 15 23 $104,903 OK   94.25M  N/A
 Billy_Liddell    22  FW  1  8 15 22 $84,653  OK   56.25M  N/A
 I_Fuhrmeyer      20  FW  1  3  5 16 $12,349  OK   0K      N/A

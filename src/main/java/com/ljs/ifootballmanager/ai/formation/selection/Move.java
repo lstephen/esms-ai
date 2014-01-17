@@ -1,6 +1,6 @@
 package com.ljs.ifootballmanager.ai.formation.selection;
 
-import com.ljs.ai.search.Action;
+import com.ljs.ai.search.hillclimbing.action.Action;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
@@ -9,7 +9,7 @@ import com.ljs.ifootballmanager.ai.player.Player;
  *
  * @author lstephen
  */
-public class Move extends Action<Formation> {
+public class Move implements Action<Formation> {
 
     private final Player player;
 

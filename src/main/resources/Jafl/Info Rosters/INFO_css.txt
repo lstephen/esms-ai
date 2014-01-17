@@ -2,8 +2,8 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 I_Kelava         26  GK 24  2  2  2 $78,000  OK   43.75M  N/A
 G_Tutt           22  GK 23  1  1  1 $58,000  OK   49.25M  N/A
+S_Bartram        20  GK 22  1  1  1 $48,000  OK   51M     N/A
 R_Marshall       22  GK 21  1  1  1 $38,000  OK   8.5M    N/A
-S_Bartram        20  GK 21  1  1  1 $38,000  OK   35.5M   N/A
 A_Benjak         26  DF  2 24 17  5 $132,600 OK   87.5M   N/A
 L_Gerald         25  DF  2 24 10 15 $136,499 OK   105.25M  N/A
 F_Perelman       27  DF  2 24 15  8 $132,600 OK   73M     N/A
@@ -20,5 +20,6 @@ D_Seeck          23  MF  2 10 21  4 $55,914  OK   13M     N/A
 I_Texter         26  MF  2  8 21  4 $52,657  OK   8.3M    N/A
 M_Berg           28  FW  2  5 11 24 $115,050 OK   50.5M   N/A
 N_Seguine        23  FW  2  5 19 24 $138,450 OK   137.25M  N/A
+T_McClaren       27  FW  1  5 10 22 $70,908  OK   23.5M   N/A
 P_Largen         20  FW  1  7 19 20 $53,729  OK   39.75M  N/A
 W_Ohnleiter      22  FW  1  5  9 20 $39,960  OK   1.9M    N/A

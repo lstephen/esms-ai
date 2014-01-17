@@ -22,6 +22,7 @@ H_Chabrus        22  MF  1  6 21 11 $59,713  OK   15.5M   N/A
 C_R_Darwin       21  MF  1  8 21 20 $76,542  OK   63.25M  N/A
 F_Scinto         21  MF  1 12 21 20 $80,884  OK   67M     N/A
 Y_Turo           20  MF  1  9 19 12 $33,700  OK   8.8M    N/A
+Player_13        27  FW  1  5 13 26 $147,753 OK   96.25M  N/A
 K_Reava          24  FW  1  4 20 24 $139,425 OK   122.75M  N/A
 Y_Hawman         25  FW  2 17  7 23 $103,391 OK   72.25M  N/A
 E_Kennell        20  FW  1 12  4 16 $16,446  OK   0K      N/A

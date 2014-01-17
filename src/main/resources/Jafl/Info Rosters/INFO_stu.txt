@@ -23,4 +23,5 @@ S_Hauke          20  MF  1  5 19  8 $27,700  OK   7.2M    N/A
 U_Aldorino       26  FW  2 13  9 24 $128,700 OK   85M     N/A
 N_Blatchly       29  FW  2  9  9 23 $88,260  OK   26.25M  N/A
 Q_Gehrken        24  FW  2 14  8 22 $82,690  OK   44M     N/A
+Player_14        22  FW  1  4 17 22 $83,345  OK   55.5M   N/A
 M_von_Lipwig     21  FW  1  9 11 21 $62,970  OK   52M     N/A

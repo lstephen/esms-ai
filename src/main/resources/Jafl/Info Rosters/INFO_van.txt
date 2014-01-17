@@ -1,14 +1,14 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 H_Weigandt       22  GK 24  2  2  2 $78,000  OK   73M     N/A
-A_Setlock        28  GK 21  2  2  2 $38,000  OK   3.4M    N/A
 I_Stopalot       21  GK 21  1  1  1 $38,000  OK   26.75M  N/A
+A_Setlock        28  GK 21  2  2  2 $38,000  OK   3.4M    N/A
 X_Hackwell       31  GK 20  2  2  2 $27,000  OK   0K      N/A
 U_Huntzicker     29  DF  1 27  2  2 $114,000 OK   48.25M  N/A
 R_Hedberg        30  DF  2 25  4 14 $135,519 OK   40M     N/A
 T_Redding        29  DF  3 23 13 10 $98,851  OK   29.5M   N/A
-D_Sarcoxie       22  DF  1 22  4  9 $67,636  OK   45M     N/A
 P_Bearinger      23  DF  1 22  8 17 $88,581  OK   53M     N/A
+D_Sarcoxie       22  DF  1 22  4  9 $67,636  OK   45M     N/A
 P_Edmunds        24  DF  2 21 17  5 $68,399  OK   14.25M  N/A
 L_Scothern       24  DF  2 20 10  5 $41,175  OK   1.5M    N/A
 Q_Delisle        20  DF  1 19  6 13 $32,800  OK   8.6M    N/A

@@ -1,12 +1,12 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 D_Felgate        32  GK 26  2  2  2 $98,000  OK   19.75M  N/A
-Arse_Bandeet     23  GK 22  1  1  1 $48,000  OK   24.25M  N/A
+Arse_Bandeet     23  GK 23  1  1  1 $58,000  OK   44.25M  N/A
 U_Dusenbury      20  GK 16  1  1  1 $9,500   OK   0K      N/A
 T_Kaczynski      20  GK 16  1  1  1 $9,500   OK   0K      N/A
 C_Felix          27  DF  1 25 10  6 $127,072 OK   77.75M  N/A
 A_Altazan        29  DF  2 24 17 11 $144,300 OK   47.5M   N/A
-L_Schvartzman    24  DF  1 23 18  6 $104,147 OK   83.25M  N/A
+L_Schvartzman    24  DF  1 24 18  6 $137,475 OK   121.25M  N/A
 Q_Mathey         24  DF  1 23 13  5 $91,286  OK   73M     N/A
 C_Wachob         32  DF  2 22  4 13 $75,490  OK   3M      N/A
 F_Tavarez        28  DF  2 21 14 10 $68,942  OK   7.2M    N/A
@@ -21,8 +21,8 @@ S_Bullara        20  DF  1 17  5 10 $17,793  OK   0K      N/A
 R_Turfitt        20  DF  1 17  5  3 $14,105  OK   0K      N/A
 B_Nelson         28  MF  2  5 25  9 $121,792 OK   59.75M  N/A
 W_Galigher       31  MF  2 15 24  6 $128,700 OK   19.75M  N/A
+S_Gehring        25  MF  1 19 23 11 $113,982 OK   79.75M  N/A
 P_Chiddix        31  MF  2  5 22  8 $66,981  SUS  3.3M    N/A
-S_Gehring        25  MF  1 19 22 11 $96,435  OK   45M     N/A
 O_Veiera         27  MF  2  4 22 10 $69,599  OK   23M     N/A
 Q_Tesluk         20  MF  1  8 17  3 $15,852  OK   0K      N/A
 O_Reinauer       30  FW  2  6 17 25 $149,248 OK   44M     N/A

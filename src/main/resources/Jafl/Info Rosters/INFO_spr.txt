@@ -2,15 +2,14 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 C_Wiggam         30  GK 25  2  2  2 $88,000  OK   22M     N/A
 Maggie_S         23  GK 22  1  1  1 $48,000  OK   24.25M  N/A
+player_2         20  GK 20  1  1  1 $27,000  OK   17M     N/A
 F_Oimoen         28  GK 19  2  2  2 $19,000  OK   0K      N/A
 Cleetus          29  DF  1 25 14 10 $148,191 OK   54.5M   N/A
 L_Kaalekahi      30  DF  2 25  6  2 $105,952 OK   31.25M  N/A
-P_Giesen         31  DF  2 23  7  4 $76,156  OK   8.4M    N/A
 C_Bentz          27  DF  2 22 11  4 $71,563  OK   23.75M  N/A
 S_Albert         22  DF  1 22 11  5 $72,872  OK   48.5M   On_Loan(CSS)
 R_Cavender       24  DF  1 21  7 11 $60,799  OK   12.75M  N/A
 P_Zaworski       26  DF  2 20  5 10 $41,175  OK   1.1M    N/A
-E_Ogren          21  DF  1 20 16  6 $49,275  OK   27.25M  N/A
 N_Redclay        22  DF  1 19  7 13 $33,400  OK   0K      N/A
 S_Karch          29  MF  1  2 24 11 $109,200 OK   36M     N/A
 S_Curry          24  MF  1  4 23  8 $78,425  OK   62.5M   N/A
@@ -23,4 +22,3 @@ P_Kilcoyne       30  FW  2  7 11 25 $132,351 SUS  39M     N/A
 J_McLovin        31  FW  2  2 13 24 $115,050 OK   17.5M   N/A
 K_Kirby          28  FW  2  5  9 22 $68,945  OK   18.25M  N/A
 S_Hartsell       26  FW  2  4 13 20 $44,009  OK   1.2M    N/A
-J_Kendter        21  FW  1  9 13 20 $48,060  OK   26.5M   N/A

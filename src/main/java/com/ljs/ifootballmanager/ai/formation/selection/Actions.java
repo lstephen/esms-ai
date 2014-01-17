@@ -3,9 +3,9 @@ package com.ljs.ifootballmanager.ai.formation.selection;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-import com.ljs.ai.search.Action;
-import com.ljs.ai.search.ActionsFunction;
-import com.ljs.ai.search.SequencedAction;
+import com.ljs.ai.search.hillclimbing.action.Action;
+import com.ljs.ai.search.hillclimbing.action.ActionGenerator;
+import com.ljs.ai.search.hillclimbing.action.SequencedAction;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @author lstephen
  */
-public class Actions extends ActionsFunction<Formation> {
+public class Actions implements ActionGenerator<Formation> {
 
     private SelectionCriteria criteria;
 
@@ -24,7 +24,7 @@ public class Actions extends ActionsFunction<Formation> {
         this.criteria = criteria;
     }
 
-    public ImmutableSet<Action<Formation>> getActions(Formation f) {
+    public ImmutableSet<Action<Formation>> apply(Formation f) {
         ImmutableSet<Move> moves = moves(f);
         ImmutableSet<Substitute> subs = substitutions(f);
         return ImmutableSet.copyOf(Iterables.concat(moves, subs, SequencedAction.allPairs(moves), SequencedAction.merged(moves, subs)));

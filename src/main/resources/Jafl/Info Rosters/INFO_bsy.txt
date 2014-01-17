@@ -1,7 +1,6 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 De_Lapper        18  GK 16  1  1  1 $9,500   OK   7.4M    N/A
-R_Burlington     19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
 R_Huffstutler    19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
 I_Purl/Cline     17  GK 15  1  1  1 $8,000   OK   6.1M    N/A
 J_Imel           19  DF  1 18 18 16 $32,900  OK   41M     N/A
@@ -21,7 +20,6 @@ I_Hushour        19  MF  1  8 16  7 $15,377  OK   10M     N/A
 P_Luif           18  MF  1  4 15  8 $12,319  OK   9.1M    N/A
 P_Dygon          18  MF  1  7 15  6 $12,480  OK   9.2M    N/A
 R_Dyckman        17  MF  1 12 15  3 $13,920  OK   12.5M   N/A
-D_Gunster        16  MF  1  9 13  2 $6,399   OK   6.3M    N/A
 J_Carmichael     19  FW  1  6 10 18 $22,633  OK   28.25M  N/A
 V_Humann         18  FW  1  6 15 17 $21,093  OK   28M     N/A
 F_Hurburgh       18  FW  1  6  2 16 $12,527  OK   11.5M   N/A

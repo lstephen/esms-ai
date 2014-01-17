@@ -17,4 +17,3 @@ A_Swait          16  MF  1  5 12  3 $4,200   OK   1.4M    N/A
 P_Buthala        17  FW  1  8  3 15 $12,000  OK   10.75M  N/A
 O_Kuchta         19  FW  1  6  4 15 $11,359  OK   6M      N/A
 C_Gerling        19  FW  1  5  7 15 $12,160  OK   6.4M    N/A
-A_Summerford     17  FW  1  5  4 15 $10,879  OK   9.8M    N/A

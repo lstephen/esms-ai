@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.rating;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.Map;
@@ -17,9 +18,7 @@ public final class Weighting {
     }
 
     public Integer get(Rating rating) {
-        return weights.containsKey(rating)
-            ? weights.get(rating)
-            : 0;
+        return Optional.fromNullable(weights.get(rating)).or(0);
     }
 
     public Integer sum() {
@@ -28,6 +27,16 @@ public final class Weighting {
             sum += weight;
         }
         return sum;
+    }
+
+    public Weighting add(Weighting rhs) {
+        Builder b = builder();
+
+        for (Rating r : Rating.values()) {
+            b = b.with(r, get(r) + rhs.get(r));
+        }
+
+        return b.build();
     }
 
     public static Weighting create(Integer tk, Integer ps, Integer sh) {
@@ -47,6 +56,11 @@ public final class Weighting {
         private final Map<Rating, Integer> weights = Maps.newHashMap();
 
         private Builder() { }
+
+        public Builder with(Rating r, Integer value) {
+            weights.put(r, value);
+            return this;
+        }
 
         public Builder st(Integer st) {
             return stopping(st);

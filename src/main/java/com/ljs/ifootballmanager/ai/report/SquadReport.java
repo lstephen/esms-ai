@@ -5,6 +5,7 @@ import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
 import com.ljs.ifootballmanager.ai.value.Value;
@@ -74,19 +75,19 @@ public class SquadReport implements Report {
             w.format("%2d %2s %5d ",
                 p.getAge(),
                 best.getRole(),
-                Math.round((double) best.getRating() / 100));
+                Maths.round(best.getRating()));
 
             for (Role r : roles) {
-                w.format("%3d ", Math.round((double) p.evaluate(r, tactic).getRating() / 100));
+                w.format("%3d ", Maths.round(p.evaluate(r, tactic).getRating()));
             }
 
-            w.format(" (%3d) ", Math.round((double) value.getValue(p) / 100));
+            w.format(" (%3d) ", Maths.round(value.getValue(p)));
 
             for (Tactic t : tactics) {
                 RatingInRole rir = p.getOverall(t);
                 w.format(
                     "%3d%3s ",
-                    Math.round((double) rir.getRating() / 100),
+                    Maths.round(rir.getRating()),
                     rir.getRole() == best.getRole() ? "" : "-" + rir.getRole());
             }
 

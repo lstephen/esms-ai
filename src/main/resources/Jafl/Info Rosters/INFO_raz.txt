@@ -17,8 +17,9 @@ P_Jackson        26  MF  1  9 25  4 $119,679 OK   88M     N/A
 H_Fahler         25  MF  1  4 25  9 $119,679 OK   102.75M  N/A
 B_delHorno       24  MF  2 13 23  8 $95,825  OK   76.5M   N/A
 Wes_Pac          22  MF  1 11 22 15 $88,580  OK   59M     N/A
-Player_8         21  MF  1 17 22  9 $89,890  OK   84.25M  N/A
+N_Sirkus         21  MF  1 17 22  9 $89,890  OK   84.25M  N/A
 E_Den            30  MF  2  4 21  7 $51,028  OK   650K    N/A
+SB_Tommy         20  MF  1 15 21 10 $70,571  OK   77.75M  N/A
 M_Dejager        22  MF  1  7 20 13 $46,439  OK   2.2M    N/A
 P_Kernel         21  MF  1 10 19  6 $30,100  OK   5.9M    N/A
 Jax              25  FW  1  4 19 25 $151,359 OK   130M     N/A

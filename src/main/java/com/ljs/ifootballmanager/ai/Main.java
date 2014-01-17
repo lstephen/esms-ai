@@ -1,8 +1,10 @@
 package com.ljs.ifootballmanager.ai;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSink;
 import com.google.common.io.Files;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  * Hello world!
@@ -34,13 +37,34 @@ import java.util.Set;
  */
 public class Main {
 
+    private static final ImmutableMap<String, League> SITES =
+        ImmutableMap
+            .<String, League>builder()
+            .put("IFM - LIV", IFootballManager.create("liv", "eve"))
+            .put("IFM - NOR", IFootballManager.create("nor"))
+            .put("IFM - DER", IFootballManager.create("der"))
+            .put("JAFL - GLI", Jafl.get())
+            .build();
+
     public static void main( String[] args ) throws IOException {
         new Main().run();
     }
 
     public void run() throws IOException {
-        run(IFootballManager.get());
-        run(Jafl.get());
+        String site = System.getProperty("site");
+
+        if (site == null) {
+            site = (String) JOptionPane.showInputDialog(
+                null,
+                "Please select league:",
+                "ESMS-AI",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                Ordering.natural().sortedCopy(SITES.keySet()).toArray(),
+                null);
+        }
+
+        run(SITES.get(site));
     }
 
     private void run(League league) throws IOException {
@@ -61,7 +85,7 @@ public class Main {
 
         Squad squad = Squad.load(league);
 
-        Formation firstXI = Formation.select(league, squad.players());
+        Formation firstXI = Formation.selectVs(league, squad.players(), squad);
 
         w.println("** Squad **");
         print(w, SquadReport.create(league, Tactic.NORMAL, squad.players()));
@@ -134,7 +158,7 @@ public class Main {
         }
     }
 
-    private void printSelection(PrintWriter w, League league, String title, Iterable<Player> available, CharSink sheet) {
+    private void printSelection(PrintWriter w, League league, String title, Iterable<Player> available, CharSink sheet) throws IOException {
         Set<String> forced = Sets.newHashSet();
 
         for (Player p : available) {
@@ -143,7 +167,10 @@ public class Main {
             }
         }
 
-        Formation formation = Formation.select(league, available);
+        Formation formation = league.getVs().isPresent()
+            ? Formation.selectVs(league, available, Squad.load(league, league.getVs().get()))
+            : Formation.select(league, available);
+
         ChangePlan cp =
             ChangePlan.select(league, formation, available);
         Bench bench =

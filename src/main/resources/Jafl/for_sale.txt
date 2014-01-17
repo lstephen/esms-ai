@@ -16,3 +16,5 @@ M_Fullbrook   18 xxx  1 16  3  3 15 300 128 421 275 # 6m - Midland
 X_Oxer        18 xxx  1 15  4  6 10 300 286 302 119 # 1m - Midland
 T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland
 
+
+A_Ruse 18 nor 1 10 3 15 12 444 486 956 720 # - 6m - Gareth James

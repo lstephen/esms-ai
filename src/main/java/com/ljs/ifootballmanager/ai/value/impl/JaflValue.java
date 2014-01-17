@@ -12,10 +12,10 @@ public final class JaflValue implements Value {
 
     private JaflValue() { }
 
-    public Integer getValue(Player p) {
-        Integer base = getPotential(p);
+    public Double getValue(Player p) {
+        Double base = getPotential(p);
 
-        return (int) Math.round(base * getAgingFactor(p.getAge()));
+        return base * getAgingFactor(p.getAge());
     }
 
     private Double getAgingFactor(Integer age) {
@@ -26,7 +26,7 @@ public final class JaflValue implements Value {
         return new JaflValue();
     }
 
-    private Integer getPotential(Player p) {
+    private Double getPotential(Player p) {
         return JaflPotential
             .create()
             .atPotential(p)

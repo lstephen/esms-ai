@@ -13,12 +13,11 @@ X_Cutko          17  DF  1 15  6  7 $12,480  OK   11.25M  N/A
 K_Ehrlich        19  MF  1 14 18 11 $27,766  OK   34.5M   N/A
 L_Hussie         19  MF  1  3 18  9 $20,533  OK   25.5M   N/A
 K_Cutsor         18  MF  1  7 16  3 $13,418  OK   12.25M  N/A
+I_Mullinax       19  MF  1  5 16 14 $17,871  OK   11.75M  N/A
 S_Fenham         19  MF  1  6 15  4 $11,359  OK   6M      N/A
-I_Mullinax       19  MF  1  5 15 14 $15,520  OK   8.2M    N/A
 E_Dutra          18  MF  1  2 15  5 $10,240  OK   7.6M    N/A
 F_Evjen          18  MF  1  7 14  3 $8,828   OK   6.6M    N/A
 X_Moutrie        19  FW  1  4 10 18 $21,699  OK   27M     N/A
 U_Cumming        19  FW  1  7  8 17 $17,405  OK   16.5M   N/A
 N_Gump           18  FW  1  3  4 15 $10,080  OK   7.4M    N/A
-S_Szmidt         18  FW  1  2  9 15 $12,160  OK   9M      N/A
 N_Lundeen        17  FW  1  6  3 14 $8,442   OK   7.7M    N/A

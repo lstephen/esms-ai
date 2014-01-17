@@ -12,7 +12,7 @@ public final class OverallValue implements Value {
     private OverallValue() { }
 
     @Override
-    public Integer getValue(Player p) {
+    public Double getValue(Player p) {
         return p.getOverall(Tactic.NORMAL).getRating();
     }
 

@@ -38,6 +38,8 @@ import java.util.concurrent.Callable;
  */
 public final class ChangePlan implements Report {
 
+    private static final Integer GAME_MINUTES = 90;
+
     private final Formation formation;
 
     private final ImmutableSet<Change> changes;
@@ -115,8 +117,8 @@ public final class ChangePlan implements Report {
     public Tactic getBestScoringTactic() {
         return Ordering
             .natural()
-            .onResultOf(new Function<Tactic, Integer>() {
-                public Integer apply(Tactic t) {
+            .onResultOf(new Function<Tactic, Double>() {
+                public Double apply(Tactic t) {
                     return scoring(t);
                 }
             })
@@ -126,30 +128,40 @@ public final class ChangePlan implements Report {
     public Tactic getBestDefensiveTactic() {
         return Ordering
             .natural()
-            .onResultOf(new Function<Tactic, Integer>() {
-                public Integer apply(Tactic t) {
+            .onResultOf(new Function<Tactic, Double>() {
+                public Double apply(Tactic t) {
                     return defending(t);
                 }
             })
             .max(Arrays.asList(Tactic.values()));
     }
 
-    private Integer scoring(Tactic t) {
+    private Double scoring(Tactic t) {
         Double score = 0.0;
-        for (Integer minute = 1; minute <= 90; minute++) {
+
+        for (Integer minute = 1; minute < GAME_MINUTES; minute++) {
             Formation f = getFormationAt(minute);
-            score += ((f.scoring(t) + f.score(t)) * minute / 90);
+            score += weightedAtMinute(f.scoring(t) + f.score(t), minute);
         }
-        return score.intValue();
+
+        return score;
     }
 
-    private Integer defending(Tactic t) {
+    private Double defending(Tactic t) {
         Double score = 0.0;
-        for (Integer minute = 1; minute <= 90; minute++) {
+        for (Integer minute = 1; minute <= GAME_MINUTES; minute++) {
             Formation f = getFormationAt(minute);
-            score += ((f.defending(t) + f.score(t)) * minute / 90);
+            score += weightedAtMinute(f.defending(t) + f.score(t), minute);
         }
-        return score.intValue();
+        return score;
+    }
+
+    private Double weightedAtMinute(Double score, Integer minute) {
+        return score * weightingAtMinute(minute);
+    }
+
+    private Double weightingAtMinute(Integer minute) {
+        return (double) minute / GAME_MINUTES;
     }
 
     public ImmutableSet<Player> getSubstitutes() {
@@ -217,10 +229,10 @@ public final class ChangePlan implements Report {
         Double score = 0.0;
 
         for (Integer minute = 0; minute <= 90; minute++) {
-            score += (score(minute) * minute / 90);
+            score += weightedAtMinute(score(minute), minute);
         }
 
-        return score - changes.size();
+        return score;
     }
 
     public Double score(Integer minute) {
@@ -242,13 +254,33 @@ public final class ChangePlan implements Report {
             players.put(formation.findRole(p), p.afterMinutes(minute));
         }
 
-        Formation f = Formation.create(formation.getValidator(), formation.getTactic(), players);
+        Formation f = Formation.create(formation.getValidator(), formation.getScorer(), formation.getTactic(), players);
 
         for (Change c : changesMadeAt(minute)) {
             f = c.apply(f, minute);
         }
 
         return f;
+    }
+
+    private static Ordering<ChangePlan> byScore() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<ChangePlan, Double>() {
+                public Double apply(ChangePlan cp) {
+                    return cp.score();
+                }
+            });
+    }
+
+    public static Ordering<ChangePlan> byChangesSize() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<ChangePlan, Integer>() {
+                public Integer apply(ChangePlan cp) {
+                    return cp.changes.size();
+                }
+            });
     }
 
     public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
@@ -263,13 +295,7 @@ public final class ChangePlan implements Report {
                     return cp.isValid();
                 }
             })
-            .heuristic(Ordering
-                .natural()
-                .onResultOf(new Function<ChangePlan, Double>() {
-                    public Double apply(ChangePlan cp) {
-                        return cp.score();
-                    }
-                }))
+            .heuristic(byScore().compound(byChangesSize().reverse()))
             .actionGenerator(actionsFunction(league, criteria));
 
 

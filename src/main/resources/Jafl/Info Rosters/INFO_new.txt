@@ -17,6 +17,7 @@ R_McCallum       23  MF  1  6 21 17 $69,485  OK   16.25M  N/A
 L_Mastrianni     26  MF  2 10 20  6 $41,985  OK   1.2M    N/A
 U_Hughston       20  MF  1  5 19  3 $23,800  OK   6.2M    N/A
 Y_Zumbro         20  MF  1  8 18 13 $25,666  OK   2.3M    N/A
+E_Ibbott         29  FW  1  3  8 24 $102,375 OK   33.75M  N/A
 S_Varsek         25  FW  1  7 19 23 $107,930 OK   75.5M   On_Loan(LEI)
 K_Schomig        22  FW  1  8 10 21 $60,257  OK   15.75M  N/A
 I_Marturello     20  FW  1  9  4 19 $28,000  OK   7.3M    N/A

@@ -12,9 +12,13 @@ public interface FormationScorer {
 
     Double score(Formation f, Tactic t);
 
-    Integer scoring(Formation f, Tactic t);
+    Double scoring(Formation f, Tactic t);
 
-    Integer defending(Formation f, Tactic t);
+    Double defending(Formation f, Tactic t);
+
+    Double gkQuality(Formation f);
+
+    Double shotQuality(Formation f, Tactic t);
 
     void print(Formation f, PrintWriter w);
 

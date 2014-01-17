@@ -9,14 +9,14 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import com.ljs.ai.search.RepeatedHillClimbing;
-import com.ljs.ai.search.State;
+import com.ljs.ai.search.hillclimbing.HillClimbing;
+import com.ljs.ai.search.hillclimbing.RepeatedHillClimbing;
+import com.ljs.ai.search.hillclimbing.Validator;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.formation.score.VsFormation;
-import com.ljs.ifootballmanager.ai.formation.score.VsSquad;
 import com.ljs.ifootballmanager.ai.formation.selection.Actions;
 import com.ljs.ifootballmanager.ai.formation.selection.RandomFormationGenerator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
@@ -26,15 +26,20 @@ import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.assertj.core.api.Assertions;
 
 /**
  *
  * @author lstephen
  */
-public final class Formation implements State, Report {
+public final class Formation implements Report {
 
     private final FormationValidator validator;
 
@@ -59,6 +64,14 @@ public final class Formation implements State, Report {
 
     public Tactic getTactic() {
         return tactic;
+    }
+
+    public FormationScorer getScorer() {
+        return scorer;
+    }
+
+    public Formation withScorer(FormationScorer scorer) {
+        return new Formation(validator, scorer, tactic, positions);
     }
 
     public Formation withTactic(Tactic tactic) {
@@ -86,7 +99,7 @@ public final class Formation implements State, Report {
             f.put(r, p);
         }
 
-        return Formation.create(validator, tactic, f);
+        return Formation.create(validator, scorer, tactic, f);
     }
 
     public Role findRole(Player p) {
@@ -147,7 +160,7 @@ public final class Formation implements State, Report {
         f.remove(findRole(out), out);
         f.put(r, in);
 
-        return Formation.create(validator, tactic, f);
+        return Formation.create(validator, scorer, tactic, f);
     }
 
     public boolean isValid(Substitution s) {
@@ -168,11 +181,19 @@ public final class Formation implements State, Report {
         return scorer.score(this, tactic);
     }
 
-    public Integer scoring(Tactic tactic) {
+    public Double scoring() {
+        return scoring(tactic);
+    }
+
+    public Double scoring(Tactic tactic) {
         return scorer.scoring(this, tactic);
     }
 
-    public Integer defending(Tactic tactic) {
+    public Double defending() {
+        return defending(tactic);
+    }
+
+    public Double defending(Tactic tactic) {
         return scorer.defending(this, tactic);
     }
 
@@ -220,10 +241,6 @@ public final class Formation implements State, Report {
         return create(validator, DefaultScorer.get(), tactic, players);
     }
 
-    private static Formation create(League league, Tactic tactic, Multimap<Role, Player> players) {
-        return create(league.getFormationValidator(), tactic, players);
-    }
-
     public static Formation select(League league, Iterable<Player> available) {
         return select(league, SelectionCriteria.create(league, available), DefaultScorer.get());
     }
@@ -233,7 +250,46 @@ public final class Formation implements State, Report {
     }
 
     public static Formation selectVs(League league, Iterable<Player> available, Squad vs) {
-        return select(league, SelectionCriteria.create(league, available), VsSquad.create(league, vs.forSelection()));
+        List<Tactic> ts = Arrays.asList(Tactic.values());
+        Collections.shuffle(ts);
+
+        Formation opposition = RandomFormationGenerator
+            .create(
+                league.getFormationValidator(),
+                DefaultScorer.get(),
+                ts.get(0),
+                SelectionCriteria.create(league, available))
+            .call();
+
+        Formation last = null;
+        Double score = Double.NEGATIVE_INFINITY;
+
+        PrintWriter w = new PrintWriter(System.out);
+
+        while (true) {
+            w.println("Selecting ----------------");
+            w.flush();
+
+            Formation us = selectVs(league, available, opposition);
+            opposition = selectVs(league, vs.forSelection(), us);
+
+            us = us.withScorer(VsFormation.create(opposition));
+
+            opposition.print(w);
+            w.println("------------------ VS --------------");
+            us.print(w);
+            w.println("Score " + us.score() + "-----------");
+
+            w.flush();
+
+            if (us.score() > score) {
+                score = us.score();
+                last = us;
+            } else {
+                Assertions.assertThat(last).isNotNull();
+                return last;
+            }
+        }
     }
 
     private static Formation select(League league, SelectionCriteria criteria, FormationScorer scorer) {
@@ -247,19 +303,52 @@ public final class Formation implements State, Report {
     }
 
     private static Formation select(League league, Tactic tactic, SelectionCriteria criteria, FormationScorer scorer) {
+
+        HillClimbing.Builder<Formation> builder = HillClimbing
+            .<Formation>builder()
+            .validator(new Validator<Formation>() {
+                @Override
+                public Boolean apply(Formation f) {
+                    return f.isValid();
+                }
+            })
+            .heuristic(byScore().compound(byGkQuality()).compound(byShotQuality()))
+            .actionGenerator(Actions.create(criteria));
+
         return new RepeatedHillClimbing<Formation>(
-            Formation.class,
             RandomFormationGenerator.create(league.getFormationValidator(), scorer, tactic, criteria),
-            Actions.create(criteria))
+            builder)
             .search();
     }
 
     private static Ordering<Formation> byScore() {
         return Ordering
             .natural()
+            .onResultOf(new Function<Formation, BigDecimal>() {
+                public BigDecimal apply(Formation f) {
+                    return BigDecimal
+                        .valueOf(f.score())
+                        .setScale(2, RoundingMode.HALF_UP);
+                }
+            });
+    }
+
+    private static Ordering<Formation> byGkQuality() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Formation, Long>() {
+                public Long apply(Formation f) {
+                    return Math.round(f.getScorer().gkQuality(f));
+                }
+            });
+    }
+
+    private static Ordering<Formation> byShotQuality() {
+        return Ordering
+            .natural()
             .onResultOf(new Function<Formation, Double>() {
                 public Double apply(Formation f) {
-                    return f.score();
+                    return f.getScorer().shotQuality(f, f.getTactic());
                 }
             });
     }

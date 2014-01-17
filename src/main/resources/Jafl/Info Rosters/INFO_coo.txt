@@ -12,7 +12,7 @@ S_Hasek          24  DF  2 21 17  7 $70,571  OK   14.75M  N/A
 U_Maugridge      23  DF  2 21  7 13 $64,056  OK   15M     N/A
 H_Fujishima      29  DF  2 20 17  4 $48,869  OK   700K    N/A
 Sousa            26  MF  2 17 25 12 $161,920 OK   119M     N/A
-Sammy_TheBull    25  MF  1 21 24 10 $154,049 OK   118.75M  N/A
+Sammy_TheBull    25  MF  1 23 24  8 $156,000 OK   120.25M  N/A
 M_Gibson         22  MF  2  9 23 22 $117,764 OK   117.75M  N/A
 Patman           21  MF  1 12 22 18 $95,781  OK   89.75M  N/A
 Emmierto         27  MF  2 12 20 15 $52,920  OK   1.2M    N/A

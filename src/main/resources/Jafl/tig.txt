@@ -3,7 +3,6 @@ Name         Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb Gam Sub  Min Mom Sav Con Ktk
 B_Wall        27 usa 27  1  1  1 41 530 631 631 631   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 N_Sandberg    33 swe 21  2  2  2 21 951 445 445 535   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 D_Quartus     24 usa 20  1  1  1 15 525 912 912 912   0   0    0   0   0   0   0   0   0   0   0   0   0   0
-F_Fenge       25 por 20  2  2  2 22 445 334 424 510   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 Shiva         27 usa  1 26 14  7  3 377 668 615 385   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 Tigger        28 usa  1 25 14  3 11 426 652 757 470   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 L_Countach    28 usa  2 24 16  9 22 545 110 240 866   0   0    0   0   0   0   0   0   0   0   0   0   0   0

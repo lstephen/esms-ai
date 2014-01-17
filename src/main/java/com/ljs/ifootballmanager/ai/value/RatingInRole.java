@@ -9,11 +9,12 @@ import com.ljs.ifootballmanager.ai.Role;
  * @author lstephen
  */
 public final class RatingInRole {
+
     private final Role role;
 
-    private final Integer rating;
+    private final Double rating;
 
-    private RatingInRole(Role role, Integer rating) {
+    private RatingInRole(Role role, Double rating) {
         this.role = role;
         this.rating = rating;
     }
@@ -22,19 +23,19 @@ public final class RatingInRole {
         return role;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public static RatingInRole create(Role role, Integer rating) {
+    public static RatingInRole create(Role role, Double rating) {
         return new RatingInRole(role, rating);
     }
 
     public static Ordering<RatingInRole> byRating() {
         return Ordering
             .natural()
-            .onResultOf(new Function<RatingInRole, Integer>() {
-                public Integer apply(RatingInRole rr) {
+            .onResultOf(new Function<RatingInRole, Double>() {
+                public Double apply(RatingInRole rr) {
                     return rr.getRating();
                 }
             });

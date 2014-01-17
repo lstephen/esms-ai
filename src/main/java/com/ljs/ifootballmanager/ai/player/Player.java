@@ -51,16 +51,28 @@ public final class Player {
         return new Player(name, age, ratings.atPercent(percentage), abilities);
     }
 
+    public Player withSkillAdded(Rating rt, Integer amount) {
+        return withSkills(ratings.add(rt, amount));
+    }
+
     public Player withAbilityAdded(Rating rt, Integer amount) {
         Ratings newAbilities = abilities.add(rt, amount);
         Ratings newSkills = ratings;
 
-        while (newAbilities.getSkill(rt) > 100000) {
+        while (newAbilities.getSkill(rt) > 999.5) {
             newSkills = newSkills.add(rt, 1);
             newAbilities = newAbilities.subtract(rt, 1000);
         }
 
-        return new Player(name, age, newSkills, newAbilities);
+        return withSkills(newSkills).withAbilities(newAbilities);
+    }
+
+    private Player withSkills(Ratings skills) {
+        return new Player(name, age, skills, abilities);
+    }
+
+    private Player withAbilities(Ratings abilities) {
+        return new Player(name, age, ratings, abilities);
     }
 
     public Player afterMinutes(Integer minutes) {
@@ -147,19 +159,23 @@ public final class Player {
         return Evaluator.create(ratings).evaluate(r, t);
     }
 
-    public Integer getRating(Role r, Tactic t) {
+    public Double getRating(Role r, Tactic t) {
         return evaluate(r, t).getRating();
     }
 
-    public Integer getSkillRating(Role rl, Tactic tc, Rating rt) {
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
         return ratings.getSkillRating(rl, tc, rt);
     }
 
-    public Integer getSkill(Rating rt) {
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt, Tactic vs) {
+        return ratings.getSkillRating(rl, tc, rt, vs);
+    }
+
+    public Double getSkill(Rating rt) {
         return ratings.getSkill(rt);
     }
 
-    public Integer getMaximumSkill() {
+    public Double getMaximumSkill() {
         return ratings.getMaximumSkill();
     }
 
@@ -203,8 +219,8 @@ public final class Player {
     public static Ordering<Player> byOverall(final Tactic t) {
         return Ordering
             .natural()
-            .onResultOf(new Function<Player, Integer>() {
-                public Integer apply(Player p) {
+            .onResultOf(new Function<Player, Double>() {
+                public Double apply(Player p) {
                     return p.getOverall(t).getRating();
                 }
             })
@@ -214,8 +230,8 @@ public final class Player {
     public static Ordering<Player> byRating(final Role r, final Tactic t) {
         return Ordering
             .natural()
-            .onResultOf(new Function<Player, Integer>() {
-                public Integer apply(Player p) {
+            .onResultOf(new Function<Player, Double>() {
+                public Double apply(Player p) {
                     return p.evaluate(r, t).getRating();
                 }
             });
@@ -228,8 +244,8 @@ public final class Player {
     public static Ordering<Player> byValue(final Value value) {
         return Ordering
             .natural()
-            .onResultOf(new Function<Player, Integer>() {
-                public Integer apply(Player p) {
+            .onResultOf(new Function<Player, Double>() {
+                public Double apply(Player p) {
                     return value.getValue(p);
                 }
             })
