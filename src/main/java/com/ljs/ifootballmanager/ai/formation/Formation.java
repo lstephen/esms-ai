@@ -22,7 +22,6 @@ import com.ljs.ifootballmanager.ai.formation.selection.RandomFormationGenerator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
-import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
@@ -33,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Assertions;
 
 /**
@@ -242,14 +242,14 @@ public final class Formation implements Report {
     }
 
     public static Formation select(League league, Iterable<Player> available) {
-        return select(league, SelectionCriteria.create(league, available), DefaultScorer.get());
+        return selectVs(league, available, available).getLeft();
     }
 
     public static Formation selectVs(League league, Iterable<Player> available, Formation vs) {
         return select(league, SelectionCriteria.create(league, available), VsFormation.create(vs));
     }
 
-    public static Formation selectVs(League league, Iterable<Player> available, Squad vs) {
+    public static Pair<Formation, Formation> selectVs(League league, Iterable<Player> available, Iterable<Player> vs) {
         List<Tactic> ts = Arrays.asList(Tactic.values());
         Collections.shuffle(ts);
 
@@ -261,33 +261,44 @@ public final class Formation implements Report {
                 SelectionCriteria.create(league, available))
             .call();
 
-        Formation last = null;
+        Formation lastUs = null;
+        Formation lastThem = opposition;
         Double score = Double.NEGATIVE_INFINITY;
 
         PrintWriter w = new PrintWriter(System.out);
 
+        Double leeway = 1.0;
+
         while (true) {
-            w.println("Selecting ----------------");
+            w.println("Selecting...");
             w.flush();
 
             Formation us = selectVs(league, available, opposition);
-            opposition = selectVs(league, vs.forSelection(), us);
+
+            w.println("Countering...");
+            w.flush();
+            opposition = selectVs(league, vs, us);
 
             us = us.withScorer(VsFormation.create(opposition));
 
-            opposition.print(w);
-            w.println("------------------ VS --------------");
-            us.print(w);
-            w.println("Score " + us.score() + "-----------");
-
+            w.format("%s vs %s : %.3f%n", us.getTactic(), opposition.getTactic(), us.score());
             w.flush();
 
             if (us.score() > score) {
                 score = us.score();
-                last = us;
+                lastUs = us;
+                lastThem = opposition;
+            } else if (us.score() > score - leeway) {
+                // do nothing, next iteration
+                System.out.println("Retrying due to leeway given:" + leeway);
             } else {
-                Assertions.assertThat(last).isNotNull();
-                return last;
+                Assertions.assertThat(lastUs).isNotNull();
+                return Pair.of(lastUs, lastThem);
+            }
+
+            leeway -= 0.1;
+            if (leeway < 1.0e-6) {
+                leeway = 0.0;
             }
         }
     }
@@ -312,7 +323,7 @@ public final class Formation implements Report {
                     return f.isValid();
                 }
             })
-            .heuristic(byScore().compound(byGkQuality()).compound(byShotQuality()))
+            .heuristic(byScore().compound(byShotQuality()).compound(byGkQuality()))
             .actionGenerator(Actions.create(criteria));
 
         return new RepeatedHillClimbing<Formation>(
@@ -328,7 +339,10 @@ public final class Formation implements Report {
                 public BigDecimal apply(Formation f) {
                     return BigDecimal
                         .valueOf(f.score())
-                        .setScale(2, RoundingMode.HALF_UP);
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .multiply(BigDecimal.valueOf(1000))
+                        .add(BigDecimal.valueOf(f.getScorer().shotQuality(f, f.getTactic())))
+                        .add(BigDecimal.valueOf(f.getScorer().gkQuality(f)));
                 }
             });
     }

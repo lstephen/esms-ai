@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -30,6 +31,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Hello world!
@@ -40,7 +42,7 @@ public class Main {
     private static final ImmutableMap<String, League> SITES =
         ImmutableMap
             .<String, League>builder()
-            .put("IFM - LIV", IFootballManager.create("liv", "eve"))
+            .put("IFM - LIV", IFootballManager.create("liv", "che"))
             .put("IFM - NOR", IFootballManager.create("nor"))
             .put("IFM - DER", IFootballManager.create("der"))
             .put("JAFL - GLI", Jafl.get())
@@ -85,7 +87,7 @@ public class Main {
 
         Squad squad = Squad.load(league);
 
-        Formation firstXI = Formation.selectVs(league, squad.players(), squad);
+        Formation firstXI = Formation.select(league, squad.players());
 
         w.println("** Squad **");
         print(w, SquadReport.create(league, Tactic.NORMAL, squad.players()));
@@ -167,12 +169,22 @@ public class Main {
             }
         }
 
-        Formation formation = league.getVs().isPresent()
-            ? Formation.selectVs(league, available, Squad.load(league, league.getVs().get()))
-            : Formation.select(league, available);
+        Formation formation;
+        Optional<Formation> vs = Optional.absent();
+
+        if (league.getVs().isPresent()) {
+            Pair<Formation, Formation> fs =
+                Formation.selectVs(league, available, Squad.load(league, league.getVs().get()).forSelection());
+
+            formation = fs.getLeft();
+            vs = Optional.of(fs.getRight());
+
+        } else {
+            formation = Formation.select(league, available);
+        }
 
         ChangePlan cp =
-            ChangePlan.select(league, formation, available);
+            ChangePlan.select(league, formation, available, vs);
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 

@@ -65,7 +65,7 @@ public final class DefaultScorer implements FormationScorer {
         return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING);
     }
 
-    private Double skillRating(Formation f, Tactic t, Rating r) {
+    public Double skillRating(Formation f, Tactic t, Rating r) {
         Double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
             score += p.getSkillRating(f.findRole(p), t, r);
