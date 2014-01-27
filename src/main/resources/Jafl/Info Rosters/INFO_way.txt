@@ -11,7 +11,7 @@ P_Thackway       19  DF  1 15  8  4 $12,319  OK   6.5M    N/A
 L_Galeano        18  DF  1 14  4  9 $9,856   OK   7.4M    N/A
 Y_Hyslope        18  DF  1 14  3  7 $8,828   OK   6.6M    N/A
 J_Hurren         17  DF  1 14  4  7 $9,085   OK   8.3M    N/A
-C_Ruvo           18  MF  1  7 16 12 $17,515  OK   16M     N/A
+C_Ruvo           18  MF  1  7 16 14 $18,583  OK   17M     N/A
 Q_Wriedt         19  MF  1  3 16  7 $13,418  OK   8.8M    N/A
 B_Rummage        18  MF  1  5 15 10 $13,600  OK   10M     N/A
 T_Zvacek         17  MF  1  6 15  4 $11,359  OK   10.25M  N/A

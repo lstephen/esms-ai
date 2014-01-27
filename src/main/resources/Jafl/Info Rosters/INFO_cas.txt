@@ -1,0 +1,22 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+B_Semidey        29  GK 24  2  2  2 $78,000  OK   21.75M  N/A
+B_Anzai          22  GK 22  1  1  1 $48,000  OK   27M     N/A
+P_Veldhuizen     27  GK 21  2  2  2 $38,000  OK   4.2M    N/A
+O_Tarango        30  DF  2 25  7 12 $135,519 OK   40M     N/A
+K_Salles         31  DF  2 23 15  5 $95,825  OK   10.5M   N/A
+F_McCrimmon      28  DF  2 22 10 16 $89,235  OK   23.75M  N/A
+A_Straith        21  DF  1 22 15 11 $88,580  OK   83M     N/A
+A_Toyota         21  DF  1 20  6  9 $40,770  SUS  22.5M   N/A
+C_Spall          20  DF  1 19  6 12 $31,900  OK   8.3M    N/A
+S_Fizzio         30  MF  2 12 24  8 $123,825 OK   23.75M  N/A
+H_Pedrin         23  MF  1  7 22 13 $79,417  OK   47.5M   N/A
+C_Begbie         23  MF  1 17 22  7 $87,272  OK   52.25M  N/A
+L_Hartopp        25  MF  1  8 22  4 $65,672  OK   30.5M   N/A
+P_Bead           22  MF  1  6 21 14 $64,599  OK   16.75M  N/A
+B_Behague        26  MF  2 10 21  4 $55,914  OK   8.8M    N/A
+P_Pytel          20  MF  1 10 19  4 $28,900  OK   7.6M    N/A
+N_Vautrot        23  FW  1  9  5 22 $68,945  OK   41.25M  N/A
+G_Hartill        23  FW  2 13  7 21 $64,056  OK   15M     N/A
+I_Lupo           20  FW  1  7 10 19 $30,700  OK   8M      N/A
+N_Nedovic        20  FW  1  2 17 18 $25,666  OK   2.3M    N/A

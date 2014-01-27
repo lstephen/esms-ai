@@ -1,12 +1,13 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
+R_Huffstutler    19  GK 15  1  1  1 $8,000   OK   3.6M    N/A
 A_Cazzell        19  GK 14  1  1  1 $6,000   OK   2.7M    N/A
 S_Russett        17  GK 13  1  1  1 $4,000   OK   2.8M    N/A
-N_Ferber         19  DF  1 18 13  5 $24,266  OK   30.25M  N/A
 X_Hughs          19  DF  1 17 12  5 $18,957  OK   18M     N/A
 V_Dunmire        18  DF  1 16  4  2 $11,459  OK   10.5M   N/A
 A_Szarowicz      19  DF  1 15  7  5 $12,160  OK   6.4M    N/A
 I_Aulph          18  DF  1 15  4  7 $11,839  OK   8.8M    N/A
+B_Wysinger       18  DF  1 15 11  8 $15,040  OK   11M     N/A
 P_Muckersie      16  DF  1 14  3  7 $8,828   OK   9.5M    N/A
 N_Von_Wald       16  DF  1 13  3  9 $6,584   OK   6.5M    N/A
 S_Hunsaker       17  DF  1 12  2 10 $5,175   OK   1.4M    N/A

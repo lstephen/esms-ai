@@ -2,7 +2,6 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 C_Wiggam         30  GK 25  2  2  2 $88,000  OK   22M     N/A
 Maggie_S         23  GK 22  1  1  1 $48,000  OK   24.25M  N/A
-player_2         20  GK 20  1  1  1 $27,000  OK   17M     N/A
 F_Oimoen         28  GK 19  2  2  2 $19,000  OK   0K      N/A
 Cleetus          29  DF  1 25 14 10 $148,191 OK   54.5M   N/A
 L_Kaalekahi      30  DF  2 25  6  2 $105,952 OK   31.25M  N/A

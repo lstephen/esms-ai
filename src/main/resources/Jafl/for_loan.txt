@@ -1,6 +1,0 @@
- Po_Kurr       16 jap  1  5 14  4 20 300 131 121 166 # £5.0M - Leicester
-
-P_Rynne       18 xxx  1 12  6 16  9 300 593 102 307 # 15m - Midland
-M_Fullbrook   18 xxx  1 16  3  3 15 300 128 421 275 # 6m - Midland
-X_Oxer        18 xxx  1 15  4  6 10 300 286 302 119 # 1m - Midland
-T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland

@@ -18,3 +18,8 @@ T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland
 
 
 A_Ruse 18 nor 1 10 3 15 12 444 486 956 720 # - 6m - Gareth James
+
+P_Rynne 18 xxx 1 12 6 16 9 300 593 102 307 # - Mark Bradley $10m
+
+D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 - KPK
+

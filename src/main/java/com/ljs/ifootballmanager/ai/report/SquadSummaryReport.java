@@ -31,16 +31,16 @@ public class SquadSummaryReport implements Report {
         this.reservesXI = builder.reservesXI;
     }
 
-    private Double getMax(Role r, Tactic t, Iterable<Player> ps) {
-        return Player.byRating(r, t).max(ps).getRating(r, t);
+    private Long getMax(Role r, Tactic t, Iterable<Player> ps) {
+        return Math.round(Player.byRating(r, t).max(ps).getRating(r, t));
     }
 
-    private Double getMin(Role r, Iterable<Player> ps) {
+    private Long getMin(Role r, Iterable<Player> ps) {
         return getMin(r, Tactic.NORMAL, ps);
     }
 
-    private Double getMin(Role r, Tactic t, Iterable<Player> ps) {
-        return Player.byRating(r, t).min(ps).getRating(r, t);
+    private Long getMin(Role r, Tactic t, Iterable<Player> ps) {
+        return Math.round(Player.byRating(r, t).min(ps).getRating(r, t));
     }
 
 

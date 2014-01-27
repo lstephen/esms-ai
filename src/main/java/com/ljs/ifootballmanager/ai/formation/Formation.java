@@ -16,7 +16,6 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
-import com.ljs.ifootballmanager.ai.formation.score.VsFormation;
 import com.ljs.ifootballmanager.ai.formation.selection.Actions;
 import com.ljs.ifootballmanager.ai.formation.selection.RandomFormationGenerator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
@@ -27,13 +26,9 @@ import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.apache.commons.lang3.tuple.Pair;
-import org.assertj.core.api.Assertions;
 
 /**
  *
@@ -242,65 +237,7 @@ public final class Formation implements Report {
     }
 
     public static Formation select(League league, Iterable<Player> available) {
-        return selectVs(league, available, available).getLeft();
-    }
-
-    public static Formation selectVs(League league, Iterable<Player> available, Formation vs) {
-        return select(league, SelectionCriteria.create(league, available), VsFormation.create(vs));
-    }
-
-    public static Pair<Formation, Formation> selectVs(League league, Iterable<Player> available, Iterable<Player> vs) {
-        List<Tactic> ts = Arrays.asList(Tactic.values());
-        Collections.shuffle(ts);
-
-        Formation opposition = RandomFormationGenerator
-            .create(
-                league.getFormationValidator(),
-                DefaultScorer.get(),
-                ts.get(0),
-                SelectionCriteria.create(league, available))
-            .call();
-
-        Formation lastUs = null;
-        Formation lastThem = opposition;
-        Double score = Double.NEGATIVE_INFINITY;
-
-        PrintWriter w = new PrintWriter(System.out);
-
-        Double leeway = 1.0;
-
-        while (true) {
-            w.println("Selecting...");
-            w.flush();
-
-            Formation us = selectVs(league, available, opposition);
-
-            w.println("Countering...");
-            w.flush();
-            opposition = selectVs(league, vs, us);
-
-            us = us.withScorer(VsFormation.create(opposition));
-
-            w.format("%s vs %s : %.3f%n", us.getTactic(), opposition.getTactic(), us.score());
-            w.flush();
-
-            if (us.score() > score) {
-                score = us.score();
-                lastUs = us;
-                lastThem = opposition;
-            } else if (us.score() > score - leeway) {
-                // do nothing, next iteration
-                System.out.println("Retrying due to leeway given:" + leeway);
-            } else {
-                Assertions.assertThat(lastUs).isNotNull();
-                return Pair.of(lastUs, lastThem);
-            }
-
-            leeway -= 0.1;
-            if (leeway < 1.0e-6) {
-                leeway = 0.0;
-            }
-        }
+        return select(league, SelectionCriteria.create(league, available), DefaultScorer.get());
     }
 
     private static Formation select(League league, SelectionCriteria criteria, FormationScorer scorer) {

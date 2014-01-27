@@ -1,7 +1,6 @@
 package com.ljs.ifootballmanager.ai;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -14,6 +13,7 @@ import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.league.Ssl;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -31,7 +31,6 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Hello world!
@@ -42,10 +41,11 @@ public class Main {
     private static final ImmutableMap<String, League> SITES =
         ImmutableMap
             .<String, League>builder()
-            .put("IFM - LIV", IFootballManager.create("liv", "che"))
+            .put("IFM - LIV", IFootballManager.create("liv"))
             .put("IFM - NOR", IFootballManager.create("nor"))
             .put("IFM - DER", IFootballManager.create("der"))
             .put("JAFL - GLI", Jafl.get())
+            .put("SSL - MIS", Ssl.get())
             .build();
 
     public static void main( String[] args ) throws IOException {
@@ -169,22 +169,10 @@ public class Main {
             }
         }
 
-        Formation formation;
-        Optional<Formation> vs = Optional.absent();
-
-        if (league.getVs().isPresent()) {
-            Pair<Formation, Formation> fs =
-                Formation.selectVs(league, available, Squad.load(league, league.getVs().get()).forSelection());
-
-            formation = fs.getLeft();
-            vs = Optional.of(fs.getRight());
-
-        } else {
-            formation = Formation.select(league, available);
-        }
+        Formation formation = Formation.select(league, available);
 
         ChangePlan cp =
-            ChangePlan.select(league, formation, available, vs);
+            ChangePlan.select(league, formation, available);
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 
@@ -203,8 +191,8 @@ public class Main {
         print(w, formation, bench, cp);
 
         w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
-        w.format("TACTIC %s IF SCORE < 0%n", cp.getBestScoringTactic().getCode());
-        w.format("TACTIC %s IF SCORE > 0%n", cp.getBestDefensiveTactic().getCode());
+        w.format("TACTIC %s IF SCORE = -1%n", cp.getBestScoringTactic().getCode());
+        w.format("TACTIC %s IF SCORE = 1%n", cp.getBestDefensiveTactic().getCode());
         w.println();
 
         Reports.print(TeamSheet.create(league, formation, cp, bench)).to(sheet);

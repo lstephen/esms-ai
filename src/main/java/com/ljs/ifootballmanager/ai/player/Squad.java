@@ -142,6 +142,10 @@ public final class Squad {
 
             String[] split = StringUtils.split(StringUtils.substringBefore(line, "#"));
 
+            if (split.length < 12) {
+                continue;
+            }
+
             String name = split[0];
             Integer age = Integer.parseInt(split[1]);
 

@@ -10,7 +10,6 @@ D_da_Guia        25  DF  2 24 20 15 $160,875 OK   124M     N/A
 E_Beregovoi      22  DF  1 23 21 16 $126,086 OK   126M     N/A
 Carlinhos        20  DF  1 20  8  5 $38,745  OK   28.5M   N/A
 Eliezio          20  DF  1 19 10  7 $30,700  OK   8M      N/A
-M_Zare           20  DF  1 19 18  5 $36,700  OK   9.6M    N/A
 C_LuisGarcia     31  MF  2  5 25 17 $147,136 OK   34.75M  N/A
 Timmy_K_Hill     26  MF  2 18 25 12 $165,088 OK   121.5M   N/A
 C_Ruddy          25  MF  1  7 24 21 $148,200 OK   114.25M  N/A
@@ -20,5 +19,5 @@ F_Egerton        24  MF  1 21 23  5 $109,443 OK   87.5M   N/A
 K_Vargason       22  MF  1  9 21  3 $53,199  OK   13.75M  N/A
 J_Enriquez       20  MF  1 11 19  5 $30,400  OK   7.9M    N/A
 K_Pennino        28  FW  2  5 14 27 $164,400 OK   93M     N/A
-Romario          25  FW  1 18  7 26 $169,238 OK   154.5M   N/A
 Gerd_Muller      28  FW  1  5 12 26 $144,361 OK   75.25M  N/A
+Romario          25  FW  1 18  7 26 $169,238 OK   154.5M   N/A

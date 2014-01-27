@@ -23,3 +23,4 @@ F_Ludden         16  MF  1  4 14  4 $7,928   OK   8.5M    N/A
 C_Pobolero       18  FW  1 10  3 17 $17,017  OK   22.5M   N/A
 J_Oxbey          18  FW  1 11  9 15 $15,360  OK   11.25M  N/A
 W_Shogun         18  FW  1  4 11 15 $13,759  OK   10M     N/A
+A_Ruse           18  FW  1 10  3 15 $12,960  OK   9.6M    N/A

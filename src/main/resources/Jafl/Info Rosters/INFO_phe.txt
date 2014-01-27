@@ -14,6 +14,7 @@ U_Rydelek        24  DF  1 21  3  3 $43,428  OK   9.1M    N/A
 Y_Scirocco       21  DF  1 21 12  6 $61,342  OK   50.75M  N/A
 T_Byford         20  DF  1 19  7  3 $25,600  OK   6.7M    N/A
 R_Lutzke         20  DF  1 18  5  8 $20,766  OK   1.9M    N/A
+O_McCaughrin     30  MF  2  8 25  5 $118,624 OK   35M     N/A
 N_Caballero      24  MF  1 11 23  6 $88,260  OK   70.5M   N/A
 B_Venteolo       29  MF  2  5 23  8 $79,938  OK   23.75M  N/A
 W_Dorey          32  MF  2  7 23 16 $101,121 OK   9M      N/A

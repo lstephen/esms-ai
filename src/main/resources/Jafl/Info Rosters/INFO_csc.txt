@@ -5,6 +5,8 @@ H_Geordio        29  GK 22  2  2  2 $48,000  OK   8.1M    N/A
 Mandragoran      26  DF  1 25 14 12 $152,416 OK   112M     N/A
 P_Delzell        30  DF  2 23 14  7 $96,582  OK   13.25M  N/A
 H_Brubaker       25  DF  2 23 13  6 $92,799  OK   64.75M  N/A
+B_Cassotto       22  DF  1 23 13 15 $107,929 OK   107.75M  N/A
+L_Dawson         33  DF  3 23 15  4 $94,312  OK   6.5M    N/A
 R_Gobert         25  DF  1 22 10 10 $77,453  OK   36M     N/A
 U_Denty          30  DF  2 21  4  8 $52,657  OK   650K    N/A
 B_Boatman        29  MF  2 11 24  7 $118,950 OK   39.25M  N/A
@@ -12,7 +14,7 @@ O_Paluzzi        30  MF  2 17 24  6 $134,550 OK   25.75M  N/A
 Ze_Eduardo       25  MF  2  3 24 15 $122,850 OK   94.75M  N/A
 Firestorm        23  MF  1 11 23 17 $109,443 OK   98.25M  N/A
 Conchobar        22  MF  1 18 23  5 $102,634 OK   102.5M   N/A
-D_Chiumento      31  MF  2  8 22 12 $78,763  OK   3.9M    N/A
+D_Chiumento      31  MF  2  8 23 12 $93,556  OK   10.25M  N/A
 X_Remschel       28  MF  2  8 20  4 $37,934  OK   700K    N/A
 W_Yarney         20  MF  1  5 19  8 $27,700  OK   7.2M    N/A
 Z_Drako          24  FW  1  7  3 24 $99,450  OK   87.5M   N/A

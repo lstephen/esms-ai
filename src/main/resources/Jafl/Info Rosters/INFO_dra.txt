@@ -10,7 +10,6 @@ Y_Theriot        22  DF  1 22 11  8 $76,799  OK   51M     N/A
 C_Caulk          23  DF  2 22 12  5 $74,836  OK   44.75M  N/A
 V_Vass           21  DF  1 20  9 12 $46,845  OK   26M     N/A
 D_Lauraine       20  DF  1 18  7  5 $20,066  OK   1.8M    N/A
-O_McCaughrin     30  MF  2  8 25  5 $118,624 OK   35M     N/A
 C_Seekell        25  MF  2 14 24  5 $123,825 OK   95.5M   N/A
 B_Paul           24  MF  1 13 23 17 $112,469 OK   89.75M  N/A
 D_Cervinski      26  MF  2  7 23 14 $96,582  OK   57.75M  N/A

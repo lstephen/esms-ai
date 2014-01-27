@@ -9,8 +9,6 @@ F_Weiderhold     24  DF  1 23 16 19 $121,547 OK   97M     N/A
 O_Testino        24  DF  2 23  9  6 $83,721  OK   66.75M  N/A
 F_Oakley         32  DF  2 23 10  6 $85,991  OK   7.7M    N/A
 V_Kent           22  DF  1 20  8 13 $47,250  OK   2.2M    N/A
-O_DePauli        29  DF  2 20 14 10 $50,085  OK   700K    N/A
-A_Bradshaw       20  DF  1 20  5 12 $43,605  OK   32.25M  N/A
 E_Murphy         20  DF  1 20  3  6 $34,695  OK   25.5M   N/A
 W_Reava          20  DF  1 18  9 12 $25,433  OK   2.3M    N/A
 K_Thurling       29  MF  2  9 27  6 $148,800 OK   63M     N/A
@@ -19,10 +17,7 @@ T_Wilson         30  MF  2 17 25  5 $147,136 OK   43.25M  N/A
 A_Pausner        23  MF  1 11 23  7 $89,773  OK   80.75M  N/A
 E_Akale          22  MF  1 10 21 19 $77,085  OK   20.25M  N/A
 H_Chabrus        22  MF  1  6 21 11 $59,713  OK   15.5M   N/A
-C_R_Darwin       21  MF  1  8 21 20 $76,542  OK   63.25M  N/A
-F_Scinto         21  MF  1 12 21 20 $80,884  OK   67M     N/A
 Y_Turo           20  MF  1  9 19 12 $33,700  OK   8.8M    N/A
-Player_13        27  FW  1  5 13 26 $147,753 OK   96.25M  N/A
+G_Oalls          27  FW  1  5 13 26 $147,753 OK   96.25M  N/A
 K_Reava          24  FW  1  4 20 24 $139,425 OK   122.75M  N/A
 Y_Hawman         25  FW  2 17  7 23 $103,391 OK   72.25M  N/A
-E_Kennell        20  FW  1 12  4 16 $16,446  OK   0K      N/A

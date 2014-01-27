@@ -76,7 +76,7 @@ public final class Player {
     }
 
     public Player afterMinutes(Integer minutes) {
-        return atPercent((int) (100.0 * Math.pow(0.9969, minutes)));
+        return atPercent((int) (100.0 * Math.pow(0.996, minutes)));
     }
 
     public Optional<Player> forSelection() {

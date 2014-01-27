@@ -6,7 +6,6 @@ M_Accaioli       31  DF  3 27  7 15 $172,799 OK   57.5M   N/A
 B_Gumble         31  DF  1 27 11 20 $200,400 OK   66.75M  N/A
 K_Chegwin        32  DF  3 24 12  8 $123,825 OK   15.25M  N/A
 H_McDede         28  DF  2 24 19  7 $142,350 OK   62.75M  N/A
-L_Dawson         33  DF  3 23 15  4 $94,312  OK   6.5M    N/A
 B_Ohlhaver       24  DF  1 23 22  6 $113,225 OK   90.5M   N/A
 R_Matuska        25  DF  2 21 15  6 $66,228  OK   12M     N/A
 D_Mastowski      25  DF  2 21  6  9 $56,456  OK   10.25M  N/A
@@ -25,4 +24,3 @@ P_Lastley        21  MF  1  5 20  8 $38,745  OK   21.5M   N/A
 A_Glick          32  FW  3  6 10 27 $152,400 OK   41.25M  N/A
 A_Kardek         28  FW  2 14  8 27 $171,600 OK   97M     N/A
 H_Pederson       24  FW  1 23  6 24 $152,100 OK   134M     N/A
-I_Lebree         28  FW  2 10  7 20 $42,794  OK   800K    N/A

@@ -22,19 +22,12 @@ public final class IFootballManager implements League {
 
     private final String team;
 
-    private final Optional<String> vs;
-
-    private IFootballManager(String team, Optional<String> vs) {
+    private IFootballManager(String team) {
         this.team = team;
-        this.vs = vs;
     }
 
     public String getTeam() {
         return team;
-    }
-
-    public Optional<String> getVs() {
-        return vs;
     }
 
     public Optional<String> getReserveTeam() {
@@ -71,15 +64,7 @@ public final class IFootballManager implements League {
     }
 
     public static IFootballManager create(String team) {
-        return create(team, Optional.<String>absent());
-    }
-
-    public static IFootballManager create(String team, String vs) {
-        return create(team, Optional.of(vs));
-    }
-
-    private static IFootballManager create(String team, Optional<String> vs) {
-        return new IFootballManager(team, vs);
+        return new IFootballManager(team);
     }
 
     public Value getPlayerValue() {
@@ -89,6 +74,5 @@ public final class IFootballManager implements League {
     public Potential getPlayerPotential() {
         return NullPotential.create();
     }
-
 
 }

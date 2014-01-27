@@ -2,11 +2,11 @@ Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
 M_Prowse         19  GK 16  1  1  1 $9,500   OK   5.3M    N/A
 J_Ezelle         18  GK 15  1  1  1 $8,000   OK   5M      N/A
-P_Cass           19  DF  1 18 17  6 $27,533  OK   34.25M  N/A
+P_Cass           19  DF  1 18 17  8 $28,466  OK   35.5M   N/A
 A_Svend          19  DF  1 17 13  6 $19,929  OK   19M     N/A
-V_Provoncha      18  DF  1 17  5 10 $17,793  OK   23.75M  N/A
+V_Provoncha      18  DF  1 17  7 10 $18,570  OK   24.75M  N/A
 M_Marrington     19  DF  1 17  4 16 $20,899  OK   19.75M  N/A
-Player_6         18  DF  1 17 11  6 $18,764  OK   25M     N/A
+R_Walden         18  DF  1 17 13  6 $19,929  OK   26.5M   N/A
 D_Vosburgh       17  DF  1 15  2  3 $9,280   OK   8.3M    N/A
 T_Gundel         17  DF  1 14  4  6 $8,699   OK   8M      N/A
 J_Workstel       16  DF  1 13  9  3 $6,584   OK   6.5M    N/A

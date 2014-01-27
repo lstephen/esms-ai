@@ -1,7 +1,6 @@
 package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -21,7 +20,6 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
-import com.ljs.ifootballmanager.ai.formation.score.IdealRatioScorer;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
@@ -163,7 +161,7 @@ public final class ChangePlan implements Report {
     }
 
     private Double weightingAtMinute(Integer minute) {
-        return (double) minute / GAME_MINUTES;
+        return Math.pow((double) minute / GAME_MINUTES, 2);
     }
 
     public ImmutableSet<Player> getSubstitutes() {
@@ -285,11 +283,11 @@ public final class ChangePlan implements Report {
             });
     }
 
-    public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad, Optional<Formation> vs) {
-        return select(league, f, SelectionCriteria.create(league, squad), vs);
+    public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
+        return select(league, f, SelectionCriteria.create(league, squad));
 
     }
-    public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria, Optional<Formation> vs) {
+    public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria) {
         HillClimbing.Builder<ChangePlan> builder = HillClimbing
             .<ChangePlan>builder()
             .validator(new Validator<ChangePlan>() {
@@ -300,14 +298,10 @@ public final class ChangePlan implements Report {
             .heuristic(byScore().compound(byChangesSize().reverse()))
             .actionGenerator(actionsFunction(league, criteria));
 
-        final Formation initialFormation = vs.isPresent()
-            ? f.withScorer(IdealRatioScorer.create(f, vs.get()))
-            : f;
-
         return new RepeatedHillClimbing<ChangePlan>(
             new Callable<ChangePlan>() {
                 public ChangePlan call() {
-                    return randomChangePlan(initialFormation, criteria);
+                    return randomChangePlan(f, criteria);
                 }
             },
             builder)

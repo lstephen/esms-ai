@@ -17,7 +17,7 @@ X_Sallade        31  MF  2 16 26 12 $173,760 OK   51M     N/A
 F_Spearman       31  MF  1  1 25 19 $145,024 OK   34.25M  N/A
 L_Paeroa         25  MF  2 20 24  6 $143,325 OK   110.5M   N/A
 Sesos_Fritas     26  MF  1  9 23 17 $106,417 OK   63.75M  N/A
-Player_9         22  MF  1  4 23 14 $92,043  OK   92M     N/A
+T_A_Raszpytz     22  MF  1  4 23 14 $92,043  OK   92M     N/A
 DeGothia         22  MF  1 14 22 19 $100,363 OK   66.75M  On_Loan(CSC)
 D_Nester         26  MF  2 14 21  9 $67,856  OK   10.5M   N/A
 K_Gerend         22  MF  1 12 21  8 $63,514  OK   16.5M   N/A

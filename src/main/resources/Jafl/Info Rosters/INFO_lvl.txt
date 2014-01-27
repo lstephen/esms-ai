@@ -7,8 +7,8 @@ Juan_Baez        31  DF  2 26 14 15 $174,892 OK   51.25M  N/A
 J_Zanzinger      27  DF  1 25 12 16 $158,752 OK   97.25M  N/A
 X_Shadduck       26  DF  2 24  6 19 $140,400 OK   92.75M  N/A
 P_Moore          22  DF  1 24 16 18 $156,975 OK   173M     N/A
-K_Von_Ulm        32  DF  3 23 19  9 $110,956 OK   9.9M    N/A
-B_Cassotto       22  DF  1 23 13 15 $107,929 OK   107.75M  N/A
+W_McTell         23  DF  1 24 14 18 $153,075 OK   151.75M  N/A
+K_Von_Ulm        32  DF  3 24 19  9 $146,250 OK   18.25M  N/A
 M_de_Cesare      32  DF  2 22 11  7 $75,490  OK   3M      N/A
 I_Haward         23  DF  2 22  5 10 $70,908  OK   42.5M   N/A
 J_Eisenhuth      26  MF  2  6 24 18 $137,475 SUS  90.75M  N/A
@@ -16,7 +16,6 @@ A_Eikamp         26  MF  2 17 24  7 $136,500 OK   90.25M  N/A
 L_Pera           32  MF  3 18 24  9 $143,325 OK   17.75M  N/A
 E_Ferger         22  MF  2 20 21  5 $73,284  OK   19.25M  N/A
 Y_Degough        22  MF  2  6 20 20 $54,135  OK   2.6M    N/A
-O_Lavallan       20  MF  1  4 19 12 $30,700  OK   8M      N/A
 K_Kobayashi      29  FW  2 11 10 25 $138,687 OK   51M     N/A
 S_benAvraham     31  FW  2 10  9 24 $119,925 OK   18.25M  N/A
 Ftang_Ftang      22  FW  1  7 17 23 $103,391 OK   103.25M  N/A
