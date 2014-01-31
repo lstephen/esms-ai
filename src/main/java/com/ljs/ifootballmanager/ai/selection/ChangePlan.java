@@ -242,9 +242,19 @@ public final class ChangePlan implements Report {
 
         Double score = getFormationAt(minute).score();
 
+        Integer substitutionsMade = changesMadeAt(minute, Substitution.class).size();
+
+        Double chanceOfPlayingWithTen = chanceOfInjuries(4 - substitutionsMade, minute);
+
+        score = (1.0 - chanceOfPlayingWithTen) * score + chanceOfPlayingWithTen * 0.9 * score;
+
         scores.put(minute, score);
 
         return score;
+    }
+
+    private Double chanceOfInjuries(Integer number, Integer minute) {
+        return Math.pow(1.0 - Math.pow(0.997, minute), number);
     }
 
     public Formation getFormationAt(Integer minute) {

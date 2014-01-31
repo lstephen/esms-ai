@@ -61,6 +61,10 @@ public class Bench implements State, Report {
             score += p.getOverall(formation.getTactic()).getRating();
         }
 
+        for (Player p : bench) {
+            score -= ((double) p.getAge() / 1000);
+        }
+
         return score;
     }
 

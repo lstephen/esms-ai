@@ -16,10 +16,6 @@ public interface FormationScorer {
 
     Double defending(Formation f, Tactic t);
 
-    Double gkQuality(Formation f);
-
-    Double shotQuality(Formation f, Tactic t);
-
     void print(Formation f, PrintWriter w);
 
 }

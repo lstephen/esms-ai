@@ -4,7 +4,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.ljs.ifootballmanager.ai.formation.Formation;
-import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
@@ -16,7 +15,7 @@ import java.io.PrintWriter;
  */
 public class TeamSheet implements Report {
 
-    private final League league;
+    private final String team;
 
     private final Formation formation;
 
@@ -24,8 +23,8 @@ public class TeamSheet implements Report {
 
     private final Bench bench;
 
-    private TeamSheet(League league, Formation formation, ChangePlan cp, Bench bench) {
-        this.league = league;
+    private TeamSheet(String team, Formation formation, ChangePlan cp, Bench bench) {
+        this.team = team;
         this.formation = formation;
         this.changePlan = cp;
         this.bench = bench;
@@ -44,7 +43,7 @@ public class TeamSheet implements Report {
     }
 
     public void print(PrintWriter w) {
-        w.println(league.getTeam());
+        w.println(team);
         w.println(formation.getTactic().getCode());
         w.println();
 
@@ -56,15 +55,15 @@ public class TeamSheet implements Report {
         w.println();
         bench.printInjuryTactics(w, getPlayerIndex());
         w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
-        w.format("TACTIC %s IF SCORE < 0%n", changePlan.getBestScoringTactic().getCode());
-        w.format("TACTIC %s IF SCORE > 0%n", changePlan.getBestDefensiveTactic().getCode());
+        w.format("TACTIC %s IF SCORE = -1%n", changePlan.getBestScoringTactic().getCode());
+        w.format("TACTIC %s IF SCORE = 1%n", changePlan.getBestDefensiveTactic().getCode());
         changePlan.print(w, getPlayerIndex());
 
     }
 
 
-    public static TeamSheet create(League league, Formation formation, ChangePlan cp, Bench bench) {
-        return new TeamSheet(league, formation, cp, bench);
+    public static TeamSheet create(String team, Formation formation, ChangePlan cp, Bench bench) {
+        return new TeamSheet(team, formation, cp, bench);
     }
 
 }

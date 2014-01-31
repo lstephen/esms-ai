@@ -24,8 +24,6 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -260,7 +258,7 @@ public final class Formation implements Report {
                     return f.isValid();
                 }
             })
-            .heuristic(byScore().compound(byShotQuality()).compound(byGkQuality()))
+            .heuristic(byScore())
             .actionGenerator(Actions.create(criteria));
 
         return new RepeatedHillClimbing<Formation>(
@@ -272,34 +270,9 @@ public final class Formation implements Report {
     private static Ordering<Formation> byScore() {
         return Ordering
             .natural()
-            .onResultOf(new Function<Formation, BigDecimal>() {
-                public BigDecimal apply(Formation f) {
-                    return BigDecimal
-                        .valueOf(f.score())
-                        .setScale(2, RoundingMode.HALF_UP)
-                        .multiply(BigDecimal.valueOf(1000))
-                        .add(BigDecimal.valueOf(f.getScorer().shotQuality(f, f.getTactic())))
-                        .add(BigDecimal.valueOf(f.getScorer().gkQuality(f)));
-                }
-            });
-    }
-
-    private static Ordering<Formation> byGkQuality() {
-        return Ordering
-            .natural()
-            .onResultOf(new Function<Formation, Long>() {
-                public Long apply(Formation f) {
-                    return Math.round(f.getScorer().gkQuality(f));
-                }
-            });
-    }
-
-    private static Ordering<Formation> byShotQuality() {
-        return Ordering
-            .natural()
             .onResultOf(new Function<Formation, Double>() {
                 public Double apply(Formation f) {
-                    return f.getScorer().shotQuality(f, f.getTactic());
+                    return f.score();
                 }
             });
     }

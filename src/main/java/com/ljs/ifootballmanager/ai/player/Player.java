@@ -30,6 +30,8 @@ public final class Player {
 
     private final Ratings abilities;
 
+    private Integer aggression;
+
     private Integer fitness = 100;
 
     private Boolean injured = Boolean.FALSE;
@@ -40,15 +42,16 @@ public final class Player {
 
     private String comment = "";
 
-    private Player(String name, Integer age, Ratings ratings, Ratings abilities) {
+    private Player(String name, Integer age, Ratings ratings, Ratings abilities, Integer aggression) {
         this.name = name;
         this.age = age;
         this.ratings = ratings;
         this.abilities = abilities;
+        this.aggression = aggression;
     }
 
     public Player atPercent(Integer percentage) {
-        return new Player(name, age, ratings.atPercent(percentage), abilities);
+        return new Player(name, age, ratings.atPercent(percentage), abilities, aggression);
     }
 
     public Player withSkillAdded(Rating rt, Integer amount) {
@@ -68,11 +71,11 @@ public final class Player {
     }
 
     private Player withSkills(Ratings skills) {
-        return new Player(name, age, skills, abilities);
+        return new Player(name, age, skills, abilities, aggression);
     }
 
     private Player withAbilities(Ratings abilities) {
-        return new Player(name, age, ratings, abilities);
+        return new Player(name, age, ratings, abilities, aggression);
     }
 
     public Player afterMinutes(Integer minutes) {
@@ -101,9 +104,18 @@ public final class Player {
         return age;
     }
 
+    public Integer getAggression() {
+        return aggression;
+    }
+
+    public void setAggression(Integer aggression) {
+        this.aggression = aggression;
+    }
+
     public void setFitness(Integer fitness) {
         this.fitness = fitness;
     }
+
 
     public void injured() {
         this.injured = Boolean.TRUE;
@@ -184,11 +196,14 @@ public final class Player {
     }
 
     public Rating getSecondarySkill() {
-        return ratings.getSkillPriority().get(1);
+        Rating sec = ratings.getSkillPriority().get(1);
+        return sec == Rating.STOPPING ? getTertiarySkill() : sec;
     }
 
     public Rating getTertiarySkill() {
-        return ratings.getSkillPriority().get(2);
+        Rating ter = ratings.getSkillPriority().get(2);
+
+        return ter == Rating.STOPPING ? ratings.getSkillPriority().get(3) : ter;
     }
 
     public boolean equals(Object obj) {
@@ -213,7 +228,7 @@ public final class Player {
     }
 
     public static Player create(String name, Integer age, Ratings ratings, Ratings abilities) {
-        return new Player(name, age, ratings, abilities);
+        return new Player(name, age, ratings, abilities, 0);
     }
 
     public static Ordering<Player> byOverall(final Tactic t) {

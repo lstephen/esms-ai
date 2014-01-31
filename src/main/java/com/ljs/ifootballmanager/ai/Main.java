@@ -25,6 +25,8 @@ import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
 import com.ljs.ifootballmanager.ai.value.OverallValue;
 import com.ljs.ifootballmanager.ai.value.Potentials;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -89,9 +91,11 @@ public class Main {
 
         Formation firstXI = Formation.select(league, squad.players());
 
-        w.println("** Squad **");
-        print(w, SquadReport.create(league, Tactic.NORMAL, squad.players()));
+        ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
+
+        print(w, "Squad", SquadReport.create(league, Tactic.NORMAL, squad.players()).sortByValue());
         print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()));
+
 
         print(w, "1st XI", firstXI);
 
@@ -131,14 +135,13 @@ public class Main {
 
         CharSink sheet = Files.asCharSink(new File("c:/esms", league.getTeam() + "sht.txt"), Charsets.ISO_8859_1);
 
-        printSelection(w, league, "Selection", squad.forSelection(), sheet);
+        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet);
 
         if (league.getReserveTeam().isPresent()) {
             CharSink rsheet = Files.asCharSink(new File("c:/esms", league.getReserveTeam().get() + "sht.txt"), Charsets.ISO_8859_1);
-            printSelection(w, league, "Reserves Selection", Potentials.atPotential(league.getPlayerPotential(), squad.forReservesSelection()), rsheet);
+            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), Potentials.atPotential(league.getPlayerPotential(), squad.forReservesSelection()), rsheet);
         }
 
-        print(w, "Value", SquadReport.create(league, Tactic.NORMAL, squad.players()).sortByValue());
 
         print(
             w,
@@ -160,7 +163,7 @@ public class Main {
         }
     }
 
-    private void printSelection(PrintWriter w, League league, String title, Iterable<Player> available, CharSink sheet) throws IOException {
+    private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, CharSink sheet) throws IOException {
         Set<String> forced = Sets.newHashSet();
 
         for (Player p : available) {
@@ -176,18 +179,7 @@ public class Main {
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 
-        print(w, "Selection", SquadReport.create(league, formation.getTactic(), available).sortByValue(OverallValue.create()));
-        print(w, formation, bench, cp);
-
-        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
-        w.format("TACTIC %s IF SCORE < 0%n", cp.getBestScoringTactic().getCode());
-        w.format("TACTIC %s IF SCORE > 0%n", cp.getBestDefensiveTactic().getCode());
-        w.println();
-
-        Reports.print(TeamSheet.create(league, formation, cp, bench)).to(sheet);
-    }
-
-    private void printSelection(PrintWriter w, League league, Formation formation, ChangePlan cp, Bench bench, CharSink sheet) {
+        print(w, title, SquadReport.create(league, formation.getTactic(), available).sortByValue(OverallValue.create()));
         print(w, formation, bench, cp);
 
         w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
@@ -195,7 +187,18 @@ public class Main {
         w.format("TACTIC %s IF SCORE = 1%n", cp.getBestDefensiveTactic().getCode());
         w.println();
 
-        Reports.print(TeamSheet.create(league, formation, cp, bench)).to(sheet);
+        Reports.print(TeamSheet.create(team, formation, cp, bench)).to(sheet);
+    }
+
+    private void printSelection(PrintWriter w, String team, Formation formation, ChangePlan cp, Bench bench, CharSink sheet) {
+        print(w, formation, bench, cp);
+
+        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
+        w.format("TACTIC %s IF SCORE = -1%n", cp.getBestScoringTactic().getCode());
+        w.format("TACTIC %s IF SCORE = 1%n", cp.getBestDefensiveTactic().getCode());
+        w.println();
+
+        Reports.print(TeamSheet.create(team, formation, cp, bench)).to(sheet);
 
     }
 

@@ -3,12 +3,12 @@ package com.ljs.ifootballmanager.ai.rating;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -92,7 +92,8 @@ public final class Ratings {
                 public Double apply(Rating r) {
                     return getSkill(r);
                 }
-            }).immutableSortedCopy(ImmutableSet.copyOf(Rating.values()));
+            })
+            .immutableSortedCopy(Arrays.asList(Rating.values()));
     }
 
     public static Builder builder() {

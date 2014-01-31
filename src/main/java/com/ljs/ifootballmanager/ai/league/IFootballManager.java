@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.validate.CountingFormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.info.InfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
@@ -69,6 +70,10 @@ public final class IFootballManager implements League {
 
     public Value getPlayerValue() {
         return IFootballManagerValue.create();
+    }
+
+    public Optional<InfoValue> getInfoValue() {
+        return Optional.absent();
     }
 
     public Potential getPlayerPotential() {

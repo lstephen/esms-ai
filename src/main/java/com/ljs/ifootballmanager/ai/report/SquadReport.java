@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.report;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
@@ -8,6 +9,8 @@ import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import com.ljs.ifootballmanager.ai.value.Value;
 import java.io.PrintWriter;
 
@@ -36,8 +39,29 @@ public class SquadReport implements Report {
         value = league.getPlayerValue();
     }
 
+    private Double getValue(Player p) {
+        Double ovr = value.getValue(p);
+        Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
+
+        Player atPotential = league.getPlayerPotential().atPotential(p);
+
+        if (ovr < value.getValue(atPotential)) {
+            vsRepl = Math.max(0, vsRepl);
+            vsRepl = Math.max(vsRepl, ReplacementLevelHolder.get().getValueVsReplacement(atPotential));
+        }
+
+        return ovr + vsRepl;
+    }
+
     public SquadReport sortByValue() {
-        ordering = Player.byValue(league).reverse();
+        ordering = Ordering
+            .natural()
+            .reverse()
+            .onResultOf(new Function<Player, Double>() {
+                public Double apply(Player p) {
+                    return getValue(p);
+                }
+            });
         return this;
     }
 
@@ -51,6 +75,8 @@ public class SquadReport implements Report {
         Role[] roles = Role.values();
         Tactic[] tactics = Tactic.values();
 
+        ReplacementLevel repl = ReplacementLevelHolder.get();
+
         w.format("%-15s ", tactic);
 
         w.format("%2s %2s %5s ", "", "", "OVR");
@@ -59,7 +85,7 @@ public class SquadReport implements Report {
             w.format("%3s ", r.name());
         }
 
-        w.format(" (%3s) ", "VAL");
+        w.format("| %3s %7s || %3s || ", "VAL", " vsRpl", "");
 
         for (Tactic t : tactics) {
             w.format("%3s    ", t.getCode());
@@ -81,14 +107,22 @@ public class SquadReport implements Report {
                 w.format("%3d ", Maths.round(p.evaluate(r, tactic).getRating()));
             }
 
-            w.format(" (%3d) ", Maths.round(value.getValue(p)));
+            Double ovr = value.getValue(p);
+            Double vsRepl = repl.getValueVsReplacement(p);
+
+            w.format(
+                "| %3d %3d/%3d || %3d || ",
+                Maths.round(ovr),
+                Maths.round(vsRepl),
+                Maths.round(repl.getValueVsReplacement(league.getPlayerPotential().atPotential(p))),
+                Maths.round(getValue(p)));
 
             for (Tactic t : tactics) {
                 RatingInRole rir = p.getOverall(t);
                 w.format(
                     "%3d%3s ",
                     Maths.round(rir.getRating()),
-                    rir.getRole() == best.getRole() ? "" : "-" + rir.getRole());
+                    rir.getRole() == best.getRole() ? "" : " " + rir.getRole());
             }
 
             w.format(

@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.validate.CountingFormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.info.InfoValue;
+import com.ljs.ifootballmanager.ai.info.SslInfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
@@ -52,7 +54,7 @@ public class Ssl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_sale.txt", "/fre.txt");
+        return ImmutableList.of("/for_sale.txt", "/free_agents.txt");
     }
 
     public Weightings getWeightings() {
@@ -70,6 +72,10 @@ public class Ssl implements League {
 
     public Potential getPlayerPotential() {
         return SslPotential.create();
+    }
+
+    public Optional<InfoValue> getInfoValue() {
+        return Optional.<InfoValue>of(SslInfoValue.get());
     }
 
     public static Ssl get() {

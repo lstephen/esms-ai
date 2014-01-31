@@ -30,7 +30,9 @@ public final class DefaultScorer implements FormationScorer {
 
         Double pct = 1 + aterm - dterm;
 
-        return (a + d) * pct + gkQuality(f) + shotQuality(f, tactic);
+        Double extras = (3 * shotQuality(f, tactic) + cornerShotQuality(f) - 2 * aggression(f)) / 6;
+
+        return (a + d) * pct + gkQuality(f) + extras;
     }
 
     public Double scoring(Formation f, Tactic tactic) {
@@ -61,14 +63,58 @@ public final class DefaultScorer implements FormationScorer {
         return score;
     }
 
+    private Double cornerShotQuality(Formation f) {
+        Double total = 0.0;
+
+        for (Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                continue;
+            }
+            total += p.getSkill(Rating.SHOOTING) + 10;
+        }
+
+        Double score = 0.0;
+        for (Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                continue;
+            }
+            Double chance = (p.getSkill(Rating.SHOOTING) + 10) / total;
+
+            score += chance * p.getSkill(Rating.SHOOTING);
+        }
+
+        return score;
+    }
+
     public Double gkQuality(Formation f) {
         return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING);
+    }
+
+    private Double aggression(Formation f) {
+        Double agg = 0.0;
+
+        for (Player p : f.unsortedPlayers()) {
+            agg += p.getAggression();
+        }
+
+        return agg / 11;
     }
 
     public Double skillRating(Formation f, Tactic t, Rating r) {
         Double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
             score += p.getSkillRating(f.findRole(p), t, r);
+        }
+        return score;
+    }
+
+    private Double outfieldPlayerSkillTotal(Formation f, Rating r) {
+        Double score = 0.0;
+        for (Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                continue;
+            }
+            score += p.getSkill(r);
         }
         return score;
     }
@@ -96,9 +142,21 @@ public final class DefaultScorer implements FormationScorer {
         }
         w.println();
 
+        w.format("%10s ", "C SH Qual");
+        for (Tactic t : tactics) {
+            w.format("%7d ", Maths.round(cornerShotQuality(f)));
+        }
+        w.println();
+
         w.format("%10s ", "GK Qual");
         for (Tactic t : tactics) {
             w.format("%7d ", Maths.round(gkQuality(f)));
+        }
+        w.println();
+
+        w.format("%10s ", "Agg");
+        for (Tactic t : tactics) {
+            w.format("%7d ", Maths.round(aggression(f)));
         }
         w.println();
 

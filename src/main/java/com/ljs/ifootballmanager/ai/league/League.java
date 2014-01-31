@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai.league;
 
 import com.google.common.base.Optional;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.info.InfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Potential;
@@ -30,5 +31,7 @@ public interface League {
     Value getPlayerValue();
 
     Potential getPlayerPotential();
+
+    Optional<InfoValue> getInfoValue();
 
 }

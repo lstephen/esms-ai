@@ -1,0 +1,25 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+AJ_Camodo        23  GK 24  1  1  1 $39,000  OK   17M     N/A
+M_Slime          28  GK 19  1  1  1 $24,000  OK   1.7M    N/A
+P_Mackiewicz     22  GK 17  1  1  1 $10,000  OK   1.7M    N/A
+E_Waeffler       23  GK 17  1  1  1 $10,000  OK   1.5M    N/A
+R_Figueiredo     22  DF  4 22 12  9 $44,850  OK   24.25M  N/A
+P_Litto          23  DF  8 21 15 13 $45,142  OK   20.25M  N/A
+G_Dianne         27  DF  9 21 11  2 $37,570  OK   9.3M    N/A
+Khamirutzox      23  DF  6 21 11  6 $39,284  OK   17.5M   N/A
+O_Cuchine        24  DF  1 19  3  5 $27,283  OK   4.5M    N/A
+D_Colvardic      19  DF  8 19  8  2 $28,799  OK   15.5M   N/A
+M_Boxall         21  DF  1 18 15  4 $30,215  OK   6.4M    N/A
+T_Accaioli       22  DF  1 18 12  6 $29,166  OK   2.7M    N/A
+C_Yastrzemski    23  MF  1  4 22 15 $44,849  OK   22M     N/A
+R_Pacos          23  MF  3  6 22  2 $37,200  OK   18.25M  N/A
+O_Aguilar        24  MF  1  4 21 17 $42,713  OK   17M     N/A
+A_Ladorlass      22  MF  1  2 20  8 $32,130  OK   14.25M  N/A
+Tarildo          22  MF  1 15 19  3 $33,599  OK   6.9M    N/A
+N_Festerand      29  MF  1  6 19  3 $27,914  OK   1.7M    N/A
+H_Lewis          21  FW  1  5 10 22 $41,550  OK   24.75M  N/A
+T_Rooney         22  FW  1  4 15 20 $37,664  OK   16.5M   N/A
+I_Lumm           22  FW  1  3  6 19 $27,914  OK   5.8M    N/A
+Efftee           22  FW  1  2 16 19 $33,851  OK   7M      N/A
+P_Gajewicz       23  FW  1  6  2 17 $11,646  OK   2M      N/A

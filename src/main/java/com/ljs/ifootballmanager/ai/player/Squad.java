@@ -169,6 +169,8 @@ public final class Squad {
 
             Player p = Player.create(name, age, ratings, abilities);
 
+            p.setAggression(Integer.parseInt(split[7]));
+
             if (split.length > 24 && !split[24].equals("0")) {
                 p.injured();
             }

@@ -1,8 +1,8 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.google.common.base.Function;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
 
@@ -29,11 +29,11 @@ public final class ChangePosition implements Change {
     }
 
     public void print(PrintWriter w) {
-        w.format("CHANGEPOS %s %s IF MIN=%s%n", player.getName(), role, minute);
+        w.format("CHANGEPOS %s %s IF MIN = %s%n", player.getName(), role, minute);
     }
 
     public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
-        w.format("CHANGEPOS %d %s IF MIN=%d%n", playerIdx.apply(player), role, minute);
+        w.format("CHANGEPOS %d %s IF MIN = %d%n", playerIdx.apply(player), role, minute);
     }
 
     public Boolean isValid(ChangePlan cp) {

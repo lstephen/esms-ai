@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.validate.CountingFormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.info.InfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
@@ -68,6 +69,10 @@ public class Jafl implements League {
 
     public Potential getPlayerPotential() {
         return JaflPotential.create();
+    }
+
+    public Optional<InfoValue> getInfoValue() {
+        return Optional.absent();
     }
 
     public static Jafl get() {
