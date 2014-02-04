@@ -1,0 +1,8 @@
+Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
+-------------------------------------------------------------
+bag   AJ_Cam_Seung      28 kor  6 25 18 12 34 300 131 869 722 is suspended for 1 game
+mfc   N_Wals            34 JAP  1 23 15 13 41 300 681 334 575 is suspended for 1 game
+mfc   P_Soto            24 nig  1  4 24 15 34 500 807 658 440 is suspended for 1 game
+rsy   V_Vela            19 ita  7 19 14  2 22 300 663 204 896 is suspended for 1 game
+say   D_Blumetti        17 ita  1 16  3  5 25 300 663  40 314 is suspended for 1 game
+jsy   Y_Marriner        20 hol  1  4 17  3 24 610 680 840 604 is suspended for 1 game

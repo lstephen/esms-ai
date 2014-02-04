@@ -1,0 +1,16 @@
+Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
+----------------------------------------------------------------------------------------
+Jan 26  C_Yastrzemski 23  1  4 22 15 40 Featherstone_Rovers  Middletown_Steelers  33,000k
+Jan 26  H_Lewis       21  1  5 10 22 25 Featherstone_Rovers  Middletown_Steelers  0
+Jan 26  J_Lames       20  1 10 17  5 24 Middletown_Steelers  Featherstone_Rovers  0
+Jan 26  D_Dowicz      21  5 13 20 14 27 Player_Draw          Mincers_FC           10,000k
+Jan 27  Q_Belfoure    20  1 20  3  3 43 Baggies_FC           Chorley_Cougars      4,750k
+Jan 29  B_Gallup      22  3  9 21 12 29 Auction              Manchester_Reds      5,793k
+Jan 31  F_Rightenour  17  1  7 16 11 16 Castleford_Town      Featherstone_Rovers  5,000k
+Jan 31  D_Vigil       17  1 14  5  1 26 Featherstone_Rovers  Castleford_Town      0
+Jan 31  N_Klymochko   16  1  2  4 13 23 Featherstone_Rovers  Castleford_Town      0
+Feb 01  J_Gasston     22  1  3  8 17 15 Asbo_All_Stars       Foreign_Team         2,200k
+Feb 01  M_Slime       28 19  1  1  1  8 Middletown_Steelers  Foreign_Team         1,400k
+Feb 01  D_Hussman     24  1  9  5 17 10 Burntwood_Rovers     Foreign_Team         1,600k
+Feb 01  J_Hutchieson  24  4 21 11  6 33 Manchester_Reds      Foreign_Team         19,000k
+Feb 01  D_Murfee      22  1  5 18  6 19 Village_Vulcans      Foreign_Team         2,100k
