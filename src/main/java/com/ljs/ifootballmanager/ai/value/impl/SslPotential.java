@@ -18,6 +18,11 @@ public class SslPotential implements Potential {
         p = p.withAbilityAdded(p.getSecondarySkill(), 1100 * yearsToDevelop);
         p = p.withAbilityAdded(p.getTertiarySkill(), 600 * yearsToDevelop);
 
+        if (p.getAge() == 20 || p.getAge() == 21) {
+            Integer factor = 22 - p.getAge();
+            p = p.withAbilityAdded(p.getPrimarySkill(), 1000 * factor);
+        }
+
         return p;
     }
 

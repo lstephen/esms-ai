@@ -37,6 +37,15 @@ public final class Squad {
         return players;
     }
 
+    public Player findPlayer(String name) {
+        for (Player p : players()) {
+            if (name.equals(p.getName())) {
+                return p;
+            }
+        }
+        throw new IllegalStateException("Could not find: " + name);
+    }
+
     public ImmutableSet<Player> players(Role r, Tactic t) {
         Set<Player> ps = Sets.newHashSet();
 

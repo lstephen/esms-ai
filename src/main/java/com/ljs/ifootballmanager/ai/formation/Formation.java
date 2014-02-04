@@ -71,6 +71,18 @@ public final class Formation implements Report {
         return new Formation(validator, scorer, tactic, positions);
     }
 
+    public Formation withUpdatedPlayers(Iterable<Player> ps) {
+        Multimap<Role, Player> f = HashMultimap.create(positions);
+
+        for (Player p : ps) {
+            Role r = findRole(p);
+            f.remove(r, p);
+            f.put(r, p);
+        }
+
+        return new Formation(validator, scorer, tactic, f);
+    }
+
     public Player getPenaltyKicker() {
         return Player.byRating(Role.FW, tactic).max(players());
     }
@@ -234,11 +246,11 @@ public final class Formation implements Report {
         return create(validator, DefaultScorer.get(), tactic, players);
     }
 
-    public static Formation select(League league, Iterable<Player> available) {
-        return select(league, SelectionCriteria.create(league, available), DefaultScorer.get());
+    public static Formation select(League league, Iterable<Player> available, FormationScorer scorer) {
+        return select(league, SelectionCriteria.create(league, available), scorer);
     }
 
-    private static Formation select(League league, SelectionCriteria criteria, FormationScorer scorer) {
+    public static Formation select(League league, SelectionCriteria criteria, FormationScorer scorer) {
         Set<Formation> formations = Sets.newHashSet();
         for (Tactic t : Tactic.values()) {
             formations.add(select(league, t, criteria, scorer));

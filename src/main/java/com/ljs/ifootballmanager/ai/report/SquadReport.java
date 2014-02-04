@@ -8,6 +8,7 @@ import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
@@ -79,7 +80,7 @@ public class SquadReport implements Report {
 
         w.format("%-15s ", tactic);
 
-        w.format("%2s %2s %5s ", "", "", "OVR");
+        w.format("%2s %2s %8s %3s ", "", "", "", "OVR");
 
         for (Role r : roles) {
             w.format("%3s ", r.name());
@@ -98,9 +99,20 @@ public class SquadReport implements Report {
 
             RatingInRole best = p.getOverall(tactic);
 
-            w.format("%2d %2s %5d ",
+            String skills = String.format(
+                "%2d/%2d/%2d",
+                Math.round(p.getSkill(Rating.TACKLING)),
+                Math.round(p.getSkill(Rating.PASSING)),
+                Math.round(p.getSkill(Rating.SHOOTING)));
+
+            if (p.getPrimarySkill() == Rating.STOPPING) {
+                skills = String.format("   %d   ", Math.round(p.getSkill(Rating.STOPPING)));
+            }
+
+            w.format("%2d %2s %8s %3d ",
                 p.getAge(),
                 best.getRole(),
+                skills,
                 Maths.round(best.getRating()));
 
             for (Role r : roles) {

@@ -1,13 +1,11 @@
 package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ai.search.hillclimbing.HillClimbing;
@@ -106,12 +104,16 @@ public final class ChangePlan implements Report {
         for (Change c : changes()) {
             c.print(w);
         }
+
+        ScoreTactics.create(formation, this).print(w);
     }
 
     public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
         for (Change c : changes()) {
             c.print(w, playerIdx);
         }
+
+        ScoreTactics.create(formation, this).print(w);
     }
 
     public Tactic getBestScoringTactic() {
@@ -209,6 +211,11 @@ public final class ChangePlan implements Report {
             return false;
         }
 
+        // TODO: We should be able to support more than one
+        if (changes(TacticChange.class).size() > 1) {
+            return false;
+        }
+
         Set<Integer> minutes = Sets.newHashSet();
 
         for (Change c : changes) {
@@ -258,13 +265,13 @@ public final class ChangePlan implements Report {
     }
 
     public Formation getFormationAt(Integer minute) {
-        Multimap<Role, Player> players = HashMultimap.create();
+        Set<Player> players = Sets.newHashSet();
 
         for (Player p : formation.players()) {
-            players.put(formation.findRole(p), p.afterMinutes(minute));
+            players.add(p.afterMinutes(minute));
         }
 
-        Formation f = Formation.create(formation.getValidator(), formation.getScorer(), formation.getTactic(), players);
+        Formation f = formation.withUpdatedPlayers(players);
 
         for (Change c : changesMadeAt(minute)) {
             f = c.apply(f, minute);
@@ -384,6 +391,20 @@ public final class ChangePlan implements Report {
 
             private Set<Substitution> availableSubstitutions(ChangePlan cp) {
                 Set<Substitution> ss = Sets.newHashSet();
+
+                for (Substitution s : cp.changes(Substitution.class)) {
+                    for (Role r : Role.values()) {
+                        if (!r.equals(s.getRole())) {
+                            ss.add(Substitution
+                                .builder()
+                                .in(s.getIn(), r)
+                                .out(s.getOut())
+                                .minute(s.getMinute())
+                                .build());
+                        }
+                    }
+
+                }
 
                 for (Role r : Role.values()) {
                     if (r == Role.GK) {

@@ -74,6 +74,10 @@ public final class Player {
         return new Player(name, age, skills, abilities, aggression);
     }
 
+    public Player withSkillCap(Double cap) {
+        return withSkills(ratings.cap(cap));
+    }
+
     private Player withAbilities(Ratings abilities) {
         return new Player(name, age, ratings, abilities, aggression);
     }

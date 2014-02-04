@@ -53,6 +53,16 @@ public final class Ratings {
         return builder.build();
     }
 
+    public Ratings cap(Double cap) {
+        Builder builder = Builder.create(this);
+
+        for (Rating r : ratings.keySet()) {
+            builder.rating(r, ratings.get(r) > cap ? cap : ratings.get(r));
+        }
+
+        return builder.build();
+    }
+
     public Ratings add(Rating r, Integer value) {
         return Builder
             .create(this)

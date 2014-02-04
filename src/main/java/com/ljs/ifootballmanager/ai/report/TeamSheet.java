@@ -54,11 +54,7 @@ public class TeamSheet implements Report {
         w.format("PK: %s%n", formation.getPenaltyKicker().getName());
         w.println();
         bench.printInjuryTactics(w, getPlayerIndex());
-        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
-        w.format("TACTIC %s IF SCORE = -1%n", changePlan.getBestScoringTactic().getCode());
-        w.format("TACTIC %s IF SCORE = 1%n", changePlan.getBestDefensiveTactic().getCode());
         changePlan.print(w, getPlayerIndex());
-
     }
 
 

@@ -30,7 +30,7 @@ public final class TacticChange implements Change {
     }
 
     public void print(PrintWriter w) {
-        w.format("TACTIC %s IF MIN >= %d AND SCORE = 0%n", tactic.getCode(), minute);
+        w.format("TACTIC %s IF MIN >= %d SCORE = 0%n", tactic.getCode(), minute);
     }
 
     public void print(PrintWriter w, Function<Player, Integer> playerIdx) {

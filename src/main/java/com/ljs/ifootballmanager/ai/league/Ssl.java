@@ -37,6 +37,10 @@ public class Ssl implements League {
         return Optional.of("msy");
     }
 
+    public Optional<Double> getYouthSkillsCap() {
+        return Optional.absent();
+    }
+
     public Iterable<String> getForcedPlay() {
         return ImmutableList.<String>of();
     }

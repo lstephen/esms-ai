@@ -10,6 +10,9 @@ import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
+import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
+import com.ljs.ifootballmanager.ai.formation.score.YouthTeamScorer;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
@@ -23,8 +26,6 @@ import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
-import com.ljs.ifootballmanager.ai.value.OverallValue;
-import com.ljs.ifootballmanager.ai.value.Potentials;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import java.io.File;
@@ -89,7 +90,7 @@ public class Main {
 
         Squad squad = Squad.load(league);
 
-        Formation firstXI = Formation.select(league, squad.players());
+        Formation firstXI = Formation.select(league, squad.players(), DefaultScorer.get());
 
         ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
 
@@ -106,7 +107,7 @@ public class Main {
 
         Formation secondXI = null;
         if (remaining.size() >= 11) {
-            secondXI = Formation.select(league, remaining);
+            secondXI = Formation.select(league, remaining, DefaultScorer.get());
             print(w, "2nd XI", secondXI);
             remaining = ImmutableSet.copyOf(
                 Sets.difference(
@@ -115,9 +116,7 @@ public class Main {
 
         Formation reservesXI = null;
         if (league.getReserveTeam().isPresent()) {
-            reservesXI = Formation.select(
-                league,
-                Potentials.atPotential(league.getPlayerPotential(), squad.reserves()));
+            reservesXI = Formation.select(league, squad.reserves(), YouthTeamScorer.create(league, squad));
             print(w, "Reserves XI", reservesXI);
             remaining = ImmutableSet.copyOf(
                 Sets.difference(
@@ -129,17 +128,17 @@ public class Main {
             print(w, "Second XI", SquadReport.create(league, Tactic.NORMAL, secondXI.players()).sortByValue());
         }
         if (reservesXI != null) {
-            print(w, "Reserves XI", SquadReport.create(league, Tactic.NORMAL, reservesXI.players()).sortByValue(OverallValue.create()));
+            print(w, "Reserves XI", SquadReport.create(league, Tactic.NORMAL, reservesXI.players()).sortByValue());
         }
         print(w, "Remaining", SquadReport.create(league, Tactic.NORMAL, remaining).sortByValue());
 
         CharSink sheet = Files.asCharSink(new File("c:/esms", league.getTeam() + "sht.txt"), Charsets.ISO_8859_1);
 
-        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet);
+        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet, DefaultScorer.get());
 
         if (league.getReserveTeam().isPresent()) {
             CharSink rsheet = Files.asCharSink(new File("c:/esms", league.getReserveTeam().get() + "sht.txt"), Charsets.ISO_8859_1);
-            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), Potentials.atPotential(league.getPlayerPotential(), squad.forReservesSelection()), rsheet);
+            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(), rsheet, YouthTeamScorer.create(league, squad));
         }
 
 
@@ -163,7 +162,7 @@ public class Main {
         }
     }
 
-    private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, CharSink sheet) throws IOException {
+    private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, CharSink sheet, FormationScorer scorer) throws IOException {
         Set<String> forced = Sets.newHashSet();
 
         for (Player p : available) {
@@ -172,34 +171,17 @@ public class Main {
             }
         }
 
-        Formation formation = Formation.select(league, available);
+        Formation formation = Formation.select(league, available, scorer);
 
         ChangePlan cp =
             ChangePlan.select(league, formation, available);
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 
-        print(w, title, SquadReport.create(league, formation.getTactic(), available).sortByValue(OverallValue.create()));
+        print(w, title, SquadReport.create(league, formation.getTactic(), available));
         print(w, formation, bench, cp);
 
-        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
-        w.format("TACTIC %s IF SCORE = -1%n", cp.getBestScoringTactic().getCode());
-        w.format("TACTIC %s IF SCORE = 1%n", cp.getBestDefensiveTactic().getCode());
-        w.println();
-
         Reports.print(TeamSheet.create(team, formation, cp, bench)).to(sheet);
-    }
-
-    private void printSelection(PrintWriter w, String team, Formation formation, ChangePlan cp, Bench bench, CharSink sheet) {
-        print(w, formation, bench, cp);
-
-        w.format("TACTIC %s IF SCORE = 0%n", formation.getTactic().getCode());
-        w.format("TACTIC %s IF SCORE = -1%n", cp.getBestScoringTactic().getCode());
-        w.format("TACTIC %s IF SCORE = 1%n", cp.getBestDefensiveTactic().getCode());
-        w.println();
-
-        Reports.print(TeamSheet.create(team, formation, cp, bench)).to(sheet);
-
     }
 
     private void print(PrintWriter w, String title, Report report) {

@@ -34,4 +34,6 @@ public interface League {
 
     Optional<InfoValue> getInfoValue();
 
+    Optional<Double> getYouthSkillsCap();
+
 }
