@@ -246,6 +246,16 @@ public final class Player {
             .compound(byTieBreak());
     }
 
+    public static Ordering<Player> bySkill(final Rating r) {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Player, Double>() {
+                public Double apply(Player p) {
+                    return p.getSkill(r);
+                }
+            });
+    }
+
     public static Ordering<Player> byRating(final Role r, final Tactic t) {
         return Ordering
             .natural()

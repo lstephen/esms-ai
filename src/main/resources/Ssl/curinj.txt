@@ -1,0 +1,33 @@
+Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
+-------------------------------------------------------------
+bbs   F_Larouso         28 ita  2 25 21  8 10 480 337 427 297 is injured for 2 weeks
+cop   G_Figueroa        28 arg  6 24 21 14 23 320 379 268 843 is injured for 2 weeks
+whh   U_Labit           33 fra  1 12 23 13 34 300 548 236 186 is injured for 1 week
+cat   K_Elinski         28 rus  5 10 24 16 19 300 820 487 331 is injured for 2 weeks
+man   L_Wojtecki        23 geo  4 21  7  6 23 300 573 586 315 is injured for 2 weeks
+man   H_Lavrinenko      26 rus  8 21 15 10 25 300 798 646 475 is injured for 3 weeks
+mod   K_Spicer          25 wal  2 22 15 10 19 300 717 858 477 is injured for 2 weeks
+shu   T_Pratchett       20 usa  1 19  9  4 25 390 474 278 914 is injured for 5 weeks
+shu   L_Sabatini        22 uru  1 11 22 10 47 480 510 366 487 is injured for 5 weeks
+vil   M_Probst          30 nir  2 23 17  8 19 930 471 362 560 is injured for 4 weeks
+der   T_Cahill          22 aus  4 10 22 13 28 300 888 221  15 is injured for 6 weeks
+dur   E_Zurek           24 cze  1 20  4  4 18 480 539 199 163 is injured for 1 week
+dur   M_Boksan          28 rsa  2  9 21  3 12 201 943 304 637 is injured for 3 weeks
+fir   I_Suarez          33 spa 22  1  1  1 55 836 390 330 330 is injured for 5 weeks
+mis   C_Yastrzemski     23 cze  1  4 22 15 40 480  68 456 339 is injured for 2 weeks
+mis   O_Aguilar         24 mex  1  4 21 17 22 390 315 731 740 is injured for 1 week
+mis   Efftee            22 por  1  2 16 19 38 300 910 885 693 is injured for 1 week
+bty   F_Swiper          19 usa  1 17  8  5 10 300 460 687 715 is injured for 3 weeks
+bry   G_Daum            17 usa  1  3 15  6 25 300 431 909 824 is injured for 5 weeks
+rsy   I_Mountel         21 uru  1  8 17 11 55 300 553 461 383 is injured for 2 weeks
+why   I_Schwaner        20 nzl  1  3 16  5 15 300 552 997 366 is injured for 1 week
+mry   R_Thead           20 sco  1 18  6  5 18 300 314 416 499 is injured for 2 weeks
+muy   I_Kloepfel        17 geo  1 15  2  4 35 300 442 786 464 is injured for 1 week
+suy   C_Taco            18 mex  1 17  9  3 52 300 268 477 681 is injured for 3 weeks
+fcy   G_Petokey         19 cro  1 17  4  5 29 300 163  16 824 is injured for 1 week
+dpy   L_Mauger          21 den  1  3 18  8 20 300 251 876  92 is injured for 3 weeks
+fsy   A_Dinegan         17 uru  1 15 11  1 23 300 588 365 256 is injured for 1 week
+jsy   S_Harsh           20 nir  1 18  5  3 11 320 835 346 270 is injured for 4 weeks
+ldy   H_Reinhardt       20 swe  1  8 18  4 39 300  22 307 863 is injured for 2 weeks
+msy   P_Levanda         17 por  1 15  4  8  9 300 505 722 781 is injured for 1 week
+msy   L_Nehring         20 den  1  3  7 18 11 300 202 281 936 is injured for 4 weeks

@@ -14,6 +14,7 @@ import com.ljs.ai.search.State;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -52,7 +53,7 @@ public class Bench implements State, Report {
         Double score = 0.0;
 
         for (Role r : formation.getRoles()) {
-            score += Player.byRating(r, formation.getTactic()).max(bench).getRating(r, formation.getTactic());
+            score += findSubstitute(r).getRating(r, formation.getTactic());
         }
 
         score *= 10000;
@@ -68,6 +69,46 @@ public class Bench implements State, Report {
         return score;
     }
 
+    private Player findSubstitute(Role r) {
+        for (Player p : players()) {
+            if (getRole(p) == r) {
+                return p;
+            }
+        }
+
+        if (r == Role.AM || r == Role.MF || r == Role.DM) {
+            for (Player p : players()) {
+                switch (getRole(p)) {
+                    case AM:
+                    case MF:
+                    case DM:
+                        return p;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        switch (r) {
+            case GK:
+                return Player.bySkill(Rating.STOPPING).max(bench);
+            case DF:
+                return Player.bySkill(Rating.TACKLING).max(bench);
+            case DM:
+            case MF:
+            case AM:
+                return Player.bySkill(Rating.PASSING).max(bench);
+            case FW:
+                return Player.bySkill(Rating.SHOOTING).max(bench);
+        }
+
+        throw new IllegalStateException();
+    }
+
+    private Role getRole(Player p) {
+        return p.getOverall(formation.getTactic()).getRole();
+    }
+
     public ImmutableList<Player> players() {
         Ordering<Player> ordering = Ordering
             .natural()
@@ -76,7 +117,8 @@ public class Bench implements State, Report {
                     return p.getOverall(formation.getTactic()).getRole();
                 }
             })
-            .compound(Player.byName());
+            .compound(Player.byOverall(formation.getTactic()))
+            .compound(Player.byTieBreak());
 
         return ordering.immutableSortedCopy(bench);
     }
@@ -91,26 +133,15 @@ public class Bench implements State, Report {
         w.println();
 
         for (Role r : Role.values()) {
-            w.format("SUB %1$s %2$s %1$s IF INJURED %1$s%n", r, Player.byRating(r, formation.getTactic()).max(bench).getName());
+            w.format("SUB %1$s %2$s %1$s IF INJURED %1$s%n", r, findSubstitute(r).getName());
         }
     }
 
     public void printPlayers(PrintWriter w) {
         for (Player p : players()) {
-            w.format("%s %s%n", p.getOverall(formation.getTactic()).getRole(), p.getName());
+            w.format("%s %s%n", getRole(p), p.getName());
         }
     }
-
-    public void printInjuryTactics(PrintWriter w, Function<Player, Integer> playerIdx) {
-        if (bench.isEmpty()) {
-            return;
-        }
-        for (Role r : Role.values()) {
-            w.format("SUB %1$s %2$d %1$s IF INJURED %1$s%n", r, playerIdx.apply(Player.byRating(r, formation.getTactic()).max(bench)));
-        }
-    }
-
-
 
     private static Bench create(Formation formation, Iterable<Player> bench) {
         return new Bench(formation, bench);

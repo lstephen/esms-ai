@@ -5,3 +5,29 @@ J_Sexton      20 ire  1 16 19  5 27 430  49 503 649 # $9m
 C_Yastrzemski 23 cze  1  4 22 15 40 480 101 477 372
 H_Lewis       21 eng  1  5 10 22 25 300 676 145  18
 
+Ozzy_Canberra 17 aus  1  3 16  1 37 300 892  24 800 # 1.5m (BAG)
+
+
+
+M_Shelp 20 wal 1 20 15 11 18 300 156 879 419 # 25m - PeterNorton
+F_Leboeuf 21 fra 1 18 15 4 10 300 722 362 900 # 6m - Peter Norton
+
+E_Fuggle      21 mex  1  7 19 14 36 675 393 392 389 # 11m - Peter Norton
+F_Goan        21 uru  1  6 19 16 39 300 555 214 940 # 12.5m -  Peter NOrton
+
+E_Cantona 21 fra 1 5 13 19 31 300 513 164 369 # 10m - Peter Norton
+Y_Scanlon 20 usa 1 4 16 20 17 500 349 936 157 #24m - Peter NOrton
+
+
+H_Chyzowych   30 rus  9 25 10  5 48 300 277 148 289 #COP
+I_Taylo       24 spa  7 20 13  4 33 300 492 402 343 #COP
+O_Ateba       30 cam  3  4  8 26 19 300 751 841 606 #COP
+B_Fernandes   31 por  1  6 10 26 25 300 147 411  93 #COP
+R_Zikos       22 gre  1  6 10 21 20 300 261 333 386 #COP
+
+U_Poulsen     21 den  1 19  7  3 13 350 760  51 702  #COP
+A_Algea       21 ita  1 19  2  8 45 350  20 868 455 #COP
+Ji_Parana     19 bra  1  5 17  6 59 350 564 466 145 #COP
+T_Leatt       20 den  1  6  2 18 10 350 306 928 565 #COP
+Diego_Rolan   19 uru  1  6  2 18 34 410 830 733 522 #COP
+

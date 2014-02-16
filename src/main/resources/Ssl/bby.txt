@@ -3,7 +3,6 @@ Name         Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb Gam Sub  Min Mom Sav Con Ktk
 A_Quartemont  21 usa 21  1  1  1 21  28 300 300 300   4   0  382   0  22   6   0   0   0   0   0   0   0   0
 F_Elizeus     18 bel 15  1  1  1 46 521 300 300 300   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 M_Shelp       20 wal  1 20 15 11 18 300 136 879 381   4   0  382   0   0   0   4   6   5   1   0   0   0   0
-M_Tensfeldt   21 ger  1 19 14 12 21 300 822 908 467   4   0  382   0   0   0   2   4   4   1   0   0   0   0
 F_Leboeuf     21 fra  1 18 15  4 10 300 662 350 900   2   0  190   0   0   0   1   2   1   0   0   0   0   0
 G_C_Moore     19 wal  3 18 15 13 30 300 624 472 528   4   0  382   1   0   0   5   5  11   2   0   0   0   0
 W_Ekelmann    20 ger  1 17  6  2 40 300 515 809 882   0   0    0   0   0   0   0   0   0   0   0   0   0   0

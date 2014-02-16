@@ -21,5 +21,10 @@ A_Ruse 18 nor 1 10 3 15 12 444 486 956 720 # - 6m - Gareth James
 
 P_Rynne 18 xxx 1 12 6 16 9 300 593 102 307 # - Mark Bradley $10m
 
-D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 - KPK
+D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 # KPK
+
+
+I_Scrooby     23 usa  1 23  4 10 29 828  88 699 517 # $30m - Wayne Laundon
+
+_Beaudin     26 alb  2  4 22 17 15   8 646 260 975 # $17 - Wayne Laundon
 

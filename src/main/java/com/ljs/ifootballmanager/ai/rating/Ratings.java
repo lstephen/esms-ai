@@ -2,13 +2,13 @@ package com.ljs.ifootballmanager.ai.rating;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
@@ -19,11 +19,11 @@ public final class Ratings {
 
     private final League league;
 
-    private final ImmutableMap<Rating, Double> ratings;
+    private final EnumMap<Rating, Double> ratings;
 
     private Ratings(Builder builder) {
         this.league = builder.league;
-        ratings = ImmutableMap.copyOf(builder.ratings);
+        ratings = Maps.newEnumMap(builder.ratings);
     }
 
     public Double overall(Role r, Tactic t) {
@@ -42,7 +42,7 @@ public final class Ratings {
     }
 
     public Ratings atPercent(Integer percent) {
-        Builder builder = Builder.create(this);
+        Builder builder = Builder.create(league);
         
         for (Rating r : ratings.keySet()) {
             Double newValue = ratings.get(r) * percent / 100;
@@ -54,10 +54,10 @@ public final class Ratings {
     }
 
     public Ratings cap(Double cap) {
-        Builder builder = Builder.create(this);
+        Builder builder = Builder.create(league);
 
         for (Rating r : ratings.keySet()) {
-            builder.rating(r, ratings.get(r) > cap ? cap : ratings.get(r));
+            builder = builder.rating(r, ratings.get(r) > cap ? cap : ratings.get(r));
         }
 
         return builder.build();
@@ -106,8 +106,8 @@ public final class Ratings {
             .immutableSortedCopy(Arrays.asList(Rating.values()));
     }
 
-    public static Builder builder() {
-        return Builder.create();
+    public static Builder builder(League league) {
+        return Builder.create(league);
     }
 
     private static Ratings build(Builder builder) {
@@ -115,7 +115,7 @@ public final class Ratings {
     }
 
     public static Ratings combine(Ratings rts, Ratings abs) {
-        Ratings.Builder builder = builder().league(rts.league);
+        Ratings.Builder builder = builder(rts.league);
 
         for (Rating r : Rating.values()) {
             Double rt = rts.getSkill(r);
@@ -131,7 +131,7 @@ public final class Ratings {
 
         private League league;
 
-        private final Map<Rating, Double> ratings = Maps.newHashMap();
+        private final Map<Rating, Double> ratings = Maps.newEnumMap(Rating.class);
 
         private Builder() { }
 
@@ -169,13 +169,14 @@ public final class Ratings {
             return Ratings.build(this);
         }
 
-        private static Builder create() {
-            return new Builder();
+        private static Builder create(League league) {
+            Builder b = new Builder();
+            b.league = league;
+            return b;
         }
 
         private static Builder create(Ratings ratings) {
-            Builder b = create();
-            b.league(ratings.league);
+            Builder b = create(ratings.league);
             b.ratings.putAll(ratings.ratings);
             return b;
         }

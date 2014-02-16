@@ -132,15 +132,17 @@ public class Main {
         }
         print(w, "Remaining", SquadReport.create(league, Tactic.NORMAL, remaining).sortByValue());
 
-        CharSink sheet = Files.asCharSink(new File("c:/esms", league.getTeam() + "sht.txt"), Charsets.ISO_8859_1);
-
+        File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");
+        CharSink sheet = Files.asCharSink(sheetFile, Charsets.ISO_8859_1);
         printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet, DefaultScorer.get());
+        Files.copy(sheetFile, new File("c:/esms/shts", sheetFile.getName()));
 
         if (league.getReserveTeam().isPresent()) {
-            CharSink rsheet = Files.asCharSink(new File("c:/esms", league.getReserveTeam().get() + "sht.txt"), Charsets.ISO_8859_1);
+            File rsheetFile = new File("c:/esms", league.getReserveTeam().get() + "sht.txt");
+            CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.ISO_8859_1);
             printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(), rsheet, YouthTeamScorer.create(league, squad));
+            Files.copy(rsheetFile, new File("c:/esms/shts", rsheetFile.getName()));
         }
-
 
         print(
             w,
@@ -159,6 +161,7 @@ public class Main {
             Squad additional = Squad.load(league, Resources.asCharSource(getClass().getResource(resource), Charsets.ISO_8859_1));
 
             print(w, f, SquadReport.create(league, Tactic.NORMAL, additional.players()).sortByValue());
+            print(w, f, SquadReport.create(league, firstXI.getTactic(), additional.players()).sortByValue());
         }
     }
 

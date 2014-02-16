@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  *
@@ -38,16 +39,21 @@ public final class ChangePlan implements Report {
 
     private static final Integer GAME_MINUTES = 90;
 
+    private static final Double INJURY_CHANCE_PER_MINUTE = 0.003;
+
     private final Formation formation;
 
     private final ImmutableSet<Change> changes;
 
     private final Map<Integer, Double> scores;
 
-    private ChangePlan(Formation formation, Iterable<? extends Change> cs, Map<Integer, Double> scores) {
+    private final Map<Pair<Player, Integer>, Player> afterMinutes;
+
+    private ChangePlan(Formation formation, Iterable<? extends Change> cs, Map<Integer, Double> scores, Map<Pair<Player, Integer>, Player> afterMinutes) {
         this.formation = formation;
         this.changes = ImmutableSet.copyOf(cs);
         this.scores = Maps.newHashMap(scores);
+        this.afterMinutes = Maps.newHashMap(afterMinutes);
     }
 
     private ImmutableList<Change> changes() {
@@ -180,13 +186,13 @@ public final class ChangePlan implements Report {
         Set<Change> cs = Sets.newHashSet(changes);
         cs.add(c);
 
-        return new ChangePlan(formation, cs, scoresBefore(c.getMinute()));
+        return new ChangePlan(formation, cs, scoresBefore(c.getMinute()), afterMinutes);
     }
 
     private ChangePlan remove(Change c) {
         Set<Change> cs = Sets.newHashSet(changes);
         cs.remove(c);
-        return new ChangePlan(formation, cs, scoresBefore(c.getMinute()));
+        return new ChangePlan(formation, cs, scoresBefore(c.getMinute()), afterMinutes);
     }
 
     private Map<Integer, Double> scoresBefore(Integer minute) {
@@ -202,8 +208,8 @@ public final class ChangePlan implements Report {
     }
 
     public Boolean isValid() {
-        // Max is 15, but we reserve 6 for injury backups, and 3 for score based tactics
-        if (changes().size() > 6) {
+        // Max is 15, and 5 for score based tactics
+        if (changes().size() > 10) {
             return false;
         }
 
@@ -261,7 +267,7 @@ public final class ChangePlan implements Report {
     }
 
     private Double chanceOfInjuries(Integer number, Integer minute) {
-        return Math.pow(1.0 - Math.pow(0.997, minute), number);
+        return Math.pow(1.0 - Math.pow(1.0 - INJURY_CHANCE_PER_MINUTE, minute), number);
     }
 
     public Formation getFormationAt(Integer minute) {
@@ -271,6 +277,9 @@ public final class ChangePlan implements Report {
             players.add(p.afterMinutes(minute));
         }
 
+        // GK's don't fatigue
+        players.addAll(formation.players(Role.GK));
+
         Formation f = formation.withUpdatedPlayers(players);
 
         for (Change c : changesMadeAt(minute)) {
@@ -278,6 +287,16 @@ public final class ChangePlan implements Report {
         }
 
         return f;
+    }
+
+    private Player afterMinutes(Player p, Integer minute) {
+        Pair<Player, Integer> key = Pair.of(p, minute);
+
+        if (!afterMinutes.containsKey(key)) {
+            afterMinutes.put(key, p.afterMinutes(minute));
+        }
+
+        return afterMinutes.get(key);
     }
 
     private static Ordering<ChangePlan> byScore() {
@@ -366,7 +385,7 @@ public final class ChangePlan implements Report {
             changes.add(s);
         }
 
-        return new ChangePlan(f, changes, ImmutableMap.<Integer, Double>of());
+        return new ChangePlan(f, changes, ImmutableMap.<Integer, Double>of(), ImmutableMap.<Pair<Player, Integer>, Player>of());
     }
 
     private static ActionGenerator<ChangePlan> actionsFunction(final League league, final SelectionCriteria criteria) {

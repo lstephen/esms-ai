@@ -1,8 +1,7 @@
 package com.ljs.ifootballmanager.ai.formation.selection;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import com.ljs.ai.search.hillclimbing.action.Action;
 import com.ljs.ai.search.hillclimbing.action.ActionGenerator;
 import com.ljs.ai.search.hillclimbing.action.SequencedAction;
@@ -10,7 +9,7 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.player.Player;
-import java.util.Set;
+import java.util.List;
 
 /**
  *
@@ -24,30 +23,26 @@ public class Actions implements ActionGenerator<Formation> {
         this.criteria = criteria;
     }
 
-    public ImmutableSet<Action<Formation>> apply(Formation f) {
-        ImmutableSet<Move> moves = moves(f);
-        ImmutableSet<Substitute> subs = substitutions(f);
-        return ImmutableSet.copyOf(Iterables.concat(moves, subs, SequencedAction.allPairs(moves), SequencedAction.merged(moves, subs)));
+    public Iterable<Action<Formation>> apply(Formation f) {
+        Iterable<Move> moves = moves(f);
+        Iterable<Substitute> subs = substitutions(f);
+        return Iterables.concat(moves, subs, SequencedAction.allPairs(moves), SequencedAction.merged(moves, subs));
     }
 
-    private ImmutableSet<Move> moves(Formation f) {
-        Set<Move> moves = Sets.newHashSet();
+    private Iterable<Move> moves(Formation f) {
+        List<Move> moves = Lists.newArrayList();
 
         for (Player p : f.unsortedPlayers()) {
-            Role current = f.findRole(p);
-
             for (Role r : Role.values()) {
-                if (r != current) {
-                    moves.add(new Move(p, r));
-                }
+                moves.add(new Move(p, r));
             }
         }
 
-        return ImmutableSet.copyOf(moves);
+        return moves;
     }
 
-    private ImmutableSet<Substitute> substitutions(Formation f) {
-        Set<Substitute> actions = Sets.newHashSet();
+    private Iterable<Substitute> substitutions(Formation f) {
+        List<Substitute> actions = Lists.newArrayList();
         for (Player in : criteria.getAll()) {
             if (!f.contains(in)) {
                 for (Player out : f.unsortedPlayers()) {
@@ -60,7 +55,7 @@ public class Actions implements ActionGenerator<Formation> {
                 }
             }
         }
-        return ImmutableSet.copyOf(actions);
+        return actions;
     }
 
     public static Actions create(SelectionCriteria sc) {

@@ -5,8 +5,8 @@ Q_Flowers        18  GK 16  1  1  1 $5,000   OK   5.1M    N/A
 Q_Bonnette       16  GK 14  1  1  1 $2,000   OK   5.1M    N/A
 B_Lasham         20  DF  1 18  6  5 $25,316  OK   7.2M    N/A
 X_Pawling        21  DF  1 17  3  8 $12,410  OK   3.2M    N/A
-S_Drye           19  DF  1 17  3  4 $11,234  OK   5.6M    N/A
-P_Tinley         18  DF  1 16  5  2 $5,718   OK   6.8M    N/A
+S_Drye           19  DF  1 17  4  4 $11,411  OK   5.7M    N/A
+P_Tinley         18  DF  1 17  5  2 $11,352  OK   11.25M  N/A
 P_Levanda        17  DF  1 15  4  8 $3,233   OK   8.7M    N/A
 A_Pilbean        17  DF  1 15  7  2 $3,050   OK   8.2M    N/A
 T_A_Raszwolaz    16  DF  1 14 10  1 $2,642   OK   7.9M    N/A

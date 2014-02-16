@@ -30,9 +30,7 @@ public final class DefaultScorer implements FormationScorer {
 
         Double pct = 1 + aterm - dterm;
 
-        Double extras = (3 * shotQuality(f, tactic) + cornerShotQuality(f) - 2 * aggression(f)) / 6;
-
-        return (a + d) * pct + gkQuality(f) + extras;
+        return (a + d) * pct + gkQuality(f) + shootingBonus(f, tactic);
     }
 
     public Double scoring(Formation f, Tactic tactic) {
@@ -44,6 +42,17 @@ public final class DefaultScorer implements FormationScorer {
 
     public Double defending(Formation f, Tactic tactic) {
         return skillRating(f, tactic, Rating.TACKLING);
+    }
+
+    public Double shootingBonus(Formation f, Tactic tactic) {
+        Double a = scoring(f, tactic);
+        Double d = defending(f, tactic);
+
+        Double avg = (a + d) / 2;
+
+        Double base = (10 * shotQuality(f, tactic) + cornerShotQuality(f)) / 11;
+
+        return a/avg * base;
     }
 
     public Double shotQuality(Formation f, Tactic t) {
@@ -88,6 +97,12 @@ public final class DefaultScorer implements FormationScorer {
 
     public Double gkQuality(Formation f) {
         return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING);
+    }
+
+    private Double teamAggression(Formation f) {
+        Double sum = aggression(f) * 11;
+
+        return 0.75*sum + 0.25 * 10 * sum;
     }
 
     private Double aggression(Formation f) {
@@ -145,6 +160,12 @@ public final class DefaultScorer implements FormationScorer {
         w.format("%10s ", "C SH Qual");
         for (Tactic t : tactics) {
             w.format("%7d ", Maths.round(cornerShotQuality(f)));
+        }
+        w.println();
+
+        w.format("%10s ", "SH Bonus");
+        for (Tactic t : tactics) {
+            w.format("%7d ", Maths.round(shootingBonus(f, t)));
         }
         w.println();
 

@@ -159,8 +159,7 @@ public final class Squad {
             Integer age = Integer.parseInt(split[1]);
 
             Ratings ratings = Ratings
-                .builder()
-                .league(league)
+                .builder(league)
                 .stopping(Integer.parseInt(split[3]))
                 .tackling(Integer.parseInt(split[4]))
                 .passing(Integer.parseInt(split[5]))
@@ -168,8 +167,7 @@ public final class Squad {
                 .build();
 
             Ratings abilities = Ratings
-                .builder()
-                .league(league)
+                .builder(league)
                 .stopping(Integer.parseInt(split[8]))
                 .tackling(Integer.parseInt(split[9]))
                 .passing(Integer.parseInt(split[10]))
