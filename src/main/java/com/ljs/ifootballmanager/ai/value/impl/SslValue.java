@@ -1,6 +1,5 @@
 package com.ljs.ifootballmanager.ai.value.impl;
 
-import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.value.Value;
 
@@ -30,7 +29,7 @@ public class SslValue implements Value {
         return SslPotential
             .create()
             .atPotential(p)
-            .getOverall(Tactic.NORMAL)
+            .getOverall()
             .getRating();
     }
 }

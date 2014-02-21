@@ -3,15 +3,13 @@ S_Ryder       18 eng 16  1  1  1 51  65 552 552 552 # Tiger
 A_Wysinger    18 aus  1 17 12  2 13 552 366 583 772 # Tiger
 Q_Burruel     18 xxx  1 16  3  2 24 300 177 117 315 #Tiger
 O_Ewing       19 usa  1 15  8  2  8 426 247 435 983 #Tiger -300k
-M_Pue         16 xxx  1 13  6  6 23 300 803 663 217 #Tiger -500k
+M_Pue         16 xxx  1 13  6  6 23 300 803 663 217 #Tiger -500k - Sold to someone else
 
 P_Buskala     17 xxx  1  9 14  1 13 300 158 622 102 #Tiger
 
 Diego         17 spa  1  6  2 15 25 300 176 311 168 #Tiger
 
-Po_Kurr       16 jap  1  5 14  4 20 300 131 121 166 # £5.0M - Leicester
 
-P_Rynne       18 xxx  1 12  6 16  9 300 593 102 307 # 15m - Midland
 M_Fullbrook   18 xxx  1 16  3  3 15 300 128 421 275 # 6m - Midland
 X_Oxer        18 xxx  1 15  4  6 10 300 286 302 119 # 1m - Midland
 T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland
@@ -19,7 +17,6 @@ T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland
 
 A_Ruse 18 nor 1 10 3 15 12 444 486 956 720 # - 6m - Gareth James
 
-P_Rynne 18 xxx 1 12 6 16 9 300 593 102 307 # - Mark Bradley $10m
 
 D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 # KPK
 
@@ -27,4 +24,40 @@ D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 # KPK
 I_Scrooby     23 usa  1 23  4 10 29 828  88 699 517 # $30m - Wayne Laundon
 
 _Beaudin     26 alb  2  4 22 17 15   8 646 260 975 # $17 - Wayne Laundon
+
+P_Giesen      31 hol  2 23  7  4 54 664 334 277 766 # £2.5M
+
+L_Meserve     32 swi  3 23  5 16 43   3 293 901 749 # £3M
+
+
+N_Swatsell    19 saf  1 10 15  3  8 468 814 841 278 # 600k - Simon Marsh - SOLD elsewhere
+
+M_Snaer       27 nor  1 23  4 15 41 450 802 414 525 # PHO
+U_Rydelek     24 nor  1 21  3  3 34 546 911 463 443 # PHO
+B_Venteolo    29 ita  2  5 23  8  8 408 337 814 876 # PHO
+A_Seigfreid   22 eng  1 13 21  5 26 846 940 428 687  # PHO
+N_Miyanishi   24 jap  2 16 21  4 35 288 533 869 722 # PHO
+C_Recknor     27 usa  2  5 20 11 39 438 858 648 297 # PHO
+
+M_Reid        19 sco  1 18  4  8 24 587 718 855 568 #PHO
+Y_Busbee      19 eng  1 17  3  6 14 454  71  41 587   #PHO
+K_Kellum      19 ire  1 16 10  4 15 706  50 943 171   #PHO
+G_Oyervides   17 mex  1 14  6  5 22 466 987 611 934    #PHO - $6.5m
+P_Kubli       17 cam  1 13  3  6 28 454 809 447 786   #PHO
+J_Sukup       16 xxx  1 12  5  2 55 328 559 543 906  #PHO
+E_Dwire       19 t&t  1  6 16  5 11 454 634 183 466    #PHO
+M_Cuffman     18 xxx  1  4 15  5  9 328 818 636 865   #PHO
+P_Prusski     18 rus  1  7 14  2 23 454 599 747 987  #PHO
+X_Cruse       18 por  1  2 14  6 24 454 916 547 750   #PHO
+U_Mylar       19 usa  1  4 14 11  8 532 877 400 743   #PHO
+T_Kwolek      16 xxx  1  7 13  2 27 328 886 496 403    #PHO - $5m
+J_Byrn        16 xxx  1  6 12  3 25 328 651 950 806  #PHO - $1m
+
+F_Marston     26 eng  2 23  7  4 29 102  46 456 132 # £25m
+U_Zendt       29 ger  2  6 10 23 17 701 296 223 552 # £17m
+
+E_McCrossan   29 sco  2 22 11  6 38 630 637 438 284 # 5m
+M_Gulledge    17 xxx  1  2 15  5 23 328 513 509 604 # 5m
+
+G_Jasnau      28 bol  2 22  4  8 11 401 266 448 329 # 4m
 

@@ -32,7 +32,7 @@ public class IFootballManagerValue implements Value {
         return IFootballManagerPotential
             .create()
             .atPotential(p)
-            .getOverall(Tactic.NORMAL)
+            .getOverall()
             .getRating();
     }
 

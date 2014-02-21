@@ -94,9 +94,7 @@ public class Main {
 
         ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
 
-        print(w, "Squad", SquadReport.create(league, Tactic.NORMAL, squad.players()).sortByValue());
-        print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()));
-
+        print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()).sortByValue());
 
         print(w, "1st XI", firstXI);
 
@@ -123,14 +121,14 @@ public class Main {
                     remaining, ImmutableSet.copyOf(reservesXI.players())));
         }
 
-        print(w, "1st XI", SquadReport.create(league, Tactic.NORMAL, firstXI.players()).sortByValue());
+        print(w, "1st XI", SquadReport.create(league, firstXI.getTactic(), firstXI.players()).sortByValue());
         if (secondXI != null) {
-            print(w, "Second XI", SquadReport.create(league, Tactic.NORMAL, secondXI.players()).sortByValue());
+            print(w, "Second XI", SquadReport.create(league, secondXI.getTactic(), secondXI.players()).sortByValue());
         }
         if (reservesXI != null) {
-            print(w, "Reserves XI", SquadReport.create(league, Tactic.NORMAL, reservesXI.players()).sortByValue());
+            print(w, "Reserves XI", SquadReport.create(league, reservesXI.getTactic(), reservesXI.players()).sortByValue());
         }
-        print(w, "Remaining", SquadReport.create(league, Tactic.NORMAL, remaining).sortByValue());
+        print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
 
         File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");
         CharSink sheet = Files.asCharSink(sheetFile, Charsets.ISO_8859_1);
@@ -160,7 +158,6 @@ public class Main {
             System.out.println("Loading:" + resource);
             Squad additional = Squad.load(league, Resources.asCharSource(getClass().getResource(resource), Charsets.ISO_8859_1));
 
-            print(w, f, SquadReport.create(league, Tactic.NORMAL, additional.players()).sortByValue());
             print(w, f, SquadReport.create(league, firstXI.getTactic(), additional.players()).sortByValue());
         }
     }

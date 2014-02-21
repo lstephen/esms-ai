@@ -157,6 +157,21 @@ public final class Player {
         return getOverall(Tactic.NORMAL).getRole() == Role.GK;
     }
 
+    public RatingInRole getOverall() {
+        Set<RatingInRole> ovrs = Sets.newHashSet();
+
+        for (Tactic t : Tactic.values()) {
+            ovrs.add(getOverall(t));
+        }
+
+        // Get the 2nd best. Throw out the highest, in case it's extreme
+        return RatingInRole
+            .byRating()
+            .reverse()
+            .immutableSortedCopy(ovrs)
+            .get(1);
+    }
+
     public RatingInRole getOverall(Tactic t) {
         return RatingInRole.byRating().max(evaluateAll(t));
     }
