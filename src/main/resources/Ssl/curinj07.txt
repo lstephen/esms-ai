@@ -1,0 +1,37 @@
+Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
+-------------------------------------------------------------
+bag   Chet_Donnelly     27 hol  6 12 25 15 18 300 863 459 934 is injured for 1 week
+bwr   A_Vadnais         21 uru  9 22 18 16 36 699 574  26 743 is injured for 2 weeks
+cop   H_Moreno          30 mex 29  1  1  1 29 198 480 300 300 is injured for 1 week
+mfc   N_Wals            34 JAP  1 23 15 13 41 300 681 334 583 is injured for 4 weeks
+whh   C_Piehl           27 ger 24  1  1  1 19  65 300 340 340 is injured for 3 weeks
+whh   D_Renn            32 fra  1  1 23  1 60 500 653 144 734 is injured for 3 weeks
+shu   T_Pratchett       20 usa  1 19  9  4 25 390 564 278 914 is injured for 2 weeks
+shu   L_Sabatini        22 uru  1 11 22 10 47 480 510 366 487 is injured for 2 weeks
+tan   Q_Zuniga          21 mex  1  4 20  5 11 480 929 694 723 is injured for 3 weeks
+vil   M_Probst          30 nir  2 23 17  8 19 930 471 362 560 is injured for 1 week
+vil   J_Rammel          27 rus  1  2 13 24 29 300 315 479  67 is injured for 6 weeks
+col   I_Suarez          33 spa 22  1  1  1 55 836 390 330 330 is injured for 2 weeks
+der   M_Schjonberg      20 den  5 22 18 13 13 660  38 191 514 is injured for 6 weeks
+der   T_Cahill          22 aus  4 10 22 13 28 300 888 221  15 is injured for 3 weeks
+der   C_Brunt           20 nir  6 11 21 12 30 480 199  53 169 is injured for 4 weeks
+dur   K_Ocain           31 usa  1 20 18  3 35 300 622 898 434 is injured for 1 week
+fir   E_Dvorak          33 CRO  1  5 13 24 15 300 250 996 254 is injured for 2 weeks
+bty   F_T_Aitch         20 eng  9 20 11 10 20 300 157 754 827 is injured for 1 week
+bry   G_Daum            17 usa  1  3 16  6 25 300 515  78 908 is injured for 2 weeks
+fry   V_Thibideau       20 swe  1 18  4  3  9 300 747 788 686 is injured for 4 weeks
+mfy   H_Moguff          19 den 20  1  1  1 29 208 300 300 300 is injured for 2 weeks
+npy   F_Shattock        20 arg  1  4 17  7 59 300 648 392 854 is injured for 3 weeks
+sby   O_Catey           20 wal  1  5 19  3 14 480 511 976 345 is injured for 2 weeks
+sby   J_Devaris         19 wal  1  9 16  2 38 300 770 718 461 is injured for 4 weeks
+say   N_Keily           20 nir 17  1  1  1  9 427 490 490 390 is injured for 4 weeks
+dhy   P_Junkins         21 aus 16  1  1  1 26 431 300 300 300 is injured for 2 weeks
+dhy   B_Rillotta        18 por 15  1  1  1 37 846 300 300 300 is injured for 1 week
+dhy   O_Sittenauer      17 rsa 14  1  1  1 17 734 300 300 300 is injured for 1 week
+dhy   B_Klinzing        17 bel  1  2 15  7 49 300  34 836 482 is injured for 1 week
+fby   C_Bastian         20 arg  1  3 18  3 41 300  97 619 355 is injured for 3 weeks
+jsy   Q_Schreder        21 nir 18  1  1  1 69 118 435 435 335 is injured for 6 weeks
+jsy   S_Harsh           20 nir  1 18  5  3 11 335 850 361 285 is injured for 1 week
+jsy   B_Blin            19 nig  1  3 17  3 42 335 620 617 497 is injured for 5 weeks
+ldy   J_Devaris         20 aus  1  1 20 10 14 300 623  52 837 is injured for 1 week
+msy   L_Nehring         20 den  1  3  7 18 11 300 202 281 936 is injured for 1 week

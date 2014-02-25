@@ -113,12 +113,25 @@ public class Main {
         }
 
         Formation reservesXI = null;
+        Formation secondReservesXI = null;
         if (league.getReserveTeam().isPresent()) {
-            reservesXI = Formation.select(league, squad.reserves(), YouthTeamScorer.create(league, squad));
+            Set<Player> reservePlayers = Sets.newHashSet(squad.reserves());
+            reservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad));
             print(w, "Reserves XI", reservesXI);
             remaining = ImmutableSet.copyOf(
                 Sets.difference(
                     remaining, ImmutableSet.copyOf(reservesXI.players())));
+
+            reservePlayers.removeAll(reservesXI.players());
+
+            if (reservePlayers.size() >= 11) {
+                secondReservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad));
+
+                print(w, "2nd Reserves XI", secondReservesXI);
+                remaining = ImmutableSet.copyOf(
+                    Sets.difference(
+                        remaining, ImmutableSet.copyOf(secondReservesXI.players())));
+            }
         }
 
         print(w, "1st XI", SquadReport.create(league, firstXI.getTactic(), firstXI.players()).sortByValue());
@@ -127,6 +140,9 @@ public class Main {
         }
         if (reservesXI != null) {
             print(w, "Reserves XI", SquadReport.create(league, reservesXI.getTactic(), reservesXI.players()).sortByValue());
+        }
+        if (secondReservesXI != null) {
+            print(w, "2nd Reserves XI", SquadReport.create(league, secondReservesXI.getTactic(), secondReservesXI.players()).sortByValue());
         }
         print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
 
