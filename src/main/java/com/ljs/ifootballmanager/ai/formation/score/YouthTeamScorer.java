@@ -22,7 +22,7 @@ public class YouthTeamScorer implements FormationScorer {
     }
 
     public Double score(Formation f, Tactic t) {
-        return now.score(f, t) + future.score(f, t);
+        return 2 * now.score(f, t) + future.score(f, t);
     }
 
     public Double scoring(Formation f, Tactic t) {

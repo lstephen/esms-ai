@@ -1,19 +1,5 @@
 Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
 -------------------------------------------------------------
-bag   F_Seidler         30 rsa  1 28 21 17 46 300 928 145 342 is suspended for 1 game
-bec   J_Parlantini      28 usa  5 16 24 15 34 300  16 778 788 is suspended for 1 game
-bwr   D_Winton          26 ger  5 17 25 15 28 660 783 737 600 is suspended for 1 game
-rsl   D_Grebeshkov      29 rus  7 27 11  5 23 300  43 914  13 is suspended for 1 game
-hur   F_Millas          24 mex  3 21 10  4 28 300 397 919 274 is suspended for 1 game
-man   J_Backus          22 cam  1 20 16 15 62 300 768 791 471 is suspended for 1 game
-shu   R_O_Flisty        21 eng  1  4  3 20 55 390  15 951  99 is suspended for 1 game
-vil   C_Keiderlin       29 rsa  3  5 23 10 29 136 180  62 861 is suspended for 1 game
-aas   B_Meetze          26 hol  1 20 14  5 28 390 563 522 644 is suspended for 1 game
-mis   O_Aguilar         24 mex  1  4 21 17 22 390 305 721 730 is suspended for 1 game
-bay   AJ_Omam_Biyik     18 cam  4  6 18 16 26 300 127 536 174 is suspended for 1 game
-bty   F_Meister         16 eng  1  2 15  8 51 300 408 744 958 is suspended for 1 game
-cky   H_Dinesen         17 den  1 15  2  8 41 360 574 558 350 is suspended for 1 game
-npy   I_Giddeons        19 bel  1  4 18  4 54 300 211 250 772 is suspended for 1 game
-why   D_Difederico      17 arg  1 15  2  4 25 300 617 868 734 is suspended for 1 game
-cay   M_Fefee           21 kor  1  2  2 19 21 300 486 931  61 is suspended for 1 game
-msy   D_Dillinger       17 nzl  1  4 11 14 38 300 448 346 676 is suspended for 1 game
+hoh   W_Tamindzic       23 geo  8 20 15  4 40 460 754 975 178 is suspended for 1 game
+tan   W_Leyland         26 eng  1  5 21  5 53 300 616 272 844 is suspended for 1 game
+hry   S_Thai            20 jap  1  8 18  4 25 300 383 519 410 is suspended for 1 game

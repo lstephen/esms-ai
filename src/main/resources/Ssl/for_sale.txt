@@ -31,3 +31,9 @@ Ji_Parana     19 bra  1  5 17  6 59 350 564 466 145 #COP
 T_Leatt       20 den  1  6  2 18 10 350 306 928 565 #COP
 Diego_Rolan   19 uru  1  6  2 18 34 410 830 733 522 #COP
 
+P_McFrancis   18 nir  1 17  5  2 43 300  94 616 353 # 6m - Shurdington
+H_Goggi       18 ita  1 16  2  1 49 300 609  13 774 # 3m - Shurdington
+D_Tito        19 cro  1 16  5  7 10 300 802 871 293 # 1m - Shurdington
+Ollie_Jones   20 eng  1  5 19  4 44 390 320  23 390 # 6m - Shurdington
+R_Dance       20 wal  1  4 18  9 25 390 360 104 435 # 4m - SHurdington
+
