@@ -115,7 +115,7 @@ public final class DefaultScorer implements FormationScorer {
         return agg / 11;
     }
 
-    public Double skillRating(Formation f, Tactic t, Rating r) {
+    private Double skillRating(Formation f, Tactic t, Rating r) {
         Double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
             score += p.getSkillRating(f.findRole(p), t, r);

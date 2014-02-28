@@ -10,8 +10,10 @@ import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
+import com.ljs.ifootballmanager.ai.formation.score.SecondXIScorer;
 import com.ljs.ifootballmanager.ai.formation.score.YouthTeamScorer;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
@@ -95,55 +97,81 @@ public class Main {
         ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
 
         print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()).sortByValue());
-
         print(w, "1st XI", firstXI);
 
-        ImmutableSet<Player> remaining = ImmutableSet.copyOf(
+        Set<Player> remaining = Sets.newHashSet(
             Sets.difference(
                 ImmutableSet.copyOf(squad.players()),
                 ImmutableSet.copyOf(firstXI.players())));
 
+        Formation atPotentialXI = Formation.select(league, remaining, AtPotentialScorer.create(league.getPlayerPotential()));
+
         Formation secondXI = null;
         if (remaining.size() >= 11) {
-            secondXI = Formation.select(league, remaining, DefaultScorer.get());
+            secondXI = Formation.select(league, remaining, SecondXIScorer.create(league));
             print(w, "2nd XI", secondXI);
-            remaining = ImmutableSet.copyOf(
-                Sets.difference(
-                    remaining, ImmutableSet.copyOf(secondXI.players())));
+            remaining.removeAll(secondXI.players());
         }
 
+        Set<Player> reservesSquad = Sets.newHashSet();
         Formation reservesXI = null;
-        Formation secondReservesXI = null;
         if (league.getReserveTeam().isPresent()) {
             Set<Player> reservePlayers = Sets.newHashSet(squad.reserves());
             reservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad));
             print(w, "Reserves XI", reservesXI);
-            remaining = ImmutableSet.copyOf(
-                Sets.difference(
-                    remaining, ImmutableSet.copyOf(reservesXI.players())));
+            reservesSquad.addAll(reservesXI.players());
+        }
 
-            reservePlayers.removeAll(reservesXI.players());
+        print(w, "At Potential XI", atPotentialXI);
 
-            if (reservePlayers.size() >= 11) {
-                secondReservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad));
+        Set<Player> firstSquad = Sets.newHashSet();
 
-                print(w, "2nd Reserves XI", secondReservesXI);
-                remaining = ImmutableSet.copyOf(
-                    Sets.difference(
-                        remaining, ImmutableSet.copyOf(secondReservesXI.players())));
+        remaining.removeAll(reservesSquad);
+
+        for (Player p : Iterables.concat(firstXI.players(), atPotentialXI.players(), secondXI != null ? secondXI.players() : ImmutableSet.<Player>of())) {
+            if (p.isReserves()) {
+                reservesSquad.add(p);
+            } else {
+                firstSquad.add(p);
             }
         }
 
-        print(w, "1st XI", SquadReport.create(league, firstXI.getTactic(), firstXI.players()).sortByValue());
+        Set<Player> trainingSquadCandidates = Sets.newHashSet(remaining);
+
+        while ((reservesSquad.size() < 21 || firstSquad.size() < 21) && !trainingSquadCandidates.isEmpty()) {
+            Player toAdd = Player.byValue(league).max(trainingSquadCandidates);
+            trainingSquadCandidates.remove(toAdd);
+
+            if (toAdd.isReserves() && reservesSquad.size() < 21) {
+                reservesSquad.add(toAdd);
+                remaining.remove(toAdd);
+            }
+            if (!toAdd.isReserves() && firstSquad.size() < 21) {
+                firstSquad.add(toAdd);
+                remaining.remove(toAdd);
+            }
+        }
+
+        print(w, String.format("First Squad (%d)", firstSquad.size()), SquadReport.create(league, firstXI.getTactic(), firstSquad).sortByValue());
+
+        if (!reservesSquad.isEmpty()) {
+            w.format("(%d)%n", reservesSquad.size());
+            print(w, String.format("Reserves Squad (%d)", reservesSquad.size()), SquadReport.create(league, reservesXI.getTactic(), reservesSquad).sortByValue());
+        }
+
+        Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
+        trainingSquad.removeAll(firstXI.players());
         if (secondXI != null) {
-            print(w, "Second XI", SquadReport.create(league, secondXI.getTactic(), secondXI.players()).sortByValue());
+            trainingSquad.removeAll(secondXI.players());
         }
         if (reservesXI != null) {
-            print(w, "Reserves XI", SquadReport.create(league, reservesXI.getTactic(), reservesXI.players()).sortByValue());
+            trainingSquad.removeAll(reservesXI.players());
         }
-        if (secondReservesXI != null) {
-            print(w, "2nd Reserves XI", SquadReport.create(league, secondReservesXI.getTactic(), secondReservesXI.players()).sortByValue());
+        if (atPotentialXI != null) {
+            trainingSquad.removeAll(atPotentialXI.players());
         }
+        print(w, "Training Squad", SquadReport.create(league, firstXI.getTactic(), trainingSquad).sortByValue());
+
         print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
 
         File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");

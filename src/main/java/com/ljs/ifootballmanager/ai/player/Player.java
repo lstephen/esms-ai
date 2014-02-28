@@ -194,6 +194,10 @@ public final class Player {
         return evaluate(r, t).getRating();
     }
 
+    public Double getAbilityRating(Role rl, Tactic tc, Rating rt) {
+        return abilities.getSkillRating(rl, tc, rt);
+    }
+
     public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
         return ratings.getSkillRating(rl, tc, rt);
     }

@@ -19,6 +19,7 @@ import com.ljs.ifootballmanager.ai.formation.selection.RandomFormationGenerator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
@@ -261,7 +262,7 @@ public final class Formation implements Report {
                     return f.isValid();
                 }
             })
-            .heuristic(byScore())
+            .heuristic(byScore().compound(byAbilitySum()))
             .actionGenerator(Actions.create(criteria));
 
         return new RepeatedHillClimbing<Formation>(
@@ -276,6 +277,22 @@ public final class Formation implements Report {
             .onResultOf(new Function<Formation, Double>() {
                 public Double apply(Formation f) {
                     return f.score();
+                }
+            });
+    }
+
+    private static Ordering<Formation> byAbilitySum() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Formation, Double>() {
+                public Double apply(Formation f) {
+                    Double sum = 0.0;
+                    for (Player p : f.players()) {
+                        for (Rating rt : Rating.values()) {
+                            sum += p.getAbilityRating(f.findRole(p), f.getTactic(), rt);
+                        }
+                    }
+                    return sum;
                 }
             });
     }

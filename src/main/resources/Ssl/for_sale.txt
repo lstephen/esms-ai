@@ -37,3 +37,10 @@ D_Tito        19 cro  1 16  5  7 10 300 802 871 293 # 1m - Shurdington
 Ollie_Jones   20 eng  1  5 19  4 44 390 320  23 390 # 6m - Shurdington
 R_Dance       20 wal  1  4 18  9 25 390 360 104 435 # 4m - SHurdington
 
+
+C_Dugarry     20 fra  1 10  8 19 34 300 945 117 578 # $10+m
+H_Larsson     19 swe  1  5  3 18 25 300 990 468 444 # $7+m
+M_Shibles     19 aus  1  3  3 17 46 300 306 458 125 # $2m
+J_Fontaine    17 fra  1  2  4 15  8 300 855 272 523 # $4m
+D_Ashton      17 eng  1  5  2 15 13 300 351 575 171 # $3.5m
+S_Iversen     16 den  1  8  2 14 30 300 384 704 550 # $4m

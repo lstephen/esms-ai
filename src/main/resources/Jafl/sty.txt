@@ -3,7 +3,7 @@ Name         Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb Gam Sub  Min Mom Sav Con Ktk
 C_Rustay      18 tur 16  1  1  1 13 178 636 636 636   7   0  661   0  23   9   0   0   0   0   0   0   0   0
 I_Buratti     19 ita 14  1  1  1 15 938 492 492 492   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 M_Lukaicaite  16 xxx 13  1  1  1 38 744 348 348 348   0   0    0   0   0   0   0   0   0   0   0   0   0   0
-M_Muscala     19 ita  1 18 18  4 12 492 280 396 265   7   0  591   0   0   0   4  10   4   0   0   0   0   0
+M_Muscala     19 ita  1 18 18  4 12 492 280 396 265   7   0  591   0   0   0   4  10   4   0   0   0   3   0
 T_Syuhldreer  18 xxx  1 16  2  3 28 348   8 556 557   7   0  661   1   0   0   9   1   1   0   1   0   0   0
 C_Burgarello  18 xxx  1 15  4 13 21 348 644 656 549   7   0  661   0   0   0   7   3  12   0   0   6   0   0
 V_Lundblade   17 xxx  1 15  2 12 11 348 592 424 513   7   0  661   1   0   0   8   0  12   0   0   0   0   0
