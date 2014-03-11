@@ -23,7 +23,7 @@ D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 # KPK
 
 I_Scrooby     23 usa  1 23  4 10 29 828  88 699 517 # $30m - Wayne Laundon
 
-_Beaudin     26 alb  2  4 22 17 15   8 646 260 975 # $17 - Wayne Laundon
+N_Beaudin     26 alb  2  4 22 17 15   8 646 260 975 # $17m - SOLD ELSEWHERE - Wayne Laundon
 
 P_Giesen      31 hol  2 23  7  4 54 664 334 277 766 # £2.5M
 
@@ -60,4 +60,22 @@ E_McCrossan   29 sco  2 22 11  6 38 630 637 438 284 # 5m
 M_Gulledge    17 xxx  1  2 15  5 23 328 513 509 604 # 5m
 
 G_Jasnau      28 bol  2 22  4  8 11 401 266 448 329 # 4m
+
+F_Futter        22 xxx  1  1  5 21  1 300 261 117 139 # 16m (Drake Cove)
+
+F_Syrett        25 xxx  1  4 25  4 12 300 745 100 766
+W_Eygabroad     25 xxx  1  4 25 13 11 300 105 231 100 # 110m
+
+C_Mouring       27 xxx 25  1  1  1  2 304 300 300 300  #  46M
+O_Lumbley       26 xxx  1  2 25 10  7 300 276 417 499  #  98M
+
+H_Fahler      25 aus  1  4 25 10 27 744 611 325  56 # 80m
+
+A_Toyota      21 jap  1 21  6 10 68 576  72 554  51   3   0  284   0   0   0   2   2   2   0   0   3   0   0 # 30m
+L_Hartopp     25 wal  2  8 22  4 72  24 207 985 568   7   0  667   0   0   0   2  17   4   0   0   3   0   0 # 18m
+B_Behague     26 cam  2 10 21  4 43 360 595 886 567   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # 10m
+R_Mysterio    30 mex  2 14  7 23 12 863  76 750 761   6   0  506   0   0   0   1   1  11   3   0   6   0   0 # 10m
+
+R_Perezinho   19 uru  1 16 10  8  9 684 620 251 646   7   0  661   0   0   0   6   3   5   0   0   0   0   0 # 3m
+C_Guidrey     19 ire  1  7 17  5 45 558 135  48 973   5   1  385   1   0   0   3   9   6   0   1   0   0   0 # 6m
 

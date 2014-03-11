@@ -1,5 +1,5 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-Feb 23  G_Rodrigues   25  5  7 14 22 17 Player_Draw          Manchester_Reds      8,000k
-Feb 25  D_Tito        19  1 16  5  7 10 Shurdington_AFC      Burntwood_Rovers     1,000k
-Feb 26  J_Briton      21  6 21  8  6 35 Auction              Village_Vulcans      13,750k
+Mar 02  U_Ogozalek    20  2  9 20  9 26 Player_Draw          Burntwood_Rovers     12,000k
+Mar 04  E_Cantona     21  1  5 13 19 31 Boston_Black_Sox     Chorley_Cougars      8,500k
+Mar 05  L_Harris      18  5  7 18  8 12 Auction              Les_Dieus_du_Monde   10,323k

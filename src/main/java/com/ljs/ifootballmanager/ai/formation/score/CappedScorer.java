@@ -1,7 +1,6 @@
 package com.ljs.ifootballmanager.ai.formation.score;
 
 import com.google.common.collect.Sets;
-import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
@@ -46,11 +45,17 @@ public final class CappedScorer implements FormationScorer {
     public void print(Formation f, PrintWriter w) { }
 
     private Formation capped(Formation f) {
-        Player gk = f.players(Role.GK).iterator().next();
+        Double fatigue = 1.0;
 
-        Player original = squad.findPlayer(gk.getName());
+        for (Player p : f.players()) {
 
-        Double fatigue = gk.getSkill(Rating.STOPPING) / original.getSkill(Rating.STOPPING);
+            Player o = squad.findPlayer(p.getName());
+            Double ft = p.getSkill(Rating.TACKLING) / o.getSkill(Rating.TACKLING);
+
+            if (ft < fatigue) {
+                fatigue = ft;
+            }
+        }
 
         Set<Player> updated = Sets.newHashSet();
         for (Player p : f.unsortedPlayers()) {

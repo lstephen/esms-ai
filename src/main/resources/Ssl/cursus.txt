@@ -1,5 +1,8 @@
 Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
 -------------------------------------------------------------
-hoh   W_Tamindzic       23 geo  8 20 15  4 40 460 754 975 178 is suspended for 1 game
-tan   W_Leyland         26 eng  1  5 21  5 53 300 616 272 844 is suspended for 1 game
-hry   S_Thai            20 jap  1  8 18  4 25 300 383 519 410 is suspended for 1 game
+bag   F_Seidler         30 rsa  1 28 21 17 46 300 918 168 332 is suspended for 1 game
+pen   H_Herrell         28 por 25  1  1  1 33  36 300 300 300 is suspended for 1 game
+shu   H_Lerner          26 wal  6 24 14  7 23 480 680 806 944 is suspended for 1 game
+dur   V_Lundstrom       25 swe  8 10 15 20 20 300 657 754 654 is suspended for 1 game
+say   Simoncelli        17 ita  1  2  2 15 27 300 359 290 858 is suspended for 1 game
+dhy   C_Knief           18 nig  1  3 16 16 57 300 309 988 350 is suspended for 1 game

@@ -30,7 +30,7 @@ public final class DefaultScorer implements FormationScorer {
 
         Double pct = 1 + aterm - dterm;
 
-        return (a + d) * pct + gkQuality(f) + shootingBonus(f, tactic);
+        return (a + d) * pct + gkBonus(f, tactic) + shootingBonus(f, tactic);
     }
 
     public Double scoring(Formation f, Tactic tactic) {
@@ -50,9 +50,18 @@ public final class DefaultScorer implements FormationScorer {
 
         Double avg = (a + d) / 2;
 
-        Double base = (10 * shotQuality(f, tactic) + cornerShotQuality(f)) / 11;
+        Double base = (9 * shotQuality(f, tactic) + cornerShotQuality(f)) / 10;
 
         return a/avg * base;
+    }
+
+    public Double gkBonus(Formation f, Tactic t) {
+        Double a = scoring(f, t);
+        Double d = defending(f, t);
+
+        Double avg = (a + d) / 2;
+
+        return avg/d * gkQuality(f);
     }
 
     public Double shotQuality(Formation f, Tactic t) {
@@ -172,6 +181,12 @@ public final class DefaultScorer implements FormationScorer {
         w.format("%10s ", "GK Qual");
         for (Tactic t : tactics) {
             w.format("%7d ", Maths.round(gkQuality(f)));
+        }
+        w.println();
+
+        w.format("%10s ", "GK Bonus");
+        for (Tactic t : tactics) {
+            w.format("%7d ", Maths.round(gkBonus(f, t)));
         }
         w.println();
 

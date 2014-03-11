@@ -1,6 +1,8 @@
 package com.ljs.ifootballmanager.ai;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -28,6 +30,7 @@ import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
+import com.ljs.ifootballmanager.ai.value.AcquisitionValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import java.io.File;
@@ -113,6 +116,8 @@ public class Main {
             remaining.removeAll(secondXI.players());
         }
 
+        remaining.removeAll(atPotentialXI.players());
+
         Set<Player> reservesSquad = Sets.newHashSet();
         Formation reservesXI = null;
         if (league.getReserveTeam().isPresent()) {
@@ -139,7 +144,7 @@ public class Main {
         Set<Player> trainingSquadCandidates = Sets.newHashSet(remaining);
 
         while ((reservesSquad.size() < 21 || firstSquad.size() < 21) && !trainingSquadCandidates.isEmpty()) {
-            Player toAdd = Player.byValue(league).max(trainingSquadCandidates);
+            Player toAdd = Player.byValue(AcquisitionValue.create(league)).max(trainingSquadCandidates);
             trainingSquadCandidates.remove(toAdd);
 
             if (toAdd.isReserves() && reservesSquad.size() < 21) {
@@ -152,10 +157,21 @@ public class Main {
             }
         }
 
-        print(w, String.format("First Squad (%d)", firstSquad.size()), SquadReport.create(league, firstXI.getTactic(), firstSquad).sortByValue());
+        print(w, "First XI", SquadReport.create(league, firstXI.getTactic(), firstXI.players()).sortByValue());
+
+        print(
+            w,
+            String.format("First Squad (%d)", firstSquad.size()),
+            SquadReport
+                .create(
+                    league,
+                    firstXI.getTactic(),
+                    FluentIterable
+                        .from(firstSquad)
+                        .filter(Predicates.not(Predicates.in(firstXI.players()))))
+                .sortByValue());
 
         if (!reservesSquad.isEmpty()) {
-            w.format("(%d)%n", reservesSquad.size());
             print(w, String.format("Reserves Squad (%d)", reservesSquad.size()), SquadReport.create(league, reservesXI.getTactic(), reservesSquad).sortByValue());
         }
 
