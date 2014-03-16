@@ -1,10 +1,14 @@
 package com.ljs.ifootballmanager.ai.formation;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ai.search.hillclimbing.HillClimbing;
@@ -23,6 +27,7 @@ import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -238,18 +243,54 @@ public final class Formation implements Report {
         return create(validator, DefaultScorer.get(), tactic, players);
     }
 
-    public static Formation select(League league, Iterable<Player> available, FormationScorer scorer) {
+    public static ImmutableList<Formation> select(League league, Iterable<Player> available, FormationScorer scorer) {
         return select(league, SelectionCriteria.create(league, available), scorer);
     }
 
-    public static Formation select(League league, SelectionCriteria criteria, FormationScorer scorer) {
+    public static Formation select(League league, Tactic tactic, Iterable<Player> available, FormationScorer scorer) {
+        return select(league, tactic, SelectionCriteria.create(league, available), scorer);
+    }
+
+    public static ImmutableList<Formation> select(League league, SelectionCriteria criteria, FormationScorer scorer) {
         Set<Formation> formations = Sets.newHashSet();
         for (Tactic t : Tactic.values()) {
             formations.add(select(league, t, criteria, scorer));
         }
 
-        return byScore().max(formations);
+        final Double max = byScore(scorer).max(formations).score();
 
+        return byScore(scorer)
+            .reverse()
+            .immutableSortedCopy(
+                FluentIterable
+                    .from(formations)
+                    .filter(new Predicate<Formation>() {
+                        public boolean apply(Formation f) {
+                            return f.score() > max * 0.95;
+                        }
+                    })
+                );
+    }
+
+    public static Formation selectOne(League league, SelectionCriteria criteria, FormationScorer scorer) {
+        ImmutableList<Formation> candidates = select(league, criteria, scorer);
+
+        Double base = byScore(scorer).min(candidates).score() - 1;
+
+        Multiset<Formation> weighted = HashMultiset.create();
+        for (Formation f : candidates) {
+            int weighting = (int) Math.round(f.score() - base);
+            weighted.add(f, weighting);
+            System.out.print(f.getTactic().getCode() + ":" + weighting + " ");
+        }
+
+        List<Formation> weightedList = Lists.newArrayList(weighted);
+
+        Collections.shuffle(weightedList);
+
+        System.out.println("(" + weightedList.size() + ") -> " + weightedList.get(0).getTactic());
+
+        return weightedList.get(0);
     }
 
     private static Formation select(League league, Tactic tactic, SelectionCriteria criteria, FormationScorer scorer) {
@@ -262,7 +303,7 @@ public final class Formation implements Report {
                     return f.isValid();
                 }
             })
-            .heuristic(byScore().compound(byAbilitySum()))
+            .heuristic(byScore(scorer).compound(byAbilitySum()))
             .actionGenerator(Actions.create(criteria));
 
         return new RepeatedHillClimbing<Formation>(
@@ -271,12 +312,12 @@ public final class Formation implements Report {
             .search();
     }
 
-    private static Ordering<Formation> byScore() {
+    private static Ordering<Formation> byScore(final FormationScorer scorer) {
         return Ordering
             .natural()
             .onResultOf(new Function<Formation, Double>() {
                 public Double apply(Formation f) {
-                    return f.score();
+                    return scorer.score(f, f.getTactic());
                 }
             });
     }

@@ -14,15 +14,12 @@ public class YouthTeamScorer implements FormationScorer {
 
     private final FormationScorer now;
 
-    private final FormationScorer future;
-
-    private YouthTeamScorer(FormationScorer now, FormationScorer future) {
+    private YouthTeamScorer(FormationScorer now) {
         this.now = now;
-        this.future = future;
     }
 
     public Double score(Formation f, Tactic t) {
-        return 2 * now.score(f, t) + future.score(f, t);
+        return now.score(f, t);
     }
 
     public Double scoring(Formation f, Tactic t) {
@@ -41,8 +38,7 @@ public class YouthTeamScorer implements FormationScorer {
         return new YouthTeamScorer(
             league.getYouthSkillsCap().isPresent()
                 ? CappedScorer.create(squad, league.getYouthSkillsCap().get())
-                : DefaultScorer.get(),
-            AtPotentialScorer.create(league.getPlayerPotential()));
+                : DefaultScorer.get());
     }
 
 }

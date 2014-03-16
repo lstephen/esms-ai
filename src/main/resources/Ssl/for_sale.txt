@@ -46,3 +46,7 @@ D_Ashton      17 eng  1  5  2 15 13 300 351 575 171 # $3.5m
 S_Iversen     16 den  1  8  2 14 30 300 384 704 550 # $4m
 
 U_Ogozalek    20 rus  2  9 20  9 26 300 377 543 305
+
+K_Prescott    25 usa  5 21 18 12 27 300 400 400 400 # 9th Auction
+
+C_Guilbeau    21 fra  1 10 12 19 19 300 664 786 156 # > $14m

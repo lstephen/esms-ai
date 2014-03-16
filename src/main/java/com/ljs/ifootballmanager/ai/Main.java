@@ -3,6 +3,7 @@ package com.ljs.ifootballmanager.ai;
 import com.google.common.base.Charsets;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -12,6 +13,7 @@ import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
@@ -95,23 +97,35 @@ public class Main {
 
         Squad squad = Squad.load(league);
 
-        Formation firstXI = Formation.select(league, squad.players(), DefaultScorer.get());
+        ImmutableList<Formation> firstXICandidates = Formation.select(league, squad.players(), DefaultScorer.get());
+
+        Set<Player> allFirstXI = Sets.newHashSet();
+        for (Formation f : firstXICandidates) {
+            allFirstXI.addAll(f.players());
+        }
+
+        Formation firstXI = firstXICandidates.get(0);
 
         ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
 
         print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()).sortByValue());
-        print(w, "1st XI", firstXI);
+        Integer count = 1;
+        Integer total = firstXICandidates.size();
+        for (Formation f : firstXICandidates) {
+            print(w, String.format("1st XI (%d/%d)", count++, total), f);
+        }
 
         Set<Player> remaining = Sets.newHashSet(
             Sets.difference(
                 ImmutableSet.copyOf(squad.players()),
                 ImmutableSet.copyOf(firstXI.players())));
 
-        Formation atPotentialXI = Formation.select(league, remaining, AtPotentialScorer.create(league.getPlayerPotential()));
+        Iterable<Player> atPotentialCandidates = FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
+        Formation atPotentialXI = Formation.select(league, atPotentialCandidates, AtPotentialScorer.create(league.getPlayerPotential())).get(0);
 
         Formation secondXI = null;
         if (remaining.size() >= 11) {
-            secondXI = Formation.select(league, remaining, SecondXIScorer.create(league));
+            secondXI = Formation.select(league, firstXI.getTactic(), remaining, SecondXIScorer.create(league));
             print(w, "2nd XI", secondXI);
             remaining.removeAll(secondXI.players());
         }
@@ -122,24 +136,33 @@ public class Main {
         Formation reservesXI = null;
         if (league.getReserveTeam().isPresent()) {
             Set<Player> reservePlayers = Sets.newHashSet(squad.reserves());
-            reservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad));
+            reservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad)).get(0);
             print(w, "Reserves XI", reservesXI);
             reservesSquad.addAll(reservesXI.players());
         }
 
         print(w, "At Potential XI", atPotentialXI);
 
+
+        Set<Player> desiredSquad = Sets.newHashSet();
+        desiredSquad.addAll(allFirstXI);
+        desiredSquad.addAll(atPotentialXI.players());
+        if (secondXI != null) {
+            desiredSquad.addAll(secondXI.players());
+        }
+
         Set<Player> firstSquad = Sets.newHashSet();
 
-        remaining.removeAll(reservesSquad);
-
-        for (Player p : Iterables.concat(firstXI.players(), atPotentialXI.players(), secondXI != null ? secondXI.players() : ImmutableSet.<Player>of())) {
+        for (Player p : Iterables.concat(desiredSquad)) {
             if (p.isReserves()) {
                 reservesSquad.add(p);
             } else {
                 firstSquad.add(p);
             }
         }
+
+        remaining.removeAll(firstSquad);
+        remaining.removeAll(reservesSquad);
 
         Set<Player> trainingSquadCandidates = Sets.newHashSet(remaining);
 
@@ -157,7 +180,7 @@ public class Main {
             }
         }
 
-        print(w, "First XI", SquadReport.create(league, firstXI.getTactic(), firstXI.players()).sortByValue());
+        print(w, "First XI", SquadReport.create(league, firstXI.getTactic(), allFirstXI).sortByValue());
 
         print(
             w,
@@ -168,7 +191,7 @@ public class Main {
                     firstXI.getTactic(),
                     FluentIterable
                         .from(firstSquad)
-                        .filter(Predicates.not(Predicates.in(firstXI.players()))))
+                        .filter(Predicates.not(Predicates.in(allFirstXI))))
                 .sortByValue());
 
         if (!reservesSquad.isEmpty()) {
@@ -176,7 +199,7 @@ public class Main {
         }
 
         Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
-        trainingSquad.removeAll(firstXI.players());
+        trainingSquad.removeAll(allFirstXI);
         if (secondXI != null) {
             trainingSquad.removeAll(secondXI.players());
         }
@@ -189,18 +212,6 @@ public class Main {
         print(w, "Training Squad", SquadReport.create(league, firstXI.getTactic(), trainingSquad).sortByValue());
 
         print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
-
-        File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");
-        CharSink sheet = Files.asCharSink(sheetFile, Charsets.ISO_8859_1);
-        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet, DefaultScorer.get());
-        Files.copy(sheetFile, new File("c:/esms/shts", sheetFile.getName()));
-
-        if (league.getReserveTeam().isPresent()) {
-            File rsheetFile = new File("c:/esms", league.getReserveTeam().get() + "sht.txt");
-            CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.ISO_8859_1);
-            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(), rsheet, YouthTeamScorer.create(league, squad));
-            Files.copy(rsheetFile, new File("c:/esms/shts", rsheetFile.getName()));
-        }
 
         print(
             w,
@@ -220,6 +231,18 @@ public class Main {
 
             print(w, f, SquadReport.create(league, firstXI.getTactic(), additional.players()).sortByValue());
         }
+
+        File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");
+        CharSink sheet = Files.asCharSink(sheetFile, Charsets.ISO_8859_1);
+        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet, DefaultScorer.get());
+        Files.copy(sheetFile, new File("c:/esms/shts", sheetFile.getName()));
+
+        if (league.getReserveTeam().isPresent()) {
+            File rsheetFile = new File("c:/esms", league.getReserveTeam().get() + "sht.txt");
+            CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.ISO_8859_1);
+            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(), rsheet, YouthTeamScorer.create(league, squad));
+            Files.copy(rsheetFile, new File("c:/esms/shts", rsheetFile.getName()));
+        }
     }
 
     private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, CharSink sheet, FormationScorer scorer) throws IOException {
@@ -231,7 +254,7 @@ public class Main {
             }
         }
 
-        Formation formation = Formation.select(league, available, scorer);
+        Formation formation = Formation.selectOne(league, SelectionCriteria.create(league, available), scorer);
 
         ChangePlan cp =
             ChangePlan.select(league, formation, available);

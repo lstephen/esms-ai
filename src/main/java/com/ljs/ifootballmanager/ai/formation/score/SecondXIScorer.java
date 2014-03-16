@@ -21,7 +21,7 @@ public class SecondXIScorer implements FormationScorer {
     }
 
     public Double score(Formation f, Tactic t) {
-        return now.score(f, t) + future.score(f, t);
+        return (now.score(f, t) + future.score(f, t)) / 2.0;
     }
 
     public Double scoring(Formation f, Tactic t) {
