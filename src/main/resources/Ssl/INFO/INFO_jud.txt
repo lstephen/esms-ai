@@ -1,0 +1,26 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+R_Dasayev        24  GK 23  1  1  1 $36,000  OK   13.75M  N/A
+Z_Oki            27  GK 19  1  1  1 $24,000  OK   2.1M    N/A
+Milk_Beast       29  GK 18  1  1  1 $21,000  OK   800K    N/A
+L_Lawton         27  DF  7 25 11  6 $52,920  OK   15.5M   N/A
+L_Sparks         31  DF  2 23 15  6 $49,303  OK   3.4M    N/A
+M_Franzke        25  DF  2 22 16 15 $50,550  OK   19.25M  N/A
+I_Ford           24  DF  7 22 17 14 $50,850  OK   22M     N/A
+U_Giannino       32  DF  6 20  1  1 $27,000  OK   700K    N/A
+I_Fingle         22  DF  5 20 11  8 $36,585  OK   16.25M  N/A
+Kragwulf         22  DF  1 20  5  4 $30,914  OK   13.5M   N/A
+A_Ameirin        24  DF  9 19  6  4 $28,293  OK   4.7M    N/A
+Sturmanator      24  DF  1 18  4  6 $24,965  OK   3.3M    N/A
+S_Paule          29  MF  1 16 23 16 $54,782  OK   9.2M    N/A
+E_Mcgarvey       32  MF  1 13 22 14 $48,149  OK   2.2M    N/A
+R_Eulitz         24  MF  1  3 22 14 $43,650  OK   19M     N/A
+E_Goeden         26  MF  1  3 20 14 $36,585  OK   9.7M    N/A
+R_Lott           24  MF  1 13 19  7 $33,851  OK   5.6M    N/A
+Rabidoggovic     23  MF  1  4 19 13 $32,714  OK   6.1M    N/A
+P_Corriea        25  MF  1  5 18 17 $31,733  OK   3.7M    N/A
+Ptriffic         22  MF  1  2 16  2 $5,249   OK   1M      N/A
+Y_Ivero          26  FW  1  4 15 22 $44,849  OK   14.5M   N/A
+T_Huseinovic     32  FW  1  4 11 20 $34,964  OK   900K    N/A
+E_Juarez         24  FW  1  7 14 20 $38,204  OK   13.5M   N/A
+P_Bas            30  FW  1  8 15 19 $35,494  OK   1.4M    N/A

@@ -1,0 +1,22 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+H_Muir           24  GK 23  1  1  1 $36,000  OK   13.75M  N/A
+M_Antolovic      25  GK 18  1  1  1 $21,000  OK   2M      N/A
+C_Krueger        22  GK 16  1  1  1 $5,000   OK   800K    N/A
+F_Paxton         27  DF  8 22  6  3 $37,650  OK   10.25M  N/A
+Y_Guilbeau       26  DF  8 21 18  4 $43,427  OK   13M     N/A
+L_Wojtecki       23  DF  4 21  7  6 $36,427  OK   16.25M  N/A
+H_Lavrinenko     26  DF  8 21 15 10 $43,857  OK   13M     N/A
+J_Backus         22  DF  1 20 16 15 $42,795  OK   19M     N/A
+B_Sticken        24  DF  1 18  3  3 $22,866  OK   3M      N/A
+F_Caldararo      23  DF  1 17  7  3 $12,116  OK   2.1M    N/A
+E_Sindhom        25  MF  5 16 22 16 $51,000  OK   19.25M  N/A
+W_Camona         23  MF  6 14 21 16 $46,285  OK   20.75M  N/A
+E_Sinicropi      26  MF  9 16 21 12 $45,428  OK   13.5M   N/A
+B_Gallup         22  MF  3  9 21 12 $41,285  OK   20.5M   N/A
+P_Noller         23  MF  2  9 21 15 $43,428  OK   19.5M   N/A
+C_Lopez          28  MF  4  8 19  2 $28,799  OK   2.3M    N/A
+S_Grolemund      25  MF  1  4 17  3 $11,234  OK   1.5M    N/A
+G_Salzer         32  FW  4 12 18 27 $64,666  OK   4.3M    N/A
+G_Rodrigues      25  FW  5  7 14 22 $45,449  OK   17.25M  N/A
+G_Dodd           21  FW  1 15 15 19 $38,147  OK   13M     N/A

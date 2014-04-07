@@ -1,0 +1,21 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+N_Gibble         20  GK 16  1  1  1 $5,000   OK   2.1M    N/A
+B_Pilley         16  GK 13  1  1  1 $1,500   OK   2.1M    N/A
+W_Larwa          20  DF  1 21  4  5 $34,142  OK   25.5M   N/A
+J_Fairto         19  DF  2 19 14  5 $33,725  OK   18.25M  N/A
+V_Thibideau      20  DF  1 18  4  3 $23,450  INJ  6.7M    N/A
+X_Reesh          21  DF  1 17  3  2 $10,764  OK   2.8M    N/A
+R_McTrusty       17  DF  1 17  3  1 $10,588  OK   15.75M  N/A
+O_Redmyer        21  MF  1  5 21  4 $34,142  OK   19M     N/A
+G_Ribble         19  MF  1  4 19  2 $26,272  OK   14.25M  N/A
+J_Lames          20  MF  1 10 17  5 $13,352  OK   4.6M    N/A
+F_Rightenour     17  MF  1  8 16 11 $7,218   OK   12.75M  N/A
+J_Skube          18  MF  1  3 15  7 $3,100   OK   5.5M    N/A
+S_Dillport       18  MF  1  3 15  3 $2,766   OK   4.9M    N/A
+S_Axtman         21  FW  1  8  5 18 $26,483  OK   5.6M    N/A
+C_Hendersonn     17  FW  3  5  6 17 $12,175  OK   18.25M  N/A
+J_Deprow         20  FW  1  7  4 16 $6,218   OK   3.1M    N/A
+V_Wallace        16  FW  3  5  5 16 $6,000   OK   14.25M  N/A
+Y_Pingree        18  FW  1  2  2 15 $2,633   OK   4.7M    N/A
+T_Orellana       17  FW  1  7  2 14 $2,470   OK   5.5M    N/A

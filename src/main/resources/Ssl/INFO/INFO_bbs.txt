@@ -1,0 +1,23 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+L_Alvarez        31  GK 29  1  1  1 $45,000  OK   5.7M    N/A
+K_Maisuradze     26  GK 26  1  1  1 $45,000  OK   13.25M  N/A
+T_Vaclik         32  GK 20  1  1  1 $27,000  OK   600K    N/A
+Y_Farlane        28  DF  4 28 23  8 $66,053  OK   17.5M   N/A
+R_Niebuhr        32  DF  1 26 21 15 $69,576  OK   3.4M    N/A
+F_Larouso        28  DF  2 25 21  8 $62,328  OK   14.5M   N/A
+O_Tal            29  DF  9 24 16 10 $55,574  OK   9.6M    N/A
+L_Probst         32  DF  1 24 16  7 $54,112  OK   2.5M    N/A
+B_Corgan         24  DF  9 23 16 15 $54,312  OK   24.25M  N/A
+D_Colvardic      19  DF  8 20  8  2 $32,130  OK   17.75M  N/A
+I_Pinwell        28  DF  1 18  3  7 $25,200  OK   1.6M    N/A
+B_Redman         30  MF  1 18 31 19 $65,467  OK   16M     N/A
+D_Stordeur       33  MF  1 15 27 17 $65,333  INJ  2.1M    N/A
+S_Terpis         25  MF  1  5 27 18 $61,166  OK   26.5M   N/A
+W_Belcher        25  MF  2  6 25 17 $57,960  OK   23.75M  N/A
+I_Morani         24  MF  6 15 23 15 $53,529  OK   24M     N/A
+Y_Heathcoat      30  MF  1  4 18  6 $24,965  OK   800K    N/A
+R_Brod           30  FW  1 18 19 28 $67,660  OK   11.25M  N/A
+K_Souders        27  FW  6 16 14 26 $64,730  OK   18.5M   N/A
+P_Hatteras       25  FW  5 10 13 24 $53,137  OK   21.25M  N/A
+Ibo_Neminisma    23  FW  1  3 12 17 $13,587  OK   2.4M    N/A

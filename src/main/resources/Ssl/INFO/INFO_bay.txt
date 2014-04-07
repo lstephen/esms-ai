@@ -1,0 +1,24 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Dai_Davies       20  GK 23  1  1  1 $36,000  OK   25.5M   N/A
+Tico_Squirrel    18  GK 18  1  1  1 $21,000  OK   12.75M  N/A
+Herbie           16  GK 14  1  1  1 $2,000   OK   5.1M    N/A
+AJ_Kokic         17  DF  7 19  9  7 $31,325  OK   51.25M  N/A
+E_Retchford      20  DF  1 18  3  4 $23,450  OK   6.7M    N/A
+F_Starr          18  DF  2 18 13 10 $31,149  OK   22M     N/A
+AJ_Avasuko       17  DF  9 18 15  4 $30,215  OK   32.25M  N/A
+C_Mosko          18  DF  4 17 15  6 $14,999  OK   14.75M  N/A
+P_McNimble       17  DF  1 15  3  6 $3,016   OK   8.1M    N/A
+Jester           17  DF  1 15  4  2 $2,800   OK   7.5M    N/A
+Piki_Zenoze      17  DF  1 14 10  3 $2,727   OK   6.1M    N/A
+Juan_Verzeri     21  MF  3 15 22 17 $51,300  OK   30.5M   N/A
+A_Vasofiakov     19  MF  1  2 20 12 $34,830  OK   19.25M  N/A
+U_Kenedy         21  MF  1  5 20 14 $37,395  OK   19.25M  N/A
+AJ_Omam_Biyik    18  MF  4  6 18 16 $31,500  OK   22.5M   N/A
+M_Schuey         17  MF  1  1 15  7 $3,000   OK   8.1M    N/A
+Owen_Evans       17  MF  1 10 14  1 $2,642   OK   5.9M    N/A
+Troy             16  MF  1  1 13  2 $1,557   OK   2.5M    N/A
+D_Marquez        19  FW  1  2 11 19 $30,693  OK   16.75M  N/A
+AJ_Gillespie     17  FW  2  5 15 17 $14,822  OK   22M     N/A
+B_Kadrii         19  FW  1  3 10 16 $6,593   OK   3.9M    N/A
+Kenny            18  FW  1  9  2 16 $6,343   OK   7.6M    N/A

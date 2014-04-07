@@ -1,0 +1,27 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+B_Gibson         19  GK 21  1  1  1 $30,000  OK   13.75M  N/A
+P_Medici         17  GK 15  1  1  1 $2,500   OK   5.7M    N/A
+K_Bodell         17  GK 14  1  1  1 $2,000   OK   3.8M    N/A
+T_Bester         20  DF  1 19  3  4 $26,651  OK   12M     N/A
+G_C_Moore        19  DF  3 19 15 13 $37,389  OK   20.25M  N/A
+R_Thead          20  DF  1 18  6  5 $25,316  OK   7.2M    N/A
+P_Kibodeaux      20  DF  1 17  3  4 $11,234  OK   3.9M    N/A
+R_Axson          21  DF  1 16  3  9 $6,437   OK   2.4M    N/A
+X_Hempstead      19  DF  1 16  5  2 $5,718   OK   3.4M    N/A
+P_Sincoskie      17  DF  1 15  3  4 $2,850   OK   7.6M    N/A
+M_Whiffen        18  DF  1 14  2  3 $2,184   OK   3.2M    N/A
+J_Flehmig        17  DF  1 14  9  5 $2,742   OK   6.1M    N/A
+P_Weichbrodt     21  MF  1 11 19  3 $31,072  OK   10.5M   N/A
+F_Kubecheck      21  MF  1  4 18 12 $28,465  OK   6M      N/A
+P_Gawthrop       21  MF  1  4 18 10 $27,299  OK   5.8M    N/A
+P_Yesersky       18  MF  1  1 17  7 $11,764  OK   11.75M  N/A
+I_Godard         17  MF  1  2 15  2 $2,633   OK   7.1M    N/A
+L_Roark          17  MF  1  1 15  6 $2,916   OK   7.8M    N/A
+T_Roady          17  MF  1  2 14  1 $2,071   OK   4.6M    N/A
+P_Annis          17  MF  1  1 14  8 $2,500   OK   5.6M    N/A
+Q_Delmore        19  FW  1  5 10 19 $31,199  OK   17M     N/A
+N_Morton         20  FW  1  3  5 18 $24,033  OK   6.8M    N/A
+K_Ellingson      19  FW  1  2 11 16 $6,655   OK   3.9M    N/A
+R_Jeffrey        19  FW  1  2  4 16 $5,561   OK   3.3M    N/A
+X_Cichon         19  FW  1 10  3 16 $6,593   OK   3.9M    N/A

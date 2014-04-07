@@ -1,0 +1,23 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+C_Piehl          27  GK 24  1  1  1 $39,000  OK   9.5M    N/A
+F_Ankiewicz      26  GK 20  1  1  1 $27,000  OK   6.1M    N/A
+C_Caisey         23  GK 16  1  1  1 $5,000   OK   700K    N/A
+M_Alaa_El_Din    30  DF  5 25 15  2 $54,264  OK   4.9M    N/A
+S_Reed           33  DF  3 25  8  4 $49,391  OK   1.1M    N/A
+I_Hen_Lee        27  DF  2 24 17 12 $57,362  INJ  16.5M   N/A
+A_Ghandour       32  DF  9 24 10  1 $46,312  OK   2.1M    N/A
+R_Ramzy          30  DF  6 22  7  4 $38,849  OK   3.6M    N/A
+C_Hetland        28  DF  5 22 15  2 $43,950  OK   9.5M    N/A
+W_Silva          27  DF  8 21 12  3 $38,714  OK   9.6M    N/A
+M_Pritchett      29  MF  1  6 24  5 $45,012  OK   7.7M    N/A
+U_Labit          33  MF  1 12 23 13 $50,556  OK   1.1M    N/A
+D_Renn           32  MF  1  1 23  1 $36,000  OK   1.6M    N/A
+F_Masalin        26  MF  7  9 23  7 $45,077  OK   15M     N/A
+V_Roche          30  MF  1  6 22 15 $45,750  OK   4.2M    N/A
+H_Gobel          26  MF  3  4 22  7 $38,849  OK   12.5M   N/A
+U_Keough         31  MF  1  2 21 11 $37,570  OK   2.1M    N/A
+D_Ogunjobi       26  MF  4 13 21 15 $45,142  OK   13.5M   N/A
+G_Lonsdale       28  FW  1  7 14 25 $55,943  OK   13M     N/A
+D_Kolsch         31  FW  1  1 10 23 $43,043  OK   3M      N/A
+X_Burgan         22  FW  1  8  4 18 $26,132  OK   4.3M    N/A

@@ -1,0 +1,24 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+S_Knesl          18  GK 18  1  1  1 $21,000  OK   12.75M  N/A
+S_Miley          19  GK 17  1  1  1 $10,000  OK   4.2M    N/A
+G_McPhie         18  GK 16  1  1  1 $5,000   OK   5.1M    N/A
+U_Poulsen        21  DF  1 19  7  3 $28,546  OK   9.8M    N/A
+A_Algea          21  DF  1 19  2  8 $28,799  OK   9.8M    N/A
+E_Farver         19  DF  1 19  3  6 $27,914  OK   15.25M  N/A
+L_Smithwick      18  DF  1 17  4  3 $11,234  OK   11M     N/A
+K_Tiffie         19  DF  1 16  3  6 $5,968   OK   3.5M    N/A
+M_Larsen         18  DF  1 16  4  3 $5,655   OK   6.7M    N/A
+H_Dinesen        17  DF  1 15  2  8 $3,133   OK   8.4M    N/A
+Amr_Al_Sulaya    21  MF  1  7 20  3 $31,860  OK   16.5M   N/A
+J_Sexton         20  MF  1 16 19  5 $34,988  OK   16M     N/A
+J_Jacobsen       21  MF  1  4 18  3 $23,450  OK   5M      N/A
+I_Kerk           20  MF  1  4 18  5 $24,382  OK   6.9M    N/A
+Ji_Parana        19  MF  1  5 17  6 $12,175  OK   6M      N/A
+R_Herrimen       18  MF  1  1 17  3 $10,588  OK   10.5M   N/A
+K_Berg           18  MF  1  2 17  4 $11,058  OK   11M     N/A
+D_Wise           18  MF  1  2 16  7 $6,030   OK   7.2M    N/A
+T_Leatt          20  FW  1  6  2 18 $24,266  OK   6.9M    N/A
+J_Molby          17  FW  1 15  6 18 $30,916  OK   33M     N/A
+I_Colinger       17  FW  1  2  2 16 $5,249   OK   9.4M    N/A
+Q_Colombara      17  FW  1  5  2 15 $2,883   OK   7.7M    N/A

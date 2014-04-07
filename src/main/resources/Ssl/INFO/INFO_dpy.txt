@@ -1,0 +1,25 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Lev_Yashin       19  GK 22  1  1  1 $33,000  OK   14.75M  N/A
+Van_Breukelen    17  GK 16  1  1  1 $5,000   OK   7.6M    N/A
+A_Linde          17  GK 15  1  1  1 $2,500   OK   5.7M    N/A
+N_Hashberger     21  DF  1 19  3  4 $26,651  OK   9.1M    N/A
+Gotoku_Sakai     18  DF  8 19 14  4 $33,346  OK   36.25M  N/A
+U_Wyley          21  DF  1 18  4  3 $23,450  INJ  5M      N/A
+D_Turpin         19  DF  1 17  2  6 $11,646  OK   5.8M    N/A
+M_F_Fraser       19  DF  1 17  3  9 $12,704  OK   6.3M    N/A
+Wim_Suurbier     17  DF  1 14  4  2 $2,256   OK   5M      N/A
+P_Silverholt     16  DF  1 14  2  1 $2,071   OK   6.2M    N/A
+A_Kallstrom      19  MF  1 11 20 12 $38,475  OK   21.25M  N/A
+F_Omam_Biyik     19  MF  1 16 20 17 $43,875  OK   24.25M  N/A
+Zico             17  MF  1 10 18 15 $32,315  OK   34.5M   N/A
+G_Seawright      21  MF  1  7 17  8 $13,116  OK   3.4M    N/A
+Ozzy_Canberra    17  MF  1  4 16  1 $5,468   OK   9.8M    N/A
+H_Bodmer         16  MF  1  7 14  9 $2,828   OK   8.4M    N/A
+S_Kuler          19  FW  1  7 13 20 $37,529  OK   20.75M  N/A
+E_Nwachi_Jr      18  FW  2  5 14 20 $37,395  OK   41.5M   N/A
+Q_Dengg          20  FW  1  3  5 17 $11,528  OK   4M      N/A
+O_Schultheib     21  FW  1  5  4 17 $11,705  OK   3M      N/A
+Edgar            17  FW  1  3  4 15 $2,850   OK   7.6M    N/A
+J_Vestergaard    16  FW  1  2  1 14 $2,071   OK   6.2M    N/A
+K_Larsen         17  FW  1  2  2 14 $2,113   OK   4.7M    N/A

@@ -1,0 +1,20 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Y_Garvey         32  GK 29  2  1  1 $45,000  OK   3.8M    N/A
+N_Hajna          21  GK 22  1  1  1 $33,000  OK   16.5M   N/A
+L_Hollamby       25  GK 16  1  1  1 $5,000   OK   550K    N/A
+U_Munros         27  DF  1 27  6  5 $51,166  OK   15.75M  N/A
+D_Vavrus         30  DF  3 26 13  9 $59,537  OK   5.9M    N/A
+H_Georges        21  DF  1 25 12 12 $56,784  OK   38M     N/A
+L_Avalos         23  DF  1 23 17  3 $49,460  INJ  25M     N/A
+L_Eloundou       21  DF  9 22  7  7 $40,199  OK   23.75M  N/A
+U_Woldseth       24  DF  1 17  4  6 $11,999  OK   1.9M    N/A
+P_Harrington     26  MF  1  4 26 11 $55,210  OK   19M     N/A
+B_Hannay         24  MF  1  5 25  5 $47,376  OK   22.25M  N/A
+L_Musee          22  MF  3 15 23 14 $53,060  OK   29.75M  N/A
+W_Cusack         20  MF  5 16 23 15 $54,312  OK   45.25M  N/A
+U_Poer           22  MF  1  2 22 15 $43,950  OK   23.75M  N/A
+M_Busse          22  MF  1  6 17  8 $12,940  OK   2.5M    N/A
+M_Massey         29  MF  1  4 13  4 $1,776   OK   0K      N/A
+L_Breen          23  FW  1  1  9 24 $45,500  OK   23.5M   N/A
+K_Vassileios     23  FW  1  4 13 24 $50,212  INJ  26M     N/A

@@ -1,0 +1,23 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+R_Brannan        25  GK 25  1  1  1 $42,000  OK   14.5M   N/A
+O_Heiden         30  GK 25  1  1  1 $42,000  OK   3.2M    N/A
+D_Candela        22  GK 20  1  1  1 $27,000  OK   10M     N/A
+J_Maddas         22  GK 16  1  1  1 $5,000   OK   800K    N/A
+V_Hemingsley     28  DF  1 25 19 14 $63,672  OK   15M     N/A
+I_Schimmel       32  DF  4 25 13  5 $54,096  OK   2.4M    N/A
+G_Denton         29  DF  3 25 18 10 $60,815  OK   10.75M  N/A
+R_Roohoo         26  DF  7 24 15  5 $52,325  OK   18M     N/A
+C_Burmann        26  DF  7 24 19 13 $59,475  OK   20.5M   N/A
+I_Fullington     22  DF  1 18  7  4 $25,549  OK   4.2M    N/A
+C_Bochum         27  DF  1 18  6  3 $24,616  OK   2M      N/A
+N_Dygert         24  DF  1 17  8  6 $12,940  OK   2M      N/A
+M_Westbay        29  MF  1  8 26 11 $57,287  OK   9.9M    N/A
+W_Jewell         28  MF  1  8 26  8 $54,691  OK   12.5M   N/A
+V_Eldridge       27  MF  1  3 25 17 $56,448  OK   16.5M   N/A
+J_Parlantini     28  MF  5 16 24 15 $58,012  OK   13.25M  N/A
+R_Bekahvic       25  MF  1  2 21 15 $40,428  OK   14M     N/A
+N_Lustermann     23  MF  1 11 17  3 $13,293  OK   2.3M    N/A
+C_Bussard        28  FW  1  1  6 25 $46,200  OK   10.75M  N/A
+N_Liden          27  FW  7  8 16 23 $51,025  OK   14.25M  N/A
+E_McDuffie       20  FW  2  6 16 21 $42,856  OK   32M     N/A

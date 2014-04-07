@@ -1,0 +1,25 @@
+Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
+---------------------------------------------------------------------
+Y_Dickerson      29  GK 22  1  1  1 $33,000  OK   4.5M    N/A
+S_Stolle         25  GK 18  1  1  1 $21,000  OK   2M      N/A
+Y_Rumsam         23  GK 16  1  1  1 $5,000   OK   700K    N/A
+K_Spicer         25  DF  2 22 15 10 $47,549  OK   18M     N/A
+P_Coffeen        27  DF  1 21  4  8 $36,285  OK   9M      N/A
+L_Hottinger      24  DF  1 20  4  4 $30,239  OK   10.75M  N/A
+L_Zerbel         25  DF  4 20 17 16 $43,875  OK   13.5M   N/A
+J_Coelho         24  DF  1 19  5  5 $28,041  OK   4.6M    N/A
+L_Lim_Saeng      27  DF  1 19  8  3 $29,178  OK   3M      N/A
+J_D'Wan          23  DF  1 19  3  7 $28,546  OK   5.3M    N/A
+E_Fey            28  MF  1  6 24  2 $43,549  OK   10M     N/A
+D_Irizarry       26  MF  1 15 20  8 $39,285  OK   10.25M  N/A
+S_Simba          23  MF  1  8 19  7 $30,694  OK   5.7M    N/A
+Q_Oki            25  MF  1  3 19 16 $34,230  OK   4.9M    N/A
+J_Summer         22  MF  2  4 19  9 $30,188  OK   6.2M    N/A
+E_El-Hadary      25  MF  4  6 19  4 $28,293  OK   4.1M    N/A
+A_Stofle         24  MF  1  4 18  6 $24,965  OK   3.3M    N/A
+D_Bledsoe        23  MF  1 16 18 14 $34,300  OK   5.1M    N/A
+A_Panzer         34  FW  1  5  7 23 $42,573  OK   375K    N/A
+K_Trepanier      26  FW  3  4  8 23 $42,886  OK   14.25M  N/A
+E_Abdelghani     30  FW  1  2 10 23 $43,512  OK   4M      N/A
+I_Scorem         27  FW  2  3  5 20 $30,510  OK   6.7M    N/A
+D_Ellensohn      22  FW  1  2  5 17 $11,352  OK   2.2M    N/A
