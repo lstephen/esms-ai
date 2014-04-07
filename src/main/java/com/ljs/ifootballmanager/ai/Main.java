@@ -54,6 +54,7 @@ public class Main {
             .put("IFM - LIV", IFootballManager.create("liv"))
             .put("IFM - NOR", IFootballManager.create("nor"))
             .put("IFM - DER", IFootballManager.create("der"))
+            .put("IFM - Holland", IFootballManager.create("hol"))
             .put("JAFL - GLI", Jafl.get())
             .put("SSL - MIS", Ssl.get())
             .build();

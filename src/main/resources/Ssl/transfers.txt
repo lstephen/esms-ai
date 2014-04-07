@@ -1,4 +1,8 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-Mar 09  C_Frazaki     26  5 23 11  6 29 Player_Draw          Huracan_Rhythm       6,000k
-Mar 12  K_Prescott    25  5 21 18 12 27 Auction              Middletown_Steelers  13,100k
+Apr 02  R_Giggs       20  6 16 19 14 22 Auction              Holcombe_Hotshots    21,650k
+Apr 03  D_Bledsoe     23  1 16 18 14 29 Modular_United       Tangerine_Terrors    0
+Apr 03  Archimedes    22  1 19 16 13 40 Tangerine_Terrors    Modular_United       0
+Apr 05  S_Bullifant   23  1  5 19  9 25 Red_Star_Llama       Foreign_Team         6,100k
+Apr 05  L_Gabby       22  1 17  3  7 38 Burntwood_Rovers     Foreign_Team         2,900k
+Apr 05  C_Huenecke    22 16  1  1  1 37 Shurdington_AFC      Foreign_Team         900k

@@ -1,9 +1,10 @@
 Name            Age Pos St Tk Ps Sh Wage     Sta  Value   Information
 ---------------------------------------------------------------------
-W_L_Grobbelar    32  GK 28  2  2  2 $118,000 OK   31.25M  N/A
+W_L_Grobbelar    32  GK 27  2  2  2 $108,000 OK   24.75M  N/A
+A_Zubizarreta    27  GK 25  1  1  1 $88,000  OK   45.75M  N/A
 U_Sturdy         25  GK 23  1  1  1 $58,000  OK   34.5M   N/A
-V_Marvel         22  GK 22  1  1  1 $48,000  OK   27M     N/A
-D_Hertz          27  DF  2 26 11 18 $178,284 SUS  116.25M  N/A
+V_Marvel         22  GK 23  1  1  1 $58,000  OK   49.25M  N/A
+D_Hertz          27  DF  2 27 12 18 $195,600 OK   138.5M   N/A
 A_Fagina         24  DF  1 25 16 14 $162,976 OK   160M     N/A
 R_Zelaya         29  DF  2 23 13 10 $98,851  OK   29.5M   N/A
 S_Alan           26  DF  2 23 16 19 $121,547 OK   72.75M  N/A
@@ -13,12 +14,12 @@ U_Maugridge      23  DF  2 21  7 13 $64,056  OK   15M     N/A
 H_Fujishima      29  DF  2 20 17  4 $48,869  OK   700K    N/A
 Sousa            26  MF  2 17 25 12 $161,920 OK   119M     N/A
 Sammy_TheBull    25  MF  1 23 24  8 $156,000 OK   120.25M  N/A
-M_Gibson         22  MF  2  9 23 22 $117,764 OK   117.75M  N/A
-Patman           21  MF  1 12 22 18 $95,781  OK   89.75M  N/A
-Emmierto         27  MF  2 12 20 15 $52,920  OK   1.2M    N/A
-K_Venet          30  MF  2  4 20 18 $50,084  OK   0K      N/A
-G_Linacre        32  FW  1  8 11 25 $134,464 OK   25.75M  N/A
+M_Gibson         22  MF  2  9 24 22 $155,025 OK   170.75M  N/A
+Patman           21  MF  1 12 22 19 $97,745  OK   91.5M   N/A
+Emmierto         27  MF  2 12 20 16 $54,135  OK   1.3M    N/A
+B_Thackrah       22  MF  2 18 19 17 $43,900  OK   0K      N/A
 Starbucks        26  FW  2  8 14 24 $129,675 OK   85.75M  N/A
-E_Velazquez      22  FW  1  6  4 23 $73,886  OK   73.75M  N/A
+E_Velazquez      22  FW  1  6  4 24 $98,475  INJ  108.5M   N/A
+G_Linacre        32  FW  1  7 11 23 $89,773  INJ  8M      N/A
 Moshi            25  FW  2 14 11 21 $70,028  OK   12.75M  N/A
-K_Thwaits        30  FW  2  6 13 21 $62,970  OK   800K    N/A
+H_Heerdt         29  FW  2  9 17 20 $52,920  OK   700K    N/A

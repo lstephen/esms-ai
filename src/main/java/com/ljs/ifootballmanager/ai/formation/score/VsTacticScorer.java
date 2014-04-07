@@ -12,11 +12,13 @@ import java.io.PrintWriter;
  *
  * @author lstephen
  */
-public final class DefaultScorer implements FormationScorer {
+public final class VsTacticScorer implements FormationScorer {
 
-    private static final DefaultScorer INSTANCE = new DefaultScorer();
+    private final Tactic vs;
 
-    private DefaultScorer() { }
+    private VsTacticScorer(Tactic vs) {
+        this.vs = vs;
+    }
 
     public Double score(Formation f, Tactic tactic) {
 
@@ -73,7 +75,7 @@ public final class DefaultScorer implements FormationScorer {
             if (f.findRole(p) == Role.GK) {
                 continue;
             }
-            Double chance = p.getSkillRating(f.findRole(p), t, Rating.SHOOTING) / shooting;
+            Double chance = p.getSkillRating(f.findRole(p), t, Rating.SHOOTING, vs) / shooting;
 
             score += (chance * p.getSkill(Rating.SHOOTING));
         }
@@ -108,6 +110,12 @@ public final class DefaultScorer implements FormationScorer {
         return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING);
     }
 
+    private Double teamAggression(Formation f) {
+        Double sum = aggression(f) * 11;
+
+        return 0.75*sum + 0.25 * 10 * sum;
+    }
+
     private Double aggression(Formation f) {
         Double agg = 0.0;
 
@@ -118,10 +126,21 @@ public final class DefaultScorer implements FormationScorer {
         return agg / 11;
     }
 
-    private Double skillRating(Formation f, Tactic t, Rating r) {
+    public Double skillRating(Formation f, Tactic t, Rating r) {
         Double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
-            score += p.getSkillRating(f.findRole(p), t, r);
+            score += p.getSkillRating(f.findRole(p), t, r, vs);
+        }
+        return score;
+    }
+
+    private Double outfieldPlayerSkillTotal(Formation f, Rating r) {
+        Double score = 0.0;
+        for (Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                continue;
+            }
+            score += p.getSkill(r);
         }
         return score;
     }
@@ -198,8 +217,8 @@ public final class DefaultScorer implements FormationScorer {
         w.println();
     }
 
-    public static DefaultScorer get() {
-        return INSTANCE;
+    public static VsTacticScorer create(Tactic vs) {
+        return new VsTacticScorer(vs);
     }
 
 

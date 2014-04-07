@@ -482,11 +482,6 @@ public final class ChangePlan implements Report {
                         continue;
                     }
                     Formation f = cp.getFormationAt(minute);
-                    for (Tactic t : Tactic.values()) {
-                        if (t != f.getTactic()) {
-                            adds.add(new AddChange(TacticChange.create(t, minute)));
-                        }
-                    }
 
                     for (Player p : f.players()) {
                         for (Role r : Role.values()) {

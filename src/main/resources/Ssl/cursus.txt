@@ -1,9 +1,13 @@
 Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
 -------------------------------------------------------------
-mfc   G_Sweeney         22 eng  6 23 12  6 56 300 744 406 318 is suspended for 2 games
-cat   B_Fett            33 den  1  1 23  1 29 570  65 711 718 is suspended for 1 game
-hur   E_Bishop          21 eng  1  2 21 13 28 300 693 273  58 is suspended for 1 game
-jud   M_Franzke         25 ger  2 22 16 15 26 300 712 604 855 is suspended for 1 game
-cho   B_Phantom         27 usa  2 23  2  3 37 300 606 119 173 is suspended for 1 game
-cay   S_Kienholz        19 cze  1  6  4 16 43 300 394 399 754 is suspended for 1 game
-msy   S_Drye            19 nzl  1 18  4  4 50 300 188 127 264 is suspended for 1 game
+cop   P_Trigoso         28 por  1  5 26  8 28 300  13 469 965 is suspended for 1 game
+dub   H_Lafollette      31 nig  1 26 18 16 23 390 989 977 723 is suspended for 1 game
+mfc   N_Wals            34 JAP  1 23 15 13 41 300 741 354 611 is suspended for 2 games
+whh   G_Lonsdale        28 sco  1  7 14 25 58 300 301 277 930 is suspended for 1 game
+aas   K_Nixon           28 wal  1  1 26 14 37 300 415  84 137 is suspended for 1 game
+foo   P_Reher           21 swe  1 21  2  8 15 300 572 830 867 is suspended for 1 game
+hhy   D_Walker          19 eng  1 18  2  9 46 300 271 431 891 is suspended for 1 game
+hry   J_Bier            19 ger  1 18  9  3 58 300 662 285  80 is suspended for 1 game
+juy   No_Huan           20 jap  1 17  5  4 48 300 428 428 518 is suspended for 1 game
+say   B_Dingley         16 eng  1  5 15 10 70 300 690 428 205 is suspended for 1 game
+suy   B_Sprout          18 bel  1 17 11  7 33 300 662 613   5 is suspended for 1 game

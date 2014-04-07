@@ -2,9 +2,8 @@ package com.ljs.ifootballmanager.ai.league;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
-import com.ljs.ifootballmanager.ai.Role;
-import com.ljs.ifootballmanager.ai.formation.validate.CountingFormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.formation.validate.FormationValidatorFactory;
 import com.ljs.ifootballmanager.ai.info.InfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
@@ -46,13 +45,8 @@ public class Jafl implements League {
     }
 
     public FormationValidator getFormationValidator() {
-        return CountingFormationValidator
-            .builder()
-            .exactly(1, Role.GK)
-            .range(3, 5, Role.DF)
-            .range(2, 5, Role.DM, Role.MF, Role.AM)
-            .range(1, 5, Role.FW)
-            .build();
+        return FormationValidatorFactory.jafl();
+        //return FormationValidatorFactory.jusCup();
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
