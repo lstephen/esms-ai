@@ -37,7 +37,7 @@ public class Jafl implements League {
 
     public Optional<Double> getYouthSkillsCap() {
         // 18 for cup games, 15 for league games
-        return Optional.of(18.0);
+        return Optional.of(15.0);
     }
 
     public Iterable<String> getForcedPlay() {
