@@ -88,8 +88,6 @@ J_Applewhite  21 usa  1  5 16 21 43 950 262 210 682 # 32m
 
 V_Darmanin    30 swe  2 23  6 13  9 861 975 460 525 # 8m
 
-M_Laudrup     20 den  1 12 20 12 29 300 507 368 706
-P_Gilbough    19 arg  1 12 19 12 16 300 296 216 658
 
 X_Maugeri     22 por  1 22 19  8 54 802 958 794 938  # $90m
 Starbucks     26 usa  2  8 14 24 13 582 939 458 250  #$70m

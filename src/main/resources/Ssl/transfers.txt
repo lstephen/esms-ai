@@ -1,8 +1,7 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-Apr 02  R_Giggs       20  6 16 19 14 22 Auction              Holcombe_Hotshots    21,650k
-Apr 03  D_Bledsoe     23  1 16 18 14 29 Modular_United       Tangerine_Terrors    0
-Apr 03  Archimedes    22  1 19 16 13 40 Tangerine_Terrors    Modular_United       0
-Apr 05  S_Bullifant   23  1  5 19  9 25 Red_Star_Llama       Foreign_Team         6,100k
-Apr 05  L_Gabby       22  1 17  3  7 38 Burntwood_Rovers     Foreign_Team         2,900k
-Apr 05  C_Huenecke    22 16  1  1  1 37 Shurdington_AFC      Foreign_Team         900k
+Apr 06  J_Vestergaard 16  1  2  1 15 13 Derry_Patriots       Football_Studs       5,000k
+Apr 06  J_Chasarik    19  6 19 10 14 12 Player_Draw          Jo`burg_Scorpions    8,000k
+Apr 07  E_Bishop      21  1  2 21 13 28 Huracan_Rhythm       Shurdington_AFC      5,000k
+Apr 07  P_Kerschner   21  1 13 19  2 76 Shurdington_AFC      Huracan_Rhythm       0
+Apr 07  P_Silverholt  16  1 14  2  1 20 Derry_Patriots       Featherstone_Colls   4,000k
