@@ -32,6 +32,8 @@ public final class Player {
 
     private Integer aggression;
 
+    private Integer games = 0;
+
     private Integer fitness = 100;
 
     private Boolean injured = Boolean.FALSE;
@@ -58,6 +60,10 @@ public final class Player {
         return withSkills(ratings.add(rt, amount));
     }
 
+    public Player withAbilityAdded(Rating rt, Long amount) {
+        return withAbilityAdded(rt, amount.intValue());
+    }
+
     public Player withAbilityAdded(Rating rt, Integer amount) {
         Ratings newAbilities = abilities.add(rt, amount);
         Ratings newSkills = ratings;
@@ -71,7 +77,9 @@ public final class Player {
     }
 
     private Player withSkills(Ratings skills) {
-        return new Player(name, age, skills, abilities, aggression);
+        Player p = new Player(name, age, skills, abilities, aggression);
+        p.reserves = reserves;
+        return p;
     }
 
     public Player withSkillCap(Double cap) {
@@ -108,6 +116,18 @@ public final class Player {
         return age;
     }
 
+    public Double getAbilitiesSum() {
+        return abilities.getSum();
+    }
+
+    public Integer getGames() {
+        return games;
+    }
+
+    public void setGames(Integer games) {
+        this.games = games;
+    }
+
     public Integer getAggression() {
         return aggression;
     }
@@ -119,7 +139,6 @@ public final class Player {
     public void setFitness(Integer fitness) {
         this.fitness = fitness;
     }
-
 
     public void injured() {
         this.injured = Boolean.TRUE;

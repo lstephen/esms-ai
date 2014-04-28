@@ -18,13 +18,13 @@ import com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.formation.score.SecondXIScorer;
-import com.ljs.ifootballmanager.ai.formation.score.YouthTeamScorer;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.Ssl;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
+import com.ljs.ifootballmanager.ai.player.SquadHolder;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.report.Reports;
 import com.ljs.ifootballmanager.ai.report.SquadReport;
@@ -97,6 +97,7 @@ public class Main {
         System.out.println("Running for: " + league.getTeam());
 
         Squad squad = Squad.load(league);
+        SquadHolder.set(squad);
 
         ImmutableList<Formation> firstXICandidates = Formation.select(league, squad.players(), DefaultScorer.get());
 
@@ -136,14 +137,14 @@ public class Main {
         Set<Player> reservesSquad = Sets.newHashSet();
         Formation reservesXI = null;
         if (league.getReserveTeam().isPresent()) {
-            Set<Player> reservePlayers = Sets.newHashSet(squad.reserves());
-            reservesXI = Formation.select(league, reservePlayers, YouthTeamScorer.create(league, squad)).get(0);
+            reservesXI = Formation.select(league, squad.reserves(league), DefaultScorer.get()).get(0);
             print(w, "Reserves XI", reservesXI);
-            reservesSquad.addAll(reservesXI.players());
+            for (Player p : reservesXI.players()) {
+                reservesSquad.add(squad.findPlayer(p.getName()));
+            }
         }
 
         print(w, "At Potential XI", atPotentialXI);
-
 
         Set<Player> desiredSquad = Sets.newHashSet();
         desiredSquad.addAll(allFirstXI);
@@ -241,7 +242,7 @@ public class Main {
         if (league.getReserveTeam().isPresent()) {
             File rsheetFile = new File("c:/esms", league.getReserveTeam().get() + "sht.txt");
             CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.ISO_8859_1);
-            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(), rsheet, YouthTeamScorer.create(league, squad));
+            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(league), rsheet, DefaultScorer.get());
             Files.copy(rsheetFile, new File("c:/esms/shts", rsheetFile.getName()));
         }
     }

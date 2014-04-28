@@ -1,10 +1,13 @@
 package com.ljs.ifootballmanager.ai.player;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
@@ -33,6 +36,19 @@ public final class Squad {
         this.players = ImmutableSet.copyOf(ps);
     }
 
+    public Integer getGames() {
+        return Ordering
+            .natural()
+            .max(
+                FluentIterable
+                    .from(players())
+                    .transform(new Function<Player, Integer>() {
+                        public Integer apply(Player p) {
+                            return p.getGames();
+                        }
+                    }));
+    }
+
     public ImmutableSet<Player> players() {
         return players;
     }
@@ -57,10 +73,10 @@ public final class Squad {
         return ImmutableSet.copyOf(ps);
     }
 
-    public ImmutableSet<Player> reserves() {
+    public ImmutableSet<Player> reserves(League league) {
         Set<Player> rs = Sets.newHashSet();
 
-        for (Player p : players()) {
+        for (Player p : withCap(league)) {
             if (p.isReserves()) {
                 rs.add(p);
             }
@@ -79,14 +95,36 @@ public final class Squad {
         return Optional.presentInstances(ps);
     }
 
-    public Iterable<Player> forReservesSelection() {
+    public Iterable<Player> forReservesSelection(League league) {
         Set<Optional<Player>> ps = Sets.newHashSet();
 
+        Optional<Double> cap = league.getYouthSkillsCap();
+
         for (Player p : players) {
-            ps.add(p.forReservesSelection());
+            if (cap.isPresent()) {
+                ps.add(p.withSkillCap(cap.get()).forReservesSelection());
+            } else {
+                ps.add(p.forReservesSelection());
+            }
         }
 
         return Optional.presentInstances(ps);
+    }
+
+    public Iterable<Player> withCap(League league) {
+        Set<Player> ps = Sets.newHashSet();
+
+        Optional<Double> cap = league.getYouthSkillsCap();
+
+        for (Player p : players) {
+            if (cap.isPresent()) {
+                ps.add(p.withSkillCap(cap.get()));
+            } else {
+                ps.add(p);
+            }
+        }
+
+        return ps;
     }
 
     public Integer count(Role r) {
@@ -177,6 +215,10 @@ public final class Squad {
             Player p = Player.create(name, age, ratings, abilities);
 
             p.setAggression(Integer.parseInt(split[7]));
+
+            if (split.length > 12) {
+                p.setGames(Integer.parseInt(split[12]));
+            }
 
             if (split.length > 24 && !split[24].equals("0")) {
                 p.injured();

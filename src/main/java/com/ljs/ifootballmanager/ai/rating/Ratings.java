@@ -106,6 +106,14 @@ public final class Ratings {
             .immutableSortedCopy(Arrays.asList(Rating.values()));
     }
 
+    public Double getSum() {
+        Double sum = 0.0;
+        for (Double r : ratings.values()) {
+            sum += r;
+        }
+        return sum;
+    }
+
     public static Builder builder(League league) {
         return Builder.create(league);
     }

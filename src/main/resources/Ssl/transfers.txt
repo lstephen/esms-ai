@@ -1,7 +1,7 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-Apr 06  J_Vestergaard 16  1  2  1 15 13 Derry_Patriots       Football_Studs       5,000k
-Apr 06  J_Chasarik    19  6 19 10 14 12 Player_Draw          Jo`burg_Scorpions    8,000k
-Apr 07  E_Bishop      21  1  2 21 13 28 Huracan_Rhythm       Shurdington_AFC      5,000k
-Apr 07  P_Kerschner   21  1 13 19  2 76 Shurdington_AFC      Huracan_Rhythm       0
-Apr 07  P_Silverholt  16  1 14  2  1 20 Derry_Patriots       Featherstone_Colls   4,000k
+Apr 19  S_Bajek       31  1  5 16 24 39 Sporting_Boyos       Derry_Patriots       3,000k
+Apr 20  Renato_Cesar  19  1  4  6 18 33 Middletown_Steelers  Featherstone_Colls   1,000k
+Apr 23  H_Northlane   24  1  5  3 21 39 Jo`burg_Scorpions    Chorley_Cougars      5,000k
+Apr 24  N_Ciszek      18  1 16  4  5 21 Boston_Black_Sox     Judithiniikos        0
+Apr 24  Cholopov      21  1 17 13  7 30 Judithiniikos        Boston_Black_Sox     0

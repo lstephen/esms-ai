@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.formation.selection;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -55,7 +56,11 @@ public final class RandomFormationGenerator implements Callable<Formation> {
             initialState.putAll(Role.MF, shuffled.subList(5, 9));
             initialState.putAll(Role.FW, shuffled.subList(9, 11));
 
-            return Formation.create(validator, scorer, tactic, initialState);
+            Formation created = Formation.create(validator, scorer, tactic, initialState);
+
+            Preconditions.checkState(created.isValid());
+
+            return created;
         } else {
             Multimap<Role, Player> initialState = HashMultimap.create();
 
@@ -65,6 +70,7 @@ public final class RandomFormationGenerator implements Callable<Formation> {
 
             return Formation.create(validator, scorer, tactic, initialState);
         }
+
     }
 
     public static RandomFormationGenerator create(FormationValidator validator, FormationScorer scorer, Tactic tactic, SelectionCriteria criteria) {

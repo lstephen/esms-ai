@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai.value.impl;
 
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.player.SquadHolder;
 import com.ljs.ifootballmanager.ai.value.Potential;
 
 /**
@@ -9,25 +10,30 @@ import com.ljs.ifootballmanager.ai.value.Potential;
  */
 public class SslPotential implements Potential {
 
-    private SslPotential() { }
+    private final Double pctOfSeason;
+
+    private SslPotential(Double pctOfSeason) {
+        this.pctOfSeason = pctOfSeason;
+    }
 
     public Player atPotential(Player p) {
-        Integer yearsToDevelop = Math.max(0, 20 - p.getAge());
+        Double yearsToDevelop = Math.max(0, 20 - pctOfSeason - p.getAge());
 
-        p = p.withAbilityAdded(p.getPrimarySkill(), 1500 * yearsToDevelop);
-        p = p.withAbilityAdded(p.getSecondarySkill(), 900 * yearsToDevelop);
-        p = p.withAbilityAdded(p.getTertiarySkill(), 600 * yearsToDevelop);
+        p = p.withAbilityAdded(p.getPrimarySkill(), Math.round(1500 * yearsToDevelop));
+        p = p.withAbilityAdded(p.getSecondarySkill(), Math.round(900 * yearsToDevelop));
+        p = p.withAbilityAdded(p.getTertiarySkill(), Math.round(600 * yearsToDevelop));
 
         if (p.getAge() == 20 || p.getAge() == 21) {
-            Integer factor = 22 - p.getAge();
-            p = p.withAbilityAdded(p.getPrimarySkill(), 800 * factor);
+            Double factor = 22 - pctOfSeason - p.getAge();
+            p = p.withAbilityAdded(p.getPrimarySkill(), Math.round(750 * factor));
         }
 
         return p;
     }
 
     public static SslPotential create() {
-        return new SslPotential();
+
+        return new SslPotential(SquadHolder.get().getGames() / 25.0);
     }
 
 }

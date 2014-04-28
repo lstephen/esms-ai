@@ -27,8 +27,8 @@ import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
 import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -85,7 +85,10 @@ public final class Formation implements Report {
     }
 
     public Player getPenaltyKicker() {
-        return Player.byRating(Role.FW, tactic).max(players());
+        return Player
+            .bySkill(Rating.SHOOTING)
+            .compound(Player.byTieBreak())
+            .max(players());
     }
 
     public ImmutableSet<Role> getRoles() {
@@ -286,11 +289,19 @@ public final class Formation implements Report {
 
         List<Formation> weightedList = Lists.newArrayList(weighted);
 
-        Collections.shuffle(weightedList);
+        Double seed = 0.0;
 
-        System.out.println("(" + weightedList.size() + ") -> " + weightedList.get(0).getTactic());
+        for (Player p : criteria.getAll()) {
+            seed += p.getAbilitiesSum();
+        }
 
-        return weightedList.get(0);
+        Random r = new Random(Math.round(seed));
+
+        Integer idx = r.nextInt(weightedList.size());
+
+        System.out.println("(" + weightedList.size() + ") -> " + weightedList.get(idx).getTactic());
+
+        return weightedList.get(idx);
     }
 
     private static Formation select(League league, Tactic tactic, SelectionCriteria criteria, FormationScorer scorer) {
@@ -303,7 +314,7 @@ public final class Formation implements Report {
                     return f.isValid();
                 }
             })
-            .heuristic(byScore(scorer).compound(byAbilitySum()))
+            .heuristic(byScore(scorer).compound(byAge().reverse()).compound(byAbilitySum()))
             .actionGenerator(Actions.create(criteria));
 
         return new RepeatedHillClimbing<Formation>(
@@ -318,6 +329,20 @@ public final class Formation implements Report {
             .onResultOf(new Function<Formation, Double>() {
                 public Double apply(Formation f) {
                     return scorer.score(f, f.getTactic());
+                }
+            });
+    }
+
+    private static Ordering<Formation> byAge() {
+        return Ordering
+            .natural()
+            .onResultOf(new Function<Formation, Double>() {
+                public Double apply(Formation f) {
+                    Double sum = 0.0;
+                    for (Player p : f.players()) {
+                        sum += p.getAge();
+                    }
+                    return sum;
                 }
             });
     }
