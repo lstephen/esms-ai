@@ -79,6 +79,8 @@ public final class Player {
     private Player withSkills(Ratings skills) {
         Player p = new Player(name, age, skills, abilities, aggression);
         p.reserves = reserves;
+        p.injured = injured;
+        p.suspended = suspended;
         return p;
     }
 
@@ -276,12 +278,11 @@ public final class Player {
     public static Ordering<Player> byOverall(final Tactic t) {
         return Ordering
             .natural()
-            .onResultOf(new Function<Player, Double>() {
-                public Double apply(Player p) {
-                    return p.getOverall(t).getRating();
+            .onResultOf(new Function<Player, Long>() {
+                public Long apply(Player p) {
+                    return Math.round(p.getOverall(t).getRating());
                 }
-            })
-            .compound(byTieBreak());
+            });
     }
 
     public static Ordering<Player> bySkill(final Rating r) {
@@ -340,6 +341,6 @@ public final class Player {
     }
 
     public static Ordering<Player> byTieBreak() {
-        return byAge().reverse().compound(byName());
+        return byAge().compound(byName());
     }
 }

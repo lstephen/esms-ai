@@ -36,7 +36,7 @@ public class SquadReport implements Report {
         this.tactic = tactic;
         this.squad = squad;
 
-        ordering = Player.byOverall(tactic).reverse();
+        ordering = Player.byOverall(tactic).reverse().compound(Player.byTieBreak());
         value = league.getPlayerValue();
     }
 
@@ -58,11 +58,12 @@ public class SquadReport implements Report {
         ordering = Ordering
             .natural()
             .reverse()
-            .onResultOf(new Function<Player, Double>() {
-                public Double apply(Player p) {
-                    return getValue(p);
+            .onResultOf(new Function<Player, Long>() {
+                public Long apply(Player p) {
+                    return Math.round(getValue(p));
                 }
-            });
+            })
+            .compound(Player.byTieBreak());
         return this;
     }
 

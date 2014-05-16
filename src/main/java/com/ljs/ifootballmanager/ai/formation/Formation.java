@@ -3,12 +3,10 @@ package com.ljs.ifootballmanager.ai.formation;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.ljs.ai.search.hillclimbing.HillClimbing;
@@ -278,12 +276,14 @@ public final class Formation implements Report {
     public static Formation selectOne(League league, SelectionCriteria criteria, FormationScorer scorer) {
         ImmutableList<Formation> candidates = select(league, criteria, scorer);
 
-        Double base = byScore(scorer).min(candidates).score() - 1;
+        Double base = candidates.get(0).score() * .95 - 1;
 
-        Multiset<Formation> weighted = HashMultiset.create();
+        List<Formation> weighted = Lists.newArrayList();
         for (Formation f : candidates) {
             int weighting = (int) Math.round(f.score() - base);
-            weighted.add(f, weighting);
+            for (int i = 0; i < weighting; i++) {
+                weighted.add(f);
+            }
             System.out.print(f.getTactic().getCode() + ":" + weighting + " ");
         }
 
