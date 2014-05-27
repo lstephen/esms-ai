@@ -20,12 +20,17 @@ import com.ljs.ifootballmanager.ai.value.impl.SslValue;
  */
 public class Ssl implements League {
 
-    private static final Ssl INSTANCE = new Ssl();
+    private final String team;
 
-    private Ssl() { }
+    private final Optional<String> reserveTeam;
+
+    private Ssl(String team, Optional<String> reserveTeam) {
+        this.team = team;
+        this.reserveTeam = reserveTeam;
+    }
 
     public String getTeam() {
-        return "mis";
+        return team;
     }
 
     public Optional<String> getVs() {
@@ -33,7 +38,11 @@ public class Ssl implements League {
     }
 
     public Optional<String> getReserveTeam() {
-        return Optional.of("msy");
+        return reserveTeam;
+    }
+
+    public Optional<Double> getSeniorSkillsCap() {
+        return Optional.of(25.0);
     }
 
     public Optional<Double> getYouthSkillsCap() {
@@ -50,7 +59,7 @@ public class Ssl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_sale.txt", "/free_agents.txt");
+        return ImmutableList.of("/for_auction.txt", "/for_sale.txt", "/free_agents.txt");
     }
 
     public Weightings getWeightings() {
@@ -74,8 +83,13 @@ public class Ssl implements League {
         return Optional.<InfoValue>of(SslInfoValue.get());
     }
 
-    public static Ssl get() {
-        return INSTANCE;
+    public static Ssl create(String team) {
+        return new Ssl(team, Optional.<String>absent());
+    }
+
+    public static Ssl create(String team, String reserveTeam) {
+        return new Ssl(team, Optional.of(reserveTeam));
     }
 
 }
+

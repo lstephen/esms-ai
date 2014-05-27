@@ -76,7 +76,7 @@ public final class Squad {
     public ImmutableSet<Player> reserves(League league) {
         Set<Player> rs = Sets.newHashSet();
 
-        for (Player p : withCap(league)) {
+        for (Player p : withCap(league.getYouthSkillsCap())) {
             if (p.isReserves()) {
                 rs.add(p);
             }
@@ -85,10 +85,10 @@ public final class Squad {
         return ImmutableSet.copyOf(rs);
     }
 
-    public Iterable<Player> forSelection() {
+    public Iterable<Player> forSelection(League league) {
         Set<Optional<Player>> ps = Sets.newHashSet();
 
-        for (Player p : players) {
+        for (Player p : withCap(league.getSeniorSkillsCap())) {
             ps.add(p.forSelection());
         }
 
@@ -111,10 +111,8 @@ public final class Squad {
         return Optional.presentInstances(ps);
     }
 
-    public Iterable<Player> withCap(League league) {
+    private Iterable<Player> withCap(Optional<Double> cap) {
         Set<Player> ps = Sets.newHashSet();
-
-        Optional<Double> cap = league.getYouthSkillsCap();
 
         for (Player p : players) {
             if (cap.isPresent()) {

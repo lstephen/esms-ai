@@ -1,20 +1,20 @@
 
 bag.txt 22
 bbs.txt 22
-bec.txt 20
-bwr.txt 23
-cop.txt 23
+bec.txt 21
+bwr.txt 24
+cop.txt 21
 dub.txt 20
-fea.txt 17
-mfc.txt 22
+fea.txt 18
+mfc.txt 21
 pen.txt 18
-rsl.txt 19
-spo.txt 19
+rsl.txt 20
+spo.txt 18
 whh.txt 21
 cat.txt 16
 hoh.txt 23
 hur.txt 22
-jud.txt 22
+jud.txt 23
 man.txt 18
 mod.txt 22
 shu.txt 25
@@ -31,7 +31,7 @@ foo.txt 24
 joh.txt 31
 les.txt 24
 mis.txt 18
-bay.txt 22
+bay.txt 21
 bby.txt 22
 bty.txt 21
 bry.txt 36
@@ -47,7 +47,7 @@ cay.txt 23
 hhy.txt 21
 hry.txt 20
 juy.txt 21
-mry.txt 23
+mry.txt 24
 muy.txt 20
 say.txt 20
 suy.txt 28

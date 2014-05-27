@@ -35,6 +35,10 @@ public class Jafl implements League {
         return Optional.of("gly");
     }
 
+    public Optional<Double> getSeniorSkillsCap() {
+        return Optional.absent();
+    }
+
     public Optional<Double> getYouthSkillsCap() {
         // 18 for cup games, 15 for league games
         return Optional.of(15.0);

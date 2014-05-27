@@ -56,7 +56,8 @@ public class Main {
             .put("IFM - DER", IFootballManager.create("der"))
             .put("IFM - Holland", IFootballManager.create("hol"))
             .put("JAFL - GLI", Jafl.get())
-            .put("SSL - MIS", Ssl.get())
+            .put("SSL - MIS", Ssl.create("mis", "msy"))
+            .put("SSL - ITA", Ssl.create("ita"))
             .build();
 
     public static void main( String[] args ) throws IOException {
@@ -236,7 +237,7 @@ public class Main {
 
         File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");
         CharSink sheet = Files.asCharSink(sheetFile, Charsets.ISO_8859_1);
-        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(), sheet, DefaultScorer.get());
+        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(league), sheet, DefaultScorer.get());
         Files.copy(sheetFile, new File("c:/esms/shts", sheetFile.getName()));
 
         if (league.getReserveTeam().isPresent()) {

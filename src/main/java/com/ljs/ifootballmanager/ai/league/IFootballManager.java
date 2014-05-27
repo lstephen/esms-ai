@@ -35,6 +35,10 @@ public final class IFootballManager implements League {
         return Optional.absent();
     }
 
+    public Optional<Double> getSeniorSkillsCap() {
+        return Optional.absent();
+    }
+
     public Optional<Double> getYouthSkillsCap() {
         return Optional.absent();
     }

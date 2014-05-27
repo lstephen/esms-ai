@@ -1,9 +1,7 @@
 Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
 -------------------------------------------------------------
-bec   R_Roohoo          26 hol  7 24 15  5 31 300 832 931  84 is suspended for 1 game
-bwr   C_Veloso          24 por  3 24 15 16 30 930 657 943 316 is suspended for 1 game
-fea   L_Breen           23 usa  1  1 10 24 30 300 657   8 728 is suspended for 1 game
-rsl   H_Vincent         33 CAM  6 13 23 15 38 300 972 220 546 is suspended for 1 game
+cop   H_Chyzowych       30 rus  9 25 10  5 48 300 672 256 274 is suspended for 2 games
+spo   A_Di_Stefano      33 SPA  1  4 25 15 37 740 267 152 208 is suspended for 1 game
 cat   S_Hamidou         28 cam  4 24  2  6 48 300 171 160 223 is suspended for 1 game
 cat   I_Simutenkic      31 cro  1  3  1 24 34 300 871 577 282 is suspended for 1 game
 vil   P_Tsiklauri       25 geo  2 22 11  6 18 930 543 823 902 is suspended for 1 game
@@ -11,5 +9,5 @@ col   C_Cao             20 jap  1 19  2  3  8 300 555 647 245 is suspended for 1
 foo   G_Legowski        25 rus  1  1 24 12 20 300 454   5 793 is suspended for 2 games
 mis   R_Figueiredo      22 por  4 22 12  9 31 300 701 483 542 is suspended for 1 game
 mis   C_Yastrzemski     23 cze  1  4 22 15 40 480 159 843 566 is suspended for 1 game
-mry   P_Weichbrodt      21 ger  1 11 20  3 52 300 462 172 866 is suspended for 1 game
+bay   U_Kenedy          21 nir  1  5 20 14 37 300 110 341 486 is suspended for 2 games
 dhy   L_Skywalker       17 usa  1 16  3 14 23 300 491 941 405 is suspended for 1 game
