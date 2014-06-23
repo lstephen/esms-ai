@@ -1,4 +1,14 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-May 24  H_Morishima   23  5  7 21  8 30 Fireblades           Tangerine_Terrors    6,444k
-May 24  J_Molby       17  1 15  6 19 10 Copenhagen_Kings     Derry_Patriots       34,780k
+Jun 04  G_Paule       25  1  5 21 12 36 Shurdington_AFC      Derry_Patriots       2,000k
+Jun 04  J_Lehmann     26 27  1  1  1 24 Dublin_Sheisskickers Beckenham_Town_FC    15,000k
+Jun 04  Y_Mcqueeney   28  2 25 20 16 16 Dublin_Sheisskickers Beckenham_Town_FC    0
+Jun 04  R_Brannan     26 26  1  1  1 14 Beckenham_Town_FC    Dublin_Sheisskickers 0
+Jun 04  G_Denton      30  3 25 19 10 14 Beckenham_Town_FC    Dublin_Sheisskickers 0
+Jun 04  C_Bellamy     18  1  2  7 16 11 Holcombe_Hotshots    Beckenham_Town_FC    0
+Jun 04  D_Scott       18  1  2 16  1 25 Beckenham_Town_FC    Holcombe_Hotshots    0
+Jun 07  G_Gafa        16  1  7 14  7 40 Tangerine_Terrors    Middletown_Steelers  2,000k
+Jun 07  T_A_Raszwolaz 17  1 15 10  2 12 Middletown_Steelers  Tangerine_Terrors    0
+Jun 07  J_Gobble      19  1 17  4  5 33 Holcombe_Hotshots    Les_Dieus_du_Monde   4,000k
+Jun 07  C_Puyol       17  1 15  3  6 16 Holcombe_Hotshots    Les_Dieus_du_Monde   0
+Jun 07  T_Folha       31  2 25 13  5 24 Newtown_Penguins     Mincers_FC           7,000k

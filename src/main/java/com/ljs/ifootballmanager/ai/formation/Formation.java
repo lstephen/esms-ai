@@ -293,6 +293,7 @@ public final class Formation implements Report {
 
         for (Player p : criteria.getAll()) {
             seed += p.getAbilitiesSum();
+            seed += p.getGames();
         }
 
         Random r = new Random(Math.round(seed));

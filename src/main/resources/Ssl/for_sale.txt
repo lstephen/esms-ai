@@ -1,0 +1,78 @@
+U_Gerty       20 cro  1  3 17  3 33 300 247 636 226 # for DF Swap
+W_Skeels      19 ire  1  5 17  2 25 300 448 376 638 # for DF Swap
+Q_Claspill    19 nig  1  4 17  2 33 300 626 212 650 # for DF Swap
+D_Scott       18 usa  1  2 16  1 25 300  18 454 731  # for DF Swap
+
+G_Gafa'       16 xxx  1  7 14  7 40 300 285 344 645 # for DF Swap
+X_Hamaty      16 xxx  1  3 14 12 44 300 216 242 562 # for DF Swap
+
+G_Paule       25 por  1  5 21 12 36 300 262 575 407 # 2m - SOLD
+
+T_Hobber      19 wal  1  2  4 16 42 300 262 259 446  # 250k
+R_Kluckhuhn   18 ger  1  5  2 16 50 300 698 660 170  # 250k
+P_Kaase       18 xxx  1  4  4 15 29 300 126 111 100  # 250k
+F_Tamas       17 xxx  1  5  6 14 32 300 657 157 625  # 250k
+
+B_Bessent     21 spa  1  3  7 17  8 300 947 214 475  # any cash offers considered
+
+Stephane_Mbia   18 cam  1  2 16  7 34 300 567 199 178 # cash or DF swap
+Enzo_Perez    17 arg  1  4 15  5  8 300 270 536 202   # cash or DF swap
+A_Di_Maria   16 arg  1  5 14  5  8 300 296 101 400    # cash or DF swap
+
+T_Folha       30 por  2 26 14  6 24 370 402 886 874
+B_Goss        30 nzl  4 20 27 17 13 300 237  93 550
+H_Kwein       29 jap  1  6 24  9 30 390 265 409 197
+
+B_Dickie      19 eng  1 19  4  4 18 300 373 269 238
+I_Giddeons    19 bel  1  4 19  5 54 300 507  99  59
+
+
+C_Brunt       21 nir  6 11 21 12 30 480 213 587 271 # still rerating for 1 more season
+Jack_Kelsey   22 wal 23  1  1  1 21 224 300 300 300 # cash or swap for older keeper plus cash
+S_Kuler       20 rsa  1  8 14 21 13 600 200 210  92  # big cash offers
+E_Nwachi_Jr   19 nig  2  5 14 20 10 480 380 550 562 # big cash offers
+
+R_Song        28 cam  8 23 13  4 24 300 624 255 546
+T_West        23 nig  1 20 14  6 26 300 679 691 218
+W_Tamindzic   24 geo  8 20 16  4 40 460 936  45 222
+
+F_Jackenbauer 28 cze  1 19  4  4 43 390 875 701 108
+L_Blanc       23 fra  1 19  2  2 43 300 134 823 869
+P_Samec       24 por  1 19 12  3 36 300 215  42 591
+G_Bambrough   23 cam  1 18  3  4 45 300 903 340  86
+R_Curtiss     22 aus  1 17  3  3 46 300  54 725 347
+
+E_Korf        27 rsa  1  2 18  4 16 425 846 787 432
+H_Luscher     24 geo  1  3 18  3 41 300 682 700 406
+
+M_Shibles     20 aus  1  3  3 17 46 300 614 766 741
+J_Fontaine    18 fra  1  3  4 16  8 300 134 550 118
+N_Ballerini   18 xxx  1 14  9 16 39 300 304 327 134
+P_Faithfull   18 xxx  1  2  7 16 11 300 505 200 233
+D_Ashton      18 eng  1  5  2 15 13 300 659 883 787
+S_Iversen     17 den  1  8  3 15 30 300 692  13 167
+
+
+M_Rui-Costa   20 por  1  7 19  3 36 300 464 536   6
+G_Kinkladze   19 geo  1  3 18  5  8 300 936 303 723
+G_Roux        21 fra  1  4 17  3 52 300 225 342 373
+D_Deschamps   18 fra  1  7 16  4 11 300 558 146 107
+S_Laguna      16 xxx  1  3 14  4 40 300 892 360 502
+
+D_Walker      20 eng  1 18  2 10 46 300 603 568  37
+Aldair        18 bra  1 17  6  7  8 300 439 291 407
+J_Gobble      19 rus  1 17  4  5 33 300 300 405 132
+O_Emmines     18 ita  1 16  2  2 10 300 363 517 402
+D_Irwin       18 ire  1 16  2  9 41 300 477 109 317
+W_Addinsell   17 xxx  1 15  3  6 16 300 156 101 727
+
+J_Latal       27 cze  8 15 22 15 28 300 553 691 315 # For Dianne swap
+
+M_Westbay     30 hol  1  8 26 11 44 300 361 863 845
+
+W_Jewell      29 nzl  1  8 26  8 34 570 157 676 814
+
+M_Laudrup     21 den  1 12 20 12 29 300 594 587 767
+P_Gilbough    20 arg  1 12 19 12 16 300 685 921 931
+
+

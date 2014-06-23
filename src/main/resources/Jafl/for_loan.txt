@@ -1,2 +1,11 @@
-Juan_Aguirre  16 arg  1 15  8  9 17 356  23 599 848 # or sale
-P_Bullough    16 xxx  1 15  8  5 17 356 107 315 442 # or sale
+
+I_Jansheski   21 eng  1 21 19  5 12 822 723 785 448
+A_Guardado    21 mex  1 12 22 18 15 904 879 389 474
+Danilinho     21 bra  1  3 18 21 10 588 134 928 514
+
+Ramazinho     21 bra  1 22 11 21 22 752 465 870 548 # $3m
+Neo_Nate      21 eng  1 21 13  9 23 770 572 741 337 # $3m
+AJ_Maradona   22 arg  1 11 22 20  9 516 357 432 829 # $3m
+Campbundo     20 bra  1 14 19 12  8 710 478   2 363 # $3m
+A_Vasofia     21 eng  1  5 15 21 34 704  30  20 970 # $3m
+

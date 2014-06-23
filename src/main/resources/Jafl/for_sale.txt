@@ -1,111 +1,138 @@
-S_Ryder       18 eng 16  1  1  1 51  65 552 552 552 # Tiger
 
-A_Wysinger    18 aus  1 17 12  2 13 552 366 583 772 # Tiger
-Q_Burruel     18 xxx  1 16  3  2 24 300 177 117 315 #Tiger
-O_Ewing       19 usa  1 15  8  2  8 426 247 435 983 #Tiger -300k
-M_Pue         16 xxx  1 13  6  6 23 300 803 663 217 #Tiger -500k - Sold to someone else
-
-P_Buskala     17 xxx  1  9 14  1 13 300 158 622 102 #Tiger
-
-Diego         17 spa  1  6  2 15 25 300 176 311 168 #Tiger
+P_Septer      32 aut  2 22 11  7 11 911 825 516 495 # £2m
+U_Imbroll     22 sen  1 21 13  7 21 858 842 425 323 # £10m
+P_Rzeznik     20 cze  1 12 19  5 10 678 801 380 111 # £7m
+L_Massirer    21 por  1 17 21  3 43 642 311  61 744 # £24m
+D_Wedgewood   21 eng  1 21  6 15 28 732 192 898  18 # £20m
 
 
-M_Fullbrook   18 xxx  1 16  3  3 15 300 128 421 275 # 6m - Midland
-X_Oxer        18 xxx  1 15  4  6 10 300 286 302 119 # 1m - Midland
-T_Vonhoff     17 xxx  1 14  4  3  9 300 392 103 482 # 2m - Midland
+P_Juninho     18 xxx  1 12 15  3  8 300 256 317 219
+M_Cutrell     17 xxx  1 15  7  3 10 300 232 191 784
+C_Durno       17 xxx  1 15  5  5  9 300 445 446 426
+X_Sundelin    17 xxx  1 15 10  2 30 300 132 500 446
+
+Y_Curell      16 xxx  1  2  4 14 24 300 239 686 393
 
 
-A_Ruse 18 nor 1 10 3 15 12 444 486 956 720 # - 6m - Gareth James
+K_Kalis       19 saf  1  3  4 15 52 414 786 213 613 # for 15-rated GK
 
 
-D_Tepe        21 sco  1 20  8 17 47 966 964 456 352 # KPK
+Luigi         23 ita  2 22 21 15 28 246 100  73 737 # trade
+Flisty        22 bra  1 19 22  9 20 912 664 552 656 # trade
+Rajah         19 jap 18  1  1  1 18 423 552 552 552 # younger version
+S_Ryder       19 eng 17  1  1  1 51 200 678 678 678 # cash
+
+L_Kuyt        19 hol  1 18 16  5 18 677 990 426 374
+A_Wysinger    19 aus  1 18 13  3 13 678 863 881 439
+
+Q_Swaddly     18 xxx  1 16  2  3 22 300 321 165 748 # cash
+W_Huskisson   17 xxx  1 15  4  3 21 300 501 475 202 # cash
+
+W_Lunar       19 eng  1 10 17  3 45 666 130 964 953 # cash
+P_Buskala     18 hun  1 10 15  1 13 426 303 819 712 # cash
+
+Champawat     18 ind  1  5  7 17 11 552 120 633 750
+
+V_Mucha       18 xxx  1  3  3 16 47 300 222 247 106 # $5m or swap
+V_Kwis        18 xxx  1  4  3 15  8 300 493 142 278 # $3m or swap
+E_Buranen     17 xxx  1  2  4 14 56 300 108 152 100 # $3m or swap
+U_Hupe        16 xxx  1  2  4 14  9 300 180 307 474 # $4m or swap
+
+G_Svoboda     18 xxx  1  6  2 15 64 300 214 201 395 # swap for youth GK
+J_Justiss     18 xxx  1  3 12 15 25 300 906 425 169 # swap for youth GK
+
+R_Cyriax      19 usa  1 17  7 11 49 588 829 960 547 # $8m
+X_Exposito    19 por  1  5  7 18 15 732  41 645 183 # $12m
+X_Oxer        19 sco  1 16  4  7 10 444 439 932 272 # first $2m
 
 
-I_Scrooby     23 usa  1 23  4 10 29 828  88 699 517 # $30m - Wayne Laundon
-
-N_Beaudin     26 alb  2  4 22 17 15   8 646 260 975 # $17m - SOLD ELSEWHERE - Wayne Laundon
-
-P_Giesen      31 hol  2 23  7  4 54 664 334 277 766 # £2.5M
-
-L_Meserve     32 swi  3 23  5 16 43   3 293 901 749 # £3M
+X_Oxer        19 sco  1 16  4  7 10 444 439 932 272 # $1m
+T_Vonhoff     18 hol  1 15  5  4  9 444 545 256 113 # $1.5m
+M_Fugl        19 bel  1 15  4  6 25 444 323 849 268 # $500k
+G_Durridge    18 xxx  1 14  4  4 30 300 481 373 142 # $500k
 
 
-N_Swatsell    19 saf  1 10 15  3  8 468 814 841 278 # 600k - Simon Marsh - SOLD elsewhere
+P_Mortimer    20 eng  2  5 20 12 17   3  68 759 405
+Y_Redbourne   20 can  2 15 20  6 16  21 476 610 337
+S_Newton      20 jam  1  8 19  9 13 768 289 273 499
 
-M_Snaer       27 nor  1 23  4 15 41 450 802 414 525 # PHO
-U_Rydelek     24 nor  1 21  3  3 34 546 911 463 443 # PHO
-B_Venteolo    29 ita  2  5 23  8  8 408 337 814 876 # PHO
-A_Seigfreid   22 eng  1 13 21  5 26 846 940 428 687  # PHO
-N_Miyanishi   24 jap  2 16 21  4 35 288 533 869 722 # PHO
-C_Recknor     27 usa  2  5 20 11 39 438 858 648 297 # PHO
+U_Ogilby      23 can  2 22  7 11 17 173 250 456 383 # for 22+GK or senior MF
+L_Pelech      26 spa  2  8 10 21 10 442 229 446 648 # $2m or youth GK
+K_Kalis       19 saf  1  3  4 15 52 414 786 213 613 # $500k or youth GK
+H_Croxford    19 eng  1  4 15 10 11 504 277 875 390 # for youth GK
+Y_Sanchez     19 mex  1 15  5  7 26 414 367  37 714 # 500k or youth GK
 
-M_Reid        19 sco  1 18  4  8 24 587 718 855 568 #PHO
-Y_Busbee      19 eng  1 17  3  6 14 454  71  41 587   #PHO
-K_Kellum      19 ire  1 16 10  4 15 706  50 943 171   #PHO
-G_Oyervides   17 mex  1 14  6  5 22 466 987 611 934    #PHO - $6.5m
-P_Kubli       17 cam  1 13  3  6 28 454 809 447 786   #PHO
-J_Sukup       16 xxx  1 12  5  2 55 328 559 543 906  #PHO
-E_Dwire       19 t&t  1  6 16  5 11 454 634 183 466    #PHO
-M_Cuffman     18 xxx  1  4 15  5  9 328 818 636 865   #PHO
-P_Prusski     18 rus  1  7 14  2 23 454 599 747 987  #PHO
-X_Cruse       18 por  1  2 14  6 24 454 916 547 750   #PHO
-U_Mylar       19 usa  1  4 14 11  8 532 877 400 743   #PHO
-T_Kwolek      16 xxx  1  7 13  2 27 328 886 496 403    #PHO - $5m
-J_Byrn        16 xxx  1  6 12  3 25 328 651 950 806  #PHO - $1m
+O_Durbin      18 xxx  1  3 16  4 35 300 111 325 368 # for FW
+B_Zyma        18 xxx  1  5 16  3 45 300 510 228 302 # for FW
 
-F_Marston     26 eng  2 23  7  4 29 102  46 456 132 # £25m
-U_Zendt       29 ger  2  6 10 23 17 701 296 223 552 # £17m
+D_Bylow       19 aus  1  6 17  3 20 534 513 141 276 # for DF
+B_Guenole     19 hon  1  6 16  4 17 534 394 876 352 # for DF
+Q_Eyster      17 xxx  1  8 15  3  8 300 227 215 406 # for DF
+N_Tyre        16 xxx  1  2 14  8 31 300 145 557 115 # for DF
 
-E_McCrossan   29 sco  2 22 11  6 38 630 637 438 284 # 5m
-M_Gulledge    17 xxx  1  2 15  5 23 328 513 509 604 # 5m
-
-G_Jasnau      28 bol  2 22  4  8 11 401 266 448 329 # 4m
-
-F_Futter        22 xxx  1  1  5 21  1 300 261 117 139 # 16m (Drake Cove)
-
-F_Syrett        25 xxx  1  4 25  4 12 300 745 100 766
-W_Eygabroad     25 xxx  1  4 25 13 11 300 105 231 100 # 110m
-
-C_Mouring       27 xxx 25  1  1  1  2 304 300 300 300  #  46M
-O_Lumbley       26 xxx  1  2 25 10  7 300 276 417 499  #  98M
-
-H_Fahler      25 aus  1  4 25 10 27 744 611 325  56 # 80m
-
-A_Toyota      21 jap  1 21  6 10 68 576  72 554  51   3   0  284   0   0   0   2   2   2   0   0   3   0   0 # 25m
-C_Begbie      23 sco  1 17 22  7 14 709 678 538 116 # 25m
-L_Hartopp     25 wal  2  8 22  4 72  24 207 985 568   7   0  667   0   0   0   2  17   4   0   0   3   0   0 # 9m
-B_Behague     26 cam  2 10 21  4 43 360 595 886 567   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # 5m
-R_Mysterio    30 mex  2 14  7 23 12 863  76 750 761   6   0  506   0   0   0   1   1  11   3   0   6   0   0 # 6m
-
-R_Perezinho   19 uru  1 16 10  8  9 684 620 251 646   7   0  661   0   0   0   6   3   5   0   0   0   0   0 # 2m - SOLD
-C_Guidrey     19 ire  1  7 17  5 45 558 135  48 973   5   1  385   1   0   0   3   9   6   0   1   0   0   0 # 4m
+K_Pennino     29 fin  2  5 14 27  8 579 809 760 597 # - 70m
+Gerd_Muller   29 ger  1  5 12 26 41 500 973 814 997 # - 60m
 
 
-F_Kurish      19 aut 16  1  1  1 66 403 466 466 466  # £1m
+B_Auliff 17 xxx 1 15 9 7 16 300 194 155 177 # available on loan or offer for sale
 
-Babybinho     20 bra  1  4 20 15  8 842 189 645 727 # 35m
-J_Applewhite  21 usa  1  5 16 21 43 950 262 210 682 # 32m
+Q_Sware 19 saf 1 14 2 4 13 348 623 514 961 # 300k
 
-V_Darmanin    30 swe  2 23  6 13  9 861 975 460 525 # 8m
+P_Worland 16 xxx 1 14 4 9 19 300 359 372 394 # available on loan or offer for sale
 
+O_Swales 16 xxx 1 13 2 4 31 300 762 454 104 # 1.25m
 
-X_Maugeri     22 por  1 22 19  8 54 802 958 794 938  # $90m
-Starbucks     26 usa  2  8 14 24 13 582 939 458 250  #$70m
-F_Griffin     18 aus  1  5 18 14 72 532 519 203 991 # $70m
-W_L_Grobbelar 32 saf 27  2  2  2 12 175 375 375 375 #($22m)
-R_Zelaya      29 sen  2 23 14 10 50 781 988   1 537 #($17m)
-Moshi         25 jap  2 14 11 21 24 327 952 416 951 #($22m)
-L_Tenant      19 aus  1 17 13  5 19 802 817 887  53 # $1.5m
-A_DeLancey    19 spa  1  4 17 10 49 820 593 855 837 # $1.5m
-M_Swick       19 aus  1  4  9 18 10 532 732 199 198 # $1.5m
-Piney_Winston 17 aus  1 15  3  5 27 388 880 531 233 # $5m
-Greg_ThePeg   18 aus  1  3 16  3 26 388 204  12 924 # $3.5m
-A_Goromaru    19 jap  1  3  5 17 23 532 276 195 246 # $750k
-B_Southworth  19 aus 17  1  1  1 29 303 532 532 532 # $500K
-M_Gerhart     19 ger  1 12  5 16 16 730 361 832 501 # $500k
+X_Burgman 16 xxx 1 13 6 5 10 300 725 766 215 # 1.5m
+
+B_Swicegood 18 xxx 1 2 16 3 56 300 391 153 279 # 4m or swap for 17 rated 19yo FW
+
+Tig_Trader 19 aus 1 17 1 5 36 444 572 926 362 # 6m
 
 
-U_Ogilby      22 can  2 22  7 11 17 137   2 420 335 # For MF or FW swap
 
-K_Hartell     21 eng  1 20 10 18 34 856 357  79 114 # $30.5m INFO
+Komodo64      26 ind  1 25 17 10 16 534 354 436 167 # 100m
+J_Enriquez    21 mex  1 12 20  6 17 704 851 580 614 # 10m
+K_Pennino     29 fin  2  5 14 27  8 579 809 760 597 # 60m
+Gerd_Muller   29 ger  1  5 12 26 41 500 973 814 997 # 50m
+
+H_Curling     16 xxx 13  1  1  1 23 553 300 300 300
+D_Quitman     16 xxx 12  1  1  1  8 173 300 300 300
+M_Nuding      19 jam  1 17  5 15  9 444 598 235 524
+C_Kuzy        19 hun  1 17 10  7 33 444 391 337 512
+U_Bunkin      19 sco  1 17  4  4  8 444 369 142 455
+C_Durno       17 xxx  1 15  5  5  9 300 445 446 426
+X_Sundelin    17 xxx  1 15 10  2 30 300 132 500 446
+G_Azarkhish   17 isr  1  3  7 14  9 444 245 270 707
+Y_Curell      16 xxx  1  2  4 14 24 300 239 686 393
+B_Sugg        17 xxx  1  6  3 14 15 300 710 141 117
+P_Wurth       19 sco  1  4 17  6 13 444 828 486 758
+Q_Lydamore    19 usa  1  8 17  4 28 444 515  23 906
+
+
+J_Beresford   20 eng  1 18  9 13 31 818 931 375 112
+R_Gemmecke    20 ger  1 17  9  4 10 800 198 798 858
+P_Masiker     21 sen  1 10 20  6  9 836 830 339 921
+Cyril_Speed   20 wal  1  7 19  3 11 602 849 323 814
+Campbundo     20 bra  1 14 19 12  8 710 478   2 36
+
+J_Beadlehands 19 eng 17  1  1  1 12 461 602 602 602 # 5m
+P_Dummy       19 eng  1 17  3  6 11 456 354 799 279 # 5m
+Hugo_Subio    19 mex  1 16  4  6 11 602 644 360 430 #2m
+O_Syzdek      17 xxx  1 15  1  7 70 300 145 209 702 # 6m
+J_Frost       17 eng  1 14  5  6 15 456 430  18 274 #1.5m
+K_Tyzbir      17 xxx  1 13  7 13 10 300 105 571 574 #3m
+E_Curylo      16 xxx  1 13  8  5  9 300 106 283 131 #1m
+Gigi_Asami    19 ita  1  5 16  7 36 456 772 588 501 #2m
+F_Wally       19 usa  1  3 16  5  9 456 875 378 537 #2m
+R_Grappa      19 fra  1  8 15  5 18 456 321 322 523 #1m
+X_Burhyte     18 xxx  1  8 15  2 21 300 765 193 299 #2m
+P_Sweetwood   17 xxx  1  2 15  8 26 300 402 328 228 #7m
+F_Swebilius   18 xxx  1  4 14  5 14 300 733 110 115 #500k
+Gino_Reservio 19 ita  1  5  6 15 34 602 977 850 512 #1m
+Hugo_Snatch   18 spa  1 13  8 15 14 456 845 218 276 #6m
+Q_Guerrios    18 xxx  1  3  3 15 14 300 152 117 100 #1.5m
+Fifi_Franca   17 bra  1  3  5 14 10 456 102 269 268 #1.5m
+
+
+X_Maugeri 23 por 1 22 19 8 54 858 785 823 967
 
