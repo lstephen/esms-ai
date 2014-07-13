@@ -1,7 +1,7 @@
 Name         Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb Gam Sub  Min Mom Sav Con Ktk Kps Sht Gls Ass  DP Inj Sus
 ------------------------------------------------------------------------------------------------------------
 K_Bjorklund   27 swe 24  1  1  1 40 275 300 300 300   0   0    0   0   0   0   0   0   0   0   0   0   0   0
-S_Marinovic   32 nzl 22  1  1  1 15  92 300 300 300   0   0    0   0   0   0   0   0   0   0   0   0   0   0
+S_Marinovic   32 NZL 24  1  1  1 15  92 300 300 300   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 F_Seidler     31 rsa  1 28 20 16 46 300 345 507 613   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 W_Vagenas     32 cro  1 25 23  2 13 840 112  96 855   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 AJ_Cam_Seung  29 kor  6 25 19 12 34 300 894 168 999   0   0    0   0   0   0   0   0   0   0   0   0   0   0

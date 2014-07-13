@@ -1,7 +1,6 @@
 U_Gerty       20 cro  1  3 17  3 33 300 247 636 226 # for DF Swap
 W_Skeels      19 ire  1  5 17  2 25 300 448 376 638 # for DF Swap
 Q_Claspill    19 nig  1  4 17  2 33 300 626 212 650 # for DF Swap
-D_Scott       18 usa  1  2 16  1 25 300  18 454 731  # for DF Swap
 
 G_Gafa'       16 xxx  1  7 14  7 40 300 285 344 645 # for DF Swap
 X_Hamaty      16 xxx  1  3 14 12 44 300 216 242 562 # for DF Swap
@@ -45,18 +44,12 @@ R_Curtiss     22 aus  1 17  3  3 46 300  54 725 347
 E_Korf        27 rsa  1  2 18  4 16 425 846 787 432
 H_Luscher     24 geo  1  3 18  3 41 300 682 700 406
 
-M_Shibles     20 aus  1  3  3 17 46 300 614 766 741
-J_Fontaine    18 fra  1  3  4 16  8 300 134 550 118
 N_Ballerini   18 xxx  1 14  9 16 39 300 304 327 134
 P_Faithfull   18 xxx  1  2  7 16 11 300 505 200 233
-D_Ashton      18 eng  1  5  2 15 13 300 659 883 787
-S_Iversen     17 den  1  8  3 15 30 300 692  13 167
 
 
 M_Rui-Costa   20 por  1  7 19  3 36 300 464 536   6
 G_Kinkladze   19 geo  1  3 18  5  8 300 936 303 723
-G_Roux        21 fra  1  4 17  3 52 300 225 342 373
-D_Deschamps   18 fra  1  7 16  4 11 300 558 146 107
 S_Laguna      16 xxx  1  3 14  4 40 300 892 360 502
 
 D_Walker      20 eng  1 18  2 10 46 300 603 568  37
@@ -76,3 +69,22 @@ M_Laudrup     21 den  1 12 20 12 29 300 594 587 767
 P_Gilbough    20 arg  1 12 19 12 16 300 685 921 931
 
 
+G_Roux        21 fra  1  4 17  3 52 300 225 342 373   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF swap
+D_Deschamps   18 fra  1  7 16  4 11 300 558 146 107   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+D_Scott       18 usa  1  2 16  1 25 300  18 454 731   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+P_Okon        16 aus  1  3 14  4 40 300 892 360 502   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+
+M_Shibles     20 aus  1  3  3 17 46 300 614 766 741   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+J_Fontaine    18 fra  1  3  4 16  8 300 134 550 118   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+S_Iversen     17 den  1  8  3 15 30 300 692  13 167   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+D_Ashton      18 eng  1  5  2 15 13 300 659 883 787   0   0    0   0   0   0   0   0   0   0   0   0   0   0 # for DF Swap
+
+
+K_Tiffie      20 rsa  1 17  4  7 36 480 442 141 287 # 200k
+M_Larsen      19 den  1 17  5  4 22 480 103   2 240 # 400k
+
+J_Coelho      25 por  1 19  5  5 70 480 398 321 537
+L_Lim_Saeng   28 kor  1 19  8  3 39 480 920 248 764
+E_El-Hadary   26 egy  4  6 19  4 44 300 449  56  97
+
+L_Mandeck     30 cam  7 22 13  5 19 390 423 905  27 # 3m

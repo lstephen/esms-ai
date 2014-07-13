@@ -4,11 +4,11 @@ bag   U_Kenedy          22 nir  1  5 20 14 37 300 110 341 486 is suspended for 2
 cop   H_Chyzowych       31 rus  9 24  9  4 48 300 672 256 274 is suspended for 1 game
 dub   Besnard_L         33 sco  1 12 23  8 42 390 186 304 934 is suspended for 1 game
 spo   H_Malik           27 egy  5 16 23 17 26 480 469 847  67 is suspended for 1 game
+vil   P_Tsiklauri       26 geo  2 22 11  6 18 930 543 823 902 is suspended for 1 game
+mis   R_Figueiredo      23 por  4 22 14  9 31 300 701 483 542 is suspended for 1 game
+mis   C_Yastrzemski     24 cze  1  4 22 15 40 480 159 843 566 is suspended for 1 game
 cat   S_Hamidou         29 cam  4 24  2  6 48 300 171 160 223 is suspended for 1 game
 cat   I_Simutenkic      32 cro  1  1  1 22 34 300 871 577 282 is suspended for 1 game
-vil   P_Tsiklauri       26 geo  2 22 11  6 18 930 543 823 902 is suspended for 1 game
 col   C_Cao             21 jap  1 19  2  3  8 300 555 647 245 is suspended for 1 game
 foo   G_Legowski        26 rus  1  1 24 12 20 300 454   5 793 is suspended for 2 games
-mis   R_Figueiredo      23 por  4 22 12  9 31 300 701 483 542 is suspended for 1 game
-mis   C_Yastrzemski     24 cze  1  4 22 15 40 480 159 843 566 is suspended for 1 game
-dhy   L_Skywalker       18 usa  1 16  3 14 23 300 491 941 405 is suspended for 1 game
+dhy   L_Skywalker       18 usa  1 16  5 15 23 300 491 941 405 is suspended for 1 game

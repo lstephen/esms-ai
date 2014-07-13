@@ -1,5 +1,6 @@
 Name         Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb Gam Sub  Min Mom Sav Con Ktk Kps Sht Gls Ass  DP Inj Sus
 ------------------------------------------------------------------------------------------------------------
+I_Aydt        18 xxx 14  1  1  1 18 132 300 300 300   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 P_Ryburn      19 sco  1 18  8  4  8 714 868 773 160   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 K_Huntsinger  19 hol  1 17  8  4 27 714 397 949  50   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 D_Hufnagel    18 ger  1 17 11  2 33 588 301 809 692   0   0    0   0   0   0   0   0   0   0   0   0   0   0

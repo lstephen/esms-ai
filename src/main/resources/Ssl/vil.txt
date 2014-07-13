@@ -3,6 +3,7 @@ Name         Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb Gam Sub  Min Mom Sav Con Ktk
 C_Brantley    33 cro 22  1  1  1 32 172 480 480 480   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 N_Mondovits   25 spa 21  1  1  1 39 484 750 930 750   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 D_Pruneda     23 kor 20  1  2  1 22 683 840  21 660   0   0    0   0   0   0   0   0   0   0   0   0   0   0
+D_Vavrus      31 cze  3 26 12  8 11 480  30  46 891   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 C_Cannon      29 ire  2 24 11 12 10 306 233 453 717   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 M_Probst      31 nir  2 22 16  7 19 930 782 446 634   0   0    0   0   0   0   0   0   0   0   0   0   0   0
 P_Tsiklauri   26 geo  2 22 11  6 18 930 543 823 902   0   0    0   0   0   0   0   0   0   0   0   0   0   1

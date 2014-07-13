@@ -45,7 +45,7 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of("Luigi", "H_Byakkotai", "Ramazinho");
+        return ImmutableList.of("P_Neel", "Ramazinho", "Babybinho");
     }
 
     public FormationValidator getFormationValidator() {
@@ -54,7 +54,7 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_auction.txt", "/for_loan.txt", "/for_sale.txt", "/fre.txt", "/loy.txt");
+        return ImmutableList.of("/for_auction.txt", "/for_loan.txt", "/for_sale.txt", "/fre.txt", "/deletedfree.txt");
     }
 
     public Weightings getWeightings() {
