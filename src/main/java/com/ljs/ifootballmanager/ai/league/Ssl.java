@@ -50,7 +50,7 @@ public class Ssl implements League {
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.<String>of();
+        return ImmutableList.<String>of("P_Gilbough");
     }
 
     public FormationValidator getFormationValidator() {

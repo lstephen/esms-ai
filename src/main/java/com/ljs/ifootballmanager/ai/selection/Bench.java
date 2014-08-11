@@ -70,25 +70,6 @@ public class Bench implements State, Report {
     }
 
     private Player findSubstitute(Role r) {
-        for (Player p : players()) {
-            if (getRole(p) == r) {
-                return p;
-            }
-        }
-
-        if (r == Role.AM || r == Role.MF || r == Role.DM) {
-            for (Player p : players()) {
-                switch (getRole(p)) {
-                    case AM:
-                    case MF:
-                    case DM:
-                        return p;
-                    default:
-                        break;
-                }
-            }
-        }
-
         switch (r) {
             case GK:
                 return Player.bySkill(Rating.STOPPING).max(bench);
