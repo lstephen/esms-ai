@@ -138,6 +138,10 @@ public final class Player {
         this.aggression = aggression;
     }
 
+    public boolean isFullFitness() {
+        return fitness == 100;
+    }
+
     public void setFitness(Integer fitness) {
         this.fitness = fitness;
     }

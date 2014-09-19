@@ -1,7 +1,7 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-Aug 03  W_McGown      23  2 14 23 10 17 Player_Draw          Red_Star_Llama       12,000k
-Aug 05  R_Pacos       24  3  6 23  2 17 Middletown_Steelers  Copenhagen_Kings     4,000k
-Aug 06  M_Tensfeldt   22  1 20 15 12 21 Shurdington_AFC      Middletown_Steelers  5,500k
-Aug 06  A_Runner      20  1  7 18  5  8 Middletown_Steelers  Shurdington_AFC      0
-Aug 06  S_Ugarte      17  4  5 17  6 25 Auction              Copenhagen_Kings     9,500k
+Sep 14  G_Dougherty   22  4  5  8 22 27 Player_Draw          Beckenham_Town_FC    10,000k
+Sep 16  M_Westbay     30  1  8 27 11 44 Beckenham_Town_FC    Middletown_Steelers  6,000k
+Sep 17  M_Laudrup     21  1 12 20 12 29 Beckenham_Town_FC    Chorley_Cougars      9,000k
+Sep 17  P_Gilbough    20  1 13 20 13 16 Beckenham_Town_FC    Chorley_Cougars      10,000k
+Sep 17  S_Bayrak      16  4 15 12 10 35 Auction              Featherstone_Rovers  18,678k

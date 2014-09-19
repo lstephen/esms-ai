@@ -46,7 +46,7 @@ public final class SelectionCriteria {
         Set<Player> forced = Sets.newHashSet();
 
         for (Player p : all) {
-            if (Iterables.contains(league.getForcedPlay(), p.getName())) {
+            if (Iterables.contains(league.getForcedPlay(), p.getName()) && !p.isReserves()) {
                 forced.add(p);
             }
         }
@@ -54,7 +54,19 @@ public final class SelectionCriteria {
         return create(forced, all);
     }
 
-    private static SelectionCriteria create(Iterable<Player> forced, Iterable<Player> all) {
+    public static SelectionCriteria createForReserves(League league, Iterable<Player> all) {
+        Set<Player> forced = Sets.newHashSet();
+
+        for (Player p : all) {
+            if (Iterables.contains(league.getForcedPlay(), p.getName()) && p.isReserves()) {
+                forced.add(p);
+            }
+        }
+
+        return create(forced, all);
+    }
+
+    public static SelectionCriteria create(Iterable<Player> forced, Iterable<Player> all) {
         return new SelectionCriteria(forced, all);
     }
 

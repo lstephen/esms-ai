@@ -18,6 +18,7 @@ import com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.formation.score.SecondXIScorer;
+import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
@@ -51,6 +52,7 @@ public class Main {
     private static final ImmutableMap<String, League> SITES =
         ImmutableMap
             .<String, League>builder()
+            .put("EFL - TTH", EliteFootballLeague.create())
             .put("IFM - LIV", IFootballManager.create("liv"))
             .put("IFM - NOR", IFootballManager.create("nor"))
             .put("IFM - DER", IFootballManager.create("der"))
@@ -137,10 +139,20 @@ public class Main {
 
         Set<Player> reservesSquad = Sets.newHashSet();
         Formation reservesXI = null;
+        Set<Player> allReservesXI = Sets.newHashSet();
         if (league.getReserveTeam().isPresent()) {
-            reservesXI = Formation.select(league, squad.reserves(league), DefaultScorer.get()).get(0);
+            ImmutableList<Formation> reserveXICandiates = Formation.select(
+                league,
+                SelectionCriteria.create(ImmutableSet.<Player>of(), squad.reserves(league)),
+                DefaultScorer.get());
+            reservesXI = reserveXICandiates.get(0);
+
+            for (Formation f : reserveXICandiates) {
+                allReservesXI.addAll(f.players());
+            }
+
             print(w, "Reserves XI", reservesXI);
-            for (Player p : reservesXI.players()) {
+            for (Player p : allReservesXI) {
                 reservesSquad.add(squad.findPlayer(p.getName()));
             }
         }
@@ -198,7 +210,11 @@ public class Main {
                 .sortByValue());
 
         if (!reservesSquad.isEmpty()) {
-            print(w, String.format("Reserves Squad (%d)", reservesSquad.size()), SquadReport.create(league, reservesXI.getTactic(), reservesSquad).sortByValue());
+            print(w, "Reserves XI", SquadReport.create(league, reservesXI.getTactic(), allReservesXI).sortByValue());
+            print(
+                w,
+                String.format("Reserves Squad (%d)", reservesSquad.size()),
+                SquadReport.create(league, reservesXI.getTactic(), FluentIterable.from(reservesSquad).filter(Predicates.not(Predicates.in(allReservesXI)))).sortByValue());
         }
 
         Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
@@ -207,12 +223,24 @@ public class Main {
             trainingSquad.removeAll(secondXI.players());
         }
         if (reservesXI != null) {
-            trainingSquad.removeAll(reservesXI.players());
+            trainingSquad.removeAll(allReservesXI);
         }
-        if (atPotentialXI != null) {
-            trainingSquad.removeAll(atPotentialXI.players());
-        }
+
+        trainingSquad.removeAll(atPotentialXI.players());
         print(w, "Training Squad", SquadReport.create(league, firstXI.getTactic(), trainingSquad).sortByValue());
+
+        print(
+            w,
+            "Potentials",
+            SquadReport
+                .create(
+                    league,
+                    firstXI.getTactic(),
+                    FluentIterable
+                        .from(atPotentialXI.players())
+                        .filter(Predicates.not(Predicates.in(allFirstXI)))
+                        .filter(Predicates.not(Predicates.in(allReservesXI))))
+                .sortByValue());
 
         print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
 
@@ -252,7 +280,7 @@ public class Main {
         Set<String> forced = Sets.newHashSet();
 
         for (Player p : available) {
-            if (Iterables.contains(league.getForcedPlay(), p.getName())) {
+            if (Iterables.contains(league.getForcedPlay(), p.getName()) && p.isFullFitness()) {
                 forced.add(p.getName());
             }
         }

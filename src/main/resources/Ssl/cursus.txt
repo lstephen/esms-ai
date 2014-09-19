@@ -1,8 +1,7 @@
 Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
 -------------------------------------------------------------
-bbs   Y_Farlane         29 bel  4 28 23  8 12 570 481 440 137 is suspended for 1 game
-vil   E_Pabst           28 hol  3  6  8 23 37 126 581 944 897 is suspended for 1 game
-bwr   D_Winton          27 ger  5 18 26 15 28 900 270 561 997 is suspended for 1 game
-why   P_Pane            17 bra  1 15  4  4 32 300 775 677 540 is suspended for 1 game
-aay   Q_Cobia           17 bra  1 15  2  3 58 300 633 304 763 is suspended for 1 game
-ccy   S_Hetet           18 nig  1 16  1  2 43 300 961 745 700 is suspended for 1 game
+hur   I_Ogan            22 aus  1 19  5 12 30 300 527 687 309 is suspended for 1 game
+fea   W_Cusack          21 swe  5 16 24 15 28 300 203 350 506 is suspended for 1 game
+cho   H_Northlane       25 nir  1  5  3 21 39 300 339 480 628 is suspended for 1 game
+fry   J_Lames           21 uru  1 10 17  5 24 300 471 935 145 is suspended for 1 game
+cay   S_Kienholz        20 cze  1  6  4 17 43 300 562 597 439 is suspended for 1 game

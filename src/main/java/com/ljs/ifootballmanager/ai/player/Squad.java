@@ -5,6 +5,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
@@ -21,8 +22,10 @@ import com.ljs.ifootballmanager.ai.rating.Ratings;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Lists;
 
 /**
  *
@@ -30,10 +33,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 public final class Squad {
 
-    private final ImmutableSet<Player> players;
+    private final ImmutableList<Player> players;
 
     private Squad(Iterable<Player> ps) {
-        this.players = ImmutableSet.copyOf(ps);
+        this.players = ImmutableList.copyOf(ps);
+    }
+
+    public Ordering<Player> getOrdering() {
+        return Ordering.explicit(players);
     }
 
     public Integer getGames() {
@@ -50,7 +57,7 @@ public final class Squad {
     }
 
     public ImmutableSet<Player> players() {
-        return players;
+        return ImmutableSet.copyOf(players);
     }
 
     public Player findPlayer(String name) {
@@ -178,7 +185,7 @@ public final class Squad {
     }
 
     private static Squad load(League league, CharSource source, Boolean reserves) throws IOException {
-        Set<Player> ps = Sets.newHashSet();
+        List<Player> ps = Lists.newArrayList();
 
         for (String line : source.readLines()) {
             if (Strings.isNullOrEmpty(line) || line.startsWith("Name") || line.startsWith("----") || line.startsWith("#")) {

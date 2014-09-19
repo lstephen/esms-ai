@@ -2,7 +2,6 @@
 P_Septer      32 aut  2 22 11  7 11 911 825 516 495 # £1.5m
 U_Imbroll     22 sen  1 21 13  7 21 858 842 425 323 # £9.5m
 P_Rzeznik     20 cze  1 12 19  5 10 678 801 380 111 # £7m
-J_DeRemer     30 fra  2 22  7 14 31 877 837 142 215 # £3.5M
 D_Wedgewood   21 eng  1 21  6 15 28 732 192 898  18 # £16m
 
 
@@ -42,8 +41,6 @@ U_Hupe        16 xxx  1  2  4 14  9 300 180 307 474 # $4m or swap
 G_Svoboda     18 xxx  1  6  2 15 64 300 214 201 395 # swap for youth GK
 J_Justiss     18 xxx  1  3 12 15 25 300 906 425 169 # swap for youth GK
 
-R_Cyriax      19 usa  1 17  7 11 49 588 829 960 547 # $8m
-X_Exposito    19 por  1  5  7 18 15 732  41 645 183 # $12m
 X_Oxer        19 sco  1 16  4  7 10 444 439 932 272 # first $2m
 
 
@@ -152,16 +149,12 @@ Luis_Lopez    21 uru  1  6  8 21 41 686 816 992   2
 
 
 K_Murrant     19 sco  1 19 11  6 11 707 154 263 133
-R_Cyriax      19 usa  1 17  7 11 49 588 829 960 547
-Y_Dunshee     19 sco  1 11 18  2 37 570 627 735 744
 Y_Guilkey     19 usa  1  4 18 13 24 588 615 136 121
-X_Exposito    19 por  1  5  7 18 15 732  41 645 183
 
 Y_Hersi       29 hol  2 12 22 12 21 176  92 707 716 # for similar defender
 
 E_Beisch      25 bel  2  8 22  5 15 147 121 473 682  # 25m
 
-N_Burdzinski  18 xxx  1 16  7  6 34 300 528 191 542 # first $5m
 
 T_Vonhoff     18 hol  1 15  5  4  9 444 545 256 113 # $1m
 
@@ -194,3 +187,13 @@ C_Gamboa      17 nig  1  4 15  6 19 300 415 299 111 # 2m
 Troy          17 usa  1  1 14  2  8 300 969 117 873 # 300k
 Barnie        18 usa  1  7  4 15 29 300 194 541 204 # 1m
 J_Campbell    17 usa  1  2  7 15 12 300 146 101 412 # 2m
+
+J_DeRemer     30 fra  2 22  7 14 31 933 501 107 180 #600k
+K_Peacham     26 ire  2 17 20  8 59 289 281  36 229 #500k
+
+R_Cyriax      19 usa  1 18  8 12 49 652 440 286  35 #prev $8m
+X_Cutko       18 por  1 17  7  8  9 508 134  41 738
+N_Burdzinski  18 xxx  1 17  7  6 34 364   7 661 796 #prev $5m
+Y_Dunshee     19 sco  1 12 19  3 37 634 108 298   1
+X_Exposito    19 por  1  5  8 18 15 796 304 135 718 #prev $12m
+X_Vough       19 sco  1  4  7 17 54 796 309 426 232

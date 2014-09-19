@@ -14,6 +14,7 @@ import com.ljs.ai.search.State;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.player.SquadHolder;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import java.io.PrintWriter;
@@ -98,8 +99,7 @@ public class Bench implements State, Report {
                     return p.getOverall(formation.getTactic()).getRole();
                 }
             })
-            .compound(Player.byOverall(formation.getTactic()))
-            .compound(Player.byTieBreak());
+            .compound(SquadHolder.get().getOrdering());
 
         return ordering.immutableSortedCopy(bench);
     }

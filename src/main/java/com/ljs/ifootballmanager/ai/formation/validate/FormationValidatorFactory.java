@@ -36,4 +36,14 @@ public final class FormationValidatorFactory {
             .build();
     }
 
+    public static FormationValidator efl() {
+        return CountingFormationValidator
+            .builder()
+            .exactly(1, Role.GK)
+            .range(3, 6, Role.DF)
+            .range(2, 6, Role.DM, Role.MF, Role.AM)
+            .range(1, 4, Role.FW)
+            .build();
+    }
+
 }

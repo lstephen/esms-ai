@@ -21,6 +21,7 @@ import com.ljs.ifootballmanager.ai.formation.selection.RandomFormationGenerator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.player.SquadHolder;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
@@ -137,7 +138,7 @@ public final class Formation implements Report {
         List<Player> players = Lists.newArrayList();
 
         for (Role r : Ordering.natural().sortedCopy(positions.roles())) {
-            for (Player p : Player.byName().sortedCopy(positions.get(r))) {
+            for (Player p : SquadHolder.get().getOrdering().sortedCopy(positions.get(r))) {
                 players.add(p);
             }
         }
