@@ -10,4 +10,13 @@ package com.ljs.ifootballmanager.ai;
  */
 public enum Role {
     GK, DF, DM, MF, AM, FW;
+
+    public boolean isOneOf(Role... rs) {
+        for (Role r : rs) {
+            if (r == this) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

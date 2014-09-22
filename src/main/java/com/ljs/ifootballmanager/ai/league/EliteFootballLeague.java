@@ -4,6 +4,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidatorFactory;
+import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidator;
+import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Potential;
@@ -28,11 +30,16 @@ public final class EliteFootballLeague implements League {
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of("R_Liverani", "Kike", "A_Andreasen", "J_Wallis");
+        return ImmutableList.of("R_Liverani", "A_Andreasen");
     }
 
     public FormationValidator getFormationValidator() {
         return FormationValidatorFactory.efl();
+    }
+
+    public PlayerValidator getPlayerValidator() {
+        //return PlayerValidatorFactory.anyRole();
+        return PlayerValidatorFactory.inPrimaryRole();
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {

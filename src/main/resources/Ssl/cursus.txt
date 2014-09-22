@@ -1,7 +1,10 @@
 Team  Name             Age Nat St Tk Ps Sh Ag KAb TAb PAb SAb
 -------------------------------------------------------------
-hur   I_Ogan            22 aus  1 19  5 12 30 300 527 687 309 is suspended for 1 game
-fea   W_Cusack          21 swe  5 16 24 15 28 300 203 350 506 is suspended for 1 game
-cho   H_Northlane       25 nir  1  5  3 21 39 300 339 480 628 is suspended for 1 game
-fry   J_Lames           21 uru  1 10 17  5 24 300 471 935 145 is suspended for 1 game
-cay   S_Kienholz        20 cze  1  6  4 17 43 300 562 597 439 is suspended for 1 game
+man   H_Lavrinenko      27 rus  8 22 15 10 25 300 352 911 657 is suspended for 2 games
+fea   L_Breen           24 usa  1  1 10 25 30 300 644 157 165 is suspended for 1 game
+mis   C_Yastrzemski     24 cze  1  4 23 15 40 480 146  94 685 is suspended for 1 game
+shu   L_Sabatini        23 uru  1 11 22 10 37 480 594 836 605 is suspended for 1 game
+sby   J_Devaris         20 wal  1 10 17  2 38 300 165 547 765 is suspended for 1 game
+sby   O_Boen            18 cam  1  4 16  8 21 300  44 271 920 is suspended for 1 game
+vvy   P_Kindl           19 spa  1 18  8  6 36 535 113 511 191 is suspended for 1 game
+say   H_Goggi           19 ita  1 18  2  2 49 300 306 683 403 is suspended for 1 game

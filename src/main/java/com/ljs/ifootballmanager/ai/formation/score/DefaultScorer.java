@@ -3,6 +3,7 @@ package com.ljs.ifootballmanager.ai.formation.score;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
@@ -52,7 +53,7 @@ public final class DefaultScorer implements FormationScorer {
 
         Double base = (9 * shotQuality(f, tactic) + cornerShotQuality(f)) / 10;
 
-        return a/avg * base;
+        return avg < 1.0 ? base : (a/avg * base);
     }
 
     public Double gkBonus(Formation f, Tactic t) {
@@ -61,19 +62,29 @@ public final class DefaultScorer implements FormationScorer {
 
         Double avg = (a + d) / 2;
 
-        return avg/d * gkQuality(f);
+        Double factor = Math.min(2.0, d < 1.0 ? 1.0 : (avg / d));
+
+        return factor * gkQuality(f);
     }
 
     public Double shotQuality(Formation f, Tactic t) {
         Double score = 0.0;
 
-        Double shooting = skillRating(f, t, Rating.SHOOTING);
+        Double shooting = 0.0;
 
         for (Player p : f.unsortedPlayers()) {
             if (f.findRole(p) == Role.GK) {
                 continue;
             }
-            Double chance = p.getSkillRating(f.findRole(p), t, Rating.SHOOTING) / shooting;
+            shooting += p.getSkillRating(f.findRole(p), t, Rating.SHOOTING);
+        }
+
+        for (Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                continue;
+            }
+            Double chance = 
+                p.getSkillRating(f.findRole(p), t, Rating.SHOOTING) / shooting;
 
             score += (chance * p.getSkill(Rating.SHOOTING));
         }
@@ -121,7 +132,9 @@ public final class DefaultScorer implements FormationScorer {
     private Double skillRating(Formation f, Tactic t, Rating r) {
         Double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
-            score += p.getSkillRating(f.findRole(p), t, r);
+            if (LeagueHolder.get().getPlayerValidator().isAllowedInRole(p.getRatings(), f.findRole(p))) {
+                score += p.getSkillRating(f.findRole(p), t, r);
+            }
         }
         return score;
     }

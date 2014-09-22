@@ -215,6 +215,10 @@ public final class Player {
         return Evaluator.create(ratings).evaluate(r, t);
     }
 
+    public Ratings getRatings() {
+        return ratings;
+    }
+
     public Double getRating(Role r, Tactic t) {
         return evaluate(r, t).getRating();
     }

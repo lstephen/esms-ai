@@ -94,6 +94,10 @@ public final class Ratings {
         return Ordering.natural().max(ratings.values());
     }
 
+    public Rating getPrimarySkill() {
+        return getSkillPriority().get(0);
+    }
+
     public ImmutableList<Rating> getSkillPriority() {
         return Ordering
             .natural()

@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai.formation;
 
 import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -258,6 +259,8 @@ public final class Formation implements Report {
         for (Tactic t : Tactic.values()) {
             formations.add(select(league, t, criteria, scorer));
         }
+
+        Preconditions.checkState(formations.size() == Tactic.values().length);
 
         final Double max = byScore(scorer).max(formations).score();
 

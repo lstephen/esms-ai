@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai.value;
 
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 
 /**
@@ -17,6 +18,9 @@ public final class Evaluator {
     }
 
     public RatingInRole evaluate(Role r, Tactic t) {
+        if (!LeagueHolder.get().getPlayerValidator().isAllowedInRole(ratings, r)) {
+            return RatingInRole.create(r, 0.0);
+        }
         return RatingInRole.create(r, ratings.overall(r, t));
     }
 

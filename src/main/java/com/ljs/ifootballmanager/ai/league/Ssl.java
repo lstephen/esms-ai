@@ -4,6 +4,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidatorFactory;
+import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidator;
+import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
 import com.ljs.ifootballmanager.ai.info.InfoValue;
 import com.ljs.ifootballmanager.ai.info.SslInfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
@@ -56,6 +58,10 @@ public class Ssl implements League {
     public FormationValidator getFormationValidator() {
         //return FormationValidatorFactory.ssl();
         return FormationValidatorFactory.jusCup();
+    }
+
+    public PlayerValidator getPlayerValidator() {
+        return PlayerValidatorFactory.anyRole();
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {

@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -22,6 +23,7 @@ import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.league.Ssl;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
@@ -99,6 +101,8 @@ public class Main {
     public void run(League league, PrintWriter w) throws IOException {
         System.out.println("Running for: " + league.getTeam());
 
+        LeagueHolder.set(league);
+
         Squad squad = Squad.load(league);
         SquadHolder.set(squad);
 
@@ -108,6 +112,8 @@ public class Main {
         for (Formation f : firstXICandidates) {
             allFirstXI.addAll(f.players());
         }
+
+        Preconditions.checkState(!firstXICandidates.isEmpty());
 
         Formation firstXI = firstXICandidates.get(0);
 
@@ -277,15 +283,15 @@ public class Main {
     }
 
     private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, CharSink sheet, FormationScorer scorer) throws IOException {
-        Set<String> forced = Sets.newHashSet();
+        Set<Player> forced = Sets.newHashSet();
 
         for (Player p : available) {
             if (Iterables.contains(league.getForcedPlay(), p.getName()) && p.isFullFitness()) {
-                forced.add(p.getName());
+                forced.add(p);
             }
         }
 
-        Formation formation = Formation.selectOne(league, SelectionCriteria.create(league, available), scorer);
+        Formation formation = Formation.selectOne(league, SelectionCriteria.create(forced, available), scorer);
 
         ChangePlan cp =
             ChangePlan.select(league, formation, available);

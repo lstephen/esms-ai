@@ -97,8 +97,6 @@ Simoncelli    18 ita  1  2  2 16 27 300 781 690 761  # 3m
 M_Tensfeldt   22 ger  1 20 15 12 21 300 598 212 552 # 9m
 R_O_Flisty    22 eng  1  3  3 20 55 390 935 864 662  # 6m
 
-U_Kenedy      22 nir  1  5 20 14 37 300 110 341 486 #6m
-
 
 
 E_Costi       28 gre  2 21 11  5  6 300 866 155 654 #3m
@@ -123,3 +121,10 @@ M_Laudrup     21 den  1 12 20 12 29 300 584 842 799 # 9m
 P_Gilbough    20 arg  1 13 20 13 16 300 655  59  33 # 12m
 
 W_Skeels      19 ire  1  5 17  2 25 300 700 880 890 # 3m
+
+H_Herrera     17 mex  1  8 16  8 13 300 500 154 605 # 6m
+W_Vagenas     32 cro  1 25 23  2 13 840 367 192 863 # 6m
+A_Sofia       31 cze  6 12 26 12 20 300 304 458 684 # 6m
+V_Kazaishvili 30 geo  4 15 24 13 32 300 977 914 296 # 6m
+U_Kenedy      22 nir  1  5 20 14 37 300 110 377 494 # 5m
+Rooneiro      26 wal  1  5 14 22 34 500 680 986 689 # 9m
