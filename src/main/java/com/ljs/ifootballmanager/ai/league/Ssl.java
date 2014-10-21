@@ -45,6 +45,8 @@ public class Ssl implements League {
 
     public Optional<Double> getSeniorSkillsCap() {
         return Optional.of(25.0);
+        // JUS cup
+        //return Optional.absent();
     }
 
     public Optional<Double> getYouthSkillsCap() {
@@ -56,8 +58,8 @@ public class Ssl implements League {
     }
 
     public FormationValidator getFormationValidator() {
-        //return FormationValidatorFactory.ssl();
-        return FormationValidatorFactory.jusCup();
+        return FormationValidatorFactory.ssl();
+        //return FormationValidatorFactory.jusCup();
     }
 
     public PlayerValidator getPlayerValidator() {

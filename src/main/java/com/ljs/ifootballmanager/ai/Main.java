@@ -286,7 +286,10 @@ public class Main {
         Set<Player> forced = Sets.newHashSet();
 
         for (Player p : available) {
-            if (Iterables.contains(league.getForcedPlay(), p.getName()) && p.isFullFitness()) {
+            Boolean isForced = Iterables.contains(league.getForcedPlay(), p.getName());
+            Boolean isFullFitness = SquadHolder.get().findPlayer(p.getName()).isFullFitness();
+
+            if (isForced && isFullFitness) {
                 forced.add(p);
             }
         }

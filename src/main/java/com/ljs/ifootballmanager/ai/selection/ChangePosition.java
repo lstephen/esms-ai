@@ -5,6 +5,7 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 /**
  *
@@ -48,6 +49,28 @@ public final class ChangePosition implements Change {
 
     public Formation apply(Formation f, Integer minute) {
         return f.move(role, player);
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof ChangePosition)) {
+            return false;
+        }
+
+        ChangePosition rhs = ChangePosition.class.cast(obj);
+
+        return Objects.equals(minute, rhs.minute)
+            && Objects.equals(player, rhs.player)
+            && Objects.equals(role, rhs.role);
+    }
+
+    public int hashCode() {
+        return Objects.hash(minute, player, role);
     }
 
     public static ChangePosition create(Player p, Role r, Integer m) {

@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.formation.score;
 
+import com.google.common.collect.ImmutableMap;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -8,6 +9,7 @@ import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import java.io.PrintWriter;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
  *
@@ -51,7 +53,9 @@ public final class DefaultScorer implements FormationScorer {
 
         Double avg = (a + d) / 2;
 
-        Double base = (9 * shotQuality(f, tactic) + cornerShotQuality(f)) / 10;
+        DescriptiveStatistics shots = buildShotQualityStatistics(f, tactic);
+
+        Double base = (shots.getMean() + shots.getPercentile(50)) / 2.0;
 
         return avg < 1.0 ? base : (a/avg * base);
     }
@@ -70,27 +74,53 @@ public final class DefaultScorer implements FormationScorer {
     public Double shotQuality(Formation f, Tactic t) {
         Double score = 0.0;
 
-        Double shooting = 0.0;
+        ImmutableMap<Player, Double> chances = shootingChances(f, t);
 
         for (Player p : f.unsortedPlayers()) {
-            if (f.findRole(p) == Role.GK) {
-                continue;
-            }
-            shooting += p.getSkillRating(f.findRole(p), t, Rating.SHOOTING);
-        }
-
-        for (Player p : f.unsortedPlayers()) {
-            if (f.findRole(p) == Role.GK) {
-                continue;
-            }
-            Double chance = 
-                p.getSkillRating(f.findRole(p), t, Rating.SHOOTING) / shooting;
-
-            score += (chance * p.getSkill(Rating.SHOOTING));
+            score += (chances.get(p) * p.getSkill(Rating.SHOOTING));
         }
 
         return score;
     }
+
+    private ImmutableMap<Player, Double> shootingChances(Formation f, Tactic t) {
+
+        Double total = 0.0;
+
+        for (Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                continue;
+            }
+            total += p.getSkillRating(f.findRole(p), t, Rating.SHOOTING);
+        }
+
+        ImmutableMap.Builder<Player, Double> chances = ImmutableMap.builder();
+
+        for(Player p : f.unsortedPlayers()) {
+            if (f.findRole(p) == Role.GK) {
+                chances.put(p, 0.0);
+            } else {
+                chances.put(p, p.getSkillRating(f.findRole(p), t, Rating.SHOOTING) / total);
+            }
+        }
+
+        return chances.build();
+    }
+
+    private DescriptiveStatistics buildShotQualityStatistics(Formation f, Tactic t) {
+        DescriptiveStatistics shots = new DescriptiveStatistics();
+
+        ImmutableMap<Player, Double> chances = shootingChances(f, t);
+
+        for (Player p : f.unsortedPlayers()) {
+            for (int i = 0; i < chances.get(p) * 1000; i++) {
+                shots.addValue(p.getSkill(Rating.SHOOTING));
+            }
+        }
+
+        return shots;
+    }
+
 
     private Double cornerShotQuality(Formation f) {
         Double total = 0.0;
@@ -156,15 +186,17 @@ public final class DefaultScorer implements FormationScorer {
             w.println();
         }
 
-        w.format("%10s ", "SH Qual");
+        w.format("%10s ", "SH Mean");
         for (Tactic t : tactics) {
-            w.format("%7d ", Maths.round(shotQuality(f, t)));
+            DescriptiveStatistics shots = buildShotQualityStatistics(f, t);
+            w.format("%7d ", Maths.round(shots.getMean()));
         }
         w.println();
 
-        w.format("%10s ", "C SH Qual");
+        w.format("%10s ", "SH Median");
         for (Tactic t : tactics) {
-            w.format("%7d ", Maths.round(cornerShotQuality(f)));
+            DescriptiveStatistics shots = buildShotQualityStatistics(f, t);
+            w.format("%7d ", Maths.round(shots.getPercentile(50)));
         }
         w.println();
 

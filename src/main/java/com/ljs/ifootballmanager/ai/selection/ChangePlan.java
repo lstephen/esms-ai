@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -550,6 +551,26 @@ public final class ChangePlan implements Report {
         public ChangePlan apply(ChangePlan cp) {
             return cp.with(add);
         }
+
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof AddChange)) {
+                return false;
+            }
+
+            AddChange rhs = AddChange.class.cast(obj);
+
+            return Objects.equals(add, rhs.add);
+        }
+
+        public int hashCode() {
+            return Objects.hash(add);
+        }
     }
 
     private static class RemoveChange implements Action<ChangePlan> {
@@ -562,6 +583,28 @@ public final class ChangePlan implements Report {
 
         public ChangePlan apply(ChangePlan cp) {
             return cp.remove(remove);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof RemoveChange)) {
+                return false;
+            }
+
+            RemoveChange rhs = RemoveChange.class.cast(obj);
+
+            return Objects.equals(remove, rhs.remove);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(remove);
         }
     }
 

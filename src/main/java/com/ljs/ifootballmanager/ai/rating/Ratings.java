@@ -38,6 +38,8 @@ public final class Ratings {
             overall += getWeightedSkill(w, r);
         }
 
+        //overall += getWeightedSkill(w, Rating.SHOOTING) / 10.0;
+
         return overall;
     }
 

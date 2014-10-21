@@ -1,4 +1,5 @@
 
+
 Given         20 ire 19  3  2  3 21 300 300 300 300
 A_Cahil       21 eng  3 21 10  5 31 300 290 828 527
 Jaunzi_I      20 spa  1  4 20  8 33 400 414   8 615
@@ -14,3 +15,38 @@ Fernandinho   31 bra  4  7 23  9 25 300 278 528 293
 Dodo          21 bra  3 22  4  6 33 800 161 760 783
 M_Richards    25 eng  2 21  9  5 29 800 960 845 828
 E_Huws        21 wal  2  6 22 16 38 800 836  72 922
+
+A_Kerzhakov   25 rus  1 23 10  7 42 300 649 966 436
+
+A_R_Essien    26 sco  1 20 18  1 23 300  57  28 355
+
+D_Prime       23 eng  2  7 22 13 40 300 883 871 751
+
+A_R_Essien	26	sco	1	20	18	1	23	300	57	28	355
+A_Wisdom		27	eng	2	22	19	8	34	300	669	868	392
+Branco		28	bra	2	19	15	5	26	300	89	622	341
+D_Barr		27	fra	2	20	15	7	21	300	225	758	577
+D_Bentley		30	eng	3	16	24	8	36	600	367	134	907
+Doriva		17	bra	2	16	19	8	21	800	920	1	867
+Emerson_Jr		18	bra	3	16	22	9	21	800	860	131	870
+G_Fofana		21	fra	1	15	23	7	21	600	593	588	180
+Gandolf		30	spa	2	18	26	8	19	300	756	138	430
+J_Wilshere	 	25	eng	2	17	25	11	19	300	723	869	329
+K_Scott	 	27	sco	1	17	15	5	29	300	732	622	892
+M_Barry	 	19	eng	2	15	21	6	32	400	622	750	668
+M_Woods		21	eng	2	15	22	8	18	300	665	458	965
+Oscar_Serrano		26	spa	2	15	25	11	19	300	39	660	866
+P_Henrique		24	spa	1	17	21	7	18	300	289	829	250
+R_Nomvethe	 	33	hol	2	18	22	6	28	300	389	825	764
+Ridoutska	 	22	eng	2	15	23	7	34	300	537	924	174
+S_Howey		27	enf	2	18	17	4	36	300	670	757	898
+S_Winzor	 	17	eng	3	16	17	9	22	500	798	993	522
+Saddam_H	 	28	por	2	18	25	23	27	300	724	238	352
+T_Manniman	 	27	eng	2	16	20	5	25	250	319	487	197
+V_Jones	 	31	wal	3	15	23	6	48	300	458	209	766
+X_Shaqiri		24	swi	1	15	22	7	29	300	483	34	769
+
+R_Canella     26 spa  2 19  6 16 18 300 408 679 753
+M_Twaddle     28 fra  2 19 12 17 22 290 401  22 973
+
+Hugo_Sanchez	26	mex	2	9	15	22	27	300	240	436	251

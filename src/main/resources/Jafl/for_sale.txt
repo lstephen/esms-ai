@@ -197,3 +197,19 @@ N_Burdzinski  18 xxx  1 17  7  6 34 364   7 661 796 #prev $5m
 Y_Dunshee     19 sco  1 12 19  3 37 634 108 298   1
 X_Exposito    19 por  1  5  8 18 15 796 304 135 718 #prev $12m
 X_Vough       19 sco  1  4  7 17 54 796 309 426 232
+
+M_Riu         31 mex  2  2 26 19 25 353  52 463  30 #$23m
+
+Q_Gehrken     24 isr  2 15  8 22 45 367  96 548 860 #20m
+G_Czappa      19 usa  1  3 18  9 12 676 236 771 473 #12m
+
+
+Y_Sanchez     19 mex  1 16  5  8 26 480  48 398 395 # SOLD
+Y_Pelis       23 fra 19  1  1  1 11 672 780 780 780 # 100K
+P_Genth       23 nig  1  5 21 17 12 870   1  72 484 # SOLD
+Q_Sura        20 gha  1 11 19  6 64 722 427 923 618 # 750k
+V_Duzant      20 fra  1  5  7 20 13 690 629 294  54 # SOLD
+
+E_Oxton         20 xxx  1 11 19  1  9 300 349 356 578 # 6.9m
+
+S_McDuck      29 sco  1 10 24  9 21 948 636 567 441 # 20m

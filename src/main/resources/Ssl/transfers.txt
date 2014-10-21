@@ -1,15 +1,3 @@
 Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
 ----------------------------------------------------------------------------------------
-Sep 14  G_Dougherty   22  4  5  8 22 27 Player_Draw          Beckenham_Town_FC    10,000k
-Sep 16  M_Westbay     30  1  8 27 11 44 Beckenham_Town_FC    Middletown_Steelers  6,000k
-Sep 17  M_Laudrup     21  1 12 20 12 29 Beckenham_Town_FC    Chorley_Cougars      9,000k
-Sep 17  P_Gilbough    20  1 13 20 13 16 Beckenham_Town_FC    Chorley_Cougars      10,000k
-Sep 17  S_Bayrak      16  4 15 12 10 35 Auction              Featherstone_Rovers  18,678k
-Sep 20  G_Dougherty   22  4  5  8 22 27 Beckenham_Town_FC    Manchester_Reds      11,000k
-Sep 20  W_Skeels      19  1  5 17  2 25 Beckenham_Town_FC    Manchester_Reds      0
-Sep 20  E_Blazard     22  1  6 19  2 37 Asbo_All_Stars       Foreign_Team         7,700k
-Sep 20  W_Hattox      22  1  3 19  3 12 Castleford_Town      Foreign_Team         6,800k
-Sep 20  Q_Groer       26  1  4 10 18 12 Chorley_Cougars      Foreign_Team         2,700k
-Sep 20  T_Accaioli    23  1 18 12  6 55 Middletown_Steelers  Foreign_Team         3,500k
-Sep 20  M_Bunis       25  1  2 11 17 14 Red_Star_Llama       Foreign_Team         1,300k
-Sep 20  A_Ramsey      28  1  4 19  6 39 Huracan_Rhythm       Foreign_Team         2,800k
+Oct 12  H_Malik       27  5 16 23 17 26 Sporting_Boyos       Derry_Patriots       10,000k

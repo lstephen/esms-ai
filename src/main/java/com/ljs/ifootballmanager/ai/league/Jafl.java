@@ -51,8 +51,8 @@ public class Jafl implements League {
     }
 
     public FormationValidator getFormationValidator() {
-        return FormationValidatorFactory.jafl();
-        //return FormationValidatorFactory.jusCup();
+        //return FormationValidatorFactory.jafl();
+        return FormationValidatorFactory.jusCup();
     }
 
     public PlayerValidator getPlayerValidator() {

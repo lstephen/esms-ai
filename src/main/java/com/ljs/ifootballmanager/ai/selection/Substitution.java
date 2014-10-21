@@ -1,11 +1,12 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 /**
  *
@@ -74,6 +75,29 @@ public final class Substitution implements Change {
 
     public Formation apply(Formation f, Integer minute) {
         return f.substitute(in.afterMinutes(minute - getMinute()), role, out);
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Substitution)) {
+            return false;
+        }
+
+        Substitution rhs = Substitution.class.cast(obj);
+
+        return Objects.equals(in, rhs.in)
+            && Objects.equals(out, rhs.out)
+            && Objects.equals(role, rhs.role)
+            && Objects.equals(minute, rhs.minute);
+    }
+
+    public int hashCode() {
+        return Objects.hash(in, out, role, minute);
     }
 
     public static Builder builder() {
