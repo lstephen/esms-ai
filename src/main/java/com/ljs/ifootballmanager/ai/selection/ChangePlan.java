@@ -18,7 +18,9 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
+import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
 import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
 import java.io.PrintWriter;
@@ -217,6 +219,11 @@ public final class ChangePlan implements Report {
         if (changes(Substitution.class).size() > 3) {
             return false;
         }
+
+		if (LeagueHolder.get() instanceof EliteFootballLeague
+			&& !changes(ChangePosition.class).isEmpty()) {
+			return false;
+		}
 
         // TODO: We should be able to support more than one
         if (changes(TacticChange.class).size() > 1) {
