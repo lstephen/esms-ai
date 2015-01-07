@@ -48,4 +48,16 @@ public final class FormationValidatorFactory {
             .build();
     }
 
+    public static FormationValidator esl() {
+      return CountingFormationValidator
+        .builder()
+        .exactly(1, Role.GK)
+        .range(3, 5, Role.DF)
+        .range(2, 6, Role.DM, Role.MF, Role.AM)
+        .max(3, Role.DM)
+        .max(3, Role.AM)
+        .range(1, 4, Role.FW)
+        .build();
+    }
+
 }

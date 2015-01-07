@@ -1,8 +1,10 @@
 package com.ljs.ifootballmanager.ai.player;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -14,6 +16,7 @@ import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
+import com.ljs.ifootballmanager.ai.Config;
 import com.ljs.ifootballmanager.ai.Main;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
@@ -21,6 +24,7 @@ import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -155,7 +159,6 @@ public final class Squad {
     public static Squad load(League league) throws IOException {
         Squad first =  load(league, league.getTeam(), Boolean.FALSE);
 
-
         if (league.getReserveTeam().isPresent()) {
             Squad reserves = load(league, league.getReserveTeam().get(), Boolean.TRUE);
 
@@ -174,12 +177,14 @@ public final class Squad {
     }
 
     private static Squad load(League league, String team, Boolean reserves) throws IOException {
-        CharSource teamFile =
-            Resources
-                .asByteSource(Main.class.getResource("/" + league.getClass().getSimpleName() + "/" + team + ".txt"))
-                .asCharSource(Charsets.ISO_8859_1);
 
-        CharStreams.copy(teamFile, Files.asCharSink(new File("c:/esms", team + ".txt"), Charsets.ISO_8859_1));
+        File data = Config.get().getDataDirectory();
+
+        CharSource teamFile = Files.asCharSource(
+            new File(data, "rosters/" + league.getClass().getSimpleName() + "/" + team + ".txt"),
+            Charsets.UTF_8);
+
+        CharStreams.copy(teamFile, Files.asCharSink(new File(data, team + ".txt"), Charsets.UTF_8));
 
         return load(league, teamFile, reserves);
     }
@@ -192,7 +197,15 @@ public final class Squad {
                 continue;
             }
 
-            String[] split = StringUtils.split(StringUtils.substringBefore(line, "#"));
+            String[] split = Splitter
+              .on(CharMatcher.WHITESPACE)
+              .splitToList(
+                  CharMatcher
+                    .WHITESPACE
+                    .collapseFrom(
+                      StringUtils.substringBefore(line, "#"), ' ')
+                    .trim())
+              .toArray(new String[] { });
 
             if (split.length < 12) {
                 continue;
@@ -222,6 +235,7 @@ public final class Squad {
             p.setAggression(Integer.parseInt(split[7]));
 
             if (split.length > 12) {
+                //System.out.println(Arrays.toString(split));
                 p.setGames(Integer.parseInt(split[12]));
             }
 

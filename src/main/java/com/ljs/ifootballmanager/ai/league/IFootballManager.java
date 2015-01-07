@@ -67,7 +67,7 @@ public final class IFootballManager implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_loan.txt", "/for_transfer.txt", "/ftr.txt");
+        return ImmutableList.of("/for_transfer.txt");
     }
 
     public Weightings getWeightings() {

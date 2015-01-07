@@ -20,11 +20,13 @@ import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.formation.score.SecondXIScorer;
 import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
+import com.ljs.ifootballmanager.ai.league.Esl;
 import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.league.Ssl;
+import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.player.SquadHolder;
@@ -55,6 +57,7 @@ public class Main {
         ImmutableMap
             .<String, League>builder()
             .put("EFL - TTH", EliteFootballLeague.create())
+            .put("ESL - WAT", Esl.create())
             .put("IFM - LIV", IFootballManager.create("liv"))
             .put("IFM - NOR", IFootballManager.create("nor"))
             .put("IFM - DER", IFootballManager.create("der"))
@@ -86,7 +89,9 @@ public class Main {
     }
 
     private void run(League league) throws IOException {
-        CharSink sink = Files.asCharSink(new File("c:/esms", league.getTeam() + "ovr.txt"), Charsets.ISO_8859_1);
+        File baseDir = Config.get().getDataDirectory();
+
+        CharSink sink = Files.asCharSink(new File(baseDir, league.getTeam() + "ovr.txt"), Charsets.ISO_8859_1);
 
         try (
             Writer w = sink.openStream();
@@ -134,12 +139,12 @@ public class Main {
         Iterable<Player> atPotentialCandidates = FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
         Formation atPotentialXI = Formation.select(league, atPotentialCandidates, AtPotentialScorer.create(league.getPlayerPotential())).get(0);
 
-        Formation secondXI = null;
+        /*Formation secondXI = null;
         if (remaining.size() >= 11) {
             secondXI = Formation.select(league, firstXI.getTactic(), remaining, SecondXIScorer.create(league));
             print(w, "2nd XI", secondXI);
             remaining.removeAll(secondXI.players());
-        }
+        }*/
 
         remaining.removeAll(atPotentialXI.players());
 
@@ -168,13 +173,13 @@ public class Main {
         Set<Player> desiredSquad = Sets.newHashSet();
         desiredSquad.addAll(allFirstXI);
         desiredSquad.addAll(atPotentialXI.players());
-        if (secondXI != null) {
+        /*if (secondXI != null) {
             desiredSquad.addAll(secondXI.players());
-        }
+        }*/
 
         Set<Player> firstSquad = Sets.newHashSet();
 
-        for (Player p : Iterables.concat(desiredSquad)) {
+        for (Player p : desiredSquad) {
             if (p.isReserves()) {
                 reservesSquad.add(p);
             } else {
@@ -225,15 +230,20 @@ public class Main {
 
         Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
         trainingSquad.removeAll(allFirstXI);
-        if (secondXI != null) {
+        /*if (secondXI != null) {
             trainingSquad.removeAll(secondXI.players());
-        }
+        }*/
         if (reservesXI != null) {
             trainingSquad.removeAll(allReservesXI);
         }
 
         trainingSquad.removeAll(atPotentialXI.players());
         print(w, "Training Squad", SquadReport.create(league, firstXI.getTactic(), trainingSquad).sortByValue());
+
+        Iterable<Player> potentials = FluentIterable
+            .from(atPotentialXI.players())
+            .filter(Predicates.not(Predicates.in(allFirstXI)))
+            .filter(Predicates.not(Predicates.in(allReservesXI)));
 
         print(
             w,
@@ -242,10 +252,7 @@ public class Main {
                 .create(
                     league,
                     firstXI.getTactic(),
-                    FluentIterable
-                        .from(atPotentialXI.players())
-                        .filter(Predicates.not(Predicates.in(allFirstXI)))
-                        .filter(Predicates.not(Predicates.in(allReservesXI))))
+                    potentials)
                 .sortByValue());
 
         print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
@@ -256,43 +263,65 @@ public class Main {
                 .builder()
                 .squad(squad)
                 .firstXI(firstXI)
-                .secondXI(secondXI)
+                //.secondXI(secondXI)
                 .reservesXI(reservesXI)
                 .build());
 
         for (String f : league.getAdditionalPlayerFiles()) {
-            String resource = "/" + league.getClass().getSimpleName() + f;
+            String resource = "/rosters/" + league.getClass().getSimpleName() + f;
 
             System.out.println("Loading:" + resource);
-            Squad additional = Squad.load(league, Resources.asCharSource(getClass().getResource(resource), Charsets.ISO_8859_1));
+
+            File sq = new File(Config.get().getDataDirectory(), resource);
+
+            Squad additional = Squad.load(league, Files.asCharSource(sq, Charsets.UTF_8));
 
             print(w, f, SquadReport.create(league, firstXI.getTactic(), additional.players()).sortByValue());
         }
 
-        File sheetFile = new File("c:/esms", league.getTeam() + "sht.txt");
-        CharSink sheet = Files.asCharSink(sheetFile, Charsets.ISO_8859_1);
-        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(league), sheet, DefaultScorer.get());
-        Files.copy(sheetFile, new File("c:/esms/shts", sheetFile.getName()));
+        File sheetFile = new File(Config.get().getDataDirectory(), league.getTeam() + "sht.txt");
+        CharSink sheet = Files.asCharSink(sheetFile, Charsets.UTF_8);
+        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(league), league.getForcedPlay(), sheet, DefaultScorer.get());
+        Files.copy(sheetFile, new File(Config.get().getDataDirectory(), "shts/" + sheetFile.getName()));
 
         if (league.getReserveTeam().isPresent()) {
-            File rsheetFile = new File("c:/esms", league.getReserveTeam().get() + "sht.txt");
-            CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.ISO_8859_1);
-            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(league), rsheet, DefaultScorer.get());
-            Files.copy(rsheetFile, new File("c:/esms/shts", rsheetFile.getName()));
+            Set<String> forced = Sets.newHashSet();
+            Iterables.addAll(forced, league.getForcedPlay());
+
+            ReplacementLevel repl = ReplacementLevelHolder.get();
+
+            for (Player p : potentials) {
+              Integer vsRepl = Maths.round(repl.getValueVsReplacement(league.getPlayerPotential().atPotential(p)));
+
+              if (vsRepl > 0) {
+                forced.add(p.getName());
+              }
+            }
+
+            File rsheetFile = new File(Config.get().getDataDirectory(), league.getReserveTeam().get() + "sht.txt");
+            CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.UTF_8);
+            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(league), forced, rsheet, DefaultScorer.get());
+            Files.copy(rsheetFile, new File(Config.get().getDataDirectory(), "shts/" + rsheetFile.getName()));
         }
     }
 
-    private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, CharSink sheet, FormationScorer scorer) throws IOException {
+    private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, Iterable<String> forcedPlay, CharSink sheet, FormationScorer scorer) throws IOException {
         Set<Player> forced = Sets.newHashSet();
 
         for (Player p : available) {
-            Boolean isForced = Iterables.contains(league.getForcedPlay(), p.getName());
+            Boolean isForced = Iterables.contains(forcedPlay, p.getName());
             Boolean isFullFitness = SquadHolder.get().findPlayer(p.getName()).isFullFitness();
 
             if (isForced && isFullFitness) {
                 forced.add(p);
             }
         }
+
+        System.out.print("Forced:");
+        for (Player p : Player.byName().sortedCopy(forced)) {
+          System.out.print(p.getName() + "/");
+        }
+        System.out.println();
 
         Formation formation = Formation.selectOne(league, SelectionCriteria.create(forced, available), scorer);
 

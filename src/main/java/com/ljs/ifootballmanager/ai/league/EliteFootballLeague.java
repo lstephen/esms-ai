@@ -30,7 +30,8 @@ public final class EliteFootballLeague implements League {
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of("R_Liverani", "G_Bengescu", "P_Singh");
+      return ImmutableList.of();
+        //return ImmutableList.of("R_Liverani", "G_Bengescu", "P_Singh", "J_Wallis");
     }
 
     public FormationValidator getFormationValidator() {
@@ -43,7 +44,7 @@ public final class EliteFootballLeague implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_transfer.txt", "/for_auction.txt", "/osa.txt");
+        return ImmutableList.of("/for_auction.txt");
     }
 
     public Weightings getWeightings() {

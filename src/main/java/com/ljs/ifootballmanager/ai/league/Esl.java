@@ -6,53 +6,35 @@ import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidatorFactory;
 import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
-import com.ljs.ifootballmanager.ai.info.InfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
-import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
-import com.ljs.ifootballmanager.ai.value.impl.JaflPotential;
-import com.ljs.ifootballmanager.ai.value.impl.JaflValue;
+import com.ljs.ifootballmanager.ai.value.impl.EslValue;
+import com.ljs.ifootballmanager.ai.value.impl.EslPotential;
 
 /**
  *
  * @author lstephen
  */
-public class Jafl implements League {
+public final class Esl implements League {
 
-    private static final Jafl INSTANCE = new Jafl();
-
-    private Jafl() { }
+    private Esl() { }
 
     public String getTeam() {
-        return "gli";
-    }
-
-    public Optional<String> getVs() {
-        return Optional.absent();
+        return "wat";
     }
 
     public Optional<String> getReserveTeam() {
-        return Optional.of("gly");
-    }
-
-    public Optional<Double> getSeniorSkillsCap() {
         return Optional.absent();
     }
 
-    public Optional<Double> getYouthSkillsCap() {
-        // 18 for cup games, 16 for league games
-        return Optional.of(16.0);
-    }
-
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of();
+      return ImmutableList.of();
     }
 
     public FormationValidator getFormationValidator() {
-        return FormationValidatorFactory.jafl();
-        //return FormationValidatorFactory.jusCup();
+        return FormationValidatorFactory.esl();
     }
 
     public PlayerValidator getPlayerValidator() {
@@ -60,32 +42,35 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_sale.txt", "/for_loan.txt", "/for_draft.txt", "/fre.txt");
+        return ImmutableList.of();
     }
 
     public Weightings getWeightings() {
-        return WeightingsFactory.ssl();
+        return com.ljs.ifootballmanager.ai.rating.weighting.EliteFootballLeague.get();
     }
 
-    @Override
     public Boolean isReserveEligible(Player p) {
-        return p.getAge() <= 19;
+      return Boolean.FALSE;
     }
 
-    public Value getPlayerValue() {
-        return JaflValue.create();
-    }
+     public Value getPlayerValue() {
+       return EslValue.create();
+     }
 
     public Potential getPlayerPotential() {
-        return JaflPotential.create();
+      return EslPotential.create();
     }
 
-    public Optional<InfoValue> getInfoValue() {
+    public Optional<Double> getSeniorSkillsCap() {
         return Optional.absent();
     }
 
-    public static Jafl get() {
-        return INSTANCE;
+    public Optional<Double> getYouthSkillsCap() {
+        return Optional.absent();
+    }
+
+    public static Esl create() {
+        return new Esl();
     }
 
 }

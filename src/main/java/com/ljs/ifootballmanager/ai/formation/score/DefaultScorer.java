@@ -55,7 +55,7 @@ public final class DefaultScorer implements FormationScorer {
 
         DescriptiveStatistics shots = buildShotQualityStatistics(f, tactic);
 
-        Double base = (shots.getMean() + shots.getPercentile(50)) / 2.0;
+        Double base = (shots.getMean() + shots.getPercentile(50) + shots.getMax()) / 3.0;
 
         return avg < 1.0 ? base : (a/avg * base);
     }
@@ -197,6 +197,13 @@ public final class DefaultScorer implements FormationScorer {
         for (Tactic t : tactics) {
             DescriptiveStatistics shots = buildShotQualityStatistics(f, t);
             w.format("%7d ", Maths.round(shots.getPercentile(50)));
+        }
+        w.println();
+
+        w.format("%10s ", "SH Max");
+        for (Tactic t : tactics) {
+            DescriptiveStatistics shots = buildShotQualityStatistics(f, t);
+            w.format("%7d ", Maths.round(shots.getMax()));
         }
         w.println();
 

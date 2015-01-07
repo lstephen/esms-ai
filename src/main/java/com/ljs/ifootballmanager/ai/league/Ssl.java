@@ -67,7 +67,7 @@ public class Ssl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_auction.txt", "/for_sale.txt", "/free_agents.txt");
+        return ImmutableList.of("/free_agents.txt", "/for_auction.txt", "/for_sale.txt");
     }
 
     public Weightings getWeightings() {

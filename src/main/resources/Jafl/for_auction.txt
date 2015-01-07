@@ -1,5 +1,0 @@
-
-P_Zaworski 27 pol 2 20 5 10 27 282 994 339 341 # (Springfield)
-S_Hartsell 27 sco 2 4 13 20 41 300 371 882 637 # (Springfield)
-P_Cece 23 hol 2 21 9 4 11 117 762 666 842 # (AC Larne)
-N_Melary 33 aus 3 16 21 5 16 177 939 554 438 # (WAS)
