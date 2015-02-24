@@ -7,7 +7,10 @@ import com.ljs.ifootballmanager.ai.rating.Weighting;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 
 /**
- * http://www.elitefootballleague.co.uk/index.php?action=hp&select=numhelp.txt
+ * @see <a href="http://www.elitefootballleague.co.uk/index.php?action=hp&select=numhelp.txt">
+ *   http://www.elitefootballleague.co.uk/index.php?action=hp&amp;select=numhelp.txt</a>
+ *
+ *
  * @author lstephen
  */
 public class EliteFootballLeague implements Weightings {
