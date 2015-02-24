@@ -44,7 +44,7 @@ public final class EliteFootballLeague implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_auction.txt");
+        return ImmutableList.of("/for_auction.txt", "/for_transfer.txt", "/wdb.txt");
     }
 
     public Weightings getWeightings() {

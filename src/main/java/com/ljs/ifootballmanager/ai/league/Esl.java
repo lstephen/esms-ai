@@ -42,7 +42,7 @@ public final class Esl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of();
+        return ImmutableList.of("/for_sale.txt", "/fre.txt", "/for_auction.txt");
     }
 
     public Weightings getWeightings() {
