@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.player</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.player;
+
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.rating.Rating;
+import com.ljs.ifootballmanager.ai.rating.Ratings;
+import com.ljs.ifootballmanager.ai.value.Evaluator;
+import com.ljs.ifootballmanager.ai.value.RatingInRole;
+import com.ljs.ifootballmanager.ai.value.Value;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class Player {
+
+    private final String name;
+
+    private final Integer age;
+
+    private final Ratings ratings;
+
+    private final Ratings abilities;
+
+    private Integer aggression;
+
+<span class="nc" id="L35">    private Integer games = 0;</span>
+
+<span class="nc" id="L37">    private Integer fitness = 100;</span>
+
+<span class="nc" id="L39">    private Boolean injured = Boolean.FALSE;</span>
+
+<span class="nc" id="L41">    private Boolean suspended = Boolean.FALSE;</span>
+
+<span class="nc" id="L43">    private Boolean reserves = Boolean.FALSE;</span>
+
+<span class="nc" id="L45">    private String comment = &quot;&quot;;</span>
+
+<span class="nc" id="L47">    private Player(String name, Integer age, Ratings ratings, Ratings abilities, Integer aggression) {</span>
+<span class="nc" id="L48">        this.name = name;</span>
+<span class="nc" id="L49">        this.age = age;</span>
+<span class="nc" id="L50">        this.ratings = ratings;</span>
+<span class="nc" id="L51">        this.abilities = abilities;</span>
+<span class="nc" id="L52">        this.aggression = aggression;</span>
+<span class="nc" id="L53">    }</span>
+
+    public Player atPercent(Integer percentage) {
+<span class="nc" id="L56">        return new Player(name, age, ratings.atPercent(percentage), abilities, aggression);</span>
+    }
+
+    public Player withSkillAdded(Rating rt, Integer amount) {
+<span class="nc" id="L60">        return withSkills(ratings.add(rt, amount));</span>
+    }
+
+    public Player withAbilityAdded(Rating rt, Long amount) {
+<span class="nc" id="L64">        return withAbilityAdded(rt, amount.intValue());</span>
+    }
+
+    public Player withAbilityAdded(Rating rt, Integer amount) {
+<span class="nc" id="L68">        Ratings newAbilities = abilities.add(rt, amount);</span>
+<span class="nc" id="L69">        Ratings newSkills = ratings;</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        while (newAbilities.getSkill(rt) &gt; 999.5) {</span>
+<span class="nc" id="L72">            newSkills = newSkills.add(rt, 1);</span>
+<span class="nc" id="L73">            newAbilities = newAbilities.subtract(rt, 1000);</span>
+        }
+
+<span class="nc" id="L76">        return withSkills(newSkills).withAbilities(newAbilities);</span>
+    }
+
+    private Player withSkills(Ratings skills) {
+<span class="nc" id="L80">        Player p = new Player(name, age, skills, abilities, aggression);</span>
+<span class="nc" id="L81">        p.reserves = reserves;</span>
+<span class="nc" id="L82">        p.injured = injured;</span>
+<span class="nc" id="L83">        p.suspended = suspended;</span>
+<span class="nc" id="L84">        return p;</span>
+    }
+
+    public Player withSkillCap(Double cap) {
+<span class="nc" id="L88">        return withSkills(ratings.cap(cap));</span>
+    }
+
+    private Player withAbilities(Ratings abilities) {
+<span class="nc" id="L92">        return new Player(name, age, ratings, abilities, aggression);</span>
+    }
+
+    public Player afterMinutes(Integer minutes) {
+<span class="nc" id="L96">        return atPercent((int) (100.0 * Math.pow(0.996, minutes)));</span>
+    }
+
+    public Optional&lt;Player&gt; forSelection() {
+<span class="nc bnc" id="L100" title="All 6 branches missed.">        if (injured || suspended || reserves) {</span>
+<span class="nc" id="L101">            return Optional.absent();</span>
+        }
+<span class="nc" id="L103">        return Optional.of(atPercent(fitness));</span>
+    }
+
+    public Optional&lt;Player&gt; forReservesSelection() {
+<span class="nc bnc" id="L107" title="All 6 branches missed.">        if (injured || suspended || !reserves) {</span>
+<span class="nc" id="L108">            return Optional.absent();</span>
+        }
+<span class="nc" id="L110">        return Optional.of(atPercent(fitness));</span>
+    }
+
+    public String getName() {
+<span class="nc" id="L114">        return name;</span>
+    }
+
+    public Integer getAge() {
+<span class="nc" id="L118">        return age;</span>
+    }
+
+    public Double getAbilitiesSum() {
+<span class="nc" id="L122">        return abilities.getSum();</span>
+    }
+
+    public Integer getGames() {
+<span class="nc" id="L126">        return games;</span>
+    }
+
+    public void setGames(Integer games) {
+<span class="nc" id="L130">        this.games = games;</span>
+<span class="nc" id="L131">    }</span>
+
+    public Integer getAggression() {
+<span class="nc" id="L134">        return aggression;</span>
+    }
+
+    public void setAggression(Integer aggression) {
+<span class="nc" id="L138">        this.aggression = aggression;</span>
+<span class="nc" id="L139">    }</span>
+
+    public boolean isFullFitness() {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        return fitness == 100;</span>
+    }
+
+    public void setFitness(Integer fitness) {
+<span class="nc" id="L146">        this.fitness = fitness;</span>
+<span class="nc" id="L147">    }</span>
+
+    public void injured() {
+<span class="nc" id="L150">        this.injured = Boolean.TRUE;</span>
+<span class="nc" id="L151">    }</span>
+
+    public void suspended() {
+<span class="nc" id="L154">        this.suspended = Boolean.TRUE;</span>
+<span class="nc" id="L155">    }</span>
+
+    public void reserves() {
+<span class="nc" id="L158">        this.reserves = Boolean.TRUE;</span>
+<span class="nc" id="L159">    }</span>
+
+    public Boolean isReserves() {
+<span class="nc" id="L162">        return reserves;</span>
+    }
+
+    public String getRosterStatus() {
+<span class="nc" id="L166">        return String.format(</span>
+            &quot;%1s%1s%1s&quot;,
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            injured ? &quot;I&quot; : &quot;&quot;,</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            suspended ? &quot;S&quot; : &quot;&quot;,</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            reserves ? &quot;R&quot; : &quot;&quot;);</span>
+    }
+
+    public String getComment() {
+<span class="nc" id="L174">        return comment;</span>
+    }
+
+    public void setComment(String comment) {
+<span class="nc" id="L178">        this.comment = comment;</span>
+<span class="nc" id="L179">    }</span>
+
+    public boolean isGk() {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        return getOverall(Tactic.NORMAL).getRole() == Role.GK;</span>
+    }
+
+    public RatingInRole getOverall() {
+<span class="nc" id="L186">        Set&lt;RatingInRole&gt; ovrs = Sets.newHashSet();</span>
+
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (Tactic t : Tactic.values()) {</span>
+<span class="nc" id="L189">            ovrs.add(getOverall(t));</span>
+        }
+
+        // Get the 2nd best. Throw out the highest, in case it's extreme
+        return RatingInRole
+<span class="nc" id="L194">            .byRating()</span>
+<span class="nc" id="L195">            .reverse()</span>
+<span class="nc" id="L196">            .immutableSortedCopy(ovrs)</span>
+<span class="nc" id="L197">            .get(1);</span>
+    }
+
+    public RatingInRole getOverall(Tactic t) {
+<span class="nc" id="L201">        return RatingInRole.byRating().max(evaluateAll(t));</span>
+    }
+
+    public ImmutableSet&lt;RatingInRole&gt; evaluateAll(Tactic t) {
+<span class="nc" id="L205">        Set&lt;RatingInRole&gt; evaluations = Sets.newHashSet();</span>
+
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        for (Role r : Role.values()) {</span>
+<span class="nc" id="L208">            evaluations.add(evaluate(r, t));</span>
+        }
+
+<span class="nc" id="L211">        return ImmutableSet.copyOf(evaluations);</span>
+    }
+
+    public RatingInRole evaluate(Role r, Tactic t) {
+<span class="nc" id="L215">        return Evaluator.create(ratings).evaluate(r, t);</span>
+    }
+
+    public Ratings getRatings() {
+<span class="nc" id="L219">        return ratings;</span>
+    }
+
+    public Double getRating(Role r, Tactic t) {
+<span class="nc" id="L223">        return evaluate(r, t).getRating();</span>
+    }
+
+    public Double getAbilityRating(Role rl, Tactic tc, Rating rt) {
+<span class="nc" id="L227">        return abilities.getSkillRating(rl, tc, rt);</span>
+    }
+
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
+<span class="nc" id="L231">        return ratings.getSkillRating(rl, tc, rt);</span>
+    }
+
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt, Tactic vs) {
+<span class="nc" id="L235">        return ratings.getSkillRating(rl, tc, rt, vs);</span>
+    }
+
+    public Double getSkill(Rating rt) {
+<span class="nc" id="L239">        return ratings.getSkill(rt);</span>
+    }
+
+    public Double getMaximumSkill() {
+<span class="nc" id="L243">        return ratings.getMaximumSkill();</span>
+    }
+
+    public Rating getPrimarySkill() {
+<span class="nc" id="L247">        return ratings.getSkillPriority().get(0);</span>
+    }
+
+    public Rating getSecondarySkill() {
+<span class="nc" id="L251">        Rating sec = ratings.getSkillPriority().get(1);</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        return sec == Rating.STOPPING ? getTertiarySkill() : sec;</span>
+    }
+
+    public Rating getTertiarySkill() {
+<span class="nc" id="L256">        Rating ter = ratings.getSkillPriority().get(2);</span>
+
+<span class="nc bnc" id="L258" title="All 2 branches missed.">        return ter == Rating.STOPPING ? ratings.getSkillPriority().get(3) : ter;</span>
+    }
+
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L263">            return false;</span>
+        }
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L266">            return true;</span>
+        }
+<span class="nc bnc" id="L268" title="All 2 branches missed.">        if (!getClass().equals(obj.getClass())) {</span>
+<span class="nc" id="L269">            return false;</span>
+        }
+
+<span class="nc" id="L272">        Player rhs = Player.class.cast(obj);</span>
+
+<span class="nc" id="L274">        return Objects.equals(name, rhs.name);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L279">        return name.hashCode();</span>
+    }
+
+    public static Player create(String name, Integer age, Ratings ratings, Ratings abilities) {
+<span class="nc" id="L283">        return new Player(name, age, ratings, abilities, 0);</span>
+    }
+
+    public static Ordering&lt;Player&gt; byOverall(final Tactic t) {
+        return Ordering
+<span class="nc" id="L288">            .natural()</span>
+<span class="nc" id="L289">            .onResultOf(new Function&lt;Player, Long&gt;() {</span>
+                public Long apply(Player p) {
+<span class="nc" id="L291">                    return Math.round(p.getOverall(t).getRating());</span>
+                }
+            });
+    }
+
+    public static Ordering&lt;Player&gt; bySkill(final Rating r) {
+        return Ordering
+<span class="nc" id="L298">            .natural()</span>
+<span class="nc" id="L299">            .onResultOf(new Function&lt;Player, Double&gt;() {</span>
+                public Double apply(Player p) {
+<span class="nc" id="L301">                    return p.getSkill(r);</span>
+                }
+            });
+    }
+
+    public static Ordering&lt;Player&gt; byRating(final Role r, final Tactic t) {
+        return Ordering
+<span class="nc" id="L308">            .natural()</span>
+<span class="nc" id="L309">            .onResultOf(new Function&lt;Player, Double&gt;() {</span>
+                public Double apply(Player p) {
+<span class="nc" id="L311">                    return p.evaluate(r, t).getRating();</span>
+                }
+            });
+    }
+
+    public static Ordering&lt;Player&gt; byValue(final League league) {
+<span class="nc" id="L317">        return byValue(league.getPlayerValue());</span>
+    }
+
+    public static Ordering&lt;Player&gt; byValue(final Value value) {
+        return Ordering
+<span class="nc" id="L322">            .natural()</span>
+<span class="nc" id="L323">            .onResultOf(new Function&lt;Player, Double&gt;() {</span>
+                public Double apply(Player p) {
+<span class="nc" id="L325">                    return value.getValue(p);</span>
+                }
+            })
+<span class="nc" id="L328">            .compound(byTieBreak());</span>
+    }
+
+    public static Ordering&lt;Player&gt; byName() {
+        return Ordering
+<span class="nc" id="L333">            .natural()</span>
+<span class="nc" id="L334">            .onResultOf(new Function&lt;Player, String&gt;() {</span>
+                public String apply(Player p) {
+<span class="nc" id="L336">                    return p.getName();</span>
+                }
+            });
+    }
+
+    public static Ordering&lt;Player&gt; byAge() {
+        return Ordering
+<span class="nc" id="L343">            .natural()</span>
+<span class="nc" id="L344">            .onResultOf(new Function&lt;Player, Integer&gt;() {</span>
+                public Integer apply(Player p) {
+<span class="nc" id="L346">                    return p.getAge();</span>
+                }
+            });
+    }
+
+    public static Ordering&lt;Player&gt; byTieBreak() {
+<span class="nc" id="L352">        return byAge().compound(byName());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

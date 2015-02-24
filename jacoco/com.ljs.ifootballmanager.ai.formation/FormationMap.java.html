@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FormationMap.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.formation</a> &gt; <span class="el_source">FormationMap.java</span></div><h1>FormationMap.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.formation;
+
+import com.google.common.base.Supplier;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.Sets;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.player.Player;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ *
+ * @author lstephen
+ */
+public class FormationMap {
+
+<span class="nc" id="L21">    private Multimap&lt;Role, Player&gt; roles = Multimaps.newSetMultimap(</span>
+<span class="nc" id="L22">        Maps.&lt;Role, Collection&lt;Player&gt;&gt;newEnumMap(Role.class),</span>
+<span class="nc" id="L23">        new Supplier&lt;Set&lt;Player&gt;&gt;() {</span>
+            public Set&lt;Player&gt; get() {
+<span class="nc" id="L25">                return Sets.&lt;Player&gt;newHashSet();</span>
+            }
+        });
+
+<span class="nc" id="L29">    private Map&lt;Player, Role&gt; players = Maps.newHashMap();</span>
+
+<span class="nc" id="L31">    private FormationMap() { }</span>
+
+    public Boolean contains(Player p) {
+<span class="nc" id="L34">        return players.containsKey(p);</span>
+    }
+
+    public Set&lt;Role&gt; roles() {
+<span class="nc" id="L38">        return roles.keySet();</span>
+    }
+
+    public Collection&lt;Player&gt; get(Role r) {
+<span class="nc" id="L42">        return roles.get(r);</span>
+    }
+
+    public Role get(Player p) {
+<span class="nc" id="L46">        return players.get(p);</span>
+    }
+
+    public void put(Role r, Player p) {
+<span class="nc" id="L50">        roles.put(r, p);</span>
+<span class="nc" id="L51">        players.put(p, r);</span>
+<span class="nc" id="L52">    }</span>
+
+    public void remove(Role r, Player p) {
+<span class="nc" id="L55">        roles.remove(r, p);</span>
+<span class="nc" id="L56">        players.remove(p);</span>
+<span class="nc" id="L57">    }</span>
+
+    public Integer size() {
+<span class="nc" id="L60">        return roles.size();</span>
+    }
+
+    public Set&lt;Player&gt; players() {
+<span class="nc" id="L64">        return players.keySet();</span>
+    }
+
+    public static FormationMap create() {
+<span class="nc" id="L68">        return new FormationMap();</span>
+    }
+
+    public static FormationMap create(FormationMap other) {
+<span class="nc" id="L72">        FormationMap result = create();</span>
+
+<span class="nc" id="L74">        result.roles = HashMultimap.create(other.roles);</span>
+<span class="nc" id="L75">        result.players = Maps.newHashMap(other.players);</span>
+
+<span class="nc" id="L77">        return result;</span>
+    }
+
+    public static FormationMap create(Multimap&lt;Role, Player&gt; other) {
+<span class="nc" id="L81">        FormationMap result = create();</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        for (Map.Entry&lt;Role, Player&gt; e : other.entries()) {</span>
+<span class="nc" id="L84">            result.put(e.getKey(), e.getValue());</span>
+<span class="nc" id="L85">        }</span>
+
+<span class="nc" id="L87">        return result;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

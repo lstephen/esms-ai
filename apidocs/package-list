@@ -1,0 +1,15 @@
+com.ljs.ifootballmanager.ai
+com.ljs.ifootballmanager.ai.formation
+com.ljs.ifootballmanager.ai.formation.score
+com.ljs.ifootballmanager.ai.formation.selection
+com.ljs.ifootballmanager.ai.formation.validate
+com.ljs.ifootballmanager.ai.info
+com.ljs.ifootballmanager.ai.league
+com.ljs.ifootballmanager.ai.math
+com.ljs.ifootballmanager.ai.player
+com.ljs.ifootballmanager.ai.rating
+com.ljs.ifootballmanager.ai.rating.weighting
+com.ljs.ifootballmanager.ai.report
+com.ljs.ifootballmanager.ai.selection
+com.ljs.ifootballmanager.ai.value
+com.ljs.ifootballmanager.ai.value.impl

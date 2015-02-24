@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ScoreTactics.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.selection</a> &gt; <span class="el_source">ScoreTactics.java</span></div><h1>ScoreTactics.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.selection;
+
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.report.Report;
+import java.io.PrintWriter;
+import java.util.Arrays;
+
+/**
+ *
+ * @author lstephen
+ */
+public class ScoreTactics implements Report {
+
+    private final Formation formation;
+    private final ChangePlan changePlan;
+
+<span class="nc" id="L22">    private ScoreTactics(Formation f, ChangePlan cp) {</span>
+<span class="nc" id="L23">        this.formation = f;</span>
+<span class="nc" id="L24">        this.changePlan = cp;</span>
+<span class="nc" id="L25">    }</span>
+
+    public void print(PrintWriter w) {
+<span class="nc" id="L28">        printTactics(w, -2);</span>
+<span class="nc" id="L29">        printTactics(w, -1);</span>
+
+<span class="nc" id="L31">        printResetTactics(w);</span>
+
+<span class="nc" id="L33">        printTactics(w, 1);</span>
+<span class="nc" id="L34">        printTactics(w, 2);</span>
+<span class="nc" id="L35">    }</span>
+
+    public void printResetTactics(PrintWriter w) {
+<span class="nc" id="L38">        TacticChange tc = Iterables.getFirst(changePlan.changes(TacticChange.class), null);</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        Optional&lt;Integer&gt; tcMinute = tc == null</span>
+<span class="nc" id="L41">            ? Optional.&lt;Integer&gt;absent()</span>
+<span class="nc" id="L42">            : Optional.of(tc.getMinute());</span>
+
+        // Reset tactics
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (tcMinute.isPresent()) {</span>
+<span class="nc" id="L46">            w.format(&quot;TACTIC %s IF MIN &lt;= %d SCORE = 0%n&quot;, formation.getTactic().getCode(), tcMinute.get() - 1);</span>
+        } else {
+<span class="nc" id="L48">            w.format(&quot;TACTIC %s IF SCORE = 0%n&quot;, formation.getTactic().getCode());</span>
+        }
+<span class="nc" id="L50">    }</span>
+
+    public void printTactics(PrintWriter w, final Integer score) {
+<span class="nc" id="L53">        final Formation atEnd = changePlan.getFormationAt(90);</span>
+
+        Tactic best = Ordering
+<span class="nc" id="L56">            .natural()</span>
+<span class="nc" id="L57">            .onResultOf(new Function&lt;Tactic, Double&gt;() {</span>
+                public Double apply(Tactic t) {
+<span class="nc" id="L59">                    return score(atEnd, t, score, 90);</span>
+                }
+            })
+<span class="nc" id="L62">            .max(Arrays.asList(Tactic.values()));</span>
+
+<span class="nc" id="L64">        Integer from = 90;</span>
+<span class="nc" id="L65">        Formation f = changePlan.getFormationAt(from);</span>
+
+<span class="nc bnc" id="L67" title="All 4 branches missed.">        while (from &gt; 0 &amp;&amp; score(f, f.getTactic(), score, from) &lt;= score(f, best, score, from)) {</span>
+<span class="nc" id="L68">            from--;</span>
+<span class="nc" id="L69">            f = changePlan.getFormationAt(from);</span>
+        }
+
+<span class="nc" id="L72">        from++;</span>
+
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (from &gt; 1) {</span>
+<span class="nc" id="L75">            w.format(&quot;TACTIC %s IF MIN &gt;= %d %s%n&quot;, best.getCode(), from, getScoreCondition(score));</span>
+        } else {
+<span class="nc" id="L77">            w.format(&quot;TACTIC %s IF %s%n&quot;, best.getCode(), getScoreCondition(score));</span>
+        }
+<span class="nc" id="L79">    }</span>
+
+    private String getScoreCondition(Integer score) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (score == -2) {</span>
+<span class="nc" id="L83">            return &quot;SCORE &lt;= -2&quot;;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        } else if (score == 2) {</span>
+<span class="nc" id="L85">            return &quot;SCORE &gt;= 2&quot;;</span>
+        } else {
+<span class="nc" id="L87">            return String.format(&quot;SCORE = %d&quot;, score);</span>
+        }
+    }
+
+    private Double score(Formation f, Tactic t, Integer score, Integer minute) {
+<span class="nc" id="L92">        Double d = f.defending(t);</span>
+<span class="nc" id="L93">        Double a = f.scoring(t);</span>
+<span class="nc" id="L94">        Double s = f.score(t);</span>
+<span class="nc" id="L95">        Double m = (double) minute / 90;</span>
+
+<span class="nc" id="L97">        return m * Math.abs(Math.min(score, 0) * a + Math.max(score, 0) * d) + s;</span>
+    }
+
+
+    public void printTacticsTable(PrintWriter w) {
+<span class="nc" id="L102">        w.format(&quot;%2s: &quot;, &quot;M&quot;);</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        for (Tactic t : Tactic.values()) {</span>
+<span class="nc" id="L105">            w.format(&quot;%21s &quot;, t.getCode());</span>
+        }
+<span class="nc" id="L107">        w.println();</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        for (int i = 0; i &lt; 90; i++) {</span>
+<span class="nc" id="L110">            Formation f = changePlan.getFormationAt(i);</span>
+
+<span class="nc" id="L112">            w.format(&quot;%2d:&quot;, i);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            for (Tactic t : Tactic.values()) {</span>
+<span class="nc" id="L114">                Double d = f.defending(t);</span>
+<span class="nc" id="L115">                Double a = f.scoring(t);</span>
+<span class="nc" id="L116">                Double s = f.score(t);</span>
+<span class="nc" id="L117">                Double m = (double) i / 90;</span>
+<span class="nc" id="L118">                w.format(</span>
+                    &quot;%3d/%3d||%3d||%3d/%3d &quot;,
+<span class="nc" id="L120">                    Math.round(m * (d + d) + s),</span>
+<span class="nc" id="L121">                    Math.round(m * d + s),</span>
+<span class="nc" id="L122">                    Math.round(s),</span>
+<span class="nc" id="L123">                    Math.round(m * a + s),</span>
+<span class="nc" id="L124">                    Math.round(m * (a + a) + s));</span>
+            }
+
+<span class="nc" id="L127">            w.println();</span>
+        }
+<span class="nc" id="L129">    }</span>
+
+    public static ScoreTactics create(Formation f, ChangePlan cp) {
+<span class="nc" id="L132">        return new ScoreTactics(f, cp);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

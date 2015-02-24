@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TeamSheet.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.report</a> &gt; <span class="el_source">TeamSheet.java</span></div><h1>TeamSheet.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.report;
+
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.selection.Bench;
+import com.ljs.ifootballmanager.ai.selection.ChangePlan;
+import java.io.PrintWriter;
+
+/**
+ *
+ * @author lstephen
+ */
+public class TeamSheet implements Report {
+
+    private final String team;
+
+    private final Formation formation;
+
+    private final ChangePlan changePlan;
+
+    private final Bench bench;
+
+<span class="nc" id="L26">    private TeamSheet(String team, Formation formation, ChangePlan cp, Bench bench) {</span>
+<span class="nc" id="L27">        this.team = team;</span>
+<span class="nc" id="L28">        this.formation = formation;</span>
+<span class="nc" id="L29">        this.changePlan = cp;</span>
+<span class="nc" id="L30">        this.bench = bench;</span>
+<span class="nc" id="L31">    }</span>
+
+    private ImmutableList&lt;Player&gt; players() {
+<span class="nc" id="L34">        return ImmutableList.copyOf(Iterables.concat(formation.players(), bench.players()));</span>
+    }
+
+    private Function&lt;Player, Integer&gt; getPlayerIndex() {
+<span class="nc" id="L38">        return new Function&lt;Player, Integer&gt;() {</span>
+            public Integer apply(Player p) {
+<span class="nc" id="L40">                return players().indexOf(p) + 1;</span>
+            }
+        };
+    }
+
+    public void print(PrintWriter w) {
+<span class="nc" id="L46">        w.println(team);</span>
+<span class="nc" id="L47">        w.println(formation.getTactic().getCode());</span>
+<span class="nc" id="L48">        w.println();</span>
+
+<span class="nc" id="L50">        formation.printPlayers(w);</span>
+<span class="nc" id="L51">        w.println();</span>
+<span class="nc" id="L52">        bench.printPlayers(w);</span>
+<span class="nc" id="L53">        w.println();</span>
+<span class="nc" id="L54">        w.format(&quot;PK: %s%n&quot;, formation.getPenaltyKicker().getName());</span>
+<span class="nc" id="L55">        w.println();</span>
+<span class="nc" id="L56">        changePlan.print(w, getPlayerIndex());</span>
+<span class="nc" id="L57">    }</span>
+
+
+    public static TeamSheet create(String team, Formation formation, ChangePlan cp, Bench bench) {
+<span class="nc" id="L61">        return new TeamSheet(team, formation, cp, bench);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

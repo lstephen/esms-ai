@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Table.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.rating.weighting</a> &gt; <span class="el_source">Table.java</span></div><h1>Table.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.rating.weighting;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.rating.TacticWeightings;
+import com.ljs.ifootballmanager.ai.rating.Weighting;
+import com.ljs.ifootballmanager.ai.rating.Weightings;
+import java.util.Map;
+import org.apache.commons.lang3.tuple.Pair;
+
+/**
+ *
+ * @author lstephen
+ */
+public class Table implements Weightings {
+
+    private final ImmutableMap&lt;Pair&lt;Role, Tactic&gt;, Weighting&gt; table;
+
+    private final ImmutableMultimap&lt;Pair&lt;Tactic, Tactic&gt;, Pair&lt;Role, Weighting&gt;&gt; bonus;
+
+<span class="nc" id="L26">    private Table(Builder builder) {</span>
+<span class="nc" id="L27">        this.table = ImmutableMap.copyOf(builder.table);</span>
+<span class="nc" id="L28">        this.bonus = ImmutableMultimap.copyOf(builder.bonus);</span>
+<span class="nc" id="L29">    }</span>
+
+    public Weighting get(Role r, Tactic t) {
+<span class="nc" id="L32">        return table.get(Pair.of(r, t));</span>
+    }
+
+    private Iterable&lt;Pair&lt;Role, Weighting&gt;&gt; getBonus(Tactic t, Tactic vs) {
+<span class="nc" id="L36">        return bonus.get(Pair.of(t, vs));</span>
+    }
+
+    public TacticWeightings forTactic(final Tactic t) {
+<span class="nc" id="L40">        return ForTactic.create(this, t);</span>
+    }
+
+    public static Builder builder() {
+<span class="nc" id="L44">        return Builder.create();</span>
+    }
+
+    private static Table build(Builder builder) {
+<span class="nc" id="L48">        return new Table(builder);</span>
+    }
+
+    public static final class Builder {
+
+<span class="nc" id="L53">        private Map&lt;Pair&lt;Role, Tactic&gt;, Weighting&gt; table = Maps.newHashMap();</span>
+
+<span class="nc" id="L55">        private Multimap&lt;Pair&lt;Tactic, Tactic&gt;, Pair&lt;Role, Weighting&gt;&gt; bonus = HashMultimap.create();</span>
+
+<span class="nc" id="L57">        private Builder() { }</span>
+
+        public Builder from(Table table) {
+<span class="nc" id="L60">            this.table.putAll(table.table);</span>
+<span class="nc" id="L61">            return this;</span>
+        }
+
+        public Builder forAllTactics(Role r, Weighting w) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            for (Tactic t : Tactic.values()) {</span>
+<span class="nc" id="L66">                add(r, t, w);</span>
+            }
+<span class="nc" id="L68">            return this;</span>
+        }
+
+        public Builder add(Role r, Tactic t, Weighting w) {
+<span class="nc" id="L72">            table.put(Pair.of(r, t), w);</span>
+<span class="nc" id="L73">            return this;</span>
+        }
+
+        public Builder bonus(Role r, Tactic t, Weighting w, Tactic... vs) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            for (Tactic v : vs) {</span>
+<span class="nc" id="L78">                bonus.put(Pair.of(t, v), Pair.of(r, w));</span>
+            }
+<span class="nc" id="L80">            return this;</span>
+        }
+
+        public Table build() {
+<span class="nc" id="L84">            return Table.build(this);</span>
+        }
+
+        private static Builder create() {
+<span class="nc" id="L88">            return new Builder();</span>
+        }
+    }
+
+    private static final class ForTactic implements TacticWeightings {
+
+        private final Table table;
+
+        private final Tactic tactic;
+
+<span class="nc" id="L98">        private ForTactic(Table table, Tactic tactic) {</span>
+<span class="nc" id="L99">            this.table = table;</span>
+<span class="nc" id="L100">            this.tactic = tactic;</span>
+<span class="nc" id="L101">        }</span>
+
+        public Weighting inRole(Role r) {
+<span class="nc" id="L104">            return table.get(r, tactic);</span>
+        }
+
+        public TacticWeightings vs(Tactic vs) {
+<span class="nc" id="L108">            return VsTactic.create(table, tactic, vs);</span>
+        }
+
+        public static ForTactic create(Table table, Tactic tactic) {
+<span class="nc" id="L112">            return new ForTactic(table, tactic);</span>
+        }
+    }
+
+    private static final class VsTactic implements TacticWeightings {
+
+        private final Table table;
+        private final Tactic tactic;
+        private final Tactic vs;
+
+<span class="nc" id="L122">        private VsTactic(Table table, Tactic t, Tactic vs) {</span>
+<span class="nc" id="L123">            this.table = table;</span>
+<span class="nc" id="L124">            this.tactic = t;</span>
+<span class="nc" id="L125">            this.vs = vs;</span>
+<span class="nc" id="L126">        }</span>
+
+        public Weighting inRole(Role r) {
+<span class="nc" id="L129">            Weighting base = table.get(r, tactic);</span>
+<span class="nc" id="L130">            Weighting bonus = Weighting.create(0, 0, 0);</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for (Pair&lt;Role, Weighting&gt; b : table.getBonus(tactic, vs)) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                if (b.getLeft() == r) {</span>
+<span class="nc" id="L134">                    bonus = b.getRight();</span>
+                }
+<span class="nc" id="L136">            }</span>
+
+<span class="nc" id="L138">            return base.add(bonus);</span>
+        }
+
+        public TacticWeightings vs(Tactic vs) {
+<span class="nc" id="L142">            return create(table, tactic, vs);</span>
+        }
+
+        public static VsTactic create(Table table, Tactic t, Tactic vs) {
+<span class="nc" id="L146">            return new VsTactic(table, t, vs);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

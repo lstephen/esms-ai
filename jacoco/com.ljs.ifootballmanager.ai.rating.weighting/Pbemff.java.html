@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Pbemff.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.rating.weighting</a> &gt; <span class="el_source">Pbemff.java</span></div><h1>Pbemff.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.rating.weighting;
+
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.rating.TacticWeightings;
+import com.ljs.ifootballmanager.ai.rating.Weighting;
+import com.ljs.ifootballmanager.ai.rating.Weightings;
+
+/**
+ * http://www.pbemff.co.uk/general/numhelp.txt
+ * @author lstephen
+ */
+public class Pbemff implements Weightings {
+
+<span class="nc" id="L15">    private static final Pbemff INSTANCE = new Pbemff();</span>
+
+<span class="nc" id="L17">    private static final Table TABLE = Table</span>
+<span class="nc" id="L18">        .builder()</span>
+<span class="nc" id="L19">        .forAllTactics(Role.GK, Weighting.builder().st(150).build())</span>
+<span class="nc" id="L20">        .add(Role.DF, Tactic.NORMAL, Weighting.create(100, 50, 30))</span>
+<span class="nc" id="L21">        .add(Role.MF, Tactic.NORMAL, Weighting.create(30, 100, 30))</span>
+<span class="nc" id="L22">        .add(Role.FW, Tactic.NORMAL, Weighting.create(30, 30, 100))</span>
+<span class="nc" id="L23">        .add(Role.DM, Tactic.NORMAL, Weighting.create(67, 87, 30))</span>
+<span class="nc" id="L24">        .add(Role.AM, Tactic.NORMAL, Weighting.create(30, 87, 67))</span>
+
+<span class="nc" id="L26">        .add(Role.DF, Tactic.DEFENSIVE, Weighting.create(125, 25, 0))</span>
+<span class="nc" id="L27">        .add(Role.MF, Tactic.DEFENSIVE, Weighting.create(100, 75, 25))</span>
+<span class="nc" id="L28">        .add(Role.FW, Tactic.DEFENSIVE, Weighting.create(50, 25, 75))</span>
+<span class="nc" id="L29">        .add(Role.DM, Tactic.DEFENSIVE, Weighting.create(110, 65, 5))</span>
+<span class="nc" id="L30">        .add(Role.AM, Tactic.DEFENSIVE, Weighting.create(65, 65, 50))</span>
+
+<span class="nc" id="L32">        .add(Role.DF, Tactic.ATTACKING, Weighting.create(100, 50, 50))</span>
+<span class="nc" id="L33">        .add(Role.MF, Tactic.ATTACKING, Weighting.create(0, 100, 75))</span>
+<span class="nc" id="L34">        .add(Role.FW, Tactic.ATTACKING, Weighting.create(0, 65, 150))</span>
+<span class="nc" id="L35">        .add(Role.DM, Tactic.ATTACKING, Weighting.create(50, 90, 50))</span>
+<span class="nc" id="L36">        .add(Role.AM, Tactic.ATTACKING, Weighting.create(0, 90, 115))</span>
+
+<span class="nc" id="L38">        .add(Role.DF, Tactic.COUNTER_ATTACK, Weighting.create(100, 50, 25))</span>
+<span class="nc" id="L39">        .add(Role.MF, Tactic.COUNTER_ATTACK, Weighting.create(50, 100, 25))</span>
+<span class="nc" id="L40">        .add(Role.FW, Tactic.COUNTER_ATTACK, Weighting.create(50, 50, 100))</span>
+<span class="nc" id="L41">        .add(Role.DM, Tactic.COUNTER_ATTACK, Weighting.create(75, 85, 25))</span>
+<span class="nc" id="L42">        .add(Role.AM, Tactic.COUNTER_ATTACK, Weighting.create(60, 85, 60))</span>
+
+<span class="nc" id="L44">        .add(Role.DF, Tactic.LONG_BALL, Weighting.create(110, 60, 10))</span>
+<span class="nc" id="L45">        .add(Role.MF, Tactic.LONG_BALL, Weighting.create(50, 70, 65))</span>
+<span class="nc" id="L46">        .add(Role.FW, Tactic.LONG_BALL, Weighting.create(10, 30, 130))</span>
+<span class="nc" id="L47">        .add(Role.DM, Tactic.LONG_BALL, Weighting.create(75, 60, 50))</span>
+<span class="nc" id="L48">        .add(Role.AM, Tactic.LONG_BALL, Weighting.create(30, 50, 100))</span>
+
+<span class="nc" id="L50">        .add(Role.DF, Tactic.PASSING, Weighting.create(100, 75, 30))</span>
+<span class="nc" id="L51">        .add(Role.MF, Tactic.PASSING, Weighting.create(25, 100, 25))</span>
+<span class="nc" id="L52">        .add(Role.FW, Tactic.PASSING, Weighting.create(25, 75, 100))</span>
+<span class="nc" id="L53">        .add(Role.DM, Tactic.PASSING, Weighting.create(65, 85, 20))</span>
+<span class="nc" id="L54">        .add(Role.AM, Tactic.PASSING, Weighting.create(25, 85, 65))</span>
+
+<span class="nc" id="L56">        .add(Role.DF, Tactic.EUROPEAN, Weighting.create(100, 30, 40))</span>
+<span class="nc" id="L57">        .add(Role.MF, Tactic.EUROPEAN, Weighting.create(25, 125, 40))</span>
+<span class="nc" id="L58">        .add(Role.FW, Tactic.EUROPEAN, Weighting.create(20, 40, 95))</span>
+<span class="nc" id="L59">        .add(Role.DM, Tactic.EUROPEAN, Weighting.create(75, 100, 15))</span>
+<span class="nc" id="L60">        .add(Role.AM, Tactic.EUROPEAN, Weighting.create(15, 100, 75))</span>
+<span class="nc" id="L61">        .build();</span>
+
+<span class="nc" id="L63">    private Pbemff() { }</span>
+
+    public TacticWeightings forTactic(Tactic t) {
+<span class="nc" id="L66">        return TABLE.forTactic(t);</span>
+    }
+
+    public static Pbemff get() {
+<span class="nc" id="L70">        return INSTANCE;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

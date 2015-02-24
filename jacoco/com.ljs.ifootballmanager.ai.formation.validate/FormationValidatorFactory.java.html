@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FormationValidatorFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.formation.validate</a> &gt; <span class="el_source">FormationValidatorFactory.java</span></div><h1>FormationValidatorFactory.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.formation.validate;
+
+import com.ljs.ifootballmanager.ai.Role;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class FormationValidatorFactory {
+
+<span class="nc" id="L11">    private FormationValidatorFactory() { }</span>
+
+    public static FormationValidator ssl() {
+        return CountingFormationValidator
+<span class="nc" id="L15">            .builder()</span>
+<span class="nc" id="L16">            .exactly(1, Role.GK)</span>
+<span class="nc" id="L17">            .range(3, 5, Role.DF)</span>
+<span class="nc" id="L18">            .range(2, 6, Role.DM, Role.MF, Role.AM)</span>
+<span class="nc" id="L19">            .max(3, Role.DM)</span>
+<span class="nc" id="L20">            .max(3, Role.AM)</span>
+<span class="nc" id="L21">            .range(1, 4, Role.FW)</span>
+<span class="nc" id="L22">            .build();</span>
+    }
+
+    public static FormationValidator jusCup() {
+<span class="nc" id="L26">        return ssl();</span>
+    }
+
+    public static FormationValidator jafl() {
+        return CountingFormationValidator
+<span class="nc" id="L31">            .builder()</span>
+<span class="nc" id="L32">            .exactly(1, Role.GK)</span>
+<span class="nc" id="L33">            .range(3, 5, Role.DF)</span>
+<span class="nc" id="L34">            .range(2, 5, Role.DM, Role.MF, Role.AM)</span>
+<span class="nc" id="L35">            .range(1, 5, Role.FW)</span>
+<span class="nc" id="L36">            .build();</span>
+    }
+
+    public static FormationValidator efl() {
+        return CountingFormationValidator
+<span class="nc" id="L41">            .builder()</span>
+<span class="nc" id="L42">            .exactly(1, Role.GK)</span>
+<span class="nc" id="L43">            .range(3, 6, Role.DF)</span>
+<span class="nc" id="L44">            .range(2, 6, Role.DM, Role.MF, Role.AM)</span>
+<span class="nc" id="L45">            .max(3, Role.DM)</span>
+<span class="nc" id="L46">            .max(3, Role.AM)</span>
+<span class="nc" id="L47">            .range(1, 4, Role.FW)</span>
+<span class="nc" id="L48">            .build();</span>
+    }
+
+    public static FormationValidator esl() {
+      return CountingFormationValidator
+<span class="nc" id="L53">        .builder()</span>
+<span class="nc" id="L54">        .exactly(1, Role.GK)</span>
+<span class="nc" id="L55">        .range(3, 5, Role.DF)</span>
+<span class="nc" id="L56">        .range(2, 6, Role.DM, Role.MF, Role.AM)</span>
+<span class="nc" id="L57">        .max(3, Role.DM)</span>
+<span class="nc" id="L58">        .max(3, Role.AM)</span>
+<span class="nc" id="L59">        .range(1, 4, Role.FW)</span>
+<span class="nc" id="L60">        .build();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RandomFormationGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.formation.selection</a> &gt; <span class="el_source">RandomFormationGenerator.java</span></div><h1>RandomFormationGenerator.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.formation.selection;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
+import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
+import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.player.Player;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class RandomFormationGenerator implements Callable&lt;Formation&gt; {
+
+    private final FormationValidator validator;
+
+    private final FormationScorer scorer;
+
+    private final Tactic tactic;
+
+    private final SelectionCriteria criteria;
+
+    private RandomFormationGenerator(
+        FormationValidator validator,
+        FormationScorer scorer,
+        Tactic tactic,
+<span class="nc" id="L36">        SelectionCriteria criteria) {</span>
+
+<span class="nc" id="L38">        this.validator = validator;</span>
+<span class="nc" id="L39">        this.scorer = scorer;</span>
+<span class="nc" id="L40">        this.tactic = tactic;</span>
+<span class="nc" id="L41">        this.criteria = criteria;</span>
+<span class="nc" id="L42">    }</span>
+
+    public Formation call() {
+<span class="nc" id="L45">        List&lt;Player&gt; shuffled = Lists.newArrayList(criteria.getOptional());</span>
+<span class="nc" id="L46">        Collections.shuffle(shuffled);</span>
+
+<span class="nc" id="L48">        shuffled.addAll(0, criteria.getRequired());</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (shuffled.size() &gt;= 11) {</span>
+
+<span class="nc" id="L52">            Multimap&lt;Role, Player&gt; initialState = HashMultimap.create();</span>
+
+<span class="nc" id="L54">            initialState.put(Role.GK, shuffled.get(0));</span>
+<span class="nc" id="L55">            initialState.putAll(Role.DF, shuffled.subList(1, 5));</span>
+<span class="nc" id="L56">            initialState.putAll(Role.MF, shuffled.subList(5, 9));</span>
+<span class="nc" id="L57">            initialState.putAll(Role.FW, shuffled.subList(9, 11));</span>
+
+<span class="nc" id="L59">            Formation created = Formation.create(validator, scorer, tactic, initialState);</span>
+
+<span class="nc" id="L61">            Preconditions.checkState(created.isValid());</span>
+
+<span class="nc" id="L63">            return created;</span>
+        } else {
+<span class="nc" id="L65">            Multimap&lt;Role, Player&gt; initialState = HashMultimap.create();</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            for (Player p : shuffled) {</span>
+<span class="nc" id="L68">                initialState.put(p.getOverall(tactic).getRole(), p);</span>
+<span class="nc" id="L69">            }</span>
+
+<span class="nc" id="L71">            return Formation.create(validator, scorer, tactic, initialState);</span>
+        }
+
+    }
+
+    public static RandomFormationGenerator create(FormationValidator validator, FormationScorer scorer, Tactic tactic, SelectionCriteria criteria) {
+<span class="nc" id="L77">        return new RandomFormationGenerator(validator, scorer, tactic, criteria);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

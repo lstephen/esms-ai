@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DefaultScorer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.formation.score</a> &gt; <span class="el_source">DefaultScorer.java</span></div><h1>DefaultScorer.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.formation.score;
+
+import com.google.common.collect.ImmutableMap;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.league.LeagueHolder;
+import com.ljs.ifootballmanager.ai.math.Maths;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
+import java.io.PrintWriter;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class DefaultScorer implements FormationScorer {
+
+<span class="nc" id="L20">    private static final DefaultScorer INSTANCE = new DefaultScorer();</span>
+
+<span class="nc" id="L22">    private DefaultScorer() { }</span>
+
+    public Double score(Formation f, Tactic tactic) {
+
+<span class="nc" id="L26">        Double a = scoring(f, tactic);</span>
+<span class="nc" id="L27">        Double d = defending(f, tactic);</span>
+
+<span class="nc" id="L29">        Double avg = (a + d) / 2;</span>
+
+<span class="nc" id="L31">        Double aterm = a / (avg + 1);</span>
+<span class="nc" id="L32">        Double dterm = avg / (d + 1);</span>
+
+<span class="nc" id="L34">        Double pct = 1 + aterm - dterm;</span>
+
+<span class="nc" id="L36">        return (a + d) * pct + gkBonus(f, tactic) + shootingBonus(f, tactic);</span>
+    }
+
+    public Double scoring(Formation f, Tactic tactic) {
+<span class="nc" id="L40">        Double shooting = skillRating(f, tactic, Rating.SHOOTING);</span>
+<span class="nc" id="L41">        Double passing = skillRating(f, tactic, Rating.PASSING);</span>
+
+<span class="nc" id="L43">        return (passing + passing + shooting) / 3;</span>
+    }
+
+    public Double defending(Formation f, Tactic tactic) {
+<span class="nc" id="L47">        return skillRating(f, tactic, Rating.TACKLING);</span>
+    }
+
+    public Double shootingBonus(Formation f, Tactic tactic) {
+<span class="nc" id="L51">        Double a = scoring(f, tactic);</span>
+<span class="nc" id="L52">        Double d = defending(f, tactic);</span>
+
+<span class="nc" id="L54">        Double avg = (a + d) / 2;</span>
+
+<span class="nc" id="L56">        DescriptiveStatistics shots = buildShotQualityStatistics(f, tactic);</span>
+
+<span class="nc" id="L58">        Double base = (shots.getMean() + shots.getPercentile(50) + shots.getMax()) / 3.0;</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        return avg &lt; 1.0 ? base : (a/avg * base);</span>
+    }
+
+    public Double gkBonus(Formation f, Tactic t) {
+<span class="nc" id="L64">        Double a = scoring(f, t);</span>
+<span class="nc" id="L65">        Double d = defending(f, t);</span>
+
+<span class="nc" id="L67">        Double avg = (a + d) / 2;</span>
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        Double factor = Math.min(2.0, d &lt; 1.0 ? 1.0 : (avg / d));</span>
+
+<span class="nc" id="L71">        return factor * gkQuality(f);</span>
+    }
+
+    public Double shotQuality(Formation f, Tactic t) {
+<span class="nc" id="L75">        Double score = 0.0;</span>
+
+<span class="nc" id="L77">        ImmutableMap&lt;Player, Double&gt; chances = shootingChances(f, t);</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc" id="L80">            score += (chances.get(p) * p.getSkill(Rating.SHOOTING));</span>
+<span class="nc" id="L81">        }</span>
+
+<span class="nc" id="L83">        return score;</span>
+    }
+
+    private ImmutableMap&lt;Player, Double&gt; shootingChances(Formation f, Tactic t) {
+
+<span class="nc" id="L88">        Double total = 0.0;</span>
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (f.findRole(p) == Role.GK) {</span>
+<span class="nc" id="L92">                continue;</span>
+            }
+<span class="nc" id="L94">            total += p.getSkillRating(f.findRole(p), t, Rating.SHOOTING);</span>
+<span class="nc" id="L95">        }</span>
+
+<span class="nc" id="L97">        ImmutableMap.Builder&lt;Player, Double&gt; chances = ImmutableMap.builder();</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for(Player p : f.unsortedPlayers()) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (f.findRole(p) == Role.GK) {</span>
+<span class="nc" id="L101">                chances.put(p, 0.0);</span>
+            } else {
+<span class="nc" id="L103">                chances.put(p, p.getSkillRating(f.findRole(p), t, Rating.SHOOTING) / total);</span>
+            }
+<span class="nc" id="L105">        }</span>
+
+<span class="nc" id="L107">        return chances.build();</span>
+    }
+
+    private DescriptiveStatistics buildShotQualityStatistics(Formation f, Tactic t) {
+<span class="nc" id="L111">        DescriptiveStatistics shots = new DescriptiveStatistics();</span>
+
+<span class="nc" id="L113">        ImmutableMap&lt;Player, Double&gt; chances = shootingChances(f, t);</span>
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            for (int i = 0; i &lt; chances.get(p) * 1000; i++) {</span>
+<span class="nc" id="L117">                shots.addValue(p.getSkill(Rating.SHOOTING));</span>
+            }
+<span class="nc" id="L119">        }</span>
+
+<span class="nc" id="L121">        return shots;</span>
+    }
+
+
+    private Double cornerShotQuality(Formation f) {
+<span class="nc" id="L126">        Double total = 0.0;</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            if (f.findRole(p) == Role.GK) {</span>
+<span class="nc" id="L130">                continue;</span>
+            }
+<span class="nc" id="L132">            total += p.getSkill(Rating.SHOOTING) + 10;</span>
+<span class="nc" id="L133">        }</span>
+
+<span class="nc" id="L135">        Double score = 0.0;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">            if (f.findRole(p) == Role.GK) {</span>
+<span class="nc" id="L138">                continue;</span>
+            }
+<span class="nc" id="L140">            Double chance = (p.getSkill(Rating.SHOOTING) + 10) / total;</span>
+
+<span class="nc" id="L142">            score += chance * p.getSkill(Rating.SHOOTING);</span>
+<span class="nc" id="L143">        }</span>
+
+<span class="nc" id="L145">        return score;</span>
+    }
+
+    public Double gkQuality(Formation f) {
+<span class="nc" id="L149">        return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING);</span>
+    }
+
+    private Double aggression(Formation f) {
+<span class="nc" id="L153">        Double agg = 0.0;</span>
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc" id="L156">            agg += p.getAggression();</span>
+<span class="nc" id="L157">        }</span>
+
+<span class="nc" id="L159">        return agg / 11;</span>
+    }
+
+    private Double skillRating(Formation f, Tactic t, Rating r) {
+<span class="nc" id="L163">        Double score = 0.0;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            if (LeagueHolder.get().getPlayerValidator().isAllowedInRole(p.getRatings(), f.findRole(p))) {</span>
+<span class="nc" id="L166">                score += p.getSkillRating(f.findRole(p), t, r);</span>
+            }
+<span class="nc" id="L168">        }</span>
+<span class="nc" id="L169">        return score;</span>
+    }
+
+    public void print(Formation f, PrintWriter w) {
+<span class="nc" id="L173">        Tactic[] tactics = Tactic.values();</span>
+
+<span class="nc" id="L175">        w.format(&quot;%10s &quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L177">            w.format(&quot;%7s &quot;, t.getCode());</span>
+        }
+<span class="nc" id="L179">        w.println();</span>
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (Rating rt : Rating.values()) {</span>
+<span class="nc" id="L182">            w.format(&quot;%10s &quot;, rt);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            for (Tactic t : tactics) {</span>
+<span class="nc" id="L184">                w.format(&quot;%7d &quot;, Maths.round(skillRating(f, t, rt)));</span>
+            }
+<span class="nc" id="L186">            w.println();</span>
+        }
+
+<span class="nc" id="L189">        w.format(&quot;%10s &quot;, &quot;SH Mean&quot;);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L191">            DescriptiveStatistics shots = buildShotQualityStatistics(f, t);</span>
+<span class="nc" id="L192">            w.format(&quot;%7d &quot;, Maths.round(shots.getMean()));</span>
+        }
+<span class="nc" id="L194">        w.println();</span>
+
+<span class="nc" id="L196">        w.format(&quot;%10s &quot;, &quot;SH Median&quot;);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L198">            DescriptiveStatistics shots = buildShotQualityStatistics(f, t);</span>
+<span class="nc" id="L199">            w.format(&quot;%7d &quot;, Maths.round(shots.getPercentile(50)));</span>
+        }
+<span class="nc" id="L201">        w.println();</span>
+
+<span class="nc" id="L203">        w.format(&quot;%10s &quot;, &quot;SH Max&quot;);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L205">            DescriptiveStatistics shots = buildShotQualityStatistics(f, t);</span>
+<span class="nc" id="L206">            w.format(&quot;%7d &quot;, Maths.round(shots.getMax()));</span>
+        }
+<span class="nc" id="L208">        w.println();</span>
+
+<span class="nc" id="L210">        w.format(&quot;%10s &quot;, &quot;SH Bonus&quot;);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L212">            w.format(&quot;%7d &quot;, Maths.round(shootingBonus(f, t)));</span>
+        }
+<span class="nc" id="L214">        w.println();</span>
+
+<span class="nc" id="L216">        w.format(&quot;%10s &quot;, &quot;GK Qual&quot;);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L218">            w.format(&quot;%7d &quot;, Maths.round(gkQuality(f)));</span>
+        }
+<span class="nc" id="L220">        w.println();</span>
+
+<span class="nc" id="L222">        w.format(&quot;%10s &quot;, &quot;GK Bonus&quot;);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L224">            w.format(&quot;%7d &quot;, Maths.round(gkBonus(f, t)));</span>
+        }
+<span class="nc" id="L226">        w.println();</span>
+
+<span class="nc" id="L228">        w.format(&quot;%10s &quot;, &quot;Agg&quot;);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L230">            w.format(&quot;%7d &quot;, Maths.round(aggression(f)));</span>
+        }
+<span class="nc" id="L232">        w.println();</span>
+
+<span class="nc" id="L234">        w.format(&quot;%10s &quot;, &quot;Scoring&quot;);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L236">            w.format(&quot;%7d &quot;, Maths.round(scoring(f, t)));</span>
+        }
+<span class="nc" id="L238">        w.println();</span>
+
+<span class="nc" id="L240">        w.format(&quot;%10s &quot;, &quot;Defending&quot;);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L242">            w.format(&quot;%7d &quot;, Maths.round(defending(f, t)));</span>
+        }
+<span class="nc" id="L244">        w.println();</span>
+
+<span class="nc" id="L246">        w.format(&quot;%10s &quot;, &quot;Overall&quot;);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        for (Tactic t : tactics) {</span>
+<span class="nc" id="L248">            w.format(&quot;%7d &quot;, Maths.round(score(f, t)));</span>
+        }
+<span class="nc" id="L250">        w.println();</span>
+<span class="nc" id="L251">    }</span>
+
+    public static DefaultScorer get() {
+<span class="nc" id="L254">        return INSTANCE;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

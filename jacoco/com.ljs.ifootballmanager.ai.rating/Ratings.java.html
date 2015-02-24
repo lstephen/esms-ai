@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Ratings.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.rating</a> &gt; <span class="el_source">Ratings.java</span></div><h1>Ratings.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.rating;
+
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.League;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class Ratings {
+
+    private final League league;
+
+    private final EnumMap&lt;Rating, Double&gt; ratings;
+
+<span class="nc" id="L24">    private Ratings(Builder builder) {</span>
+<span class="nc" id="L25">        this.league = builder.league;</span>
+<span class="nc" id="L26">        ratings = Maps.newEnumMap(builder.ratings);</span>
+<span class="nc" id="L27">    }</span>
+
+    public Double overall(Role r, Tactic t) {
+<span class="nc" id="L30">        TacticWeightings tw = league.getWeightings().forTactic(t);</span>
+<span class="nc" id="L31">        return overall(tw.inRole(r), tw);</span>
+    }
+
+    public Double overall(Weighting w, TacticWeightings tw) {
+<span class="nc" id="L35">        Double overall = 0.0;</span>
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        for (Rating r : ratings.keySet()) {</span>
+<span class="nc" id="L38">            overall += getWeightedSkill(w, r);</span>
+<span class="nc" id="L39">        }</span>
+
+        //overall += getWeightedSkill(w, Rating.SHOOTING) / 10.0;
+
+<span class="nc" id="L43">        return overall;</span>
+    }
+
+    public Ratings atPercent(Integer percent) {
+<span class="nc" id="L47">        Builder builder = Builder.create(league);</span>
+        
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for (Rating r : ratings.keySet()) {</span>
+<span class="nc" id="L50">            Double newValue = ratings.get(r) * percent / 100;</span>
+
+<span class="nc" id="L52">            builder = builder.rating(r, newValue);</span>
+<span class="nc" id="L53">        }</span>
+
+<span class="nc" id="L55">        return builder.build();</span>
+    }
+
+    public Ratings cap(Double cap) {
+<span class="nc" id="L59">        Builder builder = Builder.create(league);</span>
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        for (Rating r : ratings.keySet()) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            builder = builder.rating(r, ratings.get(r) &gt; cap ? cap : ratings.get(r));</span>
+<span class="nc" id="L63">        }</span>
+
+<span class="nc" id="L65">        return builder.build();</span>
+    }
+
+    public Ratings add(Rating r, Integer value) {
+<span class="nc" id="L69">        return Builder</span>
+<span class="nc" id="L70">            .create(this)</span>
+<span class="nc" id="L71">            .rating(r, getSkill(r) + value)</span>
+<span class="nc" id="L72">            .build();</span>
+    }
+
+    public Ratings subtract(Rating r, Integer value) {
+<span class="nc" id="L76">        return add(r, -value);</span>
+    }
+
+    public Double getSkill(Rating rt) {
+<span class="nc" id="L80">        return ratings.get(rt);</span>
+    }
+
+    public Double getWeightedSkill(Weighting w, Rating rt) {
+<span class="nc" id="L84">        return getSkill(rt) * w.get(rt) / 100;</span>
+    }
+
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
+<span class="nc" id="L88">        return getWeightedSkill(league.getWeightings().forTactic(tc).inRole(rl), rt);</span>
+    }
+
+    public Double getSkillRating(Role rl, Tactic tc, Rating rt, Tactic vs) {
+<span class="nc" id="L92">        return getWeightedSkill(league.getWeightings().forTactic(tc).vs(vs).inRole(rl), rt);</span>
+    }
+
+    public Double getMaximumSkill() {
+<span class="nc" id="L96">        return Ordering.natural().max(ratings.values());</span>
+    }
+
+    public Rating getPrimarySkill() {
+<span class="nc" id="L100">        return getSkillPriority().get(0);</span>
+    }
+
+    public ImmutableList&lt;Rating&gt; getSkillPriority() {
+        return Ordering
+<span class="nc" id="L105">            .natural()</span>
+<span class="nc" id="L106">            .reverse()</span>
+<span class="nc" id="L107">            .onResultOf(new Function&lt;Rating, Double&gt;() {</span>
+                public Double apply(Rating r) {
+<span class="nc" id="L109">                    return getSkill(r);</span>
+                }
+            })
+<span class="nc" id="L112">            .immutableSortedCopy(Arrays.asList(Rating.values()));</span>
+    }
+
+    public Double getSum() {
+<span class="nc" id="L116">        Double sum = 0.0;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        for (Double r : ratings.values()) {</span>
+<span class="nc" id="L118">            sum += r;</span>
+<span class="nc" id="L119">        }</span>
+<span class="nc" id="L120">        return sum;</span>
+    }
+
+    public static Builder builder(League league) {
+<span class="nc" id="L124">        return Builder.create(league);</span>
+    }
+
+    private static Ratings build(Builder builder) {
+<span class="nc" id="L128">        return new Ratings(builder);</span>
+    }
+
+    public static Ratings combine(Ratings rts, Ratings abs) {
+<span class="nc" id="L132">        Ratings.Builder builder = builder(rts.league);</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        for (Rating r : Rating.values()) {</span>
+<span class="nc" id="L135">            Double rt = rts.getSkill(r);</span>
+<span class="nc" id="L136">            Double ab = abs.getSkill(r);</span>
+
+<span class="nc" id="L138">            builder = builder.rating(r, rt + ab / 1000);</span>
+        }
+
+<span class="nc" id="L141">        return builder.build();</span>
+    }
+
+    public static final class Builder {
+
+        private League league;
+
+<span class="nc" id="L148">        private final Map&lt;Rating, Double&gt; ratings = Maps.newEnumMap(Rating.class);</span>
+
+<span class="nc" id="L150">        private Builder() { }</span>
+
+        public Builder league(League league) {
+<span class="nc" id="L153">            this.league = league;</span>
+<span class="nc" id="L154">            return this;</span>
+        }
+
+        private Builder rating(Rating r, Integer v) {
+<span class="nc" id="L158">            return rating(r, v.doubleValue());</span>
+        }
+
+        private Builder rating(Rating r, Double v) {
+<span class="nc" id="L162">            ratings.put(r, v);</span>
+<span class="nc" id="L163">            return this;</span>
+        }
+
+        public Builder stopping(Integer st) {
+<span class="nc" id="L167">            return rating(Rating.STOPPING, st);</span>
+        }
+
+        public Builder tackling(Integer tk) {
+<span class="nc" id="L171">            return rating(Rating.TACKLING, tk);</span>
+        }
+
+        public Builder passing(Integer ps) {
+<span class="nc" id="L175">            return rating(Rating.PASSING, ps);</span>
+        }
+
+        public Builder shooting(Integer sh) {
+<span class="nc" id="L179">            return rating(Rating.SHOOTING, sh);</span>
+        }
+
+        public Ratings build() {
+<span class="nc" id="L183">            return Ratings.build(this);</span>
+        }
+
+        private static Builder create(League league) {
+<span class="nc" id="L187">            Builder b = new Builder();</span>
+<span class="nc" id="L188">            b.league = league;</span>
+<span class="nc" id="L189">            return b;</span>
+        }
+
+        private static Builder create(Ratings ratings) {
+<span class="nc" id="L193">            Builder b = create(ratings.league);</span>
+<span class="nc" id="L194">            b.ratings.putAll(ratings.ratings);</span>
+<span class="nc" id="L195">            return b;</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Weighting.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.rating</a> &gt; <span class="el_source">Weighting.java</span></div><h1>Weighting.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.rating;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import java.util.Map;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class Weighting {
+
+    private final ImmutableMap&lt;Rating, Integer&gt; weights;
+
+<span class="nc" id="L16">    private Weighting(Builder builder) {</span>
+<span class="nc" id="L17">        weights = ImmutableMap.copyOf(builder.weights);</span>
+<span class="nc" id="L18">    }</span>
+
+    public Integer get(Rating rating) {
+<span class="nc" id="L21">        return Optional.fromNullable(weights.get(rating)).or(0);</span>
+    }
+
+    public Integer sum() {
+<span class="nc" id="L25">        Integer sum = 0;</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        for (Integer weight : weights.values()) {</span>
+<span class="nc" id="L27">            sum += weight;</span>
+<span class="nc" id="L28">        }</span>
+<span class="nc" id="L29">        return sum;</span>
+    }
+
+    public Weighting add(Weighting rhs) {
+<span class="nc" id="L33">        Builder b = builder();</span>
+
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        for (Rating r : Rating.values()) {</span>
+<span class="nc" id="L36">            b = b.with(r, get(r) + rhs.get(r));</span>
+        }
+
+<span class="nc" id="L39">        return b.build();</span>
+    }
+
+    public static Weighting create(Integer tk, Integer ps, Integer sh) {
+<span class="nc" id="L43">        return builder().tk(tk).ps(ps).sh(sh).build();</span>
+    }
+
+    public static Builder builder() {
+<span class="nc" id="L47">        return Builder.create();</span>
+    }
+
+    private static Weighting build(Builder builder) {
+<span class="nc" id="L51">        return new Weighting(builder);</span>
+    }
+
+    public static final class Builder {
+
+<span class="nc" id="L56">        private final Map&lt;Rating, Integer&gt; weights = Maps.newHashMap();</span>
+
+<span class="nc" id="L58">        private Builder() { }</span>
+
+        public Builder with(Rating r, Integer value) {
+<span class="nc" id="L61">            weights.put(r, value);</span>
+<span class="nc" id="L62">            return this;</span>
+        }
+
+        public Builder st(Integer st) {
+<span class="nc" id="L66">            return stopping(st);</span>
+        }
+
+        public Builder stopping(Integer st) {
+<span class="nc" id="L70">            weights.put(Rating.STOPPING, st);</span>
+<span class="nc" id="L71">            return this;</span>
+        }
+
+        public Builder tk(Integer tk) {
+<span class="nc" id="L75">            return tackling(tk);</span>
+        }
+
+        public Builder tackling(Integer tk) {
+<span class="nc" id="L79">            weights.put(Rating.TACKLING, tk);</span>
+<span class="nc" id="L80">            return this;</span>
+        }
+
+        public Builder ps(Integer ps) {
+<span class="nc" id="L84">            return passing(ps);</span>
+        }
+
+        public Builder passing(Integer ps) {
+<span class="nc" id="L88">            weights.put(Rating.PASSING, ps);</span>
+<span class="nc" id="L89">            return this;</span>
+        }
+
+        public Builder sh(Integer sh) {
+<span class="nc" id="L93">            return shooting(sh);</span>
+        }
+
+        public Builder shooting(Integer sh) {
+<span class="nc" id="L97">            weights.put(Rating.SHOOTING, sh);</span>
+<span class="nc" id="L98">            return this;</span>
+        }
+
+        public Weighting build() {
+<span class="nc" id="L102">            return Weighting.build(this);</span>
+        }
+
+        private static Builder create() {
+<span class="nc" id="L106">            return new Builder();</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

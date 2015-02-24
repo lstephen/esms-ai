@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AtPotentialScorer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.formation.score</a> &gt; <span class="el_source">AtPotentialScorer.java</span></div><h1>AtPotentialScorer.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.formation.score;
+
+import com.google.common.collect.Sets;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.value.Potential;
+import java.io.PrintWriter;
+import java.util.Set;
+
+/**
+ *
+ * @author lstephen
+ */
+public class AtPotentialScorer implements FormationScorer {
+
+    private Potential potential;
+
+<span class="nc" id="L19">    private AtPotentialScorer(Potential potential) {</span>
+<span class="nc" id="L20">        this.potential = potential;</span>
+<span class="nc" id="L21">    }</span>
+
+    public Double score(Formation f, Tactic t) {
+<span class="nc" id="L24">        return DefaultScorer.get().score(atPotential(f), t);</span>
+    }
+
+    public Double scoring(Formation f, Tactic t) {
+<span class="nc" id="L28">        return DefaultScorer.get().scoring(atPotential(f), t);</span>
+    }
+
+    public Double defending(Formation f, Tactic t) {
+<span class="nc" id="L32">        return DefaultScorer.get().defending(atPotential(f), t);</span>
+    }
+
+<span class="nc" id="L35">    public void print(Formation f, PrintWriter w) { }</span>
+
+    private Formation atPotential(Formation f) {
+<span class="nc" id="L38">        Set&lt;Player&gt; updated = Sets.newHashSet();</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (Player p : f.unsortedPlayers()) {</span>
+<span class="nc" id="L40">            updated.add(potential.atPotential(p));</span>
+<span class="nc" id="L41">        }</span>
+<span class="nc" id="L42">        return f.withUpdatedPlayers(updated);</span>
+    }
+
+    public static AtPotentialScorer create(Potential potential) {
+<span class="nc" id="L46">        return new AtPotentialScorer(potential);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

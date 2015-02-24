@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EflValue.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.value.impl</a> &gt; <span class="el_source">EflValue.java</span></div><h1>EflValue.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.value.impl;
+
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.value.Value;
+
+/**
+ *
+ * @author lstephen
+ */
+<span class="nc" id="L10">public class EflValue implements Value {</span>
+
+    public Double getValue(Player p) {
+<span class="nc" id="L13">        return p.getOverall().getRating()</span>
+<span class="nc" id="L14">            + getYearsLeft(p)</span>
+<span class="nc" id="L15">            + Math.max(22 - p.getAge(), 0);</span>
+    }
+
+    private Integer getYearsLeft(Player p) {
+<span class="nc" id="L19">        return getRetirementAge(p) - p.getAge();</span>
+    }
+
+    private Integer getRetirementAge(Player p) {
+<span class="nc bnc" id="L23" title="All 4 branches missed.">        switch (p.getPrimarySkill()) {</span>
+<span class="nc" id="L24">            case STOPPING: return 38;</span>
+<span class="nc" id="L25">            case TACKLING: return 37;</span>
+            case PASSING:
+            case SHOOTING:
+<span class="nc" id="L28">                return 36;</span>
+            default:
+<span class="nc" id="L30">                throw new IllegalArgumentException(p.getPrimarySkill().toString());</span>
+        }
+    }
+
+    public static EflValue create() {
+<span class="nc" id="L35">        return new EflValue();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

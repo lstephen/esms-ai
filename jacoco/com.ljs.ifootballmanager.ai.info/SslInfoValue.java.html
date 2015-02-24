@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SslInfoValue.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.info</a> &gt; <span class="el_source">SslInfoValue.java</span></div><h1>SslInfoValue.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.info;
+
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
+
+/**
+ *
+ * @author lstephen
+ */
+public final class SslInfoValue implements InfoValue {
+
+<span class="nc" id="L12">    private static SslInfoValue INSTANCE = new SslInfoValue();</span>
+
+<span class="nc" id="L14">    private SslInfoValue() { }</span>
+
+    public Double get(Player p) {
+
+<span class="nc" id="L18">        Double mult = 930.0 + 25 * p.getSkill(p.getSecondarySkill()) + 15 * p.getSkill(p.getTertiarySkill());</span>
+
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (p.getPrimarySkill() == Rating.STOPPING) {</span>
+<span class="nc" id="L21">            mult = 850.0;;</span>
+        }
+
+<span class="nc" id="L24">        return mult * getValueFactor(p) * getAgeFactor(p);</span>
+    }
+
+    private Double getAgeFactor(Player p) {
+<span class="nc bnc" id="L28" title="All 17 branches missed.">        switch (p.getAge()) {</span>
+<span class="nc" id="L29">            case 17: return .75;</span>
+<span class="nc" id="L30">            case 18: return .5;</span>
+<span class="nc" id="L31">            case 19: return .25;</span>
+
+<span class="nc" id="L33">            case 21: return .75;</span>
+
+<span class="nc" id="L35">            case 23: return .9;</span>
+<span class="nc" id="L36">            case 24: return .8;</span>
+<span class="nc" id="L37">            case 25: return .7;</span>
+<span class="nc" id="L38">            case 26: return .6;</span>
+<span class="nc" id="L39">            case 27: return .5;</span>
+<span class="nc" id="L40">            case 28: return .4;</span>
+<span class="nc" id="L41">            case 29: return .3;</span>
+
+<span class="nc" id="L43">            case 31: return .75;</span>
+<span class="nc" id="L44">            case 32: return .5;</span>
+<span class="nc" id="L45">            case 33: return .25;</span>
+<span class="nc" id="L46">            case 34: return .1;</span>
+<span class="nc" id="L47">            case 35: return .5;</span>
+
+            default:
+<span class="nc bnc" id="L50" title="All 2 branches missed.">                return p.getAge() &gt; 35 ? 0.0 : 1.0;</span>
+        }
+    }
+
+
+    private Integer getValueFactor(Player p) {
+<span class="nc" id="L56">        Integer pskill = (int) Math.round(p.getSkill(p.getPrimarySkill()));</span>
+
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (p.getAge() &lt; 20) {</span>
+<span class="nc bnc" id="L59" title="All 10 branches missed.">            switch (pskill) {</span>
+<span class="nc" id="L60">                case 11: return 100;</span>
+<span class="nc" id="L61">                case 12: return 250;</span>
+<span class="nc" id="L62">                case 13: return 2500;</span>
+<span class="nc" id="L63">                case 14: return 6000;</span>
+<span class="nc" id="L64">                case 15: return 9000;</span>
+<span class="nc" id="L65">                case 16: return 12000;</span>
+<span class="nc" id="L66">                case 17: return 20000;</span>
+<span class="nc" id="L67">                case 18: return 30000;</span>
+<span class="nc" id="L68">                case 19: return 52500;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                default: return pskill &gt; 19 ? 67500 : 0;</span>
+            }
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        } else if (p.getAge() &lt; 22) {</span>
+<span class="nc bnc" id="L72" title="All 11 branches missed.">            switch (pskill) {</span>
+<span class="nc" id="L73">                case 14: return 750;</span>
+<span class="nc" id="L74">                case 15: return 1500;</span>
+<span class="nc" id="L75">                case 16: return 2500;</span>
+<span class="nc" id="L76">                case 17: return 3500;</span>
+<span class="nc" id="L77">                case 18: return 6000;</span>
+<span class="nc" id="L78">                case 19: return 11000;</span>
+<span class="nc" id="L79">                case 20: return 18750;</span>
+<span class="nc" id="L80">                case 21: return 22500;</span>
+<span class="nc" id="L81">                case 22: return 26250;</span>
+<span class="nc" id="L82">                case 23: return 30000;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                default: return pskill &gt; 23 ? 37500 : 0;</span>
+            }
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        } else if (p.getAge() &lt; 30) {</span>
+<span class="nc bnc" id="L86" title="All 15 branches missed.">            switch (pskill) {</span>
+<span class="nc" id="L87">                case 15: return 375;</span>
+<span class="nc" id="L88">                case 16: return 1000;</span>
+<span class="nc" id="L89">                case 17: return 2000;</span>
+<span class="nc" id="L90">                case 18: return 2000;</span>
+<span class="nc" id="L91">                case 19: return 5000;</span>
+<span class="nc" id="L92">                case 20: return 12000;</span>
+<span class="nc" id="L93">                case 21: return 15000;</span>
+<span class="nc" id="L94">                case 22: return 18000;</span>
+<span class="nc" id="L95">                case 23: return 20250;</span>
+<span class="nc" id="L96">                case 24: return 22500;</span>
+<span class="nc" id="L97">                case 25: return 24750;</span>
+<span class="nc" id="L98">                case 26: return 26000;</span>
+<span class="nc" id="L99">                case 27: return 28000;</span>
+<span class="nc" id="L100">                case 28: return 30000;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                default: return pskill &gt; 28 ? 33000 : 0;</span>
+            }
+        } else {
+<span class="nc bnc" id="L104" title="All 13 branches missed.">            switch (pskill) {</span>
+<span class="nc" id="L105">                case 17: return 500;</span>
+<span class="nc" id="L106">                case 18: return 750;</span>
+<span class="nc" id="L107">                case 19: return 1000;</span>
+<span class="nc" id="L108">                case 20: return 1500;</span>
+<span class="nc" id="L109">                case 21: return 2250;</span>
+<span class="nc" id="L110">                case 22: return 3100;</span>
+<span class="nc" id="L111">                case 23: return 3375;</span>
+<span class="nc" id="L112">                case 24: return 3650;</span>
+<span class="nc" id="L113">                case 25: return 3840;</span>
+<span class="nc" id="L114">                case 26: return 4500;</span>
+<span class="nc" id="L115">                case 27: return 6000;</span>
+<span class="nc" id="L116">                case 28: return 7500;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">                default: return pskill &gt; 28 ? 9000 : 0;</span>
+            }
+        }
+
+    }
+
+    public static SslInfoValue get() {
+<span class="nc" id="L124">        return INSTANCE;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

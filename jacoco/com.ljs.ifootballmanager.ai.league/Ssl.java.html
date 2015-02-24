@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Ssl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esms-ai</a> &gt; <a href="index.source.html" class="el_package">com.ljs.ifootballmanager.ai.league</a> &gt; <span class="el_source">Ssl.java</span></div><h1>Ssl.java</h1><pre class="source lang-java linenums">package com.ljs.ifootballmanager.ai.league;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
+import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
+import com.ljs.ifootballmanager.ai.formation.validate.FormationValidatorFactory;
+import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidator;
+import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
+import com.ljs.ifootballmanager.ai.info.InfoValue;
+import com.ljs.ifootballmanager.ai.info.SslInfoValue;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Weightings;
+import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
+import com.ljs.ifootballmanager.ai.value.Potential;
+import com.ljs.ifootballmanager.ai.value.Value;
+import com.ljs.ifootballmanager.ai.value.impl.SslPotential;
+import com.ljs.ifootballmanager.ai.value.impl.SslValue;
+
+/**
+ *
+ * @author lstephen
+ */
+public class Ssl implements League {
+
+    private final String team;
+
+    private final Optional&lt;String&gt; reserveTeam;
+
+<span class="nc" id="L29">    private Ssl(String team, Optional&lt;String&gt; reserveTeam) {</span>
+<span class="nc" id="L30">        this.team = team;</span>
+<span class="nc" id="L31">        this.reserveTeam = reserveTeam;</span>
+<span class="nc" id="L32">    }</span>
+
+    public String getTeam() {
+<span class="nc" id="L35">        return team;</span>
+    }
+
+    public Optional&lt;String&gt; getVs() {
+<span class="nc" id="L39">        return Optional.absent();</span>
+    }
+
+    public Optional&lt;String&gt; getReserveTeam() {
+<span class="nc" id="L43">        return reserveTeam;</span>
+    }
+
+    public Optional&lt;Double&gt; getSeniorSkillsCap() {
+<span class="nc" id="L47">        return Optional.of(25.0);</span>
+        // JUS cup
+        //return Optional.absent();
+    }
+
+    public Optional&lt;Double&gt; getYouthSkillsCap() {
+<span class="nc" id="L53">        return Optional.of(17.0);</span>
+    }
+
+    public Iterable&lt;String&gt; getForcedPlay() {
+<span class="nc" id="L57">        return ImmutableList.&lt;String&gt;of(&quot;P_Gilbough&quot;);</span>
+    }
+
+    public FormationValidator getFormationValidator() {
+<span class="nc" id="L61">        return FormationValidatorFactory.ssl();</span>
+        //return FormationValidatorFactory.jusCup();
+    }
+
+    public PlayerValidator getPlayerValidator() {
+<span class="nc" id="L66">        return PlayerValidatorFactory.anyRole();</span>
+    }
+
+    public Iterable&lt;String&gt; getAdditionalPlayerFiles() {
+<span class="nc" id="L70">        return ImmutableList.of(&quot;/free_agents.txt&quot;, &quot;/for_auction.txt&quot;, &quot;/for_sale.txt&quot;);</span>
+    }
+
+    public Weightings getWeightings() {
+<span class="nc" id="L74">        return WeightingsFactory.ssl();</span>
+    }
+
+    @Override
+    public Boolean isReserveEligible(Player p) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        return p.getAge() &lt;= 21;</span>
+    }
+
+    public Value getPlayerValue() {
+<span class="nc" id="L83">        return SslValue.create();</span>
+    }
+
+    public Potential getPlayerPotential() {
+<span class="nc" id="L87">        return SslPotential.create();</span>
+    }
+
+    public Optional&lt;InfoValue&gt; getInfoValue() {
+<span class="nc" id="L91">        return Optional.&lt;InfoValue&gt;of(SslInfoValue.get());</span>
+    }
+
+    public static Ssl create(String team) {
+<span class="nc" id="L95">        return new Ssl(team, Optional.&lt;String&gt;absent());</span>
+    }
+
+    public static Ssl create(String team, String reserveTeam) {
+<span class="nc" id="L99">        return new Ssl(team, Optional.of(reserveTeam));</span>
+    }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
