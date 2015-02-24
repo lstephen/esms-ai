@@ -69,7 +69,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  21
+                  22
                 </td>
               </tr>
                           <tr>
@@ -83,7 +83,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  113
+                  112
                 </td>
               </tr>
                           <tr>
@@ -167,7 +167,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  31
+                  32
                 </td>
               </tr>
                           <tr>
@@ -181,7 +181,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  3
                 </td>
               </tr>
                           <tr>
@@ -195,7 +195,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  17
+                  18
                 </td>
               </tr>
                           <tr>
@@ -214,20 +214,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.Formation.java">com/ljs/ifootballmanager/ai/formation/Formation.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  131
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.league.Ssl.java">com/ljs/ifootballmanager/ai/league/Ssl.java</a>
                 </td>
                 <td>
@@ -238,6 +224,20 @@ under the License.
                 </td>
                 <td>
                   31
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.Formation.java">com/ljs/ifootballmanager/ai/formation/Formation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  131
                 </td>
               </tr>
                           <tr>
@@ -256,6 +256,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer.java">com/ljs/ifootballmanager/ai/formation/score/AtPotentialScorer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  21
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.selection.Bench.java">com/ljs/ifootballmanager/ai/selection/Bench.java</a>
                 </td>
                 <td>
@@ -270,20 +284,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer.java">com/ljs/ifootballmanager/ai/formation/score/AtPotentialScorer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  22
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.validate.FormationValidator.java">com/ljs/ifootballmanager/ai/formation/validate/FormationValidator.java</a>
                 </td>
                 <td>
@@ -293,7 +293,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  2
                 </td>
               </tr>
                           <tr>
@@ -335,7 +335,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  22
+                  21
                 </td>
               </tr>
                           <tr>
@@ -433,7 +433,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  37
+                  36
                 </td>
               </tr>
                           <tr>
@@ -461,7 +461,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  14
+                  15
                 </td>
               </tr>
                           <tr>
@@ -480,20 +480,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.score.FormationScorer.java">com/ljs/ifootballmanager/ai/formation/score/FormationScorer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.SelectionCriteria.java">com/ljs/ifootballmanager/ai/formation/SelectionCriteria.java</a>
                 </td>
                 <td>
@@ -504,6 +490,20 @@ under the License.
                 </td>
                 <td>
                   29
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.score.FormationScorer.java">com/ljs/ifootballmanager/ai/formation/score/FormationScorer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
                 </td>
               </tr>
                           <tr>
@@ -531,7 +531,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  10
+                  9
                 </td>
               </tr>
                           <tr>
@@ -587,7 +587,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  14
+                  13
                 </td>
               </tr>
                           <tr>
@@ -648,20 +648,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.report.Reports.java">com/ljs/ifootballmanager/ai/report/Reports.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.report.SquadSummaryReport.java">com/ljs/ifootballmanager/ai/report/SquadSummaryReport.java</a>
                 </td>
                 <td>
@@ -672,6 +658,20 @@ under the License.
                 </td>
                 <td>
                   56
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.report.Reports.java">com/ljs/ifootballmanager/ai/report/Reports.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
                 </td>
               </tr>
                           <tr>
@@ -746,6 +746,34 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.rating.weighting.Pbemff.java">com/ljs/ifootballmanager/ai/rating/weighting/Pbemff.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  111
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.selection.Substitute.java">com/ljs/ifootballmanager/ai/formation/selection/Substitute.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.Config.java">com/ljs/ifootballmanager/ai/Config.java</a>
                 </td>
                 <td>
@@ -760,34 +788,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.rating.weighting.Pbemff.java">com/ljs/ifootballmanager/ai/rating/weighting/Pbemff.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  110
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.selection.Substitute.java">com/ljs/ifootballmanager/ai/formation/selection/Substitute.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  13
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.selection.Move.java">com/ljs/ifootballmanager/ai/formation/selection/Move.java</a>
                 </td>
                 <td>
@@ -797,21 +797,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  11
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.selection.TacticChange.java">com/ljs/ifootballmanager/ai/selection/TacticChange.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  22
+                  10
                 </td>
               </tr>
                           <tr>
@@ -830,7 +816,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.Main.java">com/ljs/ifootballmanager/ai/Main.java</a>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.selection.TacticChange.java">com/ljs/ifootballmanager/ai/selection/TacticChange.java</a>
                 </td>
                 <td>
                   0
@@ -839,7 +825,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  67
+                  22
                 </td>
               </tr>
                           <tr>
@@ -854,6 +840,20 @@ under the License.
                 </td>
                 <td>
                   11
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.Main.java">com/ljs/ifootballmanager/ai/Main.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  67
                 </td>
               </tr>
                           <tr>
@@ -886,20 +886,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.selection.Change.java">com/ljs/ifootballmanager/ai/selection/Change.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.value.impl.IFootballManagerValue.java">com/ljs/ifootballmanager/ai/value/impl/IFootballManagerValue.java</a>
                 </td>
                 <td>
@@ -910,6 +896,20 @@ under the License.
                 </td>
                 <td>
                   15
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.selection.Change.java">com/ljs/ifootballmanager/ai/selection/Change.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
                 </td>
               </tr>
                           <tr>
@@ -928,20 +928,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.score.DefaultScorer.java">com/ljs/ifootballmanager/ai/formation/score/DefaultScorer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  58
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.league.League.java">com/ljs/ifootballmanager/ai/league/League.java</a>
                 </td>
                 <td>
@@ -956,7 +942,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.report.TeamSheet.java">com/ljs/ifootballmanager/ai/report/TeamSheet.java</a>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.formation.score.DefaultScorer.java">com/ljs/ifootballmanager/ai/formation/score/DefaultScorer.java</a>
                 </td>
                 <td>
                   0
@@ -965,7 +951,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  26
+                  58
                 </td>
               </tr>
                           <tr>
@@ -980,6 +966,20 @@ under the License.
                 </td>
                 <td>
                   1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lstephen/esms-ai/checkstyle.html#com.ljs.ifootballmanager.ai.report.TeamSheet.java">com/ljs/ifootballmanager/ai/report/TeamSheet.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  26
                 </td>
               </tr>
                           <tr>
@@ -1119,7 +1119,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  17
+                  18
                 </td>
               </tr>
                           <tr>
@@ -1133,7 +1133,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  133
+                  132
                 </td>
               </tr>
                           <tr>
@@ -1147,7 +1147,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  22
+                  23
                 </td>
               </tr>
                       </tbody>

@@ -74,10 +74,10 @@ esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePlan.new Function() {...},8,
 esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePlan.new Function() {...},6,0,0,0,2,0,2,0,2,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePlan.new Function() {...},11,0,0,0,2,0,2,0,2,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePlan.new Function() {...},11,0,0,0,2,0,2,0,2,0
-esms-ai,com.ljs.ifootballmanager.ai.selection,Substitution,246,0,24,0,41,0,26,0,14,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePlan.RemoveChange,45,0,6,0,13,0,7,0,4,0
-esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePosition,168,0,16,0,28,0,17,0,9,0
+esms-ai,com.ljs.ifootballmanager.ai.selection,Substitution,246,0,24,0,41,0,26,0,14,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,Substitution.Builder,28,0,0,0,10,0,6,0,6,0
+esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePosition,168,0,16,0,28,0,17,0,9,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,Bench.ChangePlayer,28,0,0,0,8,0,2,0,2,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,ChangePlan.AddChange,45,0,6,0,13,0,7,0,4,0
 esms-ai,com.ljs.ifootballmanager.ai.selection,ScoreTactics.new Function() {...},23,0,0,0,2,0,2,0,2,0
