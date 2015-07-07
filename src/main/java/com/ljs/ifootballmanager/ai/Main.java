@@ -64,7 +64,7 @@ public class Main {
             .put("IFM - Holland", IFootballManager.create("hol"))
             .put("JAFL - GLI", Jafl.get())
             .put("SSL - MIS", Ssl.create("mis", "msy"))
-            .put("SSL - ITA", Ssl.create("ita"))
+            .put("SSL - ARG", Ssl.create("arg"))
             .build();
 
     public static void main( String[] args ) throws IOException {
