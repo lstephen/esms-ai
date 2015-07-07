@@ -17,184 +17,182 @@ import java.util.Map;
  */
 public final class Ratings {
 
-    private final League league;
+  private final League league;
 
-    private final EnumMap<Rating, Double> ratings;
+  private final EnumMap<Rating, Double> ratings;
 
-    private Ratings(Builder builder) {
-        this.league = builder.league;
-        ratings = Maps.newEnumMap(builder.ratings);
+  private Ratings(Builder builder) {
+    this.league = builder.league;
+    ratings = Maps.newEnumMap(builder.ratings);
+  }
+
+  public Double overall(Role r, Tactic t) {
+    TacticWeightings tw = league.getWeightings().forTactic(t);
+    return overall(tw.inRole(r), tw);
+  }
+
+  public Double overall(Weighting w, TacticWeightings tw) {
+    Double overall = 0.0;
+
+    for (Rating r : ratings.keySet()) {
+      overall += getWeightedSkill(w, r);
     }
 
-    public Double overall(Role r, Tactic t) {
-        TacticWeightings tw = league.getWeightings().forTactic(t);
-        return overall(tw.inRole(r), tw);
+    return overall;
+  }
+
+  public Ratings atPercent(Integer percent) {
+    Builder builder = Builder.create(league);
+
+    for (Map.Entry<Rating, Double>  r : ratings.entrySet()) {
+      Double newValue = r.getValue() * percent / 100;
+
+      builder = builder.rating(r.getKey(), newValue);
     }
 
-    public Double overall(Weighting w, TacticWeightings tw) {
-        Double overall = 0.0;
+    return builder.build();
+  }
 
-        for (Rating r : ratings.keySet()) {
-            overall += getWeightedSkill(w, r);
+  public Ratings cap(Double cap) {
+    Builder builder = Builder.create(league);
+
+    for (Map.Entry<Rating, Double> r : ratings.entrySet()) {
+      builder = builder.rating(r.getKey(), r.getValue() > cap ? cap : r.getValue());
+    }
+
+    return builder.build();
+  }
+
+  public Ratings add(Rating r, Integer value) {
+    return Builder
+      .create(this)
+      .rating(r, getSkill(r) + value)
+      .build();
+  }
+
+  public Ratings subtract(Rating r, Integer value) {
+    return add(r, -value);
+  }
+
+  public Double getSkill(Rating rt) {
+    return ratings.get(rt);
+  }
+
+  public Double getWeightedSkill(Weighting w, Rating rt) {
+    return getSkill(rt) * w.get(rt) / 100;
+  }
+
+  public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
+    return getWeightedSkill(league.getWeightings().forTactic(tc).inRole(rl), rt);
+  }
+
+  public Double getSkillRating(Role rl, Tactic tc, Rating rt, Tactic vs) {
+    return getWeightedSkill(league.getWeightings().forTactic(tc).vs(vs).inRole(rl), rt);
+  }
+
+  public Double getMaximumSkill() {
+    return Ordering.natural().max(ratings.values());
+  }
+
+  public Rating getPrimarySkill() {
+    return getSkillPriority().get(0);
+  }
+
+  public ImmutableList<Rating> getSkillPriority() {
+    return Ordering
+      .natural()
+      .reverse()
+      .onResultOf(new Function<Rating, Double>() {
+        public Double apply(Rating r) {
+          return getSkill(r);
         }
+      })
+    .immutableSortedCopy(Arrays.asList(Rating.values()));
+  }
 
-        //overall += getWeightedSkill(w, Rating.SHOOTING) / 10.0;
+  public Double getSum() {
+    Double sum = 0.0;
+    for (Double r : ratings.values()) {
+      sum += r;
+    }
+    return sum;
+  }
 
-        return overall;
+  public static Builder builder(League league) {
+    return Builder.create(league);
+  }
+
+  private static Ratings build(Builder builder) {
+    return new Ratings(builder);
+  }
+
+  public static Ratings combine(Ratings rts, Ratings abs) {
+    Ratings.Builder builder = builder(rts.league);
+
+    for (Rating r : Rating.values()) {
+      Double rt = rts.getSkill(r);
+      Double ab = abs.getSkill(r);
+
+      builder = builder.rating(r, rt + ab / 1000);
     }
 
-    public Ratings atPercent(Integer percent) {
-        Builder builder = Builder.create(league);
-        
-        for (Rating r : ratings.keySet()) {
-            Double newValue = ratings.get(r) * percent / 100;
+    return builder.build();
+  }
 
-            builder = builder.rating(r, newValue);
-        }
+  public static final class Builder {
 
-        return builder.build();
+    private League league;
+
+    private final Map<Rating, Double> ratings = Maps.newEnumMap(Rating.class);
+
+    private Builder() { }
+
+    public Builder league(League league) {
+      this.league = league;
+      return this;
     }
 
-    public Ratings cap(Double cap) {
-        Builder builder = Builder.create(league);
-
-        for (Rating r : ratings.keySet()) {
-            builder = builder.rating(r, ratings.get(r) > cap ? cap : ratings.get(r));
-        }
-
-        return builder.build();
+    private Builder rating(Rating r, Integer v) {
+      return rating(r, v.doubleValue());
     }
 
-    public Ratings add(Rating r, Integer value) {
-        return Builder
-            .create(this)
-            .rating(r, getSkill(r) + value)
-            .build();
+    private Builder rating(Rating r, Double v) {
+      ratings.put(r, v);
+      return this;
     }
 
-    public Ratings subtract(Rating r, Integer value) {
-        return add(r, -value);
+    public Builder stopping(Integer st) {
+      return rating(Rating.STOPPING, st);
     }
 
-    public Double getSkill(Rating rt) {
-        return ratings.get(rt);
+    public Builder tackling(Integer tk) {
+      return rating(Rating.TACKLING, tk);
     }
 
-    public Double getWeightedSkill(Weighting w, Rating rt) {
-        return getSkill(rt) * w.get(rt) / 100;
+    public Builder passing(Integer ps) {
+      return rating(Rating.PASSING, ps);
     }
 
-    public Double getSkillRating(Role rl, Tactic tc, Rating rt) {
-        return getWeightedSkill(league.getWeightings().forTactic(tc).inRole(rl), rt);
+    public Builder shooting(Integer sh) {
+      return rating(Rating.SHOOTING, sh);
     }
 
-    public Double getSkillRating(Role rl, Tactic tc, Rating rt, Tactic vs) {
-        return getWeightedSkill(league.getWeightings().forTactic(tc).vs(vs).inRole(rl), rt);
+    public Ratings build() {
+      return Ratings.build(this);
     }
 
-    public Double getMaximumSkill() {
-        return Ordering.natural().max(ratings.values());
+    private static Builder create(League league) {
+      Builder b = new Builder();
+      b.league = league;
+      return b;
     }
 
-    public Rating getPrimarySkill() {
-        return getSkillPriority().get(0);
+    private static Builder create(Ratings ratings) {
+      Builder b = create(ratings.league);
+      b.ratings.putAll(ratings.ratings);
+      return b;
     }
 
-    public ImmutableList<Rating> getSkillPriority() {
-        return Ordering
-            .natural()
-            .reverse()
-            .onResultOf(new Function<Rating, Double>() {
-                public Double apply(Rating r) {
-                    return getSkill(r);
-                }
-            })
-            .immutableSortedCopy(Arrays.asList(Rating.values()));
-    }
-
-    public Double getSum() {
-        Double sum = 0.0;
-        for (Double r : ratings.values()) {
-            sum += r;
-        }
-        return sum;
-    }
-
-    public static Builder builder(League league) {
-        return Builder.create(league);
-    }
-
-    private static Ratings build(Builder builder) {
-        return new Ratings(builder);
-    }
-
-    public static Ratings combine(Ratings rts, Ratings abs) {
-        Ratings.Builder builder = builder(rts.league);
-
-        for (Rating r : Rating.values()) {
-            Double rt = rts.getSkill(r);
-            Double ab = abs.getSkill(r);
-
-            builder = builder.rating(r, rt + ab / 1000);
-        }
-
-        return builder.build();
-    }
-
-    public static final class Builder {
-
-        private League league;
-
-        private final Map<Rating, Double> ratings = Maps.newEnumMap(Rating.class);
-
-        private Builder() { }
-
-        public Builder league(League league) {
-            this.league = league;
-            return this;
-        }
-
-        private Builder rating(Rating r, Integer v) {
-            return rating(r, v.doubleValue());
-        }
-
-        private Builder rating(Rating r, Double v) {
-            ratings.put(r, v);
-            return this;
-        }
-
-        public Builder stopping(Integer st) {
-            return rating(Rating.STOPPING, st);
-        }
-
-        public Builder tackling(Integer tk) {
-            return rating(Rating.TACKLING, tk);
-        }
-
-        public Builder passing(Integer ps) {
-            return rating(Rating.PASSING, ps);
-        }
-
-        public Builder shooting(Integer sh) {
-            return rating(Rating.SHOOTING, sh);
-        }
-
-        public Ratings build() {
-            return Ratings.build(this);
-        }
-
-        private static Builder create(League league) {
-            Builder b = new Builder();
-            b.league = league;
-            return b;
-        }
-
-        private static Builder create(Ratings ratings) {
-            Builder b = create(ratings.league);
-            b.ratings.putAll(ratings.ratings);
-            return b;
-        }
-
-    }
+  }
 
 }
