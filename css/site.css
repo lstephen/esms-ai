@@ -1,1 +1,7 @@
-/* You can override this file with your own styles */
+
+@media (min-width: 980px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
