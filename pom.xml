@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.github.lstephen</groupId>
     <artifactId>basepom</artifactId>
-    <version>1.7</version>
+    <version>1.11</version>
   </parent>
 
   <artifactId>esms-ai</artifactId>
@@ -17,12 +17,12 @@
 
   <name>esms-ai</name>
   <description>AI to analyze ESMS team</description>
-  <url>https://github.com/lstephen/esms-ai</url>
+  <url>${github.site}</url>
 
   <scm>
     <connection>scm:git:git@github.com:lstpehen/esms-ai.git</connection>
     <developerConnection>scm:git:git@github.com:lstephen/esms-ai.git</developerConnection>
-    <url>https://github.com/lstephen/esms-ai</url>
+    <url>${github.url}</url>
   </scm>
 
   <properties>
