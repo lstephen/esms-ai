@@ -1,18 +1,5 @@
 package com.ljs.ifootballmanager.ai.formation;
 
-import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
-import com.ljs.ai.search.hillclimbing.HillClimbing;
-import com.ljs.ai.search.hillclimbing.RepeatedHillClimbing;
-import com.ljs.ai.search.hillclimbing.Validator;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
@@ -26,11 +13,27 @@ import com.ljs.ifootballmanager.ai.player.SquadHolder;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.selection.Substitution;
+
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import com.github.lstephen.ai.search.HillClimbing;
+import com.github.lstephen.ai.search.RepeatedHillClimbing;
+import com.github.lstephen.ai.search.Validator;
+
+import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
 
 /**
  *
@@ -307,11 +310,12 @@ public final class Formation implements Report {
 
   private static Formation select(League league, Tactic tactic, SelectionCriteria criteria, FormationScorer scorer) {
 
-    HillClimbing.Builder<Formation> builder = HillClimbing
+    HillClimbing<Formation> builder = HillClimbing
       .<Formation>builder()
       .validator(Formation::isValid)
       .heuristic(byScore(scorer).compound(byAge().reverse()).compound(byAbilitySum()))
-      .actionGenerator(Actions.create(criteria));
+      .actionGenerator(Actions.create(criteria))
+      .build();
 
     return new RepeatedHillClimbing<Formation>(
         RandomFormationGenerator.create(league.getFormationValidator(), scorer, tactic, criteria),

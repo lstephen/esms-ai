@@ -1,5 +1,21 @@
 package com.ljs.ifootballmanager.ai.selection;
 
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.player.SquadHolder;
+import com.ljs.ifootballmanager.ai.rating.Rating;
+import com.ljs.ifootballmanager.ai.report.Report;
+
+import java.io.PrintWriter;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -7,27 +23,17 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import com.ljs.ai.search.Action;
-import com.ljs.ai.search.ActionsFunction;
-import com.ljs.ai.search.RepeatedHillClimbing;
-import com.ljs.ai.search.State;
-import com.ljs.ifootballmanager.ai.Role;
-import com.ljs.ifootballmanager.ai.formation.Formation;
-import com.ljs.ifootballmanager.ai.player.Player;
-import com.ljs.ifootballmanager.ai.player.SquadHolder;
-import com.ljs.ifootballmanager.ai.rating.Rating;
-import com.ljs.ifootballmanager.ai.report.Report;
-import java.io.PrintWriter;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Callable;
+
+import com.github.lstephen.ai.search.HillClimbing;
+import com.github.lstephen.ai.search.RepeatedHillClimbing;
+import com.github.lstephen.ai.search.action.Action;
+import com.github.lstephen.ai.search.action.ActionGenerator;
 
 /**
  *
  * @author lstephen
  */
-public class Bench implements State, Report {
+public class Bench implements Report {
 
     private static final Integer BENCH_SIZE = 5;
 
@@ -40,12 +46,10 @@ public class Bench implements State, Report {
         this.bench = ImmutableSet.copyOf(bench);
     }
 
-    @Override
     public Boolean isValid() {
         return bench.size() == BENCH_SIZE;
     }
 
-    @Override
     public Double score() {
         if (bench.isEmpty()) {
             return 0.0;
@@ -129,21 +133,26 @@ public class Bench implements State, Report {
     }
 
     public static Bench select(Formation formation, Iterable<Player> substitutes, Iterable<Player> available) {
-        return new RepeatedHillClimbing<Bench>(
-            Bench.class,
-            initialState(formation, substitutes, available),
-            actionsFunction(formation, substitutes, available))
-            .search();
+      HillClimbing<Bench> hc = HillClimbing
+        .<Bench>builder()
+        .validator(Bench::isValid)
+        .heuristic(Ordering.natural().onResultOf(Bench::score))
+        .actionGenerator(actionsFunction(formation, substitutes, available))
+        .build();
 
+        return new RepeatedHillClimbing<Bench>(
+            initialState(formation, substitutes, available),
+            hc)
+            .search();
     }
 
-    private static Callable<Bench> initialState(
+    private static Supplier<Bench> initialState(
         final Formation formation,
         final Iterable<Player> subsitutes,
         final Iterable<Player> available) {
 
-        return new Callable<Bench>() {
-            public Bench call() {
+        return new Supplier<Bench>() {
+            public Bench get() {
                 List<Player> remaining = Lists.newArrayList();
 
                 for (Player p : available) {
@@ -158,15 +167,15 @@ public class Bench implements State, Report {
             }};
     }
 
-    private static ActionsFunction<Bench> actionsFunction(
+    private static ActionGenerator<Bench> actionsFunction(
         final Formation formation,
         final Iterable<Player> subsitutes,
         final Iterable<Player> available) {
 
-        return new ActionsFunction<Bench>() {
+        return new ActionGenerator<Bench>() {
 
             @Override
-            public Iterable<? extends Action<Bench>> getActions(Bench state) {
+            public Stream<Action<Bench>> apply(Bench state) {
                 List<Player> remaining = Lists.newArrayList();
 
                 for (Player p : available) {
@@ -187,12 +196,12 @@ public class Bench implements State, Report {
                     }
                 }
 
-                return actions;
+                return actions.stream();
             }
         };
     }
 
-    private static class ChangePlayer extends Action<Bench> {
+    private static class ChangePlayer implements Action<Bench> {
 
         private final Player in;
         private final Player out;

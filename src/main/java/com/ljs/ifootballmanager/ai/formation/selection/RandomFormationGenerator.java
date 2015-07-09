@@ -1,9 +1,5 @@
 package com.ljs.ifootballmanager.ai.formation.selection;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -11,15 +7,21 @@ import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.formation.validate.FormationValidator;
 import com.ljs.ifootballmanager.ai.player.Player;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.function.Supplier;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 
 /**
  *
  * @author lstephen
  */
-public final class RandomFormationGenerator implements Callable<Formation> {
+public final class RandomFormationGenerator implements Supplier<Formation> {
 
     private final FormationValidator validator;
 
@@ -41,7 +43,7 @@ public final class RandomFormationGenerator implements Callable<Formation> {
         this.criteria = criteria;
     }
 
-    public Formation call() {
+    public Formation get() {
         List<Player> shuffled = Lists.newArrayList(criteria.getOptional());
         Collections.shuffle(shuffled);
 

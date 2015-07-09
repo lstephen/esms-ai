@@ -1,15 +1,19 @@
 package com.ljs.ifootballmanager.ai.formation.selection;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.ljs.ai.search.hillclimbing.action.Action;
-import com.ljs.ai.search.hillclimbing.action.ActionGenerator;
-import com.ljs.ai.search.hillclimbing.action.SequencedAction;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.player.Player;
+
+import com.github.lstephen.ai.search.action.Action;
+import com.github.lstephen.ai.search.action.ActionGenerator;
+import com.github.lstephen.ai.search.action.SequencedAction;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  *
@@ -23,13 +27,15 @@ public class Actions implements ActionGenerator<Formation> {
         this.criteria = criteria;
     }
 
-    public Iterable<Action<Formation>> apply(Formation f) {
-        Iterable<Move> moves = moves(f);
-        Iterable<Substitute> subs = substitutions(f);
-        return Iterables.concat(moves, subs, SequencedAction.allPairs(moves), SequencedAction.merged(moves, subs));
+    public Stream<Action<Formation>> apply(Formation f) {
+        List<Move> moves = moves(f);
+        List<Substitute> subs = substitutions(f);
+        return Stream.concat(
+            Stream.concat(moves.stream(), subs.stream()),
+            Stream.concat(SequencedAction.allPairs(moves), SequencedAction.merged(moves, subs)));
     }
 
-    private Iterable<Move> moves(Formation f) {
+    private List<Move> moves(Formation f) {
         List<Move> moves = Lists.newArrayList();
 
         for (Player p : f.unsortedPlayers()) {
@@ -41,7 +47,7 @@ public class Actions implements ActionGenerator<Formation> {
         return moves;
     }
 
-    private Iterable<Substitute> substitutions(Formation f) {
+    private List<Substitute> substitutions(Formation f) {
         List<Substitute> actions = Lists.newArrayList();
         for (Player in : criteria.getAll()) {
             if (!f.contains(in)) {
