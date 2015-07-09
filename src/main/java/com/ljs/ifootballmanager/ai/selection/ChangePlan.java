@@ -1,20 +1,5 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
-import com.ljs.ai.search.hillclimbing.HillClimbing;
-import com.ljs.ai.search.hillclimbing.RepeatedHillClimbing;
-import com.ljs.ai.search.hillclimbing.Validator;
-import com.ljs.ai.search.hillclimbing.action.Action;
-import com.ljs.ai.search.hillclimbing.action.ActionGenerator;
-import com.ljs.ai.search.hillclimbing.action.SequencedAction;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -25,7 +10,9 @@ import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
+
 import java.io.PrintWriter;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +21,26 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
+
+import com.github.lstephen.ai.search.HillClimbing;
+import com.github.lstephen.ai.search.RepeatedHillClimbing;
+import com.github.lstephen.ai.search.Validator;
+import com.github.lstephen.ai.search.action.Action;
+import com.github.lstephen.ai.search.action.ActionGenerator;
+import com.github.lstephen.ai.search.action.SequencedAction;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -328,19 +335,14 @@ public final class ChangePlan implements Report {
 
   }
   public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria) {
-    HillClimbing.Builder<ChangePlan> builder = HillClimbing
+    HillClimbing<ChangePlan> hc = HillClimbing
       .<ChangePlan>builder()
       .validator(ChangePlan::isValid)
       .heuristic(byScore().compound(byChangesSize().reverse()))
-      .actionGenerator(actionsFunction(league, criteria));
+      .actionGenerator(actionsFunction(league, criteria))
+      .build();
 
-    return new RepeatedHillClimbing<ChangePlan>(
-        new Callable<ChangePlan>() {
-          public ChangePlan call() {
-            return randomChangePlan(f, criteria);
-          }
-        },
-        builder)
+    return new RepeatedHillClimbing<ChangePlan>(() -> randomChangePlan(f, criteria), hc)
       .search();
   }
 
@@ -390,7 +392,7 @@ public final class ChangePlan implements Report {
     return new ActionGenerator<ChangePlan>() {
 
       @Override
-      public Iterable<Action<ChangePlan>> apply(ChangePlan cp) {
+      public Stream<Action<ChangePlan>> apply(ChangePlan cp) {
         List<Action<ChangePlan>> actions = Lists.newArrayList();
 
         if (cp != null) {
@@ -400,12 +402,12 @@ public final class ChangePlan implements Report {
           actions.addAll(adds);
           actions.addAll(removes);
 
-          actions.addAll(SequencedAction.merged(removes, adds));
+          actions.addAll(SequencedAction.merged(removes, adds).collect(Collectors.toList()));
 
           actions.addAll(combines(cp));
         }
 
-        return actions;
+        return actions.stream();
       }
 
       private Set<Substitution> availableSubstitutions(ChangePlan cp) {

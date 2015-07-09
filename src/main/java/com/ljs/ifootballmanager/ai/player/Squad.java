@@ -1,5 +1,20 @@
 package com.ljs.ifootballmanager.ai.player;
 
+import com.ljs.ifootballmanager.ai.Config;
+import com.ljs.ifootballmanager.ai.Main;
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.rating.Ratings;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Function;
@@ -16,18 +31,7 @@ import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
-import com.ljs.ifootballmanager.ai.Config;
-import com.ljs.ifootballmanager.ai.Main;
-import com.ljs.ifootballmanager.ai.Role;
-import com.ljs.ifootballmanager.ai.Tactic;
-import com.ljs.ifootballmanager.ai.league.League;
-import com.ljs.ifootballmanager.ai.rating.Ratings;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 
@@ -184,7 +188,7 @@ public final class Squad {
             new File(data, "rosters/" + league.getClass().getSimpleName() + "/" + team + ".txt"),
             Charsets.UTF_8);
 
-        CharStreams.copy(teamFile, Files.asCharSink(new File(data, team + ".txt"), Charsets.UTF_8));
+        teamFile.copyTo(Files.asCharSink(new File(data, team + ".txt"), Charsets.UTF_8));
 
         return load(league, teamFile, reserves);
     }

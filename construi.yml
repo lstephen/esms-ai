@@ -13,6 +13,8 @@ targets:
 
   clean: mvn -B clean
 
+  update-versions: mvn -B versions:update-properties -DgenerateBackupPoms=false
+
   site: mvn -B clean site
 
   snapshot:
