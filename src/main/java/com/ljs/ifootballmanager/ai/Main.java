@@ -138,7 +138,7 @@ public class Main {
         Formation reservesXI = null;
         Set<Player> allReservesXI = Sets.newHashSet();
         if (league.getReserveTeam().isPresent()) {
-            System.out.println("Selecting Reservers XI...");
+            System.out.println("Selecting Reserves XI...");
             ImmutableList<Formation> reserveXICandiates = Formation.select(
                 league,
                 SelectionCriteria.create(ImmutableSet.<Player>of(), squad.reserves(league)),
