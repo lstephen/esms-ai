@@ -101,6 +101,8 @@ public class Main {
         Squad squad = Squad.load(league);
         SquadHolder.set(squad);
 
+        System.out.println("Selecting First XI...");
+
         ImmutableList<Formation> firstXICandidates = Formation.select(league, squad.players(), DefaultScorer.get());
 
         Set<Player> allFirstXI = Sets.newHashSet();
@@ -126,15 +128,9 @@ public class Main {
                 ImmutableSet.copyOf(squad.players()),
                 ImmutableSet.copyOf(firstXI.players())));
 
+        System.out.println("Selecting At Potential XI...");
         Iterable<Player> atPotentialCandidates = FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
         Formation atPotentialXI = Formation.select(league, atPotentialCandidates, AtPotentialScorer.create(league.getPlayerPotential())).get(0);
-
-        /*Formation secondXI = null;
-        if (remaining.size() >= 11) {
-            secondXI = Formation.select(league, firstXI.getTactic(), remaining, SecondXIScorer.create(league));
-            print(w, "2nd XI", secondXI);
-            remaining.removeAll(secondXI.players());
-        }*/
 
         remaining.removeAll(atPotentialXI.players());
 
@@ -142,6 +138,7 @@ public class Main {
         Formation reservesXI = null;
         Set<Player> allReservesXI = Sets.newHashSet();
         if (league.getReserveTeam().isPresent()) {
+            System.out.println("Selecting Reservers XI...");
             ImmutableList<Formation> reserveXICandiates = Formation.select(
                 league,
                 SelectionCriteria.create(ImmutableSet.<Player>of(), squad.reserves(league)),
@@ -180,6 +177,7 @@ public class Main {
         remaining.removeAll(firstSquad);
         remaining.removeAll(reservesSquad);
 
+        System.out.println("Selecting Training Squad...");
         Set<Player> trainingSquadCandidates = Sets.newHashSet(remaining);
 
         while ((reservesSquad.size() < 21 || firstSquad.size() < 21) && !trainingSquadCandidates.isEmpty()) {
