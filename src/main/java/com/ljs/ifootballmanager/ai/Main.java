@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
-import javax.swing.JOptionPane;
 
 /**
  * Hello world!
@@ -56,15 +55,15 @@ public class Main {
     private static final ImmutableMap<String, League> SITES =
         ImmutableMap
             .<String, League>builder()
-            .put("EFL - TTH", EliteFootballLeague.create())
-            .put("ESL - WAT", Esl.create())
-            .put("IFM - LIV", IFootballManager.create("liv"))
-            .put("IFM - NOR", IFootballManager.create("nor"))
-            .put("IFM - DER", IFootballManager.create("der"))
-            .put("IFM - Holland", IFootballManager.create("hol"))
-            .put("JAFL - GLI", Jafl.get())
-            .put("SSL - MIS", Ssl.create("mis", "msy"))
-            .put("SSL - ARG", Ssl.create("arg"))
+            .put("EFL_TTH", EliteFootballLeague.create())
+            .put("ESL_WAT", Esl.create())
+            //.put("IFM_LIV", IFootballManager.create("liv"))
+            //.put("IFM_ NOR", IFootballManager.create("nor"))
+            //.put("IFM - DER", IFootballManager.create("der"))
+            //.put("IFM - Holland", IFootballManager.create("hol"))
+            .put("JAFL_GLI", Jafl.get())
+            .put("SSL_MIS", Ssl.create("mis", "msy"))
+            //.put("SSL - ARG", Ssl.create("arg"))
             .build();
 
     public static void main( String[] args ) throws IOException {
@@ -72,18 +71,9 @@ public class Main {
     }
 
     public void run() throws IOException {
-        String site = System.getProperty("site");
+        String site = System.getenv("ESMS_AI_SITE");
 
-        if (site == null) {
-            site = (String) JOptionPane.showInputDialog(
-                null,
-                "Please select league:",
-                "ESMS-AI",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                Ordering.natural().sortedCopy(SITES.keySet()).toArray(),
-                null);
-        }
+        Preconditions.checkNotNull(site, "ESMS_AI_SITE must be provided");
 
         run(SITES.get(site));
     }
