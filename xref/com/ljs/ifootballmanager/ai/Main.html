@@ -79,9 +79,9 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          String site = System.getenv(<span class="jxr_string">"ESMS_AI_SITE"</span>);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          String site = System.getenv(<span class="jxr_string">"ESMSAI_SITE"</span>);
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          Preconditions.checkNotNull(site, <span class="jxr_string">"ESMS_AI_SITE must be provided"</span>);
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          Preconditions.checkNotNull(site, <span class="jxr_string">"ESMSAI_SITE must be provided"</span>);
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          run(SITES.get(site));
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      }
