@@ -261,6 +261,7 @@ public final class Formation implements Report {
   public static ImmutableList<Formation> select(League league, SelectionCriteria criteria, FormationScorer scorer) {
     Set<Formation> formations = Sets.newHashSet();
     for (Tactic t : Tactic.values()) {
+      System.out.print(t.toString());
       formations.add(select(league, t, criteria, scorer));
     }
 
