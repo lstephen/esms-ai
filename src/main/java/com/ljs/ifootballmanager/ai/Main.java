@@ -71,9 +71,9 @@ public class Main {
     }
 
     public void run() throws IOException {
-        String site = System.getenv("ESMS_AI_SITE");
+        String site = System.getenv("ESMSAI_SITE");
 
-        Preconditions.checkNotNull(site, "ESMS_AI_SITE must be provided");
+        Preconditions.checkNotNull(site, "ESMSAI_SITE must be provided");
 
         run(SITES.get(site));
     }
