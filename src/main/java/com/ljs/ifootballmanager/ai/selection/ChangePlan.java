@@ -61,11 +61,16 @@ public final class ChangePlan implements Report {
 
   private final Map<Pair<Player, Integer>, Player> afterMinutes;
 
+  private final Boolean isAllowChangePos;
+
   private ChangePlan(Formation formation, Iterable<? extends Change> cs, Map<Integer, Double> scores, Map<Pair<Player, Integer>, Player> afterMinutes) {
     this.formation = formation;
     this.changes = ImmutableSet.copyOf(cs);
     this.scores = Maps.newHashMap(scores);
     this.afterMinutes = Maps.newHashMap(afterMinutes);
+
+    isAllowChangePos = !(LeagueHolder.get() instanceof EliteFootballLeague
+      || LeagueHolder.get() instanceof Esl);
   }
 
   private ImmutableList<Change> changes() {
@@ -219,6 +224,10 @@ public final class ChangePlan implements Report {
     return scores;
   }
 
+  private Boolean isAllowChangePos() {
+    return isAllowChangePos;
+  }
+
   public Boolean isValid() {
     // Max is 15, and 5 for score based tactics
     if (changes().size() > 10) {
@@ -229,17 +238,12 @@ public final class ChangePlan implements Report {
       return false;
     }
 
-    boolean disallowChangePos = 
-      LeagueHolder.get() instanceof EliteFootballLeague
-      || LeagueHolder.get() instanceof Esl;
-
-    if (disallowChangePos
+    if (!isAllowChangePos()
         && !changes(ChangePosition.class).isEmpty()) {
       return false;
         }
 
-    // TODO: We should be able to support more than one
-    if (changes(TacticChange.class).size() > 1) {
+    if (!changes(TacticChange.class).isEmpty()) {
       return false;
     }
 
@@ -431,7 +435,7 @@ public final class ChangePlan implements Report {
           if (r == Role.GK) {
             continue;
           }
-          for (Integer minute = 45; minute <= 90; minute++) {
+          for (Integer minute = 45; minute <= 90; minute+=(minute < 75 ? 5 : 3)) {
             if (cp.isChangeAt(minute)) {
               continue;
             }
@@ -479,16 +483,18 @@ public final class ChangePlan implements Report {
           adds.add(new AddChange(s));
         }
 
-        for (Integer minute = 45; minute <= 90; minute++) {
-          if (cp.isChangeAt(minute)) {
-            continue;
-          }
-          Formation f = cp.getFormationAt(minute);
+        if (cp.isAllowChangePos()) {
+          for (Integer minute = 45; minute <= 90; minute+=(minute < 75 ? 5 : 3)) {
+            if (cp.isChangeAt(minute)) {
+              continue;
+            }
+            Formation f = cp.getFormationAt(minute);
 
-          for (Player p : f.players()) {
-            for (Role r : Role.values()) {
-              if (r != f.findRole(p) && r != Role.GK) {
-                adds.add(new AddChange(ChangePosition.create(p, r, minute)));
+            for (Player p : f.players()) {
+              for (Role r : Role.values()) {
+                if (r != f.findRole(p) && r != Role.GK) {
+                  adds.add(new AddChange(ChangePosition.create(p, r, minute)));
+                }
               }
             }
           }
