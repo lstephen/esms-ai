@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -415,6 +416,13 @@ public final class ChangePlan implements Report {
       }
 
       private Set<Substitution> availableSubstitutions(ChangePlan cp) {
+        Set<Player> possibleSubs = criteria.getAll()
+          .stream()
+          .filter(p -> !cp.formation.contains(p))
+          .sorted(Comparator.comparing((Player p) -> p.getOverall(cp.formation.getTactic()).getRating()).reversed())
+          .limit(5)
+          .collect(Collectors.toSet());
+
         Set<Substitution> ss = Sets.newHashSet();
 
         for (Substitution s : cp.changes(Substitution.class)) {
@@ -440,7 +448,7 @@ public final class ChangePlan implements Report {
               continue;
             }
             Formation currentFormation = cp.getFormationAt(minute);
-            for (Player in : criteria.getAll()) {
+            for (Player in : possibleSubs) {
               if (cp.formation.contains(in)) {
                 continue;
               }
