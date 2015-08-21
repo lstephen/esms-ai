@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -416,12 +417,29 @@ public final class ChangePlan implements Report {
       }
 
       private Set<Substitution> availableSubstitutions(ChangePlan cp) {
-        Set<Player> possibleSubs = criteria.getAll()
+        Set<Player> possibleSubs = new HashSet<>();
+
+        Tactic t = cp.formation.getTactic();
+
+        for (Role r : Role.values()) {
+          if (r == Role.GK) {
+            continue;
+          }
+
+          criteria.getAll()
+            .stream()
+            .filter(p -> !cp.formation.contains(p))
+            .max(Comparator.comparing((Player p) -> p.evaluate(r, t).getRating()).reversed())
+            .map(possibleSubs::add);
+        }
+
+        possibleSubs.addAll(criteria.getAll()
           .stream()
           .filter(p -> !cp.formation.contains(p))
+          .filter(p -> !possibleSubs.contains(p))
           .sorted(Comparator.comparing((Player p) -> p.getOverall(cp.formation.getTactic()).getRating()).reversed())
-          .limit(5)
-          .collect(Collectors.toSet());
+          .limit(5 - possibleSubs.size())
+          .collect(Collectors.toSet()));
 
         Set<Substitution> ss = Sets.newHashSet();
 
