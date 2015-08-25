@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -416,30 +417,37 @@ public final class ChangePlan implements Report {
         return actions.stream();
       }
 
-      private Set<Substitution> availableSubstitutions(ChangePlan cp) {
-        Set<Player> possibleSubs = new HashSet<>();
+      private Set<Player> getBestSubstitutes(ChangePlan cp) {
+        Map<Player, Double> values = new HashMap<>();
 
-        Tactic t = cp.formation.getTactic();
+        Formation f = cp.getFormationAt(90);
+        Double endOfGameScore = f.score();
 
-        for (Role r : Role.values()) {
-          if (r == Role.GK) {
+        for (Player sub : criteria.getAll()) {
+          if (f.contains(sub)) {
             continue;
           }
 
-          criteria.getAll()
-            .stream()
-            .filter(p -> !cp.formation.contains(p))
-            .max(Comparator.comparing((Player p) -> p.evaluate(r, t).getRating()).reversed())
-            .map(possibleSubs::add);
+          values.put(sub, 0.0);
+
+          for (Player starter : f.players()) {
+            Double value = f.substitute(sub, f.findRole(starter), starter).score() - endOfGameScore;
+
+            values.put(sub, Math.max(value, values.get(sub)));
+          }
         }
 
-        possibleSubs.addAll(criteria.getAll()
+        return values
+          .entrySet()
           .stream()
-          .filter(p -> !cp.formation.contains(p))
-          .filter(p -> !possibleSubs.contains(p))
-          .sorted(Comparator.comparing((Player p) -> p.getOverall(cp.formation.getTactic()).getRating()).reversed())
-          .limit(5 - possibleSubs.size())
-          .collect(Collectors.toSet()));
+          .sorted(Ordering.natural().onResultOf((Map.Entry<Player, Double> e) -> e.getValue()).reverse())
+          .limit(3)
+          .map(Map.Entry::getKey)
+          .collect(Collectors.toSet());
+      }
+
+      private Set<Substitution> availableSubstitutions(ChangePlan cp) {
+        Set<Player> possibleSubs = getBestSubstitutes(cp);
 
         Set<Substitution> ss = Sets.newHashSet();
 
