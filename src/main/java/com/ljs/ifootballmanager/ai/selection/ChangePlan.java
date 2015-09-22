@@ -164,8 +164,8 @@ public final class ChangePlan implements Report {
     .max(Arrays.asList(Tactic.values()));
   }
 
-  private Double scoring(Tactic t) {
-    Double score = 0.0;
+  private double scoring(Tactic t) {
+    double score = 0.0;
 
     for (Integer minute = 1; minute < GAME_MINUTES; minute++) {
       Formation f = getFormationAt(minute);
@@ -175,8 +175,8 @@ public final class ChangePlan implements Report {
     return score;
   }
 
-  private Double defending(Tactic t) {
-    Double score = 0.0;
+  private double defending(Tactic t) {
+    double score = 0.0;
     for (Integer minute = 1; minute <= GAME_MINUTES; minute++) {
       Formation f = getFormationAt(minute);
       score += weightedAtMinute(f.defending(t) + f.score(t), minute);
@@ -184,11 +184,11 @@ public final class ChangePlan implements Report {
     return score;
   }
 
-  private Double weightedAtMinute(Double score, Integer minute) {
+  private double weightedAtMinute(double score, Integer minute) {
     return score * weightingAtMinute(minute);
   }
 
-  private Double weightingAtMinute(Integer minute) {
+  private double weightingAtMinute(Integer minute) {
     return Math.pow((double) minute / GAME_MINUTES, 2);
   }
 
