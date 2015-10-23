@@ -141,13 +141,6 @@ public class Main {
         Iterable<Player> atPotentialCandidates = FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
         Formation atPotentialXI = Formation.select(league, atPotentialCandidates, AtPotentialScorer.create(league.getPlayerPotential())).get(0);
 
-        /*Formation secondXI = null;
-        if (remaining.size() >= 11) {
-            secondXI = Formation.select(league, firstXI.getTactic(), remaining, SecondXIScorer.create(league));
-            print(w, "2nd XI", secondXI);
-            remaining.removeAll(secondXI.players());
-        }*/
-
         remaining.removeAll(atPotentialXI.players());
 
         Set<Player> reservesSquad = Sets.newHashSet();
@@ -175,9 +168,6 @@ public class Main {
         Set<Player> desiredSquad = Sets.newHashSet();
         desiredSquad.addAll(allFirstXI);
         desiredSquad.addAll(atPotentialXI.players());
-        /*if (secondXI != null) {
-            desiredSquad.addAll(secondXI.players());
-        }*/
 
         Set<Player> firstSquad = Sets.newHashSet();
 
@@ -232,9 +222,7 @@ public class Main {
 
         Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
         trainingSquad.removeAll(allFirstXI);
-        /*if (secondXI != null) {
-            trainingSquad.removeAll(secondXI.players());
-        }*/
+
         if (reservesXI != null) {
             trainingSquad.removeAll(allReservesXI);
         }
@@ -265,7 +253,6 @@ public class Main {
                 .builder()
                 .squad(squad)
                 .firstXI(firstXI)
-                //.secondXI(secondXI)
                 .reservesXI(reservesXI)
                 .build());
 
