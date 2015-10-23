@@ -92,6 +92,11 @@ public class Main {
         }
     }
 
+    private CharSink output(League league) {
+      File baseDir = Config.get().getDataDirectory();
+      return Files.asCharSink(new File(baseDir, league.getTeam() + "ovr.txt"), Charsets.ISO_8859_1);
+    }
+
     public void run(League league, PrintWriter w) throws IOException {
         System.out.println("Running for: " + league.getTeam());
 
