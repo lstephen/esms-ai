@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.github.lstephen.ai.search.HillClimbing;
 import com.github.lstephen.ai.search.RepeatedHillClimbing;
@@ -149,6 +150,10 @@ public final class Formation implements Report {
     }
 
     return ImmutableList.copyOf(players);
+  }
+
+  public Stream<Player> playerStream() {
+    return players().stream();
   }
 
   public Iterable<Player> unsortedPlayers() {

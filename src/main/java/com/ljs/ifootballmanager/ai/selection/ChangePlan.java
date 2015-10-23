@@ -15,6 +15,9 @@ import java.io.PrintWriter;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -161,8 +164,8 @@ public final class ChangePlan implements Report {
     .max(Arrays.asList(Tactic.values()));
   }
 
-  private Double scoring(Tactic t) {
-    Double score = 0.0;
+  private double scoring(Tactic t) {
+    double score = 0.0;
 
     for (Integer minute = 1; minute < GAME_MINUTES; minute++) {
       Formation f = getFormationAt(minute);
@@ -172,8 +175,8 @@ public final class ChangePlan implements Report {
     return score;
   }
 
-  private Double defending(Tactic t) {
-    Double score = 0.0;
+  private double defending(Tactic t) {
+    double score = 0.0;
     for (Integer minute = 1; minute <= GAME_MINUTES; minute++) {
       Formation f = getFormationAt(minute);
       score += weightedAtMinute(f.defending(t) + f.score(t), minute);
@@ -181,11 +184,11 @@ public final class ChangePlan implements Report {
     return score;
   }
 
-  private Double weightedAtMinute(Double score, Integer minute) {
+  private double weightedAtMinute(double score, Integer minute) {
     return score * weightingAtMinute(minute);
   }
 
-  private Double weightingAtMinute(Integer minute) {
+  private double weightingAtMinute(Integer minute) {
     return Math.pow((double) minute / GAME_MINUTES, 2);
   }
 
@@ -414,7 +417,38 @@ public final class ChangePlan implements Report {
         return actions.stream();
       }
 
+      private Set<Player> getBestSubstitutes(ChangePlan cp) {
+        Map<Player, Double> values = new HashMap<>();
+
+        Formation f = cp.getFormationAt(90);
+        Double endOfGameScore = f.score();
+
+        for (Player sub : criteria.getAll()) {
+          if (f.contains(sub)) {
+            continue;
+          }
+
+          values.put(sub, 0.0);
+
+          for (Player starter : f.players()) {
+            Double value = f.substitute(sub, f.findRole(starter), starter).score() - endOfGameScore;
+
+            values.put(sub, Math.max(value, values.get(sub)));
+          }
+        }
+
+        return values
+          .entrySet()
+          .stream()
+          .sorted(Ordering.natural().onResultOf((Map.Entry<Player, Double> e) -> e.getValue()).reverse())
+          .limit(3)
+          .map(Map.Entry::getKey)
+          .collect(Collectors.toSet());
+      }
+
       private Set<Substitution> availableSubstitutions(ChangePlan cp) {
+        Set<Player> possibleSubs = getBestSubstitutes(cp);
+
         Set<Substitution> ss = Sets.newHashSet();
 
         for (Substitution s : cp.changes(Substitution.class)) {
@@ -440,7 +474,7 @@ public final class ChangePlan implements Report {
               continue;
             }
             Formation currentFormation = cp.getFormationAt(minute);
-            for (Player in : criteria.getAll()) {
+            for (Player in : possibleSubs) {
               if (cp.formation.contains(in)) {
                 continue;
               }
