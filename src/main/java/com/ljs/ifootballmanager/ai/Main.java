@@ -1,16 +1,32 @@
 package com.ljs.ifootballmanager.ai;
 
+import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
+import com.google.common.io.CharSink;
+import com.google.common.io.Files;
+import com.google.common.io.Resources;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
+import com.ljs.ifootballmanager.ai.formation.score.SecondXIScorer;
 import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
 import com.ljs.ifootballmanager.ai.league.Esl;
+import com.ljs.ifootballmanager.ai.league.IFootballManager;
 import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.league.Ssl;
+import com.ljs.ifootballmanager.ai.league.Ucfl;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
@@ -25,25 +41,12 @@ import com.ljs.ifootballmanager.ai.selection.ChangePlan;
 import com.ljs.ifootballmanager.ai.value.AcquisitionValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Predicates;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
-import com.google.common.io.CharSink;
-import com.google.common.io.Files;
+import javax.swing.JOptionPane;
 
 /**
  * Hello world!
@@ -62,35 +65,44 @@ public class Main {
             //.put("IFM - Holland", IFootballManager.create("hol"))
             .put("JAFL_GLI", Jafl.get())
             .put("SSL_MIS", Ssl.create("mis", "msy"))
+            .put("UCFL_THU", Ucfl.create("thu", "thy"))
             //.put("SSL - ARG", Ssl.create("arg"))
             .build();
 
-    public static void main(String... args ) throws IOException {
+    public static void main( String[] args ) throws IOException {
         new Main().run();
     }
 
     public void run() throws IOException {
-        String site = System.getenv("ESMSAI_SITE");
+        String site = System.getProperty("site");
 
-        Preconditions.checkNotNull(site, "ESMSAI_SITE must be provided");
+        if (site == null) {
+            site = (String) JOptionPane.showInputDialog(
+                null,
+                "Please select league:",
+                "ESMS-AI",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                Ordering.natural().sortedCopy(SITES.keySet()).toArray(),
+                null);
+        }
 
         run(SITES.get(site));
     }
 
     private void run(League league) throws IOException {
+        File baseDir = Config.get().getDataDirectory();
+
+        CharSink sink = Files.asCharSink(new File(baseDir, league.getTeam() + "ovr.txt"), Charsets.ISO_8859_1);
+
         try (
-            Writer w = output(league).openStream();
+            Writer w = sink.openStream();
             PrintWriter p = new PrintWriter(w); ) {
 
             run(league, p);
 
             p.flush();
         }
-    }
-
-    private CharSink output(League league) {
-      File baseDir = Config.get().getDataDirectory();
-      return Files.asCharSink(new File(baseDir, league.getTeam() + "ovr.txt"), Charsets.ISO_8859_1);
     }
 
     public void run(League league, PrintWriter w) throws IOException {
@@ -101,14 +113,12 @@ public class Main {
         Squad squad = Squad.load(league);
         SquadHolder.set(squad);
 
-        System.out.println("Selecting First XI...");
-
         ImmutableList<Formation> firstXICandidates = Formation.select(league, squad.players(), DefaultScorer.get());
 
-        Set<Player> allFirstXI = firstXICandidates
-          .stream()
-          .flatMap(Formation::playerStream)
-          .collect(Collectors.toSet());
+        Set<Player> allFirstXI = Sets.newHashSet();
+        for (Formation f : firstXICandidates) {
+            allFirstXI.addAll(f.players());
+        }
 
         Preconditions.checkState(!firstXICandidates.isEmpty());
 
@@ -117,17 +127,17 @@ public class Main {
         ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
 
         print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()).sortByValue());
-
-        firstXICandidates
-          .stream()
-          .forEach((f) -> print(w, String.format("1st XI"), f));
+        Integer count = 1;
+        Integer total = firstXICandidates.size();
+        for (Formation f : firstXICandidates) {
+            print(w, String.format("1st XI (%d/%d)", count++, total), f);
+        }
 
         Set<Player> remaining = Sets.newHashSet(
             Sets.difference(
                 ImmutableSet.copyOf(squad.players()),
                 ImmutableSet.copyOf(firstXI.players())));
 
-        System.out.println("Selecting At Potential XI...");
         Iterable<Player> atPotentialCandidates = FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
         Formation atPotentialXI = Formation.select(league, atPotentialCandidates, AtPotentialScorer.create(league.getPlayerPotential())).get(0);
 
@@ -137,23 +147,20 @@ public class Main {
         Formation reservesXI = null;
         Set<Player> allReservesXI = Sets.newHashSet();
         if (league.getReserveTeam().isPresent()) {
-            System.out.println("Selecting Reserves XI...");
             ImmutableList<Formation> reserveXICandiates = Formation.select(
                 league,
                 SelectionCriteria.create(ImmutableSet.<Player>of(), squad.reserves(league)),
                 DefaultScorer.get());
             reservesXI = reserveXICandiates.get(0);
 
-            reserveXICandiates
-              .stream()
-              .flatMap(Formation::playerStream)
-              .forEach(allReservesXI::add);
+            for (Formation f : reserveXICandiates) {
+                allReservesXI.addAll(f.players());
+            }
 
             print(w, "Reserves XI", reservesXI);
-            allReservesXI
-              .stream()
-              .map((p) -> squad.findPlayer(p.getName()))
-              .forEach(reservesSquad::add);
+            for (Player p : allReservesXI) {
+                reservesSquad.add(squad.findPlayer(p.getName()));
+            }
         }
 
         print(w, "At Potential XI", atPotentialXI);
@@ -164,20 +171,17 @@ public class Main {
 
         Set<Player> firstSquad = Sets.newHashSet();
 
-        desiredSquad
-          .stream()
-          .forEach(p -> {
+        for (Player p : desiredSquad) {
             if (p.isReserves()) {
                 reservesSquad.add(p);
             } else {
                 firstSquad.add(p);
             }
-          });
+        }
 
         remaining.removeAll(firstSquad);
         remaining.removeAll(reservesSquad);
 
-        System.out.println("Selecting Training Squad...");
         Set<Player> trainingSquadCandidates = Sets.newHashSet(remaining);
 
         while ((reservesSquad.size() < 21 || firstSquad.size() < 21) && !trainingSquadCandidates.isEmpty()) {
@@ -218,6 +222,7 @@ public class Main {
 
         Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
         trainingSquad.removeAll(allFirstXI);
+
         if (reservesXI != null) {
             trainingSquad.removeAll(allReservesXI);
         }
@@ -248,7 +253,6 @@ public class Main {
                 .builder()
                 .squad(squad)
                 .firstXI(firstXI)
-                //.secondXI(secondXI)
                 .reservesXI(reservesXI)
                 .build());
 
@@ -335,3 +339,4 @@ public class Main {
     }
 
 }
+
