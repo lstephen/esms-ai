@@ -74,29 +74,16 @@ public class Main {
     }
 
     public void run() throws IOException {
-        String site = System.getProperty("site");
+        String site = System.getenv("ESMSAI_SITE");
 
-        if (site == null) {
-            site = (String) JOptionPane.showInputDialog(
-                null,
-                "Please select league:",
-                "ESMS-AI",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                Ordering.natural().sortedCopy(SITES.keySet()).toArray(),
-                null);
-        }
+        Preconditions.checkNotNull(site, "ESMSAI_SITE must be provided");
 
         run(SITES.get(site));
     }
 
     private void run(League league) throws IOException {
-        File baseDir = Config.get().getDataDirectory();
-
-        CharSink sink = Files.asCharSink(new File(baseDir, league.getTeam() + "ovr.txt"), Charsets.ISO_8859_1);
-
         try (
-            Writer w = sink.openStream();
+            Writer w = output(league).openStream();
             PrintWriter p = new PrintWriter(w); ) {
 
             run(league, p);
