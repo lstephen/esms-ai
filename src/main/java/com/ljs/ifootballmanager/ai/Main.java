@@ -26,6 +26,7 @@ import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.league.Ssl;
+import com.ljs.ifootballmanager.ai.league.Ucfl;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
@@ -56,15 +57,16 @@ public class Main {
     private static final ImmutableMap<String, League> SITES =
         ImmutableMap
             .<String, League>builder()
-            .put("EFL - TTH", EliteFootballLeague.create())
-            .put("ESL - WAT", Esl.create())
-            .put("IFM - LIV", IFootballManager.create("liv"))
-            .put("IFM - NOR", IFootballManager.create("nor"))
-            .put("IFM - DER", IFootballManager.create("der"))
-            .put("IFM - Holland", IFootballManager.create("hol"))
-            .put("JAFL - GLI", Jafl.get())
-            .put("SSL - MIS", Ssl.create("mis", "msy"))
-            .put("SSL - ITA", Ssl.create("ita"))
+            .put("EFL_TTH", EliteFootballLeague.create())
+            .put("ESL_WAT", Esl.create())
+            //.put("IFM_LIV", IFootballManager.create("liv"))
+            //.put("IFM_ NOR", IFootballManager.create("nor"))
+            //.put("IFM - DER", IFootballManager.create("der"))
+            //.put("IFM - Holland", IFootballManager.create("hol"))
+            .put("JAFL_GLI", Jafl.get())
+            .put("SSL_MIS", Ssl.create("mis", "msy"))
+            .put("UCFL_THU", Ucfl.create("thu", "thy"))
+            //.put("SSL - ARG", Ssl.create("arg"))
             .build();
 
     public static void main( String[] args ) throws IOException {
