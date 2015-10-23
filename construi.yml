@@ -1,0 +1,37 @@
+image: maven:3-jdk-8
+
+environment:
+  - GPG_PASSPHRASE
+  - GITHUB_OAUTH_TOKEN
+  - NEXUS_PASSWORD
+  - ESMSAI_SITE
+  - ESMSAI_DATA=/var/workspace/esms-ai-data
+  - GIT_AUTHOR_NAME
+  - GIT_AUTHOR_EMAIL
+
+files:
+  - etc/settings.xml:/root/.m2/settings.xml
+
+targets:
+  build: mvn -B verify -Dgpg.skip=true
+
+  clean: mvn -B clean
+
+  update-versions: mvn -B versions:update-properties -DgenerateBackupPoms=false
+
+  site: mvn -B clean site
+
+  run:
+    files:
+      - $GIT_SSH_KEY:/root/.ssh/id_rsa:0600
+    run: /bin/bash construi/run/run.sh
+
+  snapshot:
+    files:
+      - $GPG_PUBLIC_KEY:/root/.gnupg/public.key
+      - $GPG_PRIVATE_KEY:/root/.gnupg/private.key
+    run:
+      - gpg --import /root/.gnupg/public.key
+      - gpg --import --allow-secret-key-import /root/.gnupg/private.key
+      - mvn -B deploy
+

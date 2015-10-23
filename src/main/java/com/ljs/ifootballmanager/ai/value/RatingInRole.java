@@ -10,35 +10,29 @@ import com.ljs.ifootballmanager.ai.Role;
  */
 public final class RatingInRole {
 
-    private final Role role;
+  private final Role role;
 
-    private final Double rating;
+  private final Double rating;
 
-    private RatingInRole(Role role, Double rating) {
-        this.role = role;
-        this.rating = rating;
-    }
+  private RatingInRole(Role role, Double rating) {
+    this.role = role;
+    this.rating = rating;
+  }
 
-    public Role getRole() {
-        return role;
-    }
+  public Role getRole() {
+    return role;
+  }
 
-    public Double getRating() {
-        return rating;
-    }
+  public Double getRating() {
+    return rating;
+  }
 
-    public static RatingInRole create(Role role, Double rating) {
-        return new RatingInRole(role, rating);
-    }
+  public static RatingInRole create(Role role, Double rating) {
+    return new RatingInRole(role, rating);
+  }
 
-    public static Ordering<RatingInRole> byRating() {
-        return Ordering
-            .natural()
-            .onResultOf(new Function<RatingInRole, Double>() {
-                public Double apply(RatingInRole rr) {
-                    return rr.getRating();
-                }
-            });
-    }
+  public static Ordering<RatingInRole> byRating() {
+    return Ordering.natural().onResultOf(RatingInRole::getRating);
+  }
 
 }

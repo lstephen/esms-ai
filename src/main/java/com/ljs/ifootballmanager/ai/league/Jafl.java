@@ -42,12 +42,13 @@ public class Jafl implements League {
     }
 
     public Optional<Double> getYouthSkillsCap() {
-        // 18 for cup games, 16 for league games
-        return Optional.of(16.0);
+        // 18 for cup games
+        // YD1 - 18, YD2 - 17, YD3 - 16
+        return Optional.of(17.0);
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of();
+        return ImmutableList.of("H_Kazuyoshi");
     }
 
     public FormationValidator getFormationValidator() {
