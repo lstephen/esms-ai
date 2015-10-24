@@ -212,7 +212,7 @@ public final class Squad {
                     .trim())
               .toArray(new String[] { });
 
-            if (split.length < 12 || !Character.isDigit(split[3].charAt(0))) {
+            if (split.length < 12 || !Character.isDigit(split[1].charAt(0))) {
                 continue;
             }
 
