@@ -64,8 +64,7 @@ public class Ucfl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-      return ImmutableList.of();
-      //return ImmutableList.of("/free_agents.txt", "/for_auction.txt", "/for_sale.txt");
+      return ImmutableList.of("/for_transfer.txt");
     }
 
     public Weightings getWeightings() {
