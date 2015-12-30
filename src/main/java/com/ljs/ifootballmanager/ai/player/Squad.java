@@ -241,12 +241,14 @@ public final class Squad {
 
 
             if (league.getClass().equals(Ucfl.class)) {
-              if (!split[13].equals("0")) {
-                p.injured();
-              }
+              if (split.length > 14) {
+                if (!split[13].equals("0")) {
+                  p.injured();
+                }
 
-              if (!split[14].equals("0")) {
-                p.suspended();
+                if (!split[14].equals("0")) {
+                  p.suspended();
+                }
               }
 
             } else {
