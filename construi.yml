@@ -8,7 +8,6 @@ environment:
   - ESMSAI_DATA=/var/workspace/esms-ai-data
   - GIT_AUTHOR_NAME
   - GIT_AUTHOR_EMAIL
-  - GIT_SSH_KEY
 
 volumes:
   - ./etc/settings.xml:/root/.m2/settings.xml

@@ -3,6 +3,8 @@
 set -e
 set -x
 
+sleep 3
+
 mkdir -p /root/.ssh
 
 printf "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
