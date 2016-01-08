@@ -25,7 +25,5 @@ targets:
   run:
     volumes:
       - $GIT_SSH_KEY:/ssh/id_rsa:ro
-    run: 
-      - /bin/bash -c "echo $GIT_SSH_KEY"
-      - /bin/bash construi/run/run.sh
+    run: /bin/bash construi/run/run.sh
 

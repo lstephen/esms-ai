@@ -7,7 +7,6 @@ mkdir -p /root/.ssh
 
 printf "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
-ls -la /ssh
 cp /ssh/id_rsa /root/.ssh/id_rsa
 chmod 0600 /root/.ssh/id_rsa
 
