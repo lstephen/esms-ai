@@ -2,6 +2,8 @@
 
 set -e
 
+mkdir -p /root/.ssh
+
 printf "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 cp /ssh/id_rsa /root/.ssh/id_rsa
