@@ -4,6 +4,9 @@ set -e
 
 printf "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
+cp /ssh/id_rsa /root/.ssh/id_rsa
+chmod 0600 /root/.ssh/id_rsa
+
 if [ -d "esms-ai-data/.git" ]; then
   echo "Pulling latest data..."
   cd esms-ai-data
