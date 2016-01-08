@@ -11,7 +11,7 @@ import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
 import com.ljs.ifootballmanager.ai.value.impl.EflValue;
-import com.ljs.ifootballmanager.ai.value.impl.JaflPotential;
+import com.ljs.ifootballmanager.ai.value.impl.EflPotential;
 
 /**
  *
@@ -60,7 +60,7 @@ public final class EliteFootballLeague implements League {
      }
 
     public Potential getPlayerPotential() {
-        return JaflPotential.create();
+        return EflPotential.create();
     }
 
     public Optional<Double> getSeniorSkillsCap() {
