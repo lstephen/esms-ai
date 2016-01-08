@@ -1,9 +1,10 @@
 package com.ljs.ifootballmanager.ai.formation.selection;
 
-import com.ljs.ai.search.hillclimbing.action.Action;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
+
+import com.github.lstephen.ai.search.action.Action;
 
 /**
  *

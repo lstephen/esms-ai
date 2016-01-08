@@ -7,26 +7,32 @@ import com.ljs.ifootballmanager.ai.formation.validate.FormationValidatorFactory;
 import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
 import com.ljs.ifootballmanager.ai.info.InfoValue;
+import com.ljs.ifootballmanager.ai.info.SslInfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
-import com.ljs.ifootballmanager.ai.value.impl.JaflPotential;
-import com.ljs.ifootballmanager.ai.value.impl.JaflValue;
+import com.ljs.ifootballmanager.ai.value.impl.SslPotential;
+import com.ljs.ifootballmanager.ai.value.impl.SslValue;
 
 /**
  *
  * @author lstephen
  */
-public class Jafl implements League {
+public class Ucfl implements League {
 
-    private static final Jafl INSTANCE = new Jafl();
+    private final String team;
 
-    private Jafl() { }
+    private final Optional<String> reserveTeam;
+
+    private Ucfl(String team, Optional<String> reserveTeam) {
+        this.team = team;
+        this.reserveTeam = reserveTeam;
+    }
 
     public String getTeam() {
-        return "gli";
+        return team;
     }
 
     public Optional<String> getVs() {
@@ -34,7 +40,7 @@ public class Jafl implements League {
     }
 
     public Optional<String> getReserveTeam() {
-        return Optional.of("gly");
+        return reserveTeam;
     }
 
     public Optional<Double> getSeniorSkillsCap() {
@@ -42,18 +48,15 @@ public class Jafl implements League {
     }
 
     public Optional<Double> getYouthSkillsCap() {
-        // 18 for cup games
-        // YD1 - 18, YD2 - 17, YD3 - 16
-        return Optional.of(17.0);
+        return Optional.of(15.0);
     }
 
     public Iterable<String> getForcedPlay() {
-        return ImmutableList.of("H_Kazuyoshi");
+        return ImmutableList.<String>of();
     }
 
     public FormationValidator getFormationValidator() {
-        return FormationValidatorFactory.jafl();
-        //return FormationValidatorFactory.jusCup();
+        return FormationValidatorFactory.ucfl();
     }
 
     public PlayerValidator getPlayerValidator() {
@@ -61,7 +64,7 @@ public class Jafl implements League {
     }
 
     public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_sale.txt", "/for_loan.txt", "/for_auction.txt", "/fre.txt");
+      return ImmutableList.of("/for_transfer.txt");
     }
 
     public Weightings getWeightings() {
@@ -70,23 +73,28 @@ public class Jafl implements League {
 
     @Override
     public Boolean isReserveEligible(Player p) {
-        return p.getAge() <= 19;
+        return p.getAge() <= 20;
     }
 
     public Value getPlayerValue() {
-        return JaflValue.create();
+        return SslValue.create();
     }
 
     public Potential getPlayerPotential() {
-        return JaflPotential.create();
+        return SslPotential.create();
     }
 
     public Optional<InfoValue> getInfoValue() {
-        return Optional.absent();
+        return Optional.<InfoValue>of(SslInfoValue.get());
     }
 
-    public static Jafl get() {
-        return INSTANCE;
+    public static Ucfl create(String team) {
+        return new Ucfl(team, Optional.<String>absent());
+    }
+
+    public static Ucfl create(String team, String reserveTeam) {
+        return new Ucfl(team, Optional.of(reserveTeam));
     }
 
 }
+
