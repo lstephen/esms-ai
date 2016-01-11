@@ -24,7 +24,7 @@ else
 fi
 
 echo "Running..."
-mvn -B install exec:java -Dgpg.skip=true
+mvn -B exec:java
 
 echo "Updating data..."
 cd esms-ai-data
