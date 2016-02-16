@@ -10,6 +10,8 @@ volumes:
 targets:
   build: mvn -B verify -Dgpg.skip=true
 
+  install: mvn -B install -Dgpg.skip=true
+
   clean: mvn -B clean
 
   update-versions: mvn -B versions:update-properties -DgenerateBackupPoms=false
@@ -17,7 +19,8 @@ targets:
   site: mvn -B clean site
 
   run:
-    build: .
+    before:
+      - install
     volumes:
       - $GIT_SSH_KEY:/ssh/id_rsa:ro
       - ./esms-ai-data:/var/esms-ai-data
