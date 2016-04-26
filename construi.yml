@@ -5,7 +5,7 @@ environment:
   - GIT_AUTHOR_EMAIL
 
 volumes:
-  - $PWD/.m2:/root/.m2
+  - ./.m2/:/root/.m2
 
 targets:
   build: mvn -B verify -Dgpg.skip=true
@@ -23,7 +23,7 @@ targets:
       - install
     volumes:
       - $GIT_SSH_KEY:/ssh/id_rsa:ro
-      - $PWD/esms-ai-data:/var/esms-ai-data
+      - ./esms-ai-data/:/var/esms-ai-data
     environment:
       - ESMSAI_SITE
       - ESMSAI_DATA=/var/esms-ai-data
