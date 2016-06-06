@@ -10,10 +10,12 @@ public final class LeagueHolder {
 
     private LeagueHolder() { }
 
+    @Deprecated
     public static League get() {
         return league;
     }
 
+    @Deprecated
     public static void set(League league) {
         LeagueHolder.league = league;
     }
