@@ -10,11 +10,11 @@ import java.io.PrintWriter;
  */
 public interface FormationScorer {
 
-    Double score(Formation f, Tactic t);
+    double score(Formation f, Tactic t);
 
-    Double scoring(Formation f, Tactic t);
+    double scoring(Formation f, Tactic t);
 
-    Double defending(Formation f, Tactic t);
+    double defending(Formation f, Tactic t);
 
     void print(Formation f, PrintWriter w);
 
