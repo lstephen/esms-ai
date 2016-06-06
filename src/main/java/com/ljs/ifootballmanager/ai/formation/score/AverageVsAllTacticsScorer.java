@@ -20,8 +20,8 @@ public final class AverageVsAllTacticsScorer implements FormationScorer {
 
     private AverageVsAllTacticsScorer() { }
 
-    public Double score(Formation f, Tactic tactic) {
-        Double score = 0.0;
+    public double score(Formation f, Tactic tactic) {
+        double score = 0.0;
 
         for (Tactic t : tactics) {
             score += VsTacticScorer.create(t).score(f, tactic);
@@ -30,8 +30,8 @@ public final class AverageVsAllTacticsScorer implements FormationScorer {
         return score / tactics.size();
     }
 
-    public Double scoring(Formation f, Tactic tactic) {
-        Double score = 0.0;
+    public double scoring(Formation f, Tactic tactic) {
+        double score = 0.0;
 
         for (Tactic t : tactics) {
             score += VsTacticScorer.create(t).scoring(f, tactic);
@@ -40,8 +40,8 @@ public final class AverageVsAllTacticsScorer implements FormationScorer {
         return score / tactics.size();
     }
 
-    public Double defending(Formation f, Tactic tactic) {
-        Double score = 0.0;
+    public double defending(Formation f, Tactic tactic) {
+        double score = 0.0;
 
         for (Tactic t : tactics) {
             score += VsTacticScorer.create(t).defending(f, tactic);
@@ -50,24 +50,24 @@ public final class AverageVsAllTacticsScorer implements FormationScorer {
         return score / tactics.size();
     }
 
-    public Double shootingBonus(Formation f, Tactic tactic) {
+    public double shootingBonus(Formation f, Tactic tactic) {
         return DefaultScorer.get().shootingBonus(f, tactic);
     }
 
-    public Double gkBonus(Formation f, Tactic t) {
+    public double gkBonus(Formation f, Tactic t) {
         return DefaultScorer.get().gkBonus(f , t);
     }
 
-    public Double shotQuality(Formation f, Tactic t) {
+    public double shotQuality(Formation f, Tactic t) {
         return DefaultScorer.get().shotQuality(f, t);
     }
 
-    public Double gkQuality(Formation f) {
+    public double gkQuality(Formation f) {
         return DefaultScorer.get().gkQuality(f);
     }
 
-    private Double skillRating(Formation f, Tactic tactic, Rating r) {
-        Double score = 0.0;
+    private double skillRating(Formation f, Tactic tactic, Rating r) {
+        double score = 0.0;
 
         for (Tactic t : tactics) {
             score += VsTacticScorer.create(t).skillRating(f, tactic, r);

@@ -21,58 +21,58 @@ public final class DefaultScorer implements FormationScorer {
 
     private DefaultScorer() { }
 
-    public Double score(Formation f, Tactic tactic) {
+    public double score(Formation f, Tactic tactic) {
 
-        Double a = scoring(f, tactic);
-        Double d = defending(f, tactic);
+        double a = scoring(f, tactic);
+        double d = defending(f, tactic);
 
-        Double avg = (a + d) / 2;
+        double avg = (a + d) / 2;
 
-        Double aterm = a / (avg + 1);
-        Double dterm = avg / (d + 1);
+        double aterm = a / (avg + 1);
+        double dterm = avg / (d + 1);
 
-        Double pct = 1 + aterm - dterm;
+        double pct = 1 + aterm - dterm;
 
         return (a + d) * pct + gkBonus(f, tactic) + shootingBonus(f, tactic);
     }
 
-    public Double scoring(Formation f, Tactic tactic) {
-        Double shooting = skillRating(f, tactic, Rating.SHOOTING);
-        Double passing = skillRating(f, tactic, Rating.PASSING);
+    public double scoring(Formation f, Tactic tactic) {
+        double shooting = skillRating(f, tactic, Rating.SHOOTING);
+        double passing = skillRating(f, tactic, Rating.PASSING);
 
         return (passing + passing + shooting) / 3;
     }
 
-    public Double defending(Formation f, Tactic tactic) {
+    public double defending(Formation f, Tactic tactic) {
         return skillRating(f, tactic, Rating.TACKLING);
     }
 
-    public Double shootingBonus(Formation f, Tactic tactic) {
-        Double a = scoring(f, tactic);
-        Double d = defending(f, tactic);
+    public double shootingBonus(Formation f, Tactic tactic) {
+        double a = scoring(f, tactic);
+        double d = defending(f, tactic);
 
-        Double avg = (a + d) / 2;
+        double avg = (a + d) / 2;
 
         DescriptiveStatistics shots = buildShotQualityStatistics(f, tactic);
 
-        Double base = (shots.getMean() + shots.getPercentile(50) + shots.getMax()) / 3.0;
+        double base = (shots.getMean() + shots.getPercentile(50) + shots.getMax()) / 3.0;
 
         return avg < 1.0 ? base : (a/avg * base);
     }
 
-    public Double gkBonus(Formation f, Tactic t) {
-        Double a = scoring(f, t);
-        Double d = defending(f, t);
+    public double gkBonus(Formation f, Tactic t) {
+        double a = scoring(f, t);
+        double d = defending(f, t);
 
-        Double avg = (a + d) / 2;
+        double avg = (a + d) / 2;
 
-        Double factor = Math.min(2.0, d < 1.0 ? 1.0 : (avg / d));
+        double factor = Math.min(2.0, d < 1.0 ? 1.0 : (avg / d));
 
         return factor * gkQuality(f);
     }
 
-    public Double shotQuality(Formation f, Tactic t) {
-        Double score = 0.0;
+    public double shotQuality(Formation f, Tactic t) {
+        double score = 0.0;
 
         ImmutableMap<Player, Double> chances = shootingChances(f, t);
 
@@ -85,7 +85,7 @@ public final class DefaultScorer implements FormationScorer {
 
     private ImmutableMap<Player, Double> shootingChances(Formation f, Tactic t) {
 
-        Double total = 0.0;
+        double total = 0.0;
 
         for (Player p : f.unsortedPlayers()) {
             if (f.findRole(p) == Role.GK) {
@@ -122,8 +122,8 @@ public final class DefaultScorer implements FormationScorer {
     }
 
 
-    private Double cornerShotQuality(Formation f) {
-        Double total = 0.0;
+    private double cornerShotQuality(Formation f) {
+        double total = 0.0;
 
         for (Player p : f.unsortedPlayers()) {
             if (f.findRole(p) == Role.GK) {
@@ -132,12 +132,12 @@ public final class DefaultScorer implements FormationScorer {
             total += p.getSkill(Rating.SHOOTING) + 10;
         }
 
-        Double score = 0.0;
+        double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
             if (f.findRole(p) == Role.GK) {
                 continue;
             }
-            Double chance = (p.getSkill(Rating.SHOOTING) + 10) / total;
+            double chance = (p.getSkill(Rating.SHOOTING) + 10) / total;
 
             score += chance * p.getSkill(Rating.SHOOTING);
         }
@@ -145,12 +145,12 @@ public final class DefaultScorer implements FormationScorer {
         return score;
     }
 
-    public Double gkQuality(Formation f) {
+    public double gkQuality(Formation f) {
         return f.players(Role.GK).iterator().next().getSkill(Rating.STOPPING);
     }
 
-    private Double aggression(Formation f) {
-        Double agg = 0.0;
+    private double aggression(Formation f) {
+        double agg = 0.0;
 
         for (Player p : f.unsortedPlayers()) {
             agg += p.getAggression();
@@ -159,8 +159,8 @@ public final class DefaultScorer implements FormationScorer {
         return agg / 11;
     }
 
-    private Double skillRating(Formation f, Tactic t, Rating r) {
-        Double score = 0.0;
+    private double skillRating(Formation f, Tactic t, Rating r) {
+        double score = 0.0;
         for (Player p : f.unsortedPlayers()) {
             if (LeagueHolder.get().getPlayerValidator().isAllowedInRole(p.getRatings(), f.findRole(p))) {
                 score += p.getSkillRating(f.findRole(p), t, r);

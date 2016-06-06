@@ -20,15 +20,15 @@ public class AtPotentialScorer implements FormationScorer {
         this.potential = potential;
     }
 
-    public Double score(Formation f, Tactic t) {
+    public double score(Formation f, Tactic t) {
         return DefaultScorer.get().score(atPotential(f), t);
     }
 
-    public Double scoring(Formation f, Tactic t) {
+    public double scoring(Formation f, Tactic t) {
         return DefaultScorer.get().scoring(atPotential(f), t);
     }
 
-    public Double defending(Formation f, Tactic t) {
+    public double defending(Formation f, Tactic t) {
         return DefaultScorer.get().defending(atPotential(f), t);
     }
 
