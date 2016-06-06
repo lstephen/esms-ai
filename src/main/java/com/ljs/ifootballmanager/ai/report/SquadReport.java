@@ -3,12 +3,14 @@ package com.ljs.ifootballmanager.ai.report;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
+import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
+import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
@@ -23,6 +25,8 @@ public class SquadReport implements Report {
 
     private final League league;
 
+    private final FirstXI firstXI;
+
     private final Tactic tactic;
 
     private final Iterable<Player> squad;
@@ -31,8 +35,9 @@ public class SquadReport implements Report {
 
     private Value value;
 
-    private SquadReport(League league, Tactic tactic, Iterable<Player> squad) {
-        this.league = league;
+    private SquadReport(Context ctx, Tactic tactic, Iterable<Player> squad) {
+        this.league = ctx.getLeague();
+        this.firstXI = ctx.getFirstXI();
         this.tactic = tactic;
         this.squad = squad;
 
@@ -89,9 +94,7 @@ public class SquadReport implements Report {
 
         w.format("| %3s %7s || %3s || ", "VAL", " vsRpl", "");
 
-        for (Tactic t : tactics) {
-            w.format("%3s    ", t.getCode());
-        }
+        firstXI.getTactics().forEach(t -> w.format("%3s    ", t.getCode()));
 
         w.println();
 
@@ -130,13 +133,13 @@ public class SquadReport implements Report {
                 Maths.round(repl.getValueVsReplacement(league.getPlayerPotential().atPotential(p))),
                 Maths.round(getValue(p)));
 
-            for (Tactic t : tactics) {
+            firstXI.getTactics().forEach(t -> {
                 RatingInRole rir = p.getOverall(t);
                 w.format(
                     "%3d%3s ",
                     Maths.round(rir.getRating()),
                     rir.getRole() == best.getRole() ? "" : " " + rir.getRole());
-            }
+            });
 
             w.format(
                 "%s%1s%1s ",
@@ -151,7 +154,7 @@ public class SquadReport implements Report {
 
     }
 
-    public static SquadReport create(League league, Tactic tactic, Iterable<Player> squad) {
-        return new SquadReport(league, tactic, squad);
+    public static SquadReport create(Context ctx, Tactic tactic, Iterable<Player> squad) {
+        return new SquadReport(ctx, tactic, squad);
     }
 }

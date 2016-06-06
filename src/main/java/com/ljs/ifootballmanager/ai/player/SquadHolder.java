@@ -10,10 +10,12 @@ public final class SquadHolder {
 
     private SquadHolder() { }
 
+    @Deprecated
     public static Squad get() {
         return squad;
     }
 
+    @Deprecated
     public static void set(Squad squad) {
         SquadHolder.squad = squad;
     }

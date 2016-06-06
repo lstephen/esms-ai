@@ -38,6 +38,7 @@ import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
+import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import com.ljs.ifootballmanager.ai.value.AcquisitionValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
@@ -46,6 +47,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -100,35 +102,32 @@ public class Main {
     public void run(League league, PrintWriter w) throws IOException {
         System.out.println("Running for: " + league.getTeam());
 
+        Context ctx = new Context();
+
+        ctx.setLeague(league);
         LeagueHolder.set(league);
 
         Squad squad = Squad.load(league);
+        ctx.setSquad(squad);
         SquadHolder.set(squad);
 
-        ImmutableList<Formation> firstXICandidates = Formation.select(league, squad.players(), DefaultScorer.get());
+        ctx.setFirstXI(FirstXI.select(ctx));
 
-        Set<Player> allFirstXI = Sets.newHashSet();
-        for (Formation f : firstXICandidates) {
-            allFirstXI.addAll(f.players());
-        }
+        Set<Player> allFirstXI = ctx.getFirstXI().getPlayers().collect(Collectors.toSet());
 
-        Preconditions.checkState(!firstXICandidates.isEmpty());
+        Formation bestXI = ctx.getFirstXI().best();
 
-        Formation firstXI = firstXICandidates.get(0);
+        ReplacementLevelHolder.set(ReplacementLevel.create(squad, bestXI));
 
-        ReplacementLevelHolder.set(ReplacementLevel.create(squad, firstXI));
-
-        print(w, SquadReport.create(league, firstXI.getTactic(), squad.players()).sortByValue());
-        Integer count = 1;
-        Integer total = firstXICandidates.size();
-        for (Formation f : firstXICandidates) {
-            print(w, String.format("1st XI (%d/%d)", count++, total), f);
-        }
+        print(w, SquadReport.create(ctx, bestXI.getTactic(), squad.players()).sortByValue());
+        ctx.getFirstXI()
+          .getFormations()
+          .forEach(f -> print(w, "1st XI", f));
 
         Set<Player> remaining = Sets.newHashSet(
             Sets.difference(
                 ImmutableSet.copyOf(squad.players()),
-                ImmutableSet.copyOf(firstXI.players())));
+                ImmutableSet.copyOf(bestXI.players())));
 
         Iterable<Player> atPotentialCandidates = FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
         Formation atPotentialXI = Formation.select(league, atPotentialCandidates, AtPotentialScorer.create(league.getPlayerPotential())).get(0);
@@ -190,26 +189,26 @@ public class Main {
             }
         }
 
-        print(w, "First XI", SquadReport.create(league, firstXI.getTactic(), allFirstXI).sortByValue());
+        print(w, "First XI", SquadReport.create(ctx, bestXI.getTactic(), allFirstXI).sortByValue());
 
         print(
             w,
             String.format("First Squad (%d)", firstSquad.size()),
             SquadReport
                 .create(
-                    league,
-                    firstXI.getTactic(),
+                    ctx,
+                    bestXI.getTactic(),
                     FluentIterable
                         .from(firstSquad)
                         .filter(Predicates.not(Predicates.in(allFirstXI))))
                 .sortByValue());
 
         if (!reservesSquad.isEmpty()) {
-            print(w, "Reserves XI", SquadReport.create(league, reservesXI.getTactic(), allReservesXI).sortByValue());
+            print(w, "Reserves XI", SquadReport.create(ctx, reservesXI.getTactic(), allReservesXI).sortByValue());
             print(
                 w,
                 String.format("Reserves Squad (%d)", reservesSquad.size()),
-                SquadReport.create(league, reservesXI.getTactic(), FluentIterable.from(reservesSquad).filter(Predicates.not(Predicates.in(allReservesXI)))).sortByValue());
+                SquadReport.create(ctx, reservesXI.getTactic(), FluentIterable.from(reservesSquad).filter(Predicates.not(Predicates.in(allReservesXI)))).sortByValue());
         }
 
         Set<Player> trainingSquad = Sets.newHashSet(Iterables.concat(firstSquad, reservesSquad));
@@ -220,7 +219,7 @@ public class Main {
         }
 
         trainingSquad.removeAll(atPotentialXI.players());
-        print(w, "Training Squad", SquadReport.create(league, firstXI.getTactic(), trainingSquad).sortByValue());
+        print(w, "Training Squad", SquadReport.create(ctx, bestXI.getTactic(), trainingSquad).sortByValue());
 
         Iterable<Player> potentials = FluentIterable
             .from(atPotentialXI.players())
@@ -232,19 +231,19 @@ public class Main {
             "Potentials",
             SquadReport
                 .create(
-                    league,
-                    firstXI.getTactic(),
+                    ctx,
+                    bestXI.getTactic(),
                     potentials)
                 .sortByValue());
 
-        print(w, "Remaining", SquadReport.create(league, firstXI.getTactic(), remaining).sortByValue());
+        print(w, "Remaining", SquadReport.create(ctx, bestXI.getTactic(), remaining).sortByValue());
 
         print(
             w,
             SquadSummaryReport
                 .builder()
                 .squad(squad)
-                .firstXI(firstXI)
+                .firstXI(bestXI)
                 .reservesXI(reservesXI)
                 .build());
 
@@ -257,12 +256,12 @@ public class Main {
 
             Squad additional = Squad.load(league, Files.asCharSource(sq, Charsets.UTF_8));
 
-            print(w, f, SquadReport.create(league, firstXI.getTactic(), additional.players()).sortByValue());
+            print(w, f, SquadReport.create(ctx, bestXI.getTactic(), additional.players()).sortByValue());
         }
 
         File sheetFile = new File(Config.get().getDataDirectory(), league.getTeam() + "sht.txt");
         CharSink sheet = Files.asCharSink(sheetFile, Charsets.UTF_8);
-        printSelection(w, league, "Selection", league.getTeam(), squad.forSelection(league), league.getForcedPlay(), sheet, DefaultScorer.get());
+        printSelection(w, ctx, "Selection", league.getTeam(), squad.forSelection(league), league.getForcedPlay(), sheet, DefaultScorer.get());
         Files.copy(sheetFile, new File(Config.get().getDataDirectory(), "shts/" + sheetFile.getName()));
 
         if (league.getReserveTeam().isPresent()) {
@@ -281,12 +280,12 @@ public class Main {
 
             File rsheetFile = new File(Config.get().getDataDirectory(), league.getReserveTeam().get() + "sht.txt");
             CharSink rsheet = Files.asCharSink(rsheetFile, Charsets.UTF_8);
-            printSelection(w, league, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(league), forced, rsheet, DefaultScorer.get());
+            printSelection(w, ctx, "Reserves Selection", league.getReserveTeam().get(), squad.forReservesSelection(league), forced, rsheet, DefaultScorer.get());
             Files.copy(rsheetFile, new File(Config.get().getDataDirectory(), "shts/" + rsheetFile.getName()));
         }
     }
 
-    private void printSelection(PrintWriter w, League league, String title, String team, Iterable<Player> available, Iterable<String> forcedPlay, CharSink sheet, FormationScorer scorer) throws IOException {
+    private void printSelection(PrintWriter w, Context ctx, String title, String team, Iterable<Player> available, Iterable<String> forcedPlay, CharSink sheet, FormationScorer scorer) throws IOException {
         Set<Player> forced = Sets.newHashSet();
 
         for (Player p : available) {
@@ -304,14 +303,14 @@ public class Main {
         }
         System.out.println();
 
-        Formation formation = Formation.selectOne(league, SelectionCriteria.create(forced, available), scorer);
+        Formation formation = Formation.selectOne(ctx.getLeague(), SelectionCriteria.create(forced, available), scorer);
 
         ChangePlan cp =
-            ChangePlan.select(league, formation, available);
+            ChangePlan.select(ctx.getLeague(), formation, available);
         Bench bench =
             Bench.select(formation, cp.getSubstitutes(), available);
 
-        print(w, title, SquadReport.create(league, formation.getTactic(), available));
+        print(w, title, SquadReport.create(ctx, formation.getTactic(), available));
         print(w, formation, bench, cp);
 
         Reports.print(TeamSheet.create(team, formation, cp, bench)).to(sheet);
