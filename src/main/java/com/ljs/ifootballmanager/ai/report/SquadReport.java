@@ -6,11 +6,13 @@ import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.WithContext;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
+import com.ljs.ifootballmanager.ai.value.OverallValue;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
@@ -21,11 +23,9 @@ import java.io.PrintWriter;
  *
  * @author lstephen
  */
-public class SquadReport implements Report {
+public class SquadReport implements Report, WithContext {
 
-    private final League league;
-
-    private final FirstXI firstXI;
+    private final Context ctx;
 
     private final Tactic tactic;
 
@@ -36,20 +36,23 @@ public class SquadReport implements Report {
     private Value value;
 
     private SquadReport(Context ctx, Tactic tactic, Iterable<Player> squad) {
-        this.league = ctx.getLeague();
-        this.firstXI = ctx.getFirstXI();
+        this.ctx = ctx;
         this.tactic = tactic;
         this.squad = squad;
 
         ordering = Player.byOverall(tactic).reverse().compound(Player.byTieBreak());
-        value = league.getPlayerValue();
+        value = getLeague().getPlayerValue();
+    }
+
+    public Context getContext() {
+      return ctx;
     }
 
     private Double getValue(Player p) {
         Double ovr = value.getValue(p);
         Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
 
-        Player atPotential = league.getPlayerPotential().atPotential(p);
+        Player atPotential = getLeague().getPlayerPotential().atPotential(p);
 
         if (ovr < value.getValue(atPotential)) {
             vsRepl = Math.max(0, vsRepl);
@@ -94,14 +97,14 @@ public class SquadReport implements Report {
 
         w.format("| %3s %7s || %3s || ", "VAL", " vsRpl", "");
 
-        firstXI.getTactics().forEach(t -> w.format("%3s    ", t.getCode()));
+        getFirstXI().getTactics().forEach(t -> w.format("%3s    ", t.getCode()));
 
         w.println();
 
         for (Player p : ordering.immutableSortedCopy(squad)) {
             w.format("%-15s ", p.getName());
 
-            RatingInRole best = p.getOverall(tactic);
+            RatingInRole best = OverallValue.create(ctx).getBest(p);
 
             String skills = String.format(
                 "%2d/%2d/%2d",
@@ -130,10 +133,10 @@ public class SquadReport implements Report {
                 "| %3d %3d/%3d || %3d || ",
                 Maths.round(ovr),
                 Maths.round(vsRepl),
-                Maths.round(repl.getValueVsReplacement(league.getPlayerPotential().atPotential(p))),
+                Maths.round(repl.getValueVsReplacement(getLeague().getPlayerPotential().atPotential(p))),
                 Maths.round(getValue(p)));
 
-            firstXI.getTactics().forEach(t -> {
+            getFirstXI().getTactics().forEach(t -> {
                 RatingInRole rir = p.getOverall(t);
                 w.format(
                     "%3d%3s ",
@@ -144,8 +147,8 @@ public class SquadReport implements Report {
             w.format(
                 "%s%1s%1s ",
                 p.getRosterStatus(),
-                Iterables.contains(league.getForcedPlay(), p.getName()) ? "F" : "",
-                league.isReserveEligible(p) ? "r" : "");
+                Iterables.contains(getLeague().getForcedPlay(), p.getName()) ? "F" : "",
+                getLeague().isReserveEligible(p) ? "r" : "");
 
             w.format("%s", p.getComment());
 

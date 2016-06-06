@@ -182,6 +182,7 @@ public final class Player {
     return getOverall(Tactic.NORMAL).getRole() == Role.GK;
   }
 
+  @Deprecated
   public RatingInRole getOverall() {
     Set<RatingInRole> ovrs = Sets.newHashSet();
 
