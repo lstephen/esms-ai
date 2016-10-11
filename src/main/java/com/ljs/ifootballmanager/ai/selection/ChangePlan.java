@@ -10,6 +10,7 @@ import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 
 import java.io.PrintWriter;
 
@@ -341,6 +342,7 @@ public final class ChangePlan implements Report {
     return select(league, f, SelectionCriteria.create(league, squad));
 
   }
+
   public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria) {
     HillClimbing<ChangePlan> hc = HillClimbing
       .<ChangePlan>builder()
@@ -349,50 +351,12 @@ public final class ChangePlan implements Report {
       .actionGenerator(actionsFunction(league, criteria))
       .build();
 
-    return new RepeatedHillClimbing<ChangePlan>(() -> randomChangePlan(f, criteria), hc)
+    return new RepeatedHillClimbing<ChangePlan>(() -> zero(f), hc)
       .search();
   }
 
-  private static ChangePlan randomChangePlan(Formation f, SelectionCriteria criteria) {
-    Set<Change> changes = Sets.newHashSet();
-
-    List<Player> starters = Lists.newArrayList(f.players());
-    List<Player> all = Lists.newArrayList(criteria.getAll());
-
-    Collections.shuffle(starters);
-    Collections.shuffle(all);
-
-    List<Integer> minutes = Lists.newArrayList();
-    for(int minute = 1; minute < 90; minute++) {
-      minutes.add(minute);
-    }
-
-    Collections.shuffle(minutes);
-
-    for (int i = 0; i < 3; i++) {
-      if (all.isEmpty() || all.size() <= starters.size()) {
-        break;
-      }
-      Player out = starters.get(i);
-      if (criteria.isRequired(out)) {
-        continue;
-      }
-
-      Player in = all.remove(0);
-      while (starters.contains(in)) {
-        in = all.remove(0);
-      }
-      Substitution s = Substitution
-        .builder()
-        .in(in, f.findRole(out))
-        .out(out)
-        .minute(minutes.remove(0))
-        .build();
-
-      changes.add(s);
-    }
-
-    return new ChangePlan(f, changes, ImmutableMap.<Integer, Double>of(), ImmutableMap.<Pair<Player, Integer>, Player>of());
+  private static ChangePlan zero(Formation f) {
+    return new ChangePlan(f, Sets.newHashSet(), ImmutableMap.<Integer, Double>of(), ImmutableMap.<Pair<Player, Integer>, Player>of());
   }
 
   private static ActionGenerator<ChangePlan> actionsFunction(final League league, final SelectionCriteria criteria) {
@@ -417,11 +381,31 @@ public final class ChangePlan implements Report {
         return actions.stream();
       }
 
-      private Set<Player> getBestSubstitutes(ChangePlan cp) {
-        Map<Player, Double> values = new HashMap<>();
+      private Double getValue(Player p) {
+          Double ovr = league.getPlayerValue().getValue(p);
+          Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
 
-        Formation f = cp.getFormationAt(90);
-        Double endOfGameScore = f.score();
+          Player atPotential = league.getPlayerPotential().atPotential(p);
+
+          if (ovr < league.getPlayerValue().getValue(atPotential)) {
+              vsRepl = Math.max(0, vsRepl);
+              vsRepl = Math.max(vsRepl, ReplacementLevelHolder.get().getValueVsReplacement(atPotential));
+          }
+
+          return ovr + vsRepl;
+      }
+
+      private Set<Player> getBestSubstitutes(ChangePlan cp) {
+        Formation f = cp.getFormationAt(0);
+
+        return criteria.getAll()
+          .stream()
+          .filter(p -> !f.contains(p))
+          .sorted(Ordering.natural().onResultOf((Player p) -> getValue(p)).reverse())
+          .limit(5)
+          .collect(Collectors.toSet());
+
+        /*Double endOfGameScore = f.score();
 
         for (Player sub : criteria.getAll()) {
           if (f.contains(sub)) {
@@ -443,7 +427,7 @@ public final class ChangePlan implements Report {
           .sorted(Ordering.natural().onResultOf((Map.Entry<Player, Double> e) -> e.getValue()).reverse())
           .limit(3)
           .map(Map.Entry::getKey)
-          .collect(Collectors.toSet());
+          .collect(Collectors.toSet());*/
       }
 
       private Set<Substitution> availableSubstitutions(ChangePlan cp) {
