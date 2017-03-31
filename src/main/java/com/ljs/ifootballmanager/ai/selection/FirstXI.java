@@ -1,5 +1,6 @@
 package com.ljs.ifootballmanager.ai.selection;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
@@ -24,6 +25,10 @@ public final class FirstXI {
 
   public Stream<Formation> getFormations() {
     return formations.stream();
+  }
+
+  public Optional<Formation> getFormation(Tactic t) {
+    return getFormations().filter(f -> f.getTactic().equals(t)).findAny();
   }
 
   public Stream<Tactic> getTactics() {

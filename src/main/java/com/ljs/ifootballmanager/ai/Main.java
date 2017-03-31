@@ -31,6 +31,7 @@ import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.player.SquadHolder;
+import com.ljs.ifootballmanager.ai.report.ReplacementLevelReport;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.report.Reports;
 import com.ljs.ifootballmanager.ai.report.SquadReport;
@@ -117,12 +118,14 @@ public class Main {
 
         Formation bestXI = ctx.getFirstXI().best();
 
-        ReplacementLevelHolder.set(ReplacementLevel.create(squad, bestXI));
+        ReplacementLevelHolder.set(ReplacementLevel.create(ctx));
+        ctx.setReplacementLevel(ReplacementLevelHolder.get());
 
         print(w, SquadReport.create(ctx, bestXI.getTactic(), squad.players()).sortByValue());
         ctx.getFirstXI()
           .getFormations()
           .forEach(f -> print(w, "1st XI", f));
+
 
         Set<Player> remaining = Sets.newHashSet(
             Sets.difference(
@@ -237,6 +240,8 @@ public class Main {
                 .sortByValue());
 
         print(w, "Remaining", SquadReport.create(ctx, bestXI.getTactic(), remaining).sortByValue());
+
+        print(w, "Replacement Level", ReplacementLevelReport.create(ctx));
 
         print(
             w,

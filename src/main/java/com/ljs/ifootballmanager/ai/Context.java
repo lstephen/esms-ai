@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 
 public final class Context {
 
@@ -13,6 +14,8 @@ public final class Context {
   private Optional<Squad> squad;
 
   private Optional<FirstXI> firstXI;
+
+  private Optional<ReplacementLevel> replacementLevel;
 
   public League getLeague() {
     return league.get();
@@ -36,6 +39,14 @@ public final class Context {
 
   public void setFirstXI(FirstXI firstXI) {
     this.firstXI = Optional.of(firstXI);
+  }
+
+  public ReplacementLevel getReplacementLevel() {
+    return replacementLevel.get();
+  }
+
+  public void setReplacementLevel(ReplacementLevel rl) {
+    this.replacementLevel = Optional.of(rl);
   }
 
 }
