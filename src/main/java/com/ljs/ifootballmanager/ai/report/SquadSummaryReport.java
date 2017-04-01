@@ -81,19 +81,6 @@ public class SquadSummaryReport implements Report {
         }
         w.println();
 
-        ReplacementLevel rl = ReplacementLevelHolder.get();
-        w.format("%28s ", "Replacement (N)");
-        for (Role r : roles) {
-            w.format("%5s ", Math.round(rl.getReplacementLevel(r, Tactic.NORMAL)));
-        }
-        w.println();
-
-        w.format("%28s ", "Replacement (" + firstXI.getTactic().getCode() + ")");
-        for (Role r : roles) {
-            w.format("%5s ", Math.round(rl.getReplacementLevel(r, firstXI.getTactic())));
-        }
-        w.println();
-
         if (secondXI.isPresent()) {
             w.format("%28s ", "2nd XI (N)");
             for (Role r : roles) {
