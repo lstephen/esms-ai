@@ -276,10 +276,7 @@ public final class Formation implements Report {
 
     return byScore(scorer)
       .reverse()
-      .immutableSortedCopy(
-          FluentIterable
-          .from(formations)
-          .filter(f -> f.score() > max * 0.95));
+      .immutableSortedCopy(formations);
   }
 
   public static Formation selectOne(League league, SelectionCriteria criteria, FormationScorer scorer) {
@@ -289,7 +286,7 @@ public final class Formation implements Report {
 
     List<Formation> weighted = Lists.newArrayList();
     for (Formation f : candidates) {
-      int weighting = (int) Math.round(f.score() - base);
+      int weighting = Math.min((int) Math.round(f.score() - base), 1);
       for (int i = 0; i < weighting; i++) {
         weighted.add(f);
       }
