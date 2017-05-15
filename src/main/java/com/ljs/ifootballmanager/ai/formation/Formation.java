@@ -286,7 +286,7 @@ public final class Formation implements Report {
 
     List<Formation> weighted = Lists.newArrayList();
     for (Formation f : candidates) {
-      int weighting = Math.min((int) Math.round(f.score() - base), 1);
+      int weighting = Math.max((int) Math.round(f.score() - base), 1);
       for (int i = 0; i < weighting; i++) {
         weighted.add(f);
       }
