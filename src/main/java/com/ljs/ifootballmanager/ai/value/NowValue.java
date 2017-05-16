@@ -7,7 +7,6 @@ import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public final class NowValue {
@@ -40,7 +39,8 @@ public final class NowValue {
   }
 
   public String format() {
-    return String.format("%2s %s : %3d %3d : %3d",
+    return String.format(
+        "%2s %s : %3d %3d : %3d",
         role,
         tactic.getCode(),
         Math.round(getAbility()),
@@ -53,13 +53,16 @@ public final class NowValue {
   }
 
   private static Collection<NowValue> all(Context ctx, Player p) {
-    return Arrays.stream(Tactic.values()).flatMap(t -> all(ctx, p, t).stream()).collect(Collectors.toList());
+    return Arrays.stream(Tactic.values())
+        .flatMap(t -> all(ctx, p, t).stream())
+        .collect(Collectors.toList());
   }
 
   private static Collection<NowValue> all(Context ctx, Player p, Tactic t) {
-    return Arrays.stream(Role.values()).map(r -> new NowValue(ctx, p, r, t)).collect(Collectors.toList());
+    return Arrays.stream(Role.values())
+        .map(r -> new NowValue(ctx, p, r, t))
+        .collect(Collectors.toList());
   }
-
 
   public static NowValue best(Context ctx, Player p) {
     return Ordering.natural().onResultOf(NowValue::getScore).max(all(ctx, p));
@@ -73,4 +76,3 @@ public final class NowValue {
     return Ordering.natural().onResultOf(NowValue::getVsReplacement).max(all(ctx, p, t));
   }
 }
-

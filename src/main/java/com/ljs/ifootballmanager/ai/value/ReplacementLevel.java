@@ -13,55 +13,51 @@ import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import java.util.List;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public class ReplacementLevel {
 
-    private Squad squad;
+  private Squad squad;
 
-    private FirstXI firstXI;
+  private FirstXI firstXI;
 
-    private ReplacementLevel(Squad squad, FirstXI firstXI) {
-        this.squad = squad;
-        this.firstXI = firstXI;
+  private ReplacementLevel(Squad squad, FirstXI firstXI) {
+    this.squad = squad;
+    this.firstXI = firstXI;
+  }
+
+  public Double getValueVsReplacement(Player p) {
+    List<Double> values = Lists.newArrayList();
+
+    for (Role r : Role.values()) {
+      values.add(getValueVsReplecement(p, r));
     }
 
-    public Double getValueVsReplacement(Player p) {
-        List<Double> values = Lists.newArrayList();
+    return Ordering.natural().max(values);
+  }
 
-        for (Role r : Role.values()) {
-            values.add(getValueVsReplecement(p, r));
-        }
+  private Double getValueVsReplecement(Player p, Role r) {
+    Tactic t = firstXI.best().getTactic();
 
-        return Ordering.natural().max(values);
-    }
+    return p.evaluate(r, t).getRating() - getReplacementLevel(r, t);
+  }
 
-    private Double getValueVsReplecement(Player p, Role r) {
-        Tactic t = firstXI.best().getTactic();
+  public Double getReplacementLevel(Role role, Tactic t) {
+    Formation f =
+        firstXI
+            .getFormation(t)
+            .orElseThrow(() -> new IllegalStateException("No formation for tactic " + t));
 
-        return p.evaluate(r, t).getRating() - getReplacementLevel(r, t);
-    }
+    ImmutableSet<Player> replacements =
+        ImmutableSet.copyOf(Sets.difference(squad.players(), ImmutableSet.copyOf(f.players())));
 
-    public Double getReplacementLevel(Role role, Tactic t) {
-        Formation f = firstXI.getFormation(t).orElseThrow(() -> new IllegalStateException("No formation for tactic " + t));
+    return Player.byRating(role, t).max(replacements).getRating(role, t);
+  }
 
-        ImmutableSet<Player> replacements =
-            ImmutableSet.copyOf(Sets.difference(squad.players(), ImmutableSet.copyOf(f.players())));
+  public static ReplacementLevel create(Squad squad, FirstXI firstXI) {
+    return new ReplacementLevel(squad, firstXI);
+  }
 
-        return Player
-            .byRating(role, t)
-            .max(replacements)
-            .getRating(role, t);
-    }
-
-    public static ReplacementLevel create(Squad squad, FirstXI firstXI) {
-        return new ReplacementLevel(squad, firstXI);
-    }
-
-    public static ReplacementLevel create(Context ctx) {
-      return create(ctx.getSquad(), ctx.getFirstXI());
-    }
-
+  public static ReplacementLevel create(Context ctx) {
+    return create(ctx.getSquad(), ctx.getFirstXI());
+  }
 }

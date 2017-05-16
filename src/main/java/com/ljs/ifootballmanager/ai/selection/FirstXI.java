@@ -1,15 +1,13 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import com.google.common.collect.ImmutableList;
-
 import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.player.Player;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public final class FirstXI {
 
@@ -40,7 +38,7 @@ public final class FirstXI {
   }
 
   public static FirstXI select(Context ctx) {
-    return new FirstXI(Formation.select(ctx.getLeague(), ctx.getSquad().players(), DefaultScorer.get()));
+    return new FirstXI(
+        Formation.select(ctx.getLeague(), ctx.getSquad().players(), DefaultScorer.get()));
   }
-
 }

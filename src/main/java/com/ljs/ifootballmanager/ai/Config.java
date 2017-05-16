@@ -6,7 +6,7 @@ public class Config {
 
   private static Config INSTANCE = new Config();
 
-  private Config() { }
+  private Config() {}
 
   public File getDataDirectory() {
     return new File(System.getenv("ESMSAI_DATA"));

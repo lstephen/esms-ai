@@ -4,19 +4,21 @@
  */
 package com.ljs.ifootballmanager.ai;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public enum Role {
-    GK, DF, DM, MF, AM, FW;
+  GK,
+  DF,
+  DM,
+  MF,
+  AM,
+  FW;
 
-    public boolean isOneOf(Role... rs) {
-        for (Role r : rs) {
-            if (r == this) {
-                return true;
-            }
-        }
-        return false;
+  public boolean isOneOf(Role... rs) {
+    for (Role r : rs) {
+      if (r == this) {
+        return true;
+      }
     }
+    return false;
+  }
 }

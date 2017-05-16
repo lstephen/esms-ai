@@ -10,71 +10,67 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
-import com.ljs.ifootballmanager.ai.value.impl.EslValue;
 import com.ljs.ifootballmanager.ai.value.impl.EslPotential;
+import com.ljs.ifootballmanager.ai.value.impl.EslValue;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class Esl implements League {
 
-    private Esl() { }
+  private Esl() {}
 
-    public String getTeam() {
-        return "wat";
-    }
+  public String getTeam() {
+    return "wat";
+  }
 
-    public Optional<String> getReserveTeam() {
-        return Optional.absent();
-    }
+  public Optional<String> getReserveTeam() {
+    return Optional.absent();
+  }
 
-    public Iterable<String> getForcedPlay() {
-      return ImmutableList.of();
-    }
+  public Iterable<String> getForcedPlay() {
+    return ImmutableList.of();
+  }
 
-    public FormationValidator getFormationValidator() {
-        return FormationValidatorFactory.esl();
-    }
+  public FormationValidator getFormationValidator() {
+    return FormationValidatorFactory.esl();
+  }
 
-    public PlayerValidator getPlayerValidator() {
-        return PlayerValidatorFactory.anyRole();
-    }
+  public PlayerValidator getPlayerValidator() {
+    return PlayerValidatorFactory.anyRole();
+  }
 
-    public Iterable<String> getAdditionalPlayerFiles() {
-        return ImmutableList.of("/for_sale.txt", "/fre.txt", "/for_auction.txt");
-    }
+  public Iterable<String> getAdditionalPlayerFiles() {
+    return ImmutableList.of("/for_sale.txt", "/fre.txt", "/for_auction.txt");
+  }
 
-    public Weightings getWeightings() {
-        return com.ljs.ifootballmanager.ai.rating.weighting.EliteFootballLeague.get();
-    }
+  public Weightings getWeightings() {
+    return com.ljs.ifootballmanager.ai.rating.weighting.EliteFootballLeague.get();
+  }
 
-    public Boolean isReserveEligible(Player p) {
-      return Boolean.FALSE;
-    }
+  public Boolean isReserveEligible(Player p) {
+    return Boolean.FALSE;
+  }
 
-    public Value getPlayerValue() {
-      return EslValue.create();
-    }
+  public Value getPlayerValue() {
+    return EslValue.create();
+  }
 
-    public Value getAgeValue() {
-      return EslValue.create().getAgeValue();
-    }
+  public Value getAgeValue() {
+    return EslValue.create().getAgeValue();
+  }
 
-    public Potential getPlayerPotential() {
-      return EslPotential.create();
-    }
+  public Potential getPlayerPotential() {
+    return EslPotential.create();
+  }
 
-    public Optional<Double> getSeniorSkillsCap() {
-        return Optional.absent();
-    }
+  public Optional<Double> getSeniorSkillsCap() {
+    return Optional.absent();
+  }
 
-    public Optional<Double> getYouthSkillsCap() {
-        return Optional.absent();
-    }
+  public Optional<Double> getYouthSkillsCap() {
+    return Optional.absent();
+  }
 
-    public static Esl create() {
-        return new Esl();
-    }
-
+  public static Esl create() {
+    return new Esl();
+  }
 }

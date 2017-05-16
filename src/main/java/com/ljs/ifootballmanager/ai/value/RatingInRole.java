@@ -1,13 +1,9 @@
 package com.ljs.ifootballmanager.ai.value;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Role;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class RatingInRole {
 
   private final Role role;
@@ -34,5 +30,4 @@ public final class RatingInRole {
   public static Ordering<RatingInRole> byRating() {
     return Ordering.natural().onResultOf(RatingInRole::getRating);
   }
-
 }

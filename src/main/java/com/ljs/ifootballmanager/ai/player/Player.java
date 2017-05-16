@@ -1,6 +1,5 @@
 package com.ljs.ifootballmanager.ai.player;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
@@ -16,10 +15,7 @@ import com.ljs.ifootballmanager.ai.value.Value;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class Player {
 
   private final String name;
@@ -164,10 +160,7 @@ public final class Player {
 
   public String getRosterStatus() {
     return String.format(
-        "%1s%1s%1s",
-        injured ? "I" : "",
-        suspended ? "S" : "",
-        reserves ? "R" : "");
+        "%1s%1s%1s", injured ? "I" : "", suspended ? "S" : "", reserves ? "R" : "");
   }
 
   public String getComment() {
@@ -191,11 +184,7 @@ public final class Player {
     }
 
     // Get the 2nd best. Throw out the highest, in case it's extreme
-    return RatingInRole
-      .byRating()
-      .reverse()
-      .immutableSortedCopy(ovrs)
-      .get(1);
+    return RatingInRole.byRating().reverse().immutableSortedCopy(ovrs).get(1);
   }
 
   public RatingInRole getOverall(Tactic t) {
@@ -285,21 +274,15 @@ public final class Player {
   }
 
   public static Ordering<Player> byOverall(final Tactic t) {
-    return Ordering
-      .natural()
-      .onResultOf((Player p) -> p.getOverall(t).getRating());
+    return Ordering.natural().onResultOf((Player p) -> p.getOverall(t).getRating());
   }
 
   public static Ordering<Player> bySkill(final Rating r) {
-    return Ordering
-      .natural()
-      .onResultOf((Player p) -> p.getSkill(r));
+    return Ordering.natural().onResultOf((Player p) -> p.getSkill(r));
   }
 
   public static Ordering<Player> byRating(final Role r, final Tactic t) {
-    return Ordering
-      .natural()
-      .onResultOf((Player p) -> p.evaluate(r, t).getRating());
+    return Ordering.natural().onResultOf((Player p) -> p.evaluate(r, t).getRating());
   }
 
   public static Ordering<Player> byValue(final League league) {
