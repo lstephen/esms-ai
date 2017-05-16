@@ -1,35 +1,11 @@
 package com.ljs.ifootballmanager.ai.selection;
 
-import com.ljs.ifootballmanager.ai.Role;
-import com.ljs.ifootballmanager.ai.Tactic;
-import com.ljs.ifootballmanager.ai.formation.Formation;
-import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
-import com.ljs.ifootballmanager.ai.league.Esl;
-import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
-import com.ljs.ifootballmanager.ai.league.League;
-import com.ljs.ifootballmanager.ai.league.LeagueHolder;
-import com.ljs.ifootballmanager.ai.player.Player;
-import com.ljs.ifootballmanager.ai.report.Report;
-import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
-
-import java.io.PrintWriter;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.github.lstephen.ai.search.HillClimbing;
+import com.github.lstephen.ai.search.RepeatedHillClimbing;
+import com.github.lstephen.ai.search.action.Action;
+import com.github.lstephen.ai.search.action.ActionGenerator;
+import com.github.lstephen.ai.search.action.SequencedAction;
 import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -37,20 +13,28 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-
-import com.github.lstephen.ai.search.HillClimbing;
-import com.github.lstephen.ai.search.RepeatedHillClimbing;
-import com.github.lstephen.ai.search.Validator;
-import com.github.lstephen.ai.search.action.Action;
-import com.github.lstephen.ai.search.action.ActionGenerator;
-import com.github.lstephen.ai.search.action.SequencedAction;
-
+import com.ljs.ifootballmanager.ai.Role;
+import com.ljs.ifootballmanager.ai.Tactic;
+import com.ljs.ifootballmanager.ai.formation.Formation;
+import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
+import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
+import com.ljs.ifootballmanager.ai.league.Esl;
+import com.ljs.ifootballmanager.ai.league.League;
+import com.ljs.ifootballmanager.ai.league.LeagueHolder;
+import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.report.Report;
+import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.tuple.Pair;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class ChangePlan implements Report {
 
   private static final Integer GAME_MINUTES = 90;
@@ -67,14 +51,18 @@ public final class ChangePlan implements Report {
 
   private final Boolean isAllowChangePos;
 
-  private ChangePlan(Formation formation, Iterable<? extends Change> cs, Map<Integer, Double> scores, Map<Pair<Player, Integer>, Player> afterMinutes) {
+  private ChangePlan(
+      Formation formation,
+      Iterable<? extends Change> cs,
+      Map<Integer, Double> scores,
+      Map<Pair<Player, Integer>, Player> afterMinutes) {
     this.formation = formation;
     this.changes = ImmutableSet.copyOf(cs);
     this.scores = Maps.newHashMap(scores);
     this.afterMinutes = Maps.newHashMap(afterMinutes);
 
-    isAllowChangePos = !(LeagueHolder.get() instanceof EliteFootballLeague
-      || LeagueHolder.get() instanceof Esl);
+    isAllowChangePos =
+        !(LeagueHolder.get() instanceof EliteFootballLeague || LeagueHolder.get() instanceof Esl);
   }
 
   private ImmutableList<Change> changes() {
@@ -112,7 +100,6 @@ public final class ChangePlan implements Report {
       if (clazz.isInstance(c)) {
         cs.add(clazz.cast(c));
       }
-
     }
 
     return ImmutableList.copyOf(cs);
@@ -144,25 +131,25 @@ public final class ChangePlan implements Report {
   }
 
   public Tactic getBestScoringTactic() {
-    return Ordering
-      .natural()
-      .onResultOf(new Function<Tactic, Double>() {
-        public Double apply(Tactic t) {
-          return scoring(t);
-        }
-      })
-    .max(Arrays.asList(Tactic.values()));
+    return Ordering.natural()
+        .onResultOf(
+            new Function<Tactic, Double>() {
+              public Double apply(Tactic t) {
+                return scoring(t);
+              }
+            })
+        .max(Arrays.asList(Tactic.values()));
   }
 
   public Tactic getBestDefensiveTactic() {
-    return Ordering
-      .natural()
-      .onResultOf(new Function<Tactic, Double>() {
-        public Double apply(Tactic t) {
-          return defending(t);
-        }
-      })
-    .max(Arrays.asList(Tactic.values()));
+    return Ordering.natural()
+        .onResultOf(
+            new Function<Tactic, Double>() {
+              public Double apply(Tactic t) {
+                return defending(t);
+              }
+            })
+        .max(Arrays.asList(Tactic.values()));
   }
 
   private double scoring(Tactic t) {
@@ -242,10 +229,9 @@ public final class ChangePlan implements Report {
       return false;
     }
 
-    if (!isAllowChangePos()
-        && !changes(ChangePosition.class).isEmpty()) {
+    if (!isAllowChangePos() && !changes(ChangePosition.class).isEmpty()) {
       return false;
-        }
+    }
 
     if (!changes(TacticChange.class).isEmpty()) {
       return false;
@@ -333,33 +319,35 @@ public final class ChangePlan implements Report {
   }
 
   public static Ordering<ChangePlan> byChangesSize() {
-    return Ordering
-      .natural()
-      .onResultOf((ChangePlan cp) -> cp.changes.size());
+    return Ordering.natural().onResultOf((ChangePlan cp) -> cp.changes.size());
   }
 
   public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
     return select(league, f, SelectionCriteria.create(league, squad));
-
   }
 
-  public static ChangePlan select(League league, final Formation f, final SelectionCriteria criteria) {
-    HillClimbing<ChangePlan> hc = HillClimbing
-      .<ChangePlan>builder()
-      .validator(ChangePlan::isValid)
-      .heuristic(byScore().compound(byChangesSize().reverse()))
-      .actionGenerator(actionsFunction(league, criteria))
-      .build();
+  public static ChangePlan select(
+      League league, final Formation f, final SelectionCriteria criteria) {
+    HillClimbing<ChangePlan> hc =
+        HillClimbing.<ChangePlan>builder()
+            .validator(ChangePlan::isValid)
+            .heuristic(byScore().compound(byChangesSize().reverse()))
+            .actionGenerator(actionsFunction(league, criteria))
+            .build();
 
-    return new RepeatedHillClimbing<ChangePlan>(() -> zero(f), hc)
-      .search();
+    return new RepeatedHillClimbing<ChangePlan>(() -> zero(f), hc).search();
   }
 
   private static ChangePlan zero(Formation f) {
-    return new ChangePlan(f, Sets.newHashSet(), ImmutableMap.<Integer, Double>of(), ImmutableMap.<Pair<Player, Integer>, Player>of());
+    return new ChangePlan(
+        f,
+        Sets.newHashSet(),
+        ImmutableMap.<Integer, Double>of(),
+        ImmutableMap.<Pair<Player, Integer>, Player>of());
   }
 
-  private static ActionGenerator<ChangePlan> actionsFunction(final League league, final SelectionCriteria criteria) {
+  private static ActionGenerator<ChangePlan> actionsFunction(
+      final League league, final SelectionCriteria criteria) {
     return new ActionGenerator<ChangePlan>() {
 
       @Override
@@ -382,28 +370,30 @@ public final class ChangePlan implements Report {
       }
 
       private Double getValue(Player p) {
-          Double ovr = league.getPlayerValue().getValue(p);
-          Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
+        Double ovr = league.getPlayerValue().getValue(p);
+        Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
 
-          Player atPotential = league.getPlayerPotential().atPotential(p);
+        Player atPotential = league.getPlayerPotential().atPotential(p);
 
-          if (ovr < league.getPlayerValue().getValue(atPotential)) {
-              vsRepl = Math.max(0, vsRepl);
-              vsRepl = Math.max(vsRepl, ReplacementLevelHolder.get().getValueVsReplacement(atPotential));
-          }
+        if (ovr < league.getPlayerValue().getValue(atPotential)) {
+          vsRepl = Math.max(0, vsRepl);
+          vsRepl =
+              Math.max(vsRepl, ReplacementLevelHolder.get().getValueVsReplacement(atPotential));
+        }
 
-          return ovr + vsRepl;
+        return ovr + vsRepl;
       }
 
       private Set<Player> getBestSubstitutes(ChangePlan cp) {
         Formation f = cp.getFormationAt(0);
 
-        return criteria.getAll()
-          .stream()
-          .filter(p -> !f.contains(p))
-          .sorted(Ordering.natural().onResultOf((Player p) -> getValue(p)).reverse())
-          .limit(5)
-          .collect(Collectors.toSet());
+        return criteria
+            .getAll()
+            .stream()
+            .filter(p -> !f.contains(p))
+            .sorted(Ordering.natural().onResultOf((Player p) -> getValue(p)).reverse())
+            .limit(5)
+            .collect(Collectors.toSet());
 
         /*Double endOfGameScore = f.score();
 
@@ -438,22 +428,21 @@ public final class ChangePlan implements Report {
         for (Substitution s : cp.changes(Substitution.class)) {
           for (Role r : Role.values()) {
             if (!r.equals(s.getRole())) {
-              ss.add(Substitution
-                  .builder()
-                  .in(s.getIn(), r)
-                  .out(s.getOut())
-                  .minute(s.getMinute())
-                  .build());
+              ss.add(
+                  Substitution.builder()
+                      .in(s.getIn(), r)
+                      .out(s.getOut())
+                      .minute(s.getMinute())
+                      .build());
             }
           }
-
         }
 
         for (Role r : Role.values()) {
           if (r == Role.GK) {
             continue;
           }
-          for (Integer minute = 45; minute <= 90; minute+=(minute < 75 ? 5 : 3)) {
+          for (Integer minute = 45; minute <= 90; minute += (minute < 75 ? 5 : 3)) {
             if (cp.isChangeAt(minute)) {
               continue;
             }
@@ -470,12 +459,7 @@ public final class ChangePlan implements Report {
                 if (criteria.isRequired(out)) {
                   continue;
                 }
-                Substitution s = Substitution
-                  .builder()
-                  .in(in, r)
-                  .out(out)
-                  .minute(minute)
-                  .build();
+                Substitution s = Substitution.builder().in(in, r).out(out).minute(minute).build();
 
                 ss.add(s);
               }
@@ -502,7 +486,7 @@ public final class ChangePlan implements Report {
         }
 
         if (cp.isAllowChangePos()) {
-          for (Integer minute = 45; minute <= 90; minute+=(minute < 75 ? 5 : 3)) {
+          for (Integer minute = 45; minute <= 90; minute += (minute < 75 ? 5 : 3)) {
             if (cp.isChangeAt(minute)) {
               continue;
             }
@@ -533,29 +517,25 @@ public final class ChangePlan implements Report {
 
             if (lhs.getIn().equals(rhs.getOut())) {
               SequencedAction<ChangePlan> removes =
-                SequencedAction.create(
-                    new RemoveChange(lhs),
-                    new RemoveChange(rhs));
+                  SequencedAction.create(new RemoveChange(lhs), new RemoveChange(rhs));
 
-              Substitution atLhs = Substitution
-                .builder()
-                .in(rhs.getIn(), rhs.getRole())
-                .out(lhs.getOut())
-                .minute(lhs.getMinute())
-                .build();
+              Substitution atLhs =
+                  Substitution.builder()
+                      .in(rhs.getIn(), rhs.getRole())
+                      .out(lhs.getOut())
+                      .minute(lhs.getMinute())
+                      .build();
 
-              Substitution atRhs = Substitution
-                .builder()
-                .in(rhs.getIn(), rhs.getRole())
-                .out(rhs.getOut())
-                .minute(rhs.getMinute())
-                .build();
-
+              Substitution atRhs =
+                  Substitution.builder()
+                      .in(rhs.getIn(), rhs.getRole())
+                      .out(rhs.getOut())
+                      .minute(rhs.getMinute())
+                      .build();
 
               actions.add(SequencedAction.create(removes, new AddChange(atLhs)));
               actions.add(SequencedAction.create(removes, new AddChange(atRhs)));
             }
-
           }
         }
 
@@ -632,5 +612,4 @@ public final class ChangePlan implements Report {
       return Objects.hash(remove);
     }
   }
-
 }

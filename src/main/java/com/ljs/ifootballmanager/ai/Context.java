@@ -1,11 +1,10 @@
 package com.ljs.ifootballmanager.ai;
 
-import java.util.Optional;
-
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
+import java.util.Optional;
 
 public final class Context {
 
@@ -48,6 +47,4 @@ public final class Context {
   public void setReplacementLevel(ReplacementLevel rl) {
     this.replacementLevel = Optional.of(rl);
   }
-
 }
-

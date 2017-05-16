@@ -11,10 +11,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class Ratings {
 
   private final League league;
@@ -44,7 +41,7 @@ public final class Ratings {
   public Ratings atPercent(Integer percent) {
     Builder builder = Builder.create(league);
 
-    for (Map.Entry<Rating, Double>  r : ratings.entrySet()) {
+    for (Map.Entry<Rating, Double> r : ratings.entrySet()) {
       Double newValue = r.getValue() * percent / 100;
 
       builder = builder.rating(r.getKey(), newValue);
@@ -64,10 +61,7 @@ public final class Ratings {
   }
 
   public Ratings add(Rating r, Integer value) {
-    return Builder
-      .create(this)
-      .rating(r, getSkill(r) + value)
-      .build();
+    return Builder.create(this).rating(r, getSkill(r) + value).build();
   }
 
   public Ratings subtract(Rating r, Integer value) {
@@ -99,15 +93,15 @@ public final class Ratings {
   }
 
   public ImmutableList<Rating> getSkillPriority() {
-    return Ordering
-      .natural()
-      .reverse()
-      .onResultOf(new Function<Rating, Double>() {
-        public Double apply(Rating r) {
-          return getSkill(r);
-        }
-      })
-    .immutableSortedCopy(Arrays.asList(Rating.values()));
+    return Ordering.natural()
+        .reverse()
+        .onResultOf(
+            new Function<Rating, Double>() {
+              public Double apply(Rating r) {
+                return getSkill(r);
+              }
+            })
+        .immutableSortedCopy(Arrays.asList(Rating.values()));
   }
 
   public Double getSum() {
@@ -145,7 +139,7 @@ public final class Ratings {
 
     private final Map<Rating, Double> ratings = Maps.newEnumMap(Rating.class);
 
-    private Builder() { }
+    private Builder() {}
 
     public Builder league(League league) {
       this.league = league;
@@ -192,7 +186,5 @@ public final class Ratings {
       b.ratings.putAll(ratings.ratings);
       return b;
     }
-
   }
-
 }

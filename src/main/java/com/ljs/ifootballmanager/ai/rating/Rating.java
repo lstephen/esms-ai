@@ -4,10 +4,10 @@
  */
 package com.ljs.ifootballmanager.ai.rating;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public enum Rating {
-    STOPPING, TACKLING, PASSING, SHOOTING;
+  STOPPING,
+  TACKLING,
+  PASSING,
+  SHOOTING;
 }

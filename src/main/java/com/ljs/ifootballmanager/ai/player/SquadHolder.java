@@ -1,23 +1,19 @@
 package com.ljs.ifootballmanager.ai.player;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class SquadHolder {
 
-    private static Squad squad;
+  private static Squad squad;
 
-    private SquadHolder() { }
+  private SquadHolder() {}
 
-    @Deprecated
-    public static Squad get() {
-        return squad;
-    }
+  @Deprecated
+  public static Squad get() {
+    return squad;
+  }
 
-    @Deprecated
-    public static void set(Squad squad) {
-        SquadHolder.squad = squad;
-    }
-
+  @Deprecated
+  public static void set(Squad squad) {
+    SquadHolder.squad = squad;
+  }
 }

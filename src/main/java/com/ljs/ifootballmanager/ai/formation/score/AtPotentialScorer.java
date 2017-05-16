@@ -8,42 +8,38 @@ import com.ljs.ifootballmanager.ai.value.Potential;
 import java.io.PrintWriter;
 import java.util.Set;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public class AtPotentialScorer implements FormationScorer {
 
-    private Potential potential;
+  private Potential potential;
 
-    private AtPotentialScorer(Potential potential) {
-        this.potential = potential;
+  private AtPotentialScorer(Potential potential) {
+    this.potential = potential;
+  }
+
+  public double score(Formation f, Tactic t) {
+    return DefaultScorer.get().score(atPotential(f), t);
+  }
+
+  public double scoring(Formation f, Tactic t) {
+    return DefaultScorer.get().scoring(atPotential(f), t);
+  }
+
+  public double defending(Formation f, Tactic t) {
+    return DefaultScorer.get().defending(atPotential(f), t);
+  }
+
+  public void print(Formation f, PrintWriter w) {}
+
+  private Formation atPotential(Formation f) {
+    Set<Player> updated = Sets.newHashSet();
+    for (Player p : f.unsortedPlayers()) {
+      updated.add(potential.atPotential(p));
     }
+    return f.withUpdatedPlayers(updated);
+  }
 
-    public double score(Formation f, Tactic t) {
-        return DefaultScorer.get().score(atPotential(f), t);
-    }
-
-    public double scoring(Formation f, Tactic t) {
-        return DefaultScorer.get().scoring(atPotential(f), t);
-    }
-
-    public double defending(Formation f, Tactic t) {
-        return DefaultScorer.get().defending(atPotential(f), t);
-    }
-
-    public void print(Formation f, PrintWriter w) { }
-
-    private Formation atPotential(Formation f) {
-        Set<Player> updated = Sets.newHashSet();
-        for (Player p : f.unsortedPlayers()) {
-            updated.add(potential.atPotential(p));
-        }
-        return f.withUpdatedPlayers(updated);
-    }
-
-    public static AtPotentialScorer create(Potential potential) {
-        return new AtPotentialScorer(potential);
-    }
-
+  public static AtPotentialScorer create(Potential potential) {
+    return new AtPotentialScorer(potential);
+  }
 }

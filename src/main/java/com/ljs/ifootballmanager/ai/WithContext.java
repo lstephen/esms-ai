@@ -8,10 +8,15 @@ public interface WithContext {
 
   Context getContext();
 
-  default League getLeague() { return getContext().getLeague(); }
+  default League getLeague() {
+    return getContext().getLeague();
+  }
 
-  default FirstXI getFirstXI() { return getContext().getFirstXI(); }
+  default FirstXI getFirstXI() {
+    return getContext().getFirstXI();
+  }
 
-  default Squad getSquad() { return getContext().getSquad(); }
-
+  default Squad getSquad() {
+    return getContext().getSquad();
+  }
 }

@@ -8,36 +8,32 @@ import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public interface League {
 
-    String getTeam();
+  String getTeam();
 
-    Optional<String> getReserveTeam();
+  Optional<String> getReserveTeam();
 
-    Iterable<String> getForcedPlay();
+  Iterable<String> getForcedPlay();
 
-    FormationValidator getFormationValidator();
+  FormationValidator getFormationValidator();
 
-    PlayerValidator getPlayerValidator();
+  PlayerValidator getPlayerValidator();
 
-    Iterable<String> getAdditionalPlayerFiles();
+  Iterable<String> getAdditionalPlayerFiles();
 
-    Weightings getWeightings();
+  Weightings getWeightings();
 
-    Boolean isReserveEligible(Player p);
+  Boolean isReserveEligible(Player p);
 
-    Value getPlayerValue();
+  Value getPlayerValue();
 
-    Value getAgeValue();
+  Value getAgeValue();
 
-    Potential getPlayerPotential();
+  Potential getPlayerPotential();
 
-    Optional<Double> getSeniorSkillsCap();
+  Optional<Double> getSeniorSkillsCap();
 
-    Optional<Double> getYouthSkillsCap();
-
+  Optional<Double> getYouthSkillsCap();
 }

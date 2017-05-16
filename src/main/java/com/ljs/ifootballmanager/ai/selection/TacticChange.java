@@ -6,48 +6,43 @@ import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.io.PrintWriter;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public final class TacticChange implements Change {
 
-    private final Tactic tactic;
+  private final Tactic tactic;
 
-    private final Integer minute;
+  private final Integer minute;
 
-    private TacticChange(Tactic t, Integer m) {
-        this.tactic = t;
-        this.minute = m;
-    }
+  private TacticChange(Tactic t, Integer m) {
+    this.tactic = t;
+    this.minute = m;
+  }
 
-    public Tactic getTactic() {
-        return tactic;
-    }
+  public Tactic getTactic() {
+    return tactic;
+  }
 
-    public Integer getMinute() {
-        return minute;
-    }
+  public Integer getMinute() {
+    return minute;
+  }
 
-    public void print(PrintWriter w) {
-        w.format("TACTIC %s IF MIN >= %d SCORE = 0%n", tactic.getCode(), minute);
-    }
+  public void print(PrintWriter w) {
+    w.format("TACTIC %s IF MIN >= %d SCORE = 0%n", tactic.getCode(), minute);
+  }
 
-    public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
-        print(w);
-    }
+  public void print(PrintWriter w, Function<Player, Integer> playerIdx) {
+    print(w);
+  }
 
-    public Boolean isValid(ChangePlan cp) {
-        return true;
-    }
+  public Boolean isValid(ChangePlan cp) {
+    return true;
+  }
 
-    public Formation apply(Formation f, Integer minute) {
-        return f.withTactic(tactic);
-    }
+  public Formation apply(Formation f, Integer minute) {
+    return f.withTactic(tactic);
+  }
 
-    public static TacticChange create(Tactic t, Integer m) {
-        return new TacticChange(t, m);
-    }
-
-
+  public static TacticChange create(Tactic t, Integer m) {
+    return new TacticChange(t, m);
+  }
 }

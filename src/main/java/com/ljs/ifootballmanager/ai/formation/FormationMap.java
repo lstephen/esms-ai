@@ -12,80 +12,76 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-/**
- *
- * @author lstephen
- */
+/** @author lstephen */
 public class FormationMap {
 
-    private Multimap<Role, Player> roles = Multimaps.newSetMultimap(
-        Maps.<Role, Collection<Player>>newEnumMap(Role.class),
-        new Supplier<Set<Player>>() {
+  private Multimap<Role, Player> roles =
+      Multimaps.newSetMultimap(
+          Maps.<Role, Collection<Player>>newEnumMap(Role.class),
+          new Supplier<Set<Player>>() {
             public Set<Player> get() {
-                return Sets.<Player>newHashSet();
+              return Sets.<Player>newHashSet();
             }
-        });
+          });
 
-    private Map<Player, Role> players = Maps.newHashMap();
+  private Map<Player, Role> players = Maps.newHashMap();
 
-    private FormationMap() { }
+  private FormationMap() {}
 
-    public Boolean contains(Player p) {
-        return players.containsKey(p);
+  public Boolean contains(Player p) {
+    return players.containsKey(p);
+  }
+
+  public Set<Role> roles() {
+    return roles.keySet();
+  }
+
+  public Collection<Player> get(Role r) {
+    return roles.get(r);
+  }
+
+  public Role get(Player p) {
+    return players.get(p);
+  }
+
+  public void put(Role r, Player p) {
+    roles.put(r, p);
+    players.put(p, r);
+  }
+
+  public void remove(Role r, Player p) {
+    roles.remove(r, p);
+    players.remove(p);
+  }
+
+  public Integer size() {
+    return roles.size();
+  }
+
+  public Set<Player> players() {
+    return players.keySet();
+  }
+
+  public static FormationMap create() {
+    return new FormationMap();
+  }
+
+  public static FormationMap create(FormationMap other) {
+    FormationMap result = create();
+
+    result.roles = HashMultimap.create(other.roles);
+    result.players = Maps.newHashMap(other.players);
+
+    return result;
+  }
+
+  public static FormationMap create(Multimap<Role, Player> other) {
+    FormationMap result = create();
+
+    for (Map.Entry<Role, Player> e : other.entries()) {
+      result.put(e.getKey(), e.getValue());
     }
 
-    public Set<Role> roles() {
-        return roles.keySet();
-    }
-
-    public Collection<Player> get(Role r) {
-        return roles.get(r);
-    }
-
-    public Role get(Player p) {
-        return players.get(p);
-    }
-
-    public void put(Role r, Player p) {
-        roles.put(r, p);
-        players.put(p, r);
-    }
-
-    public void remove(Role r, Player p) {
-        roles.remove(r, p);
-        players.remove(p);
-    }
-
-    public Integer size() {
-        return roles.size();
-    }
-
-    public Set<Player> players() {
-        return players.keySet();
-    }
-
-    public static FormationMap create() {
-        return new FormationMap();
-    }
-
-    public static FormationMap create(FormationMap other) {
-        FormationMap result = create();
-
-        result.roles = HashMultimap.create(other.roles);
-        result.players = Maps.newHashMap(other.players);
-
-        return result;
-    }
-
-    public static FormationMap create(Multimap<Role, Player> other) {
-        FormationMap result = create();
-
-        for (Map.Entry<Role, Player> e : other.entries()) {
-            result.put(e.getKey(), e.getValue());
-        }
-
-        return result;
-    }
-
-
+    return result;
+  }
 }
