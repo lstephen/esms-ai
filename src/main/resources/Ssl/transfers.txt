@@ -1,5 +1,0 @@
-Date    Player      Age St Tk Ps Sh Ag Club From            Club To              Fee
-----------------------------------------------------------------------------------------
-Oct 20  Ozzy_Canberra 18  1  4 18  2 37 Derry_Patriots       Huracan_Rhythm       6,000k
-Oct 21  T_Bacile      17  1 14 15  5 51 Sporting_Boyos       Derry_Patriots       2,500k
-Oct 22  U_Poer        23  1  2 23 15 20 Featherstone_Rovers  Asbo_All_Stars       10,000k

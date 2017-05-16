@@ -53,9 +53,13 @@ public final class Esl implements League {
       return Boolean.FALSE;
     }
 
-     public Value getPlayerValue() {
-       return EslValue.create();
-     }
+    public Value getPlayerValue() {
+      return EslValue.create();
+    }
+
+    public Value getAgeValue() {
+      return EslValue.create().getAgeValue();
+    }
 
     public Potential getPlayerPotential() {
       return EslPotential.create();

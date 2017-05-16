@@ -32,6 +32,8 @@ public interface League {
 
     Value getPlayerValue();
 
+    Value getAgeValue();
+
     Potential getPlayerPotential();
 
     Optional<Double> getSeniorSkillsCap();

@@ -21,8 +21,6 @@ import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.formation.score.SecondXIScorer;
 import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
 import com.ljs.ifootballmanager.ai.league.Esl;
-import com.ljs.ifootballmanager.ai.league.IFootballManager;
-import com.ljs.ifootballmanager.ai.league.Jafl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.league.Ssl;
