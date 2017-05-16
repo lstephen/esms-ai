@@ -12,6 +12,7 @@ import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
+import com.ljs.ifootballmanager.ai.value.NowValue;
 import com.ljs.ifootballmanager.ai.value.OverallValue;
 import com.ljs.ifootballmanager.ai.value.RatingInRole;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
@@ -49,17 +50,9 @@ public class SquadReport implements Report, WithContext {
     }
 
     private Double getValue(Player p) {
-        Double ovr = value.getValue(p);
-        Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
-
-        Player atPotential = getLeague().getPlayerPotential().atPotential(p);
-
-        if (ovr < value.getValue(atPotential)) {
-            vsRepl = Math.max(0, vsRepl);
-            vsRepl = Math.max(vsRepl, ReplacementLevelHolder.get().getValueVsReplacement(atPotential));
-        }
-
-        return ovr + vsRepl;
+      Double now = NowValue.bestVsReplacement(ctx, p).getScore();
+      Double future = NowValue.bestVsReplacement(ctx, getLeague().getPlayerPotential().atPotential(p)).getScore();
+      return Math.max(now, future);
     }
 
     public SquadReport sortByValue() {
@@ -95,7 +88,7 @@ public class SquadReport implements Report, WithContext {
             w.format("%3s ", r.name());
         }
 
-        w.format("| %3s %7s || %3s || ", "VAL", " vsRpl", "");
+        w.format("| %3s %7s | %20s | %20s || %3s || ", "VAL", " vsRpl", "", "", "");
 
         getFirstXI().getTactics().forEach(t -> w.format("%3s    ", t.getCode()));
 
@@ -116,15 +109,16 @@ public class SquadReport implements Report, WithContext {
                 skills = String.format("   %d   ", Math.round(p.getSkill(Rating.STOPPING)));
             }
 
-            w.format("%2d %2s %8s %3d ",
+            w.format("%2d %2s %8s ",
                 p.getAge(),
                 best.getRole(),
-                skills,
-                Maths.round(best.getRating()));
+                skills);
 
-            for (Role r : roles) {
-                w.format("%3d ", Maths.round(p.evaluate(r, tactic).getRating()));
-            }
+            NowValue now = NowValue.bestVsReplacement(ctx, p);
+            NowValue future = NowValue.bestVsReplacement(ctx, getLeague().getPlayerPotential().atPotential(p));
+
+            w.format("| %20s ", now.format());
+            w.format("| %20s ", now.getScore() < future.getScore() ? future.format() : "");
 
             Double ovr = value.getValue(p);
             Double vsRepl = repl.getValueVsReplacement(p);
