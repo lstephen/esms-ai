@@ -109,10 +109,7 @@ public class SquadReport implements Report, WithContext {
                 skills = String.format("   %d   ", Math.round(p.getSkill(Rating.STOPPING)));
             }
 
-            w.format("%2d %2s %8s ",
-                p.getAge(),
-                best.getRole(),
-                skills);
+            w.format("%2d %8s ", p.getAge(), skills);
 
             NowValue now = NowValue.bestVsReplacement(ctx, p);
             NowValue future = NowValue.bestVsReplacement(ctx, getLeague().getPlayerPotential().atPotential(p));
@@ -131,11 +128,7 @@ public class SquadReport implements Report, WithContext {
                 Maths.round(getValue(p)));
 
             getFirstXI().getTactics().forEach(t -> {
-                RatingInRole rir = p.getOverall(t);
-                w.format(
-                    "%3d%3s ",
-                    Maths.round(rir.getRating()),
-                    rir.getRole() == best.getRole() ? "" : " " + rir.getRole());
+              w.format("%5s ", NowValue.bestVsReplacement(ctx, p, t).formatShort());
             });
 
             w.format(
