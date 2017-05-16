@@ -80,6 +80,10 @@ public class Ucfl implements League {
         return SslValue.create();
     }
 
+    public Value getAgeValue() {
+      return SslValue.create().getAgeValue();
+    }
+
     public Potential getPlayerPotential() {
         return SslPotential.create();
     }

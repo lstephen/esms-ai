@@ -55,9 +55,13 @@ public final class EliteFootballLeague implements League {
         return p.getMaximumSkill() < 22.5 || (p.isGk() && p.getMaximumSkill() < 26.5);
     }
 
-     public Value getPlayerValue() {
-         return EflValue.create();
-     }
+    public Value getPlayerValue() {
+      return EflValue.create();
+    }
+
+    public Value getAgeValue() {
+      return EflValue.create().getAgeValue();
+    }
 
     public Potential getPlayerPotential() {
         return EflPotential.create();

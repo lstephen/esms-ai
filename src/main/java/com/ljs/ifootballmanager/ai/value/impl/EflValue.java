@@ -31,6 +31,10 @@ public class EflValue implements Value {
         }
     }
 
+    public Value getAgeValue() {
+      return p -> (double) getYearsLeft(p) / 2;
+    }
+
     public static EflValue create() {
         return new EflValue();
     }

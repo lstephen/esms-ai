@@ -52,7 +52,10 @@ public class SquadReport implements Report, WithContext {
     private Double getValue(Player p) {
       Double now = NowValue.bestVsReplacement(ctx, p).getScore();
       Double future = NowValue.bestVsReplacement(ctx, getLeague().getPlayerPotential().atPotential(p)).getScore();
-      return Math.max(now, future);
+
+      Double ageValue = getLeague().getAgeValue().getValue(p);
+
+      return Math.max(now, future) + ageValue;
     }
 
     public SquadReport sortByValue() {
@@ -80,17 +83,9 @@ public class SquadReport implements Report, WithContext {
 
         ReplacementLevel repl = ReplacementLevelHolder.get();
 
-        w.format("%-15s ", tactic);
+        w.format("%27s | %20s | %20s |     || %3s ||", "", "", "", "");
 
-        w.format("%2s %2s %8s %3s ", "", "", "", "OVR");
-
-        for (Role r : roles) {
-            w.format("%3s ", r.name());
-        }
-
-        w.format("| %3s %7s | %20s | %20s || %3s || ", "VAL", " vsRpl", "", "", "");
-
-        getFirstXI().getTactics().forEach(t -> w.format("%3s    ", t.getCode()));
+        getFirstXI().getTactics().forEach(t -> w.format("%3s   ", t.getCode()));
 
         w.println();
 
@@ -121,10 +116,8 @@ public class SquadReport implements Report, WithContext {
             Double vsRepl = repl.getValueVsReplacement(p);
 
             w.format(
-                "| %3d %3d/%3d || %3d || ",
-                Maths.round(ovr),
-                Maths.round(vsRepl),
-                Maths.round(repl.getValueVsReplacement(getLeague().getPlayerPotential().atPotential(p))),
+                "| %3d || %3d || ",
+                Maths.round(getLeague().getAgeValue().getValue(p)),
                 Maths.round(getValue(p)));
 
             getFirstXI().getTactics().forEach(t -> {

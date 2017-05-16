@@ -17,6 +17,10 @@ public class SslValue implements Value {
         return base * getAgingFactor(p.getAge()) + getPeakYearsValue(p);
     }
 
+    public Value getAgeValue() {
+      return p -> Math.pow(Math.max(0, p.getAge() - 29), 2) * 2 / 10 + getPeakYearsValue(p);
+    }
+
     private Double getAgingFactor(Integer age) {
         return 1.0 - (Math.pow(Math.max(0, age - 29), 2) * 2 / 100);
     }
