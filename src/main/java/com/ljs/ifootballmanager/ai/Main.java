@@ -334,7 +334,7 @@ public class Main {
     Formation formation =
         Formation.selectOne(ctx.getLeague(), SelectionCriteria.create(forced, available), scorer);
 
-    ChangePlan cp = ChangePlan.select(ctx.getLeague(), formation, available);
+    ChangePlan cp = ChangePlan.select(ctx, ctx.getLeague(), formation, available);
     Bench bench = Bench.select(formation, cp.getSubstitutes(), available);
 
     print(w, title, SquadReport.create(ctx, formation.getTactic(), available));

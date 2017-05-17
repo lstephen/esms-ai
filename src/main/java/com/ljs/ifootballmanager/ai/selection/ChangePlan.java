@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
+import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -23,6 +24,7 @@ import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
+import com.ljs.ifootballmanager.ai.value.NowValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -322,17 +324,17 @@ public final class ChangePlan implements Report {
     return Ordering.natural().onResultOf((ChangePlan cp) -> cp.changes.size());
   }
 
-  public static ChangePlan select(League league, final Formation f, final Iterable<Player> squad) {
-    return select(league, f, SelectionCriteria.create(league, squad));
+  public static ChangePlan select(Context ctx, League league, final Formation f, final Iterable<Player> squad) {
+    return select(ctx, league, f, SelectionCriteria.create(league, squad));
   }
 
   public static ChangePlan select(
-      League league, final Formation f, final SelectionCriteria criteria) {
+      Context ctx, League league, final Formation f, final SelectionCriteria criteria) {
     HillClimbing<ChangePlan> hc =
         HillClimbing.<ChangePlan>builder()
             .validator(ChangePlan::isValid)
             .heuristic(byScore().compound(byChangesSize().reverse()))
-            .actionGenerator(actionsFunction(league, criteria))
+            .actionGenerator(actionsFunction(ctx, league, criteria))
             .build();
 
     return new RepeatedHillClimbing<ChangePlan>(() -> zero(f), hc).search();
@@ -347,7 +349,7 @@ public final class ChangePlan implements Report {
   }
 
   private static ActionGenerator<ChangePlan> actionsFunction(
-      final League league, final SelectionCriteria criteria) {
+      final Context ctx, final League league, final SelectionCriteria criteria) {
     return new ActionGenerator<ChangePlan>() {
 
       @Override
@@ -370,18 +372,13 @@ public final class ChangePlan implements Report {
       }
 
       private Double getValue(Player p) {
-        Double ovr = league.getPlayerValue().getValue(p);
-        Double vsRepl = ReplacementLevelHolder.get().getValueVsReplacement(p);
+        Double now = NowValue.bestVsReplacement(ctx, p).getScore();
+        Double future =
+            NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p)).getScore();
 
-        Player atPotential = league.getPlayerPotential().atPotential(p);
+        Double ageValue = league.getAgeValue().getValue(p);
 
-        if (ovr < league.getPlayerValue().getValue(atPotential)) {
-          vsRepl = Math.max(0, vsRepl);
-          vsRepl =
-              Math.max(vsRepl, ReplacementLevelHolder.get().getValueVsReplacement(atPotential));
-        }
-
-        return ovr + vsRepl;
+        return Math.max(now, future) + ageValue;
       }
 
       private Set<Player> getBestSubstitutes(ChangePlan cp) {
