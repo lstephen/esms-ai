@@ -119,17 +119,6 @@ public class Main {
             Sets.difference(
                 ImmutableSet.copyOf(squad.players()), ImmutableSet.copyOf(bestXI.players())));
 
-    Iterable<Player> atPotentialCandidates =
-        FluentIterable.from(squad.players()).filter(Predicates.not(Predicates.in(allFirstXI)));
-    Formation atPotentialXI =
-        Formation.select(
-                league,
-                atPotentialCandidates,
-                AtPotentialScorer.create(league.getPlayerPotential()))
-            .get(0);
-
-    remaining.removeAll(atPotentialXI.players());
-
     Set<Player> reservesSquad = Sets.newHashSet();
     Formation reservesXI = null;
     Set<Player> allReservesXI = Sets.newHashSet();
@@ -151,11 +140,8 @@ public class Main {
       }
     }
 
-    print(w, "At Potential XI", atPotentialXI);
-
     Set<Player> desiredSquad = Sets.newHashSet();
     desiredSquad.addAll(allFirstXI);
-    desiredSquad.addAll(atPotentialXI.players());
 
     Set<Player> firstSquad = Sets.newHashSet();
 
@@ -226,18 +212,10 @@ public class Main {
       trainingSquad.removeAll(allReservesXI);
     }
 
-    trainingSquad.removeAll(atPotentialXI.players());
     print(
         w,
         "Training Squad",
         SquadReport.create(ctx, bestXI.getTactic(), trainingSquad).sortByValue());
-
-    Iterable<Player> potentials =
-        FluentIterable.from(atPotentialXI.players())
-            .filter(Predicates.not(Predicates.in(allFirstXI)))
-            .filter(Predicates.not(Predicates.in(allReservesXI)));
-
-    print(w, "Potentials", SquadReport.create(ctx, bestXI.getTactic(), potentials).sortByValue());
 
     print(w, "Remaining", SquadReport.create(ctx, bestXI.getTactic(), remaining).sortByValue());
 
@@ -276,7 +254,7 @@ public class Main {
       Set<String> forced = Sets.newHashSet();
       Iterables.addAll(forced, league.getForcedPlay());
 
-      for (Player p : potentials) {
+      for (Player p : squad.forReservesSelection(league)) {
         Integer vsRepl =
             Maths.round(NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p)).getVsReplacement());
 
