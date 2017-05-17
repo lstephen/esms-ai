@@ -12,7 +12,6 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.value.NowValue;
 import com.ljs.ifootballmanager.ai.value.OverallValue;
-import com.ljs.ifootballmanager.ai.value.RatingInRole;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import com.ljs.ifootballmanager.ai.value.Value;
@@ -45,13 +44,7 @@ public class SquadReport implements Report, WithContext {
   }
 
   private Double getValue(Player p) {
-    Double now = NowValue.bestVsReplacement(ctx, p).getScore();
-    Double future =
-        NowValue.bestVsReplacement(ctx, getLeague().getPlayerPotential().atPotential(p)).getScore();
-
-    Double ageValue = getLeague().getAgeValue().getValue(p);
-
-    return Math.max(now, future) + ageValue;
+    return OverallValue.create(ctx).getValue(p);
   }
 
   public SquadReport sortByValue() {
@@ -88,8 +81,6 @@ public class SquadReport implements Report, WithContext {
 
     for (Player p : ordering.immutableSortedCopy(squad)) {
       w.format("%-15s ", p.getName());
-
-      RatingInRole best = OverallValue.create(ctx).getBest(p);
 
       String skills =
           String.format(

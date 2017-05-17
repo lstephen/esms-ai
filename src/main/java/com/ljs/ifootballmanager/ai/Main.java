@@ -14,7 +14,6 @@ import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
-import com.ljs.ifootballmanager.ai.formation.score.AtPotentialScorer;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
@@ -37,6 +36,7 @@ import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import com.ljs.ifootballmanager.ai.value.NowValue;
+import com.ljs.ifootballmanager.ai.value.OverallValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import java.io.File;
@@ -163,7 +163,7 @@ public class Main {
 
       Player toAdd =
           Ordering.natural()
-              .onResultOf((Player p) -> NowValue.bestVsReplacement(ctx, p).getScore())
+              .onResultOf((Player p) -> OverallValue.create(ctx).getValue(p))
               .max(trainingSquadCandidates);
 
       trainingSquadCandidates.remove(toAdd);
@@ -256,7 +256,9 @@ public class Main {
 
       for (Player p : squad.forReservesSelection(league)) {
         Integer vsRepl =
-            Maths.round(NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p)).getVsReplacement());
+            Maths.round(
+                NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p))
+                    .getVsReplacement());
 
         if (vsRepl > 0) {
           forced.add(p.getName());
