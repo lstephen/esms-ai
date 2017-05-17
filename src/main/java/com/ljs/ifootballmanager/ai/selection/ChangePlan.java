@@ -24,8 +24,7 @@ import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.report.Report;
-import com.ljs.ifootballmanager.ai.value.NowValue;
-import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
+import com.ljs.ifootballmanager.ai.value.OverallValue;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
@@ -324,7 +323,8 @@ public final class ChangePlan implements Report {
     return Ordering.natural().onResultOf((ChangePlan cp) -> cp.changes.size());
   }
 
-  public static ChangePlan select(Context ctx, League league, final Formation f, final Iterable<Player> squad) {
+  public static ChangePlan select(
+      Context ctx, League league, final Formation f, final Iterable<Player> squad) {
     return select(ctx, league, f, SelectionCriteria.create(league, squad));
   }
 
@@ -372,13 +372,7 @@ public final class ChangePlan implements Report {
       }
 
       private Double getValue(Player p) {
-        Double now = NowValue.bestVsReplacement(ctx, p).getScore();
-        Double future =
-            NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p)).getScore();
-
-        Double ageValue = league.getAgeValue().getValue(p);
-
-        return Math.max(now, future) + ageValue;
+        return OverallValue.create(ctx).getValue(p);
       }
 
       private Set<Player> getBestSubstitutes(ChangePlan cp) {

@@ -2,10 +2,9 @@ package com.ljs.ifootballmanager.ai.value;
 
 import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.player.Player;
-import java.util.stream.Collectors;
 
 /** @author lstephen */
-public final class OverallValue implements Value {
+public final class OverallValue {
 
   private final Context ctx;
 
@@ -14,12 +13,14 @@ public final class OverallValue implements Value {
   }
 
   public Double getValue(Player p) {
-    return getBest(p).getRating();
-  }
+    Double now = NowValue.bestVsReplacement(ctx, p).getScore();
+    Double future =
+        NowValue.bestVsReplacement(ctx, ctx.getLeague().getPlayerPotential().atPotential(p))
+            .getScore();
 
-  public RatingInRole getBest(Player p) {
-    return RatingInRole.byRating()
-        .max(ctx.getFirstXI().getTactics().map(t -> p.getOverall(t)).collect(Collectors.toList()));
+    Double ageValue = ctx.getLeague().getAgeValue().getValue(p);
+
+    return Math.max(now, future) + ageValue;
   }
 
   public static OverallValue create(Context ctx) {
