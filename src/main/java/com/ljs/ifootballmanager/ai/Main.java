@@ -276,11 +276,9 @@ public class Main {
       Set<String> forced = Sets.newHashSet();
       Iterables.addAll(forced, league.getForcedPlay());
 
-      ReplacementLevel repl = ReplacementLevelHolder.get();
-
       for (Player p : potentials) {
         Integer vsRepl =
-            Maths.round(repl.getValueVsReplacement(league.getPlayerPotential().atPotential(p)));
+            Maths.round(NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p)).getVsReplacement());
 
         if (vsRepl > 0) {
           forced.add(p.getName());
