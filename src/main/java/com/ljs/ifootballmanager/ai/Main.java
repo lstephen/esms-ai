@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.CharSink;
 import com.google.common.io.Files;
@@ -35,7 +36,7 @@ import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
-import com.ljs.ifootballmanager.ai.value.AcquisitionValue;
+import com.ljs.ifootballmanager.ai.value.NowValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevelHolder;
 import java.io.File;
@@ -173,7 +174,12 @@ public class Main {
 
     while ((reservesSquad.size() < 21 || firstSquad.size() < 21)
         && !trainingSquadCandidates.isEmpty()) {
-      Player toAdd = Player.byValue(AcquisitionValue.create(league)).max(trainingSquadCandidates);
+
+      Player toAdd =
+          Ordering.natural()
+              .onResultOf((Player p) -> NowValue.bestVsReplacement(ctx, p).getScore())
+              .max(trainingSquadCandidates);
+
       trainingSquadCandidates.remove(toAdd);
 
       if (toAdd.isReserves() && reservesSquad.size() < 21) {
@@ -328,7 +334,7 @@ public class Main {
     Formation formation =
         Formation.selectOne(ctx.getLeague(), SelectionCriteria.create(forced, available), scorer);
 
-    ChangePlan cp = ChangePlan.select(ctx.getLeague(), formation, available);
+    ChangePlan cp = ChangePlan.select(ctx, ctx.getLeague(), formation, available);
     Bench bench = Bench.select(formation, cp.getSubstitutes(), available);
 
     print(w, title, SquadReport.create(ctx, formation.getTactic(), available));
