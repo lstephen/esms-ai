@@ -174,8 +174,11 @@ public class Main {
 
     while ((reservesSquad.size() < 21 || firstSquad.size() < 21)
         && !trainingSquadCandidates.isEmpty()) {
-      
-      Player toAdd = Ordering.natural().onResultOf((Player p) -> NowValue.bestVsReplacement(ctx, p).getScore()).max(trainingSquadCandidates);
+
+      Player toAdd =
+          Ordering.natural()
+              .onResultOf((Player p) -> NowValue.bestVsReplacement(ctx, p).getScore())
+              .max(trainingSquadCandidates);
 
       trainingSquadCandidates.remove(toAdd);
 
