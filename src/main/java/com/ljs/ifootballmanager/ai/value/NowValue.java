@@ -30,7 +30,7 @@ public final class NowValue {
     return player.evaluate(role, tactic).getRating();
   }
 
-  private Double getVsReplacement() {
+  public Double getVsReplacement() {
     return getAbility() - ctx.getReplacementLevel().getReplacementLevel(role, tactic);
   }
 
