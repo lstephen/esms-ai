@@ -66,7 +66,7 @@ public class Bench implements Report {
     return score;
   }
 
-  private Player findSubstitute(Role r) {
+  public Player findSubstitute(Role r) {
     switch (r) {
       case GK:
         return Player.bySkill(Rating.STOPPING).max(bench);

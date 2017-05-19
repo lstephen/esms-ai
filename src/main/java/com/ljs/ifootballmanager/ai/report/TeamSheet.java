@@ -7,6 +7,7 @@ import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
+import com.ljs.ifootballmanager.ai.selection.RestPlan;
 import java.io.PrintWriter;
 
 /** @author lstephen */
@@ -20,11 +21,14 @@ public class TeamSheet implements Report {
 
   private final Bench bench;
 
-  private TeamSheet(String team, Formation formation, ChangePlan cp, Bench bench) {
+  private final RestPlan rest;
+
+  private TeamSheet(String team, Formation formation, ChangePlan cp, Bench bench, RestPlan rest) {
     this.team = team;
     this.formation = formation;
     this.changePlan = cp;
     this.bench = bench;
+    this.rest = rest;
   }
 
   private ImmutableList<Player> players() {
@@ -52,9 +56,11 @@ public class TeamSheet implements Report {
     w.println("AGG 20");
     w.println();
     changePlan.print(w, getPlayerIndex());
+    rest.print(w, getPlayerIndex());
   }
 
-  public static TeamSheet create(String team, Formation formation, ChangePlan cp, Bench bench) {
-    return new TeamSheet(team, formation, cp, bench);
+  public static TeamSheet create(
+      String team, Formation formation, ChangePlan cp, Bench bench, RestPlan rest) {
+    return new TeamSheet(team, formation, cp, bench, rest);
   }
 }
