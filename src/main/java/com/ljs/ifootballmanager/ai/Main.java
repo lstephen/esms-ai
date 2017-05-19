@@ -35,6 +35,7 @@ import com.ljs.ifootballmanager.ai.report.TeamSheet;
 import com.ljs.ifootballmanager.ai.selection.Bench;
 import com.ljs.ifootballmanager.ai.selection.ChangePlan;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
+import com.ljs.ifootballmanager.ai.selection.RestPlan;
 import com.ljs.ifootballmanager.ai.value.NowValue;
 import com.ljs.ifootballmanager.ai.value.OverallValue;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
@@ -314,11 +315,12 @@ public class Main {
 
     ChangePlan cp = ChangePlan.select(ctx, ctx.getLeague(), formation, available);
     Bench bench = Bench.select(formation, cp.getSubstitutes(), available);
+    RestPlan rest = RestPlan.create(ctx.getSquad(), formation, bench);
 
     print(w, title, SquadReport.create(ctx, formation.getTactic(), available));
-    print(w, formation, bench, cp);
+    print(w, formation, bench, cp, rest);
 
-    Reports.print(TeamSheet.create(team, formation, cp, bench)).to(sheet);
+    Reports.print(TeamSheet.create(team, formation, cp, bench, rest)).to(sheet);
   }
 
   private void print(PrintWriter w, String title, Report report) {

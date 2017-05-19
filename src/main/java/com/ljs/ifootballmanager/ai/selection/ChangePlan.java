@@ -221,8 +221,8 @@ public final class ChangePlan implements Report {
   }
 
   public Boolean isValid() {
-    // Max is 15, and 5 for score based tactics
-    if (changes().size() > 10) {
+    // Max is 15, and 5 for score based tactics, 2 for rest based
+    if (changes().size() > 8) {
       return false;
     }
 
