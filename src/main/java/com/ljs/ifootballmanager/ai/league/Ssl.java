@@ -41,13 +41,13 @@ public class Ssl implements League {
   }
 
   public Optional<Double> getSeniorSkillsCap() {
-    return Optional.of(26.0);
+    return Optional.of(27.0);
     // JUS cup
     //return Optional.absent();
   }
 
   public Optional<Double> getYouthSkillsCap() {
-    return Optional.of(17.0);
+    return Optional.of(18.0);
   }
 
   public Iterable<String> getForcedPlay() {
