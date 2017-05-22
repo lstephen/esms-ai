@@ -65,14 +65,22 @@ public final class NowValue {
   }
 
   public static NowValue best(Context ctx, Player p) {
-    return Ordering.natural().onResultOf(NowValue::getScore).max(all(ctx, p));
+    return byScore().max(all(ctx, p));
   }
 
   public static NowValue bestVsReplacement(Context ctx, Player p) {
-    return Ordering.natural().onResultOf(NowValue::getVsReplacement).max(all(ctx, p));
+    return byVsReplacement().compound(byScore()).max(all(ctx, p));
   }
 
   public static NowValue bestVsReplacement(Context ctx, Player p, Tactic t) {
-    return Ordering.natural().onResultOf(NowValue::getVsReplacement).max(all(ctx, p, t));
+    return byVsReplacement().compound(byScore()).max(all(ctx, p, t));
+  }
+
+  private static Ordering<NowValue> byScore() {
+    return Ordering.natural().onResultOf(NowValue::getScore);
+  }
+
+  private static Ordering<NowValue> byVsReplacement() {
+    return Ordering.natural().onResultOf(NowValue::getVsReplacement);
   }
 }
