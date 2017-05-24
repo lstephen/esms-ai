@@ -58,7 +58,7 @@ public final class RestPlan implements Report {
             out -> {
               Player in = getSubstituteFor(out);
               w.format(
-                  "SUB %s %s %s IF SCORE <= 3%n",
+                  "SUB %s %s %s IF SCORE <= -3%n",
                   playerIdx.apply(out), playerIdx.apply(in), formation.findRole(out));
               w.format(
                   "SUB %s %s %s IF SCORE >= 3%n",
