@@ -7,6 +7,8 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public final class RestPlan implements Report {
@@ -24,10 +26,13 @@ public final class RestPlan implements Report {
   }
 
   private Optional<Player> getPlayerToBeRested() {
+    List<Player> ps = formation.players();
+    Collections.shuffle(ps);
+
     Player lowestFitness =
         Ordering.natural()
             .onResultOf((Player p) -> squad.findPlayer(p.getName()).getFitness())
-            .min(formation.players());
+            .min(ps);
 
     return squad.findPlayer(lowestFitness.getName()).isFullFitness()
         ? Optional.empty()
