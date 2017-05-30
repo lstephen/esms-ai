@@ -2,16 +2,18 @@ package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
+import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.report.Report;
+import com.ljs.ifootballmanager.ai.value.OverallValue;
 import java.io.PrintWriter;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 public final class RestPlan implements Report {
+
+  private final Context ctx;
 
   private final Squad squad;
 
@@ -19,20 +21,23 @@ public final class RestPlan implements Report {
 
   private final Bench bench;
 
-  private RestPlan(Squad s, Formation f, Bench b) {
-    this.squad = s;
+  private RestPlan(Context ctx, Formation f, Bench b) {
+    this.ctx = ctx;
+    this.squad = ctx.getSquad();
     this.formation = f;
     this.bench = b;
   }
 
   private Optional<Player> getPlayerToBeRested() {
-    List<Player> ps = formation.players();
-    Collections.shuffle(ps);
+    OverallValue ovr = OverallValue.create(ctx);
 
-    Player lowestFitness =
+    Ordering<Player> byFitness = 
         Ordering.natural()
-            .onResultOf((Player p) -> squad.findPlayer(p.getName()).getFitness())
-            .min(ps);
+            .onResultOf((Player p) -> squad.findPlayer(p.getName()).getFitness());
+
+    Ordering<Player> byOvr = Ordering.natural().onResultOf(ovr::getValue).reverse();
+
+    Player lowestFitness = byFitness.compound(byOvr).min(formation.players());
 
     return squad.findPlayer(lowestFitness.getName()).isFullFitness()
         ? Optional.empty()
@@ -71,7 +76,7 @@ public final class RestPlan implements Report {
             });
   }
 
-  public static RestPlan create(Squad s, Formation f, Bench b) {
-    return new RestPlan(s, f, b);
+  public static RestPlan create(Context ctx, Formation f, Bench b) {
+    return new RestPlan(ctx, f, b);
   }
 }
