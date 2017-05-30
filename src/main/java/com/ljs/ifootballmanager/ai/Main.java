@@ -315,7 +315,7 @@ public class Main {
 
     ChangePlan cp = ChangePlan.select(ctx, ctx.getLeague(), formation, available);
     Bench bench = Bench.select(formation, cp.getSubstitutes(), available);
-    RestPlan rest = RestPlan.create(ctx.getSquad(), formation, bench);
+    RestPlan rest = RestPlan.create(ctx, formation, bench);
 
     print(w, title, SquadReport.create(ctx, formation.getTactic(), available));
     print(w, formation, bench, cp, rest);
