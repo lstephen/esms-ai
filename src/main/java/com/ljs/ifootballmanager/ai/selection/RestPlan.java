@@ -31,9 +31,8 @@ public final class RestPlan implements Report {
   private Optional<Player> getPlayerToBeRested() {
     OverallValue ovr = OverallValue.create(ctx);
 
-    Ordering<Player> byFitness = 
-        Ordering.natural()
-            .onResultOf((Player p) -> squad.findPlayer(p.getName()).getFitness());
+    Ordering<Player> byFitness =
+        Ordering.natural().onResultOf((Player p) -> squad.findPlayer(p.getName()).getFitness());
 
     Ordering<Player> byOvr = Ordering.natural().onResultOf(ovr::getValue).reverse();
 
