@@ -30,6 +30,17 @@ targets:
       - SKIP_GIT_SYNC
     run: /bin/bash construi/run/run.sh
 
+  run-local:
+    before:
+      - install
+    volumes:
+      - ./esms-ai-data:/var/esms-ai-data
+    environment:
+      - ESMSAI_DATA=/var/esms-ai-data
+      - ESMSAI_SITE
+      - SKIP_GIT_SYNC=true
+    run: /bin/bash construi/run/run.sh
+
   fmt:
     environment:
       - GOOGLE_JAVA_FORMAT_JAR=target/google-java-format-all-deps.jar
