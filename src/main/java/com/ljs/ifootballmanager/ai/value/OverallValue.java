@@ -14,13 +14,15 @@ public final class OverallValue {
 
   public Double getValue(Player p) {
     Double now = NowValue.bestVsReplacement(ctx, p).getScore();
-    Double future =
-        NowValue.bestVsReplacement(ctx, ctx.getLeague().getPlayerPotential().atPotential(p))
-            .getScore();
+    //Double future =
+    //    NowValue.bestVsReplacement(ctx, ctx.getLeague().getPlayerPotential().atPotential(p))
+    //        .getScore();
 
+    Double vsAge = now - ctx.getSkillByAge().getAverageForComparison(p.getAge());
     Double ageValue = ctx.getLeague().getAgeValue().getValue(p);
 
-    return Math.max(now, future) + ageValue;
+    return now + vsAge + ageValue;
+    //return Math.max(now, future) + ageValue;
   }
 
   public static OverallValue create(Context ctx) {
