@@ -50,7 +50,7 @@ public class SkillByAge implements Report {
       return getAverageForComparison(getMaxAge());
     }
 
-    return getThreeYearAverage(age).orElse(getAvgNowValue(age).getAsDouble());
+    return getThreeYearAverage(age).orElseGet(() -> getAvgNowValue(age).getAsDouble());
   }
 
   public void print(PrintWriter w) {
