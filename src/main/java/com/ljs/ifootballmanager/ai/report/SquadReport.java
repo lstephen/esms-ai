@@ -73,7 +73,7 @@ public class SquadReport implements Report, WithContext {
 
     ReplacementLevel repl = ReplacementLevelHolder.get();
 
-    w.format("%27s | %20s | %20s |     || %3s ||", "", "", "", "");
+    w.format("%27s | %20s | %3s      || %3s ||", "", "", "vAg", "OVR");
 
     getFirstXI().getTactics().forEach(t -> w.format("%3s   ", t.getCode()));
 
@@ -96,17 +96,16 @@ public class SquadReport implements Report, WithContext {
       w.format("%2d %8s ", p.getAge(), skills);
 
       NowValue now = NowValue.bestVsReplacement(ctx, p);
-      NowValue future =
-          NowValue.bestVsReplacement(ctx, getLeague().getPlayerPotential().atPotential(p));
+      Double vsAge = now.getScore() - ctx.getSkillByAge().getAverageForComparison(p.getAge());
 
       w.format("| %20s ", now.format());
-      w.format("| %20s ", now.getScore() < future.getScore() ? future.format() : "");
+      w.format("| %3d ", Maths.round(vsAge));
 
       Double ovr = value.getValue(p);
       Double vsRepl = repl.getValueVsReplacement(p);
 
       w.format(
-          "| %3d || %3d || ",
+          " %3d || %3d || ",
           Maths.round(getLeague().getAgeValue().getValue(p)), Maths.round(getValue(p)));
 
       getFirstXI()

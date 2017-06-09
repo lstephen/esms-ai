@@ -2,6 +2,7 @@ package com.ljs.ifootballmanager.ai;
 
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.player.Squad;
+import com.ljs.ifootballmanager.ai.report.SkillByAge;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import com.ljs.ifootballmanager.ai.value.ReplacementLevel;
 import java.util.Optional;
@@ -15,6 +16,8 @@ public final class Context {
   private Optional<FirstXI> firstXI;
 
   private Optional<ReplacementLevel> replacementLevel;
+
+  private Optional<SkillByAge> skillByAge;
 
   public League getLeague() {
     return league.get();
@@ -46,5 +49,13 @@ public final class Context {
 
   public void setReplacementLevel(ReplacementLevel rl) {
     this.replacementLevel = Optional.of(rl);
+  }
+
+  public SkillByAge getSkillByAge() {
+    return skillByAge.get();
+  }
+
+  public void setSkillByAge(SkillByAge sba) {
+    this.skillByAge = Optional.of(sba);
   }
 }

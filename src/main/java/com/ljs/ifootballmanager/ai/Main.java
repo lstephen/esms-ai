@@ -29,6 +29,7 @@ import com.ljs.ifootballmanager.ai.player.SquadHolder;
 import com.ljs.ifootballmanager.ai.report.ReplacementLevelReport;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.report.Reports;
+import com.ljs.ifootballmanager.ai.report.SkillByAge;
 import com.ljs.ifootballmanager.ai.report.SquadReport;
 import com.ljs.ifootballmanager.ai.report.SquadSummaryReport;
 import com.ljs.ifootballmanager.ai.report.TeamSheet;
@@ -112,7 +113,14 @@ public class Main {
     ReplacementLevelHolder.set(ReplacementLevel.create(ctx));
     ctx.setReplacementLevel(ReplacementLevelHolder.get());
 
+    SkillByAge sba = SkillByAge.create(ctx);
+
+    ctx.setSkillByAge(sba);
+
     print(w, SquadReport.create(ctx, bestXI.getTactic(), squad.players()).sortByValue());
+
+    print(w, sba);
+
     ctx.getFirstXI().getFormations().forEach(f -> print(w, "1st XI", f));
 
     Set<Player> remaining =
@@ -256,12 +264,10 @@ public class Main {
       Iterables.addAll(forced, league.getForcedPlay());
 
       for (Player p : squad.forReservesSelection(league)) {
-        Integer vsRepl =
-            Maths.round(
-                NowValue.bestVsReplacement(ctx, league.getPlayerPotential().atPotential(p))
-                    .getVsReplacement());
+        Integer vsAvg = Maths.round(
+            NowValue.bestVsReplacement(ctx, p).getScore() - sba.getAverageForComparison(p.getAge()));
 
-        if (vsRepl > 0) {
+        if (vsAvg > 0) {
           forced.add(p.getName());
         }
       }
