@@ -173,6 +173,7 @@ public class Main {
       Player toAdd =
           Ordering.natural()
               .onResultOf((Player p) -> OverallValue.create(ctx).getValue(p))
+              .compound(Player.byAge())
               .max(trainingSquadCandidates);
 
       trainingSquadCandidates.remove(toAdd);
