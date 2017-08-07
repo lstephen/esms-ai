@@ -247,6 +247,18 @@ public class Main {
       print(w, f, SquadReport.create(ctx, bestXI.getTactic(), additional.players()).sortByValue());
     }
 
+    Set<String> seniorsForced = Sets.newHashSet();
+    Iterables.addAll(seniorsForced, league.getForcedPlay());
+
+    for (Player p : squad.forSelection(league)) {
+      Integer vsAvg = Maths.round(
+          NowValue.bestVsReplacement(ctx, p).getScore() - sba.getAverageForComparison(p.getAge()));
+
+      if (vsAvg > 0) {
+        seniorsForced.add(p.getName());
+      }
+    }
+
     File sheetFile = new File(Config.get().getDataDirectory(), league.getTeam() + "sht.txt");
     CharSink sheet = Files.asCharSink(sheetFile, Charsets.UTF_8);
     printSelection(
@@ -255,7 +267,7 @@ public class Main {
         "Selection",
         league.getTeam(),
         squad.forSelection(league),
-        league.getForcedPlay(),
+        seniorsForced,
         sheet,
         DefaultScorer.get());
     Files.copy(sheetFile, new File(Config.get().getDataDirectory(), "shts/" + sheetFile.getName()));
