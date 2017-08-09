@@ -254,7 +254,7 @@ public class Main {
       Integer vsAvg = Maths.round(
           NowValue.bestVsReplacement(ctx, p).getScore() - sba.getAverageForComparison(p.getAge()));
 
-      if (vsAvg > 0) {
+      if (vsAvg > 0 && !p.isGk()) {
         seniorsForced.add(p.getName());
       }
     }
@@ -280,7 +280,7 @@ public class Main {
         Integer vsAvg = Maths.round(
             NowValue.bestVsReplacement(ctx, p).getScore() - sba.getAverageForComparison(p.getAge()));
 
-        if (vsAvg > 0) {
+        if (vsAvg > 0 && !p.isGk()) {
           forced.add(p.getName());
         }
       }
