@@ -4,7 +4,7 @@ import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.player.Player;
 
 /** @author lstephen */
-public final class OverallValue {
+public final class OverallValue implements Value {
 
   private final Context ctx;
 

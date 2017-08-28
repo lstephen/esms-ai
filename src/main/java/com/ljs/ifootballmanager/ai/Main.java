@@ -312,22 +312,26 @@ public class Main {
       CharSink sheet,
       FormationScorer scorer)
       throws IOException {
+
     Set<Player> forced = Sets.newHashSet();
 
-    for (Player p : available) {
+    for (Player p : Player.byValue(OverallValue.create(ctx)).reverse().sortedCopy(available)) {
       Boolean isForced = Iterables.contains(forcedPlay, p.getName());
       Boolean isFullFitness = SquadHolder.get().findPlayer(p.getName()).isFullFitness();
 
-      if (isForced && isFullFitness) {
+      if (isForced && isFullFitness && forced.size() < 5) {
         forced.add(p);
       }
     }
 
     System.out.print("Forced:");
-    for (Player p : Player.byName().sortedCopy(forced)) {
+    w.print("Forced:");
+    for (Player p : Player.byValue(OverallValue.create(ctx)).reverse().sortedCopy(forced)) {
       System.out.print(p.getName() + "/");
+      w.format("%s/", p.getName());
     }
     System.out.println();
+    w.println();
 
     Formation formation =
         Formation.selectOne(ctx.getLeague(), SelectionCriteria.create(forced, available), scorer);
