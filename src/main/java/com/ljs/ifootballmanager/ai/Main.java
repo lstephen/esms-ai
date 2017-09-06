@@ -106,7 +106,7 @@ public class Main {
 
     ctx.setFirstXI(FirstXI.select(ctx));
 
-    Set<Player> allFirstXI = ctx.getFirstXI().getPlayers().collect(Collectors.toSet());
+    Set<Player> allFirstXI = ctx.getFirstXI().getPlayers();
 
     Formation bestXI = ctx.getFirstXI().best();
 

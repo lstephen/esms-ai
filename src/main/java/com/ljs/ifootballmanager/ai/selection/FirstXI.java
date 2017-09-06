@@ -7,6 +7,8 @@ import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.player.Player;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class FirstXI {
@@ -33,8 +35,12 @@ public final class FirstXI {
     return getFormations().map(Formation::getTactic);
   }
 
-  public Stream<Player> getPlayers() {
-    return getFormations().flatMap(f -> f.players().stream());
+  public Set<Player> getPlayers() {
+    return getFormations()
+      .flatMap(f -> f.players().stream())
+      .distinct()
+      .filter(p -> getFormations().filter(f -> f.contains(p)).count() >= 2)
+      .collect(Collectors.toSet());
   }
 
   public static FirstXI select(Context ctx) {
