@@ -213,6 +213,10 @@ public final class Player {
     return ratings;
   }
 
+  public Ratings getAbilities() {
+    return abilities;
+  }
+
   public Double getRating(Role r, Tactic t) {
     return evaluate(r, t).getRating();
   }

@@ -26,6 +26,14 @@ public final class NowValue {
     this.tactic = t;
   }
 
+  public Role getRole() {
+    return role;
+  }
+
+  public Tactic getTactic() {
+    return tactic;
+  }
+
   private Double getAbility() {
     return player.evaluate(role, tactic).getRating();
   }
