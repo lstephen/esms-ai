@@ -26,6 +26,14 @@ public final class NowValue {
     this.tactic = t;
   }
 
+  public Context getContext() {
+    return ctx;
+  }
+
+  public Player getPlayer() {
+    return player;
+  }
+
   public Role getRole() {
     return role;
   }
