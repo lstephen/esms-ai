@@ -46,7 +46,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /** Hello world! */
 public class Main {
@@ -251,8 +250,10 @@ public class Main {
     Iterables.addAll(seniorsForced, league.getForcedPlay());
 
     for (Player p : squad.forSelection(league)) {
-      Integer vsAvg = Maths.round(
-          NowValue.bestVsReplacement(ctx, p).getScore() - sba.getAverageForComparison(p.getAge()));
+      Integer vsAvg =
+          Maths.round(
+              NowValue.bestVsReplacement(ctx, p).getScore()
+                  - sba.getAverageForComparison(p.getAge()));
 
       if (vsAvg > 0 && !p.isGk()) {
         seniorsForced.add(p.getName());
@@ -277,8 +278,10 @@ public class Main {
       Iterables.addAll(forced, league.getForcedPlay());
 
       for (Player p : squad.forReservesSelection(league)) {
-        Integer vsAvg = Maths.round(
-            NowValue.bestVsReplacement(ctx, p).getScore() - sba.getAverageForComparison(p.getAge()));
+        Integer vsAvg =
+            Maths.round(
+                NowValue.bestVsReplacement(ctx, p).getScore()
+                    - sba.getAverageForComparison(p.getAge()));
 
         if (vsAvg > 0 && !p.isGk()) {
           forced.add(p.getName());
