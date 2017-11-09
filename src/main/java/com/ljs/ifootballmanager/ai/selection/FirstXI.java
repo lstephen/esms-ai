@@ -13,9 +13,12 @@ import java.util.stream.Stream;
 
 public final class FirstXI {
 
+  private final Context ctx;
+
   private final ImmutableList<Formation> formations;
 
-  private FirstXI(ImmutableList<Formation> formations) {
+  private FirstXI(Context ctx, ImmutableList<Formation> formations) {
+    this.ctx = ctx;
     this.formations = formations;
   }
 
@@ -37,14 +40,17 @@ public final class FirstXI {
 
   public Set<Player> getPlayers() {
     return getFormations()
-      .flatMap(f -> f.players().stream())
-      .distinct()
-      .filter(p -> getFormations().filter(f -> f.contains(p)).count() >= 2)
-      .collect(Collectors.toSet());
+        .flatMap(f -> f.players().stream())
+        .distinct()
+        .filter(
+            p ->
+                getFormations().filter(f -> f.contains(p)).count()
+                    >= (ctx.getLeague().isReserveEligible(p) ? 4 : 2))
+        .collect(Collectors.toSet());
   }
 
   public static FirstXI select(Context ctx) {
     return new FirstXI(
-        Formation.select(ctx.getLeague(), ctx.getSquad().players(), DefaultScorer.get()));
+        ctx, Formation.select(ctx.getLeague(), ctx.getSquad().players(), DefaultScorer.get()));
   }
 }
