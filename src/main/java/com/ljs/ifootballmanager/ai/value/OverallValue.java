@@ -13,16 +13,20 @@ public final class OverallValue implements Value {
   }
 
   public Double getValue(Player p) {
-    Double now = NowValue.bestVsReplacement(ctx, p).getScore();
-    //Double future =
-    //    NowValue.bestVsReplacement(ctx, ctx.getLeague().getPlayerPotential().atPotential(p))
-    //        .getScore();
+    NowValue now = NowValue.bestVsReplacement(ctx, p);
 
-    Double vsAge = now - ctx.getSkillByAge().getAverageForComparison(p.getAge());
     Double ageValue = ctx.getLeague().getAgeValue().getValue(p);
 
-    return now + vsAge + ageValue;
+    return now.getScore() + OverallValue.getAbilities(now) + OverallValue.getVsAge(now) + ageValue;
     //return Math.max(now, future) + ageValue;
+  }
+
+  public static double getVsAge(NowValue now) {
+    return now.getScore() - now.getContext().getSkillByAge().getAverageForComparison(now.getPlayer().getAge());
+  }
+
+  public static double getAbilities(NowValue now) {
+    return Evaluator.create(now.getPlayer().getAbilities()).evaluate(now.getRole(), now.getTactic()).getRating() / 1000.0;
   }
 
   public static OverallValue create(Context ctx) {
