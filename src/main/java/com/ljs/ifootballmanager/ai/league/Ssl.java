@@ -84,10 +84,6 @@ public class Ssl implements League {
     return SslValue.create().getAgeValue();
   }
 
-  public Potential getPlayerPotential() {
-    return SslPotential.create();
-  }
-
   public Optional<InfoValue> getInfoValue() {
     return Optional.<InfoValue>of(SslInfoValue.get());
   }

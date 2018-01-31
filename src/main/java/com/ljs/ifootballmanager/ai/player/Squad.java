@@ -18,7 +18,6 @@ import com.ljs.ifootballmanager.ai.Config;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.league.League;
-import com.ljs.ifootballmanager.ai.league.Ucfl;
 import com.ljs.ifootballmanager.ai.rating.Ratings;
 import java.io.File;
 import java.io.IOException;
@@ -229,32 +228,19 @@ public final class Squad {
 
       p.setAggression(Integer.parseInt(split[7]));
 
-      if (league.getClass().equals(Ucfl.class)) {
-        if (split.length > 14) {
-          if (!split[13].equals("0")) {
-            p.injured();
-          }
 
-          if (!split[14].equals("0")) {
-            p.suspended();
-          }
-        }
+      if (split.length > 12) {
+        p.setGames(Integer.parseInt(split[12]));
+      }
+      if (split.length > 24 && !split[24].equals("0")) {
+        p.injured();
+      }
+      if (split.length > 25 && !split[25].equals("0")) {
+        p.suspended();
+      }
 
-      } else {
-
-        if (split.length > 12) {
-          p.setGames(Integer.parseInt(split[12]));
-        }
-        if (split.length > 24 && !split[24].equals("0")) {
-          p.injured();
-        }
-        if (split.length > 25 && !split[25].equals("0")) {
-          p.suspended();
-        }
-
-        if (split.length > 26) {
-          p.setFitness(Integer.parseInt(split[26]));
-        }
+      if (split.length > 26) {
+        p.setFitness(Integer.parseInt(split[26]));
       }
 
       p.setComment(StringUtils.substringAfter(line, "#"));
