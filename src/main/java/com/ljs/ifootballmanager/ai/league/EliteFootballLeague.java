@@ -60,10 +60,6 @@ public final class EliteFootballLeague implements League {
     return EflValue.create().getAgeValue();
   }
 
-  public Potential getPlayerPotential() {
-    return EflPotential.create();
-  }
-
   public Optional<Double> getSeniorSkillsCap() {
     return Optional.absent();
   }
