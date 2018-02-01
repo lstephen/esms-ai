@@ -19,7 +19,6 @@ import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
-import com.ljs.ifootballmanager.ai.league.Esl;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
@@ -63,7 +62,7 @@ public final class ChangePlan implements Report {
     this.afterMinutes = Maps.newHashMap(afterMinutes);
 
     isAllowChangePos =
-        !(LeagueHolder.get() instanceof EliteFootballLeague || LeagueHolder.get() instanceof Esl);
+        !(LeagueHolder.get() instanceof EliteFootballLeague);
   }
 
   private ImmutableList<Change> changes() {
