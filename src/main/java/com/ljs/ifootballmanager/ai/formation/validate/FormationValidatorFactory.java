@@ -18,31 +18,6 @@ public final class FormationValidatorFactory {
         .build();
   }
 
-  public static FormationValidator ucfl() {
-    return CountingFormationValidator.builder()
-        .exactly(1, Role.GK)
-        .range(3, 5, Role.DF)
-        .range(2, 6, Role.DM, Role.MF, Role.AM)
-        .max(3, Role.DM)
-        .max(3, Role.AM)
-        .max(5, Role.MF)
-        .range(1, 4, Role.FW)
-        .build();
-  }
-
-  public static FormationValidator jusCup() {
-    return ssl();
-  }
-
-  public static FormationValidator jafl() {
-    return CountingFormationValidator.builder()
-        .exactly(1, Role.GK)
-        .range(3, 5, Role.DF)
-        .range(2, 5, Role.DM, Role.MF, Role.AM)
-        .range(1, 5, Role.FW)
-        .build();
-  }
-
   public static FormationValidator efl() {
     return CountingFormationValidator.builder()
         .exactly(1, Role.GK)
@@ -54,14 +29,15 @@ public final class FormationValidatorFactory {
         .build();
   }
 
-  public static FormationValidator esl() {
+  public static FormationValidator ffo() {
     return CountingFormationValidator.builder()
         .exactly(1, Role.GK)
         .range(3, 5, Role.DF)
-        .range(2, 6, Role.DM, Role.MF, Role.AM)
-        .max(3, Role.DM)
+        .range(1, 6, Role.DM, Role.MF, Role.AM)
+        .max(2, Role.DM)
+        .max(5, Role.MF)
         .max(3, Role.AM)
-        .range(1, 4, Role.FW)
+        .range(0, 4, Role.FW)
         .build();
   }
 }

@@ -17,6 +17,7 @@ import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
 import com.ljs.ifootballmanager.ai.formation.score.DefaultScorer;
 import com.ljs.ifootballmanager.ai.formation.score.FormationScorer;
 import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
+import com.ljs.ifootballmanager.ai.league.Ffo;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.league.Ssl;
@@ -51,6 +52,7 @@ public class Main {
   private static final ImmutableMap<String, League> SITES =
       ImmutableMap.<String, League>builder()
           .put("EFL_TTH", EliteFootballLeague.create())
+          .put("FFO_CSK", Ffo.create())
           //.put("IFM_LIV", IFootballManager.create("liv"))
           //.put("IFM_ NOR", IFootballManager.create("nor"))
           //.put("IFM - DER", IFootballManager.create("der"))

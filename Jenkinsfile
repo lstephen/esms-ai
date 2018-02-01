@@ -5,7 +5,7 @@ properties(
   , [$class: 'GithubProjectProperty', projectUrlStr: 'http://github.com/lstephen/esms-ai']
   , [$class: 'ParametersDefinitionProperty',
       parameterDefinitions:
-      [ [$class: 'ChoiceParameterDefinition', name: 'ESMSAI_SITE', choices: "NONE\nEFL_TTH\nESL_WAT\nSSL_MIS\nUCFL_GLI"]
+      [ [$class: 'ChoiceParameterDefinition', name: 'ESMSAI_SITE', choices: "NONE\nEFL_TTH\nFFO_CSK\nSSL_MIS"]
       ]
     ]
   ])
