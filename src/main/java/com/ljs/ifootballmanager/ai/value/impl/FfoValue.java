@@ -11,7 +11,7 @@ public class FfoValue implements Value {
   public Double getValue(Player p) {
     Double base = getPotential(p);
 
-    return base * getAgingFactor(p.getAge());
+    return base * getAgingFactor(p.getAge()) + getPeakYearsValue(p);
   }
 
   public Value getAgeValue() {
@@ -19,18 +19,18 @@ public class FfoValue implements Value {
   }
 
   private Double getAgingFactor(Integer age) {
-    return 1.0 - ((double) Math.pow(Math.max(0, age - 29), 2) * 2 / 100);
+    return 1.0 - (Math.pow(Math.max(0, age - 29), 2) * 2 / 100);
   }
 
   private Integer getPeakYearsValue(Player p) {
     return Math.min(29 - p.getAge(), 7);
   }
 
-  public static EslValue create() {
-    return new EslValue();
+  public static FfoValue create() {
+    return new FfoValue();
   }
 
   private Double getPotential(Player p) {
-    return EslPotential.create().atPotential(p).getOverall().getRating();
+    return SslPotential.create().atPotential(p).getOverall().getRating();
   }
 }

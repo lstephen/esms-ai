@@ -10,8 +10,7 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
-import com.ljs.ifootballmanager.ai.value.impl.EslPotential;
-import com.ljs.ifootballmanager.ai.value.impl.EslValue;
+import com.ljs.ifootballmanager.ai.value.impl.FfoValue;
 
 /** @author lstephen */
 public final class Ffo implements League {
@@ -58,10 +57,6 @@ public final class Ffo implements League {
     return FfoValue.create().getAgeValue();
   }
 
-  public Potential getPlayerPotential() {
-    return FfoPotential.create();
-  }
-
   public Optional<Double> getSeniorSkillsCap() {
     return Optional.absent();
   }
@@ -70,7 +65,7 @@ public final class Ffo implements League {
     return Optional.absent();
   }
 
-  public static Esl create() {
-    return new Esl();
+  public static Ffo create() {
+    return new Ffo();
   }
 }
