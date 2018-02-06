@@ -38,7 +38,7 @@ public final class Ffo implements League {
   }
 
   public Iterable<String> getAdditionalPlayerFiles() {
-    return ImmutableList.of();
+    return ImmutableList.of("/for_transfer.txt");
   }
 
   public Weightings getWeightings() {
