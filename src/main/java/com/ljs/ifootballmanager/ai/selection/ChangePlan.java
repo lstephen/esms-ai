@@ -365,6 +365,11 @@ public final class ChangePlan implements Report {
           actions.addAll(SequencedAction.merged(removes, adds).collect(Collectors.toList()));
 
           actions.addAll(combines(cp));
+
+          // To avoid timeout on Travis for no stdout
+          if (Math.random() < 0.05) {
+            System.out.print(".");
+          }
         }
 
         return actions.stream();
