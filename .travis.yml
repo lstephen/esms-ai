@@ -1,0 +1,41 @@
+sudo: required
+
+language: generic
+
+cache:
+  directories:
+    - .m2
+    - esms-ai-data
+
+env:
+  global:
+    - secure: "aaGgZn+lRvsEbW9lkuzdQv0+fptyXF78liBmXZHXAkVwZ1XMFedgrry/WPMX7GSZ+nrO8V8sjHv3HfQU8VR1wgJBWDYCIBPV5se5UwuCNguHGiHcHBQEjQ393Q3fDe8fQ58qcrlbH/oVDAveUg5jmNDbL7pPEInaOfQcKnmRigGo2oI43rwEh/PsOe4xXxXYa7YA56lBUFeSOT2+UboH7UUcJ54Uo1PN9LcdoBmGhe2t4Tw+A/4i6ETcml99Esxw8T3cbAuVJK39k0HzjOMPYDzSNP79A6X9Q0sKyk8uiN0+xlBc9eUSA04et/6iUKXpyOdVp8WVFWAx2wfjt474mYNKbq0Si0FifO0w0ZHIh9+VftYMkPgBjfPrX/aaADwBl20pfRimW05Kq2phtEPgZ/xC3GnytuKpTE46oGYTVAX1m1fWl2ihMKgJemLkDajJ+U7JS2N1ts4gML0Myw22/DyWChgtAVVIFy130Ortgq8P6JZ+bHbfFT2cmyvvdiB0Vwp2HDexJ2Sjqo9xgk/zOP0lJG52bn3ROe9Qqx7/i8jXaUFAwmvbnFyS5lXW4vKoes5C7HpFfZfvULQ6dFvpi3zwm5IWZd8YRrHC/ciILqjq/uxCw5gozsBH5xwDOjSdaIEl9ZRmiIxHYGRrF8rgtUICzzfLlS1z7AmQWgyOZkM="
+    
+
+services:
+- docker
+
+before_install:
+- pip install --user construi
+
+
+stages:
+- build
+- name: run
+  if: branch = master AND NOT type = pull_request
+
+jobs:
+  include:
+    - stage: build
+      script: construi build
+    - stage: run
+      env:
+        - ESMSAI_SITE=EFL_TTH
+      script: construi run
+    - env:
+        - ESMSAI_SITE=FFO_CSK
+      script: construi run
+    - env:
+        - ESMSAI_SITE=SSL_MIS
+      script: construi run
+
