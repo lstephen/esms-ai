@@ -30,12 +30,12 @@ jobs:
       script: construi build
     - stage: run
       env:
-        - ESMAI_SITE=EFL_TTH
+        - ESMSAI_SITE=EFL_TTH
       script: construi run
     - env:
-        - ESMAI_SITE=FFO_CSK
+        - ESMSAI_SITE=FFO_CSK
       script: construi run
     - env:
-        - ESMAI_SITE=SSL_MIS
+        - ESMSAI_SITE=SSL_MIS
       script: construi run
 
