@@ -26,6 +26,7 @@ targets:
     environment:
       - ESMSAI_SITE
       - ESMSAI_DATA=/var/esms-ai-data
+      - GITHUB_TOKEN
       - SKIP_GIT_SYNC
     run: /bin/bash construi/run/run.sh
 
