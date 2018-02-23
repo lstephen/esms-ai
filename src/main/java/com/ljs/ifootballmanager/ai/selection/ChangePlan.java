@@ -369,6 +369,7 @@ public final class ChangePlan implements Report {
           // To avoid timeout on Travis for no stdout
           if (Math.random() < 0.05) {
             System.out.print(".");
+            System.out.flush();
           }
         }
 
