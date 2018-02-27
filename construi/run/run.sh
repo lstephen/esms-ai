@@ -31,10 +31,12 @@ then
   [[ -n "$GIT_AUTHOR_NAME" ]] && git config user.name $GIT_AUTHOR_NAME
   [[ -n "$GIT_AUTHOR_EMAIL" ]] && git config user.email $GIT_AUTHOR_EMAIL
 
-  git add --all
-  git commit -m "$(date)"
-  git pull --rebase
-  git push origin master
+  if [[ $(git status --porcelain) ]]; then
+    git add --all
+    git commit -m "$(date)"
+    git pull --rebase
+    git push origin master
+  fi
 fi
 
 echo "Done."
