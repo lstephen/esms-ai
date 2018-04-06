@@ -21,7 +21,7 @@ public final class FormationValidatorFactory {
   public static FormationValidator efl() {
     return CountingFormationValidator.builder()
         .exactly(1, Role.GK)
-        .range(3, 6, Role.DF)
+        .range(3, 5, Role.DF)
         .range(2, 6, Role.DM, Role.MF, Role.AM)
         .max(3, Role.DM)
         .max(3, Role.AM)
