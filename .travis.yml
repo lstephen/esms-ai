@@ -33,9 +33,6 @@ jobs:
         - ESMSAI_SITE=EFL_TTH
       script: construi run
     - env:
-        - ESMSAI_SITE=FFO_CSK
-      script: construi run
-    - env:
         - ESMSAI_SITE=SSL_MIS
       script: construi run
 
