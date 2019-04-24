@@ -123,7 +123,7 @@ public class Main {
     Set<Player> remaining =
         Sets.newHashSet(
             Sets.difference(
-                ImmutableSet.copyOf(squad.players()), ImmutableSet.copyOf(bestXI.players())));
+                ImmutableSet.copyOf(squad.players()), allFirstXI));
 
     Set<Player> reservesSquad = Sets.newHashSet();
     Formation reservesXI = null;
