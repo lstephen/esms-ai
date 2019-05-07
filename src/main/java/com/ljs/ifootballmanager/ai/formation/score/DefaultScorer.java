@@ -52,7 +52,7 @@ public final class DefaultScorer implements FormationScorer {
 
     DescriptiveStatistics shots = buildShotQualityStatistics(f, tactic);
 
-    double base = (shots.getMean() + shots.getPercentile(50) + shots.getMax() * 3) / 5.0;
+    double base = (shots.getMean() + shots.getPercentile(50) * 3.0 + shots.getMax() * 6.0) / 10.0;
 
     return avg < 1.0 ? base : (a / avg * base);
   }
