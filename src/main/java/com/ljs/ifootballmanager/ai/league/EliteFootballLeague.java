@@ -49,10 +49,6 @@ public final class EliteFootballLeague implements League {
   }
 
   public Boolean isReserveEligible(Player p) {
-    if (p.getAge() < 22) {
-      return p.getMaximumSkill() < 22.5 || (p.isGk() && p.getMaximumSkill() < 26.5);
-    }
-
     return p.getMaximumSkill() < 24.5 || (p.isGk() && p.getMaximumSkill() < 28.5);
   }
 
