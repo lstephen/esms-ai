@@ -25,6 +25,7 @@ import com.ljs.ifootballmanager.ai.math.Maths;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
 import com.ljs.ifootballmanager.ai.player.SquadHolder;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.report.ReplacementLevelReport;
 import com.ljs.ifootballmanager.ai.report.Report;
 import com.ljs.ifootballmanager.ai.report.Reports;
@@ -44,6 +45,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /** Hello world! */
@@ -314,16 +317,20 @@ public class Main {
       FormationScorer scorer)
       throws IOException {
 
-    Set<Player> forced = Sets.newHashSet();
+    Map<Rating, Player> forcedByRating = new HashMap<>();
 
-    for (Player p : Player.byValue(OverallValue.create(ctx)).reverse().sortedCopy(available)) {
+    // Loop from worst to best, so that we overwrite worse players with better players
+    // as we add them to the map
+    for (Player p : Player.byValue(OverallValue.create(ctx)).sortedCopy(available)) {
       Boolean isForced = Iterables.contains(forcedPlay, p.getName());
       Boolean isFullFitness = SquadHolder.get().findPlayer(p.getName()).isFullFitness();
 
-      if (isForced && isFullFitness && forced.size() < 5) {
-        forced.add(p);
+      if (isForced && isFullFitness) {
+        forcedByRating.put(p.getPrimarySkill(), p);
       }
     }
+
+    Set<Player> forced = Sets.newHashSet(forcedByRating.values());
 
     System.out.print("Forced:");
     w.print("Forced:");
