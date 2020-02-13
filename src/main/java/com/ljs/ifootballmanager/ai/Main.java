@@ -297,7 +297,7 @@ public class Main {
           ctx,
           "Reserves Selection",
           league.getReserveTeam().get(),
-          squad.forReservesSelection(league),
+          Iterables.filter(squad.forReservesSelection(league), p -> p.getFitness() >= 90),
           forced,
           rsheet,
           DefaultScorer.get());
