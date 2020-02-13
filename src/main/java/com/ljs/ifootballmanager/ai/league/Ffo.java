@@ -8,7 +8,6 @@ import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidator;
 import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
-import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
 import com.ljs.ifootballmanager.ai.value.impl.FfoValue;
 

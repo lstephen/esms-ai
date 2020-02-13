@@ -11,9 +11,7 @@ import com.ljs.ifootballmanager.ai.info.SslInfoValue;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.rating.weighting.WeightingsFactory;
-import com.ljs.ifootballmanager.ai.value.Potential;
 import com.ljs.ifootballmanager.ai.value.Value;
-import com.ljs.ifootballmanager.ai.value.impl.SslPotential;
 import com.ljs.ifootballmanager.ai.value.impl.SslValue;
 
 /** @author lstephen */

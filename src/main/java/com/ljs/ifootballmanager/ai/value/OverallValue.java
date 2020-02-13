@@ -22,11 +22,15 @@ public final class OverallValue implements Value {
   }
 
   public static double getVsAge(NowValue now) {
-    return now.getScore() - now.getContext().getSkillByAge().getAverageForComparison(now.getPlayer().getAge());
+    return now.getScore()
+        - now.getContext().getSkillByAge().getAverageForComparison(now.getPlayer().getAge());
   }
 
   public static double getAbilities(NowValue now) {
-    return Evaluator.create(now.getPlayer().getAbilities()).evaluate(now.getRole(), now.getTactic()).getRating() / 1000.0;
+    return Evaluator.create(now.getPlayer().getAbilities())
+            .evaluate(now.getRole(), now.getTactic())
+            .getRating()
+        / 1000.0;
   }
 
   public static OverallValue create(Context ctx) {
