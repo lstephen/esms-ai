@@ -124,9 +124,7 @@ public class Main {
     ctx.getFirstXI().getFormations().forEach(f -> print(w, "1st XI", f));
 
     Set<Player> remaining =
-        Sets.newHashSet(
-            Sets.difference(
-                ImmutableSet.copyOf(squad.players()), allFirstXI));
+        Sets.newHashSet(Sets.difference(ImmutableSet.copyOf(squad.players()), allFirstXI));
 
     Set<Player> reservesSquad = Sets.newHashSet();
     Formation reservesXI = null;
@@ -297,7 +295,9 @@ public class Main {
           ctx,
           "Reserves Selection",
           league.getReserveTeam().get(),
-          Iterables.filter(squad.forReservesSelection(league), p -> p.getFitness() >= 90),
+          Iterables.filter(
+              squad.forReservesSelection(league),
+              p -> squad.findPlayer(p.getName()).getFitness() >= 90),
           forced,
           rsheet,
           DefaultScorer.get());

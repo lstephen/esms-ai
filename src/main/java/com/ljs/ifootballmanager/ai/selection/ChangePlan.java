@@ -61,8 +61,7 @@ public final class ChangePlan implements Report {
     this.scores = Maps.newHashMap(scores);
     this.afterMinutes = Maps.newHashMap(afterMinutes);
 
-    isAllowChangePos =
-        !(LeagueHolder.get() instanceof EliteFootballLeague);
+    isAllowChangePos = !(LeagueHolder.get() instanceof EliteFootballLeague);
   }
 
   private ImmutableList<Change> changes() {

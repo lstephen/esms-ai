@@ -228,7 +228,6 @@ public final class Squad {
 
       p.setAggression(Integer.parseInt(split[7]));
 
-
       if (split.length > 12) {
         p.setGames(Integer.parseInt(split[12]));
       }
