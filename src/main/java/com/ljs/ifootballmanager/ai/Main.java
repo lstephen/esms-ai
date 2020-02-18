@@ -45,7 +45,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -318,6 +320,7 @@ public class Main {
       throws IOException {
 
     Map<Rating, Player> forcedByRating = new HashMap<>();
+    List<Player> forcedByOverall = new ArrayList<>();
 
     // Loop from worst to best, so that we overwrite worse players with better players
     // as we add them to the map
@@ -327,10 +330,13 @@ public class Main {
 
       if (isForced && isFullFitness) {
         forcedByRating.put(p.getPrimarySkill(), p);
+        forcedByOverall.add(p);
       }
     }
 
     Set<Player> forced = Sets.newHashSet(forcedByRating.values());
+    forcedByOverall.removeAll(forced);
+    forced.add(forcedByOverall.get(forcedByOverall.size() - 1));
 
     System.out.print("Forced:");
     w.print("Forced:");
