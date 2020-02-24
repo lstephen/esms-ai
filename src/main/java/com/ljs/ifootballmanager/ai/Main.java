@@ -336,7 +336,10 @@ public class Main {
 
     Set<Player> forced = Sets.newHashSet(forcedByRating.values());
     forcedByOverall.removeAll(forced);
-    forced.add(forcedByOverall.get(forcedByOverall.size() - 1));
+
+    if (!forcedByOverall.isEmpty()) {
+      forced.add(forcedByOverall.get(forcedByOverall.size() - 1));
+    }
 
     System.out.print("Forced:");
     w.print("Forced:");
