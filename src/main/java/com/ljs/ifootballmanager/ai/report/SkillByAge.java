@@ -54,7 +54,8 @@ public class SkillByAge implements Report {
 
     double result = 0.0;
     for (int a = getMinAge(); a <= age; a++) {
-      double current = getThreeYearAverage(a).orElseGet(() -> getAvgNowValue(age).orElse(0.0));
+      double now = getAvgNowValue(a).orElse(0.0);
+      double current = getThreeYearAverage(a).orElse(now);
 
       result = Math.max(current, result);
     }
