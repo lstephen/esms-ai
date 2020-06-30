@@ -44,7 +44,7 @@ public class SkillByAge implements Report {
         .average();
   }
 
-  public Double getAverageForComparison(int age) {
+  public double getAverageForComparison(int age) {
     if (age < getMinAge()) {
       return getAverageForComparison(getMinAge());
     }
@@ -52,7 +52,14 @@ public class SkillByAge implements Report {
       return getAverageForComparison(getMaxAge());
     }
 
-    return getThreeYearAverage(age).orElseGet(() -> getAvgNowValue(age).orElse(0.0));
+    double result = 0.0;
+    for (int a = getMinAge(); a <= age; a++) {
+      double current = getThreeYearAverage(a).orElseGet(() -> getAvgNowValue(age).orElse(0.0));
+
+      result = Math.max(current, result);
+    }
+
+    return result;
   }
 
   public void print(PrintWriter w) {
@@ -72,6 +79,13 @@ public class SkillByAge implements Report {
     for (int age = getMinAge(); age <= getMaxAge(); age++) {
       OptionalDouble avg = getThreeYearAverage(age);
       w.format("%3s", avg.isPresent() ? String.format("%3d", Math.round(avg.getAsDouble())) : "");
+    }
+
+    w.println();
+
+    for (int age = getMinAge(); age <= getMaxAge(); age++) {
+      double avg = getAverageForComparison(age);
+      w.format("%3s", String.format("%3d", Math.round(avg)));
     }
 
     w.println();
