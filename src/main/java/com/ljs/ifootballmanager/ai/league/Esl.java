@@ -9,15 +9,15 @@ import com.ljs.ifootballmanager.ai.formation.validate.PlayerValidatorFactory;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.rating.Weightings;
 import com.ljs.ifootballmanager.ai.value.Value;
-import com.ljs.ifootballmanager.ai.value.impl.FfoValue;
+import com.ljs.ifootballmanager.ai.value.impl.EslValue;
 
 /** @author lstephen */
-public final class Ffo implements League {
+public final class Esl implements League {
 
-  private Ffo() {}
+  private Esl() {}
 
   public String getTeam() {
-    return "csk";
+    return "wba";
   }
 
   public Optional<String> getReserveTeam() {
@@ -25,35 +25,37 @@ public final class Ffo implements League {
   }
 
   public Iterable<String> getForcedPlay() {
-    return ImmutableList.of("G_Jesus");
+    return ImmutableList.of();
+    //return ImmutableList.of("R_Liverani", "G_Bengescu", "P_Singh", "J_Wallis");
   }
 
   public FormationValidator getFormationValidator() {
-    return FormationValidatorFactory.ffo();
+    return FormationValidatorFactory.esl();
   }
 
   public PlayerValidator getPlayerValidator() {
     return PlayerValidatorFactory.anyRole();
+    //return PlayerValidatorFactory.inPrimaryRole();
   }
 
   public Iterable<String> getAdditionalPlayerFiles() {
-    return ImmutableList.of("/for_transfer.txt");
+    return ImmutableList.of("/for_auction.txt");
   }
 
   public Weightings getWeightings() {
-    return com.ljs.ifootballmanager.ai.rating.weighting.Ffo.get();
+    return com.ljs.ifootballmanager.ai.rating.weighting.Esl.get();
   }
 
   public Boolean isReserveEligible(Player p) {
-    return Boolean.FALSE;
+    return false;
   }
 
   public Value getPlayerValue() {
-    return FfoValue.create();
+    return EslValue.create();
   }
 
   public Value getAgeValue() {
-    return FfoValue.create().getAgeValue();
+    return EslValue.create().getAgeValue();
   }
 
   public Optional<Double> getSeniorSkillsCap() {
@@ -64,7 +66,7 @@ public final class Ffo implements League {
     return Optional.absent();
   }
 
-  public static Ffo create() {
-    return new Ffo();
+  public static Esl create() {
+    return new Esl();
   }
 }

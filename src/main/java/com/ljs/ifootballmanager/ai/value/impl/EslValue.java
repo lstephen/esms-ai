@@ -6,12 +6,14 @@ import com.ljs.ifootballmanager.ai.value.Value;
 /** @author lstephen */
 public class EslValue implements Value {
 
-  private EslValue() {}
+  public static EslValue create() {
+    return new EslValue();
+  }
 
   public Double getValue(Player p) {
-    Double base = getPotential(p);
+    Double base = p.getOverall().getRating();
 
-    return base * getAgingFactor(p.getAge());
+    return base * getAgingFactor(p.getAge()) + getPeakYearsValue(p);
   }
 
   public Value getAgeValue() {
@@ -19,18 +21,11 @@ public class EslValue implements Value {
   }
 
   private Double getAgingFactor(Integer age) {
-    return 1.0 - ((double) Math.pow(Math.max(0, age - 29), 2) * 2 / 100);
+    return 1.0 - (Math.pow(Math.max(0, age - 29), 2) * 2 / 100);
   }
 
   private Integer getPeakYearsValue(Player p) {
     return Math.min(29 - p.getAge(), 7);
   }
 
-  public static EslValue create() {
-    return new EslValue();
-  }
-
-  private Double getPotential(Player p) {
-    return EslPotential.create().atPotential(p).getOverall().getRating();
-  }
 }

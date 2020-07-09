@@ -35,4 +35,7 @@ jobs:
     - env:
         - ESMSAI_SITE=SSL_MIS
       script: construi run
+    - env:
+        - ESMSAI_SITE=ESL_WBA
+      script: construi run
 
