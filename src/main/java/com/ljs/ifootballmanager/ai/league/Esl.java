@@ -66,6 +66,11 @@ public final class Esl implements League {
     return Optional.absent();
   }
 
+  @Override
+  public boolean isAllowedChangePos() {
+    return false;
+  }
+
   public static Esl create() {
     return new Esl();
   }

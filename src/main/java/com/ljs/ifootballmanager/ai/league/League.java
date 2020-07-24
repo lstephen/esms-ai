@@ -33,4 +33,8 @@ public interface League {
   Optional<Double> getSeniorSkillsCap();
 
   Optional<Double> getYouthSkillsCap();
+
+  default boolean isAllowedChangePos() {
+    return true;
+  }
 }

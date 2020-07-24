@@ -66,6 +66,11 @@ public final class EliteFootballLeague implements League {
     return Optional.absent();
   }
 
+  @Override
+  public boolean isAllowedChangePos() {
+    return false;
+  }
+
   public static EliteFootballLeague create() {
     return new EliteFootballLeague();
   }
