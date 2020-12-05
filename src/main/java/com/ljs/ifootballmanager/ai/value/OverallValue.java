@@ -18,7 +18,7 @@ public final class OverallValue implements Value {
     Double ageValue = ctx.getLeague().getAgeValue().getValue(p);
 
     return now.getScore() + OverallValue.getAbilities(now) + OverallValue.getVsAge(now) + ageValue;
-    //return Math.max(now, future) + ageValue;
+    // return Math.max(now, future) + ageValue;
   }
 
   public static double getVsAge(NowValue now) {

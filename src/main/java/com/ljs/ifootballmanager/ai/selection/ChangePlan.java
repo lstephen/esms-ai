@@ -18,7 +18,6 @@ import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.formation.SelectionCriteria;
-import com.ljs.ifootballmanager.ai.league.EliteFootballLeague;
 import com.ljs.ifootballmanager.ai.league.League;
 import com.ljs.ifootballmanager.ai.league.LeagueHolder;
 import com.ljs.ifootballmanager.ai.player.Player;
@@ -382,9 +381,7 @@ public final class ChangePlan implements Report {
       private Set<Player> getBestSubstitutes(ChangePlan cp) {
         Formation f = cp.getFormationAt(0);
 
-        return criteria
-            .getAll()
-            .stream()
+        return criteria.getAll().stream()
             .filter(p -> !f.contains(p))
             .sorted(Ordering.natural().onResultOf((Player p) -> getValue(p)).reverse())
             .limit(5)

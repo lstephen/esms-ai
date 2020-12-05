@@ -27,5 +27,4 @@ public class EslValue implements Value {
   private Integer getPeakYearsValue(Player p) {
     return Math.min(29 - p.getAge(), 7);
   }
-
 }

@@ -338,8 +338,7 @@ public final class Formation implements Report {
     return Ordering.natural()
         .onResultOf(
             (Formation f) ->
-                f.players()
-                    .stream()
+                f.players().stream()
                     .flatMap(
                         p ->
                             Arrays.stream(Rating.values())
