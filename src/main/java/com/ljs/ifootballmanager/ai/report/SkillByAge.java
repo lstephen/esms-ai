@@ -23,9 +23,7 @@ public class SkillByAge implements Report {
   }
 
   private OptionalDouble getAvgNowValue(int age) {
-    return ctx.getSquad()
-        .players()
-        .stream()
+    return ctx.getSquad().players().stream()
         .filter(p -> p.getAge() == age)
         .mapToDouble(p -> NowValue.bestVsReplacement(ctx, p).getScore())
         .average();
@@ -36,9 +34,7 @@ public class SkillByAge implements Report {
       return OptionalDouble.empty();
     }
 
-    return ctx.getSquad()
-        .players()
-        .stream()
+    return ctx.getSquad().players().stream()
         .filter(p -> p.getAge() >= age - 1 && p.getAge() <= age + 1)
         .mapToDouble(p -> NowValue.bestVsReplacement(ctx, p).getScore())
         .average();

@@ -45,5 +45,5 @@ targets:
     environment:
       - GOOGLE_JAVA_FORMAT_JAR=target/google-java-format-all-deps.jar
     run:
-      - /bin/bash -c '[[ -e "$GOOGLE_JAVA_FORMAT_JAR" ]] || curl -sSL https://github.com/google/google-java-format/releases/download/google-java-format-1.8/google-java-format-1.8-all-deps.jar -o $GOOGLE_JAVA_FORMAT_JAR'
+      - /bin/bash -c '[[ -e "$GOOGLE_JAVA_FORMAT_JAR" ]] || curl -sSL https://github.com/google/google-java-format/releases/download/google-java-format-1.9/google-java-format-1.9-all-deps.jar -o $GOOGLE_JAVA_FORMAT_JAR'
       - /bin/bash -c 'find src -name *.java | xargs java -jar $GOOGLE_JAVA_FORMAT_JAR --replace'

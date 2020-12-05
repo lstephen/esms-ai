@@ -26,7 +26,7 @@ public final class EliteFootballLeague implements League {
 
   public Iterable<String> getForcedPlay() {
     return ImmutableList.of();
-    //return ImmutableList.of("R_Liverani", "G_Bengescu", "P_Singh", "J_Wallis");
+    // return ImmutableList.of("R_Liverani", "G_Bengescu", "P_Singh", "J_Wallis");
   }
 
   public FormationValidator getFormationValidator() {
@@ -35,7 +35,7 @@ public final class EliteFootballLeague implements League {
 
   public PlayerValidator getPlayerValidator() {
     return PlayerValidatorFactory.anyRole();
-    //return PlayerValidatorFactory.inPrimaryRole();
+    // return PlayerValidatorFactory.inPrimaryRole();
   }
 
   public Iterable<String> getAdditionalPlayerFiles() {

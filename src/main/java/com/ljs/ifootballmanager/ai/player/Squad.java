@@ -194,9 +194,9 @@ public final class Squad {
       }
 
       String[] split =
-          Splitter.on(CharMatcher.WHITESPACE)
+          Splitter.on(CharMatcher.whitespace())
               .splitToList(
-                  CharMatcher.WHITESPACE
+                  CharMatcher.whitespace()
                       .collapseFrom(StringUtils.substringBefore(line, "#"), ' ')
                       .trim())
               .toArray(new String[] {});
