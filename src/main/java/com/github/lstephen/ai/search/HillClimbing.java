@@ -16,8 +16,8 @@ import java.util.Optional;
  *       com.github.lstephen.ai.search.action.Action}s that transform the current solution into
  *       another solution.
  *   <li>{@link Validator} - Determines if a given solution is valid. This allows the {@link
- *       ActionGenerator} to provide {@link com.github.lstephen.ai.search.Action}s that may lead to
- *       invalid solutions. Sometimes this is useful for performance reasons.
+ *       ActionGenerator} to provide {@link com.github.lstephen.ai.search.action.Action}s that may
+ *       lead to invalid solutions. Sometimes this is useful for performance reasons.
  * </ul>
  *
  * <p>The {@link Validator} is optional and if not provided it's assumed that all solutions are
