@@ -117,6 +117,8 @@ public class Main {
 
     print(w, sba);
 
+    print(w, writer -> writer.println(ctx.getFirstXI().getTacticWeightings()));
+
     ctx.getFirstXI().getFormations().forEach(f -> print(w, "1st XI", f));
 
     Set<Player> remaining =
@@ -246,9 +248,7 @@ public class Main {
 
     for (Player p : squad.forSelection(league)) {
       Integer vsAvg =
-          Maths.round(
-              NowValue.bestVsReplacement(ctx, p).getScore()
-                  - sba.getAverageForComparison(p.getAge()));
+          Maths.round(NowValue.weightedScore(ctx, p) - sba.getAverageForComparison(p.getAge()));
 
       if (vsAvg > 0 && !p.isGk()) {
         seniorsForced.add(p.getName());
@@ -274,9 +274,7 @@ public class Main {
 
       for (Player p : squad.forReservesSelection(league)) {
         Integer vsAvg =
-            Maths.round(
-                NowValue.bestVsReplacement(ctx, p).getScore()
-                    - sba.getAverageForComparison(p.getAge()));
+            Maths.round(NowValue.weightedScore(ctx, p) - sba.getAverageForComparison(p.getAge()));
 
         if (vsAvg > 0 && !p.isGk()) {
           forced.add(p.getName());

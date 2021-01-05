@@ -73,7 +73,7 @@ public class SquadReport implements Report, WithContext {
 
     ReplacementLevel repl = ReplacementLevelHolder.get();
 
-    w.format("%27s | %20s | %3s %3s      || %3s ||", "", "", "vAg", "Abs", "OVR");
+    w.format("%27s | %20s | %3s %3s %3s      || %3s ||", "", "", "now", "vAg", "Abs", "OVR");
 
     getFirstXI().getTactics().forEach(t -> w.format("%3s   ", t.getCode()));
 
@@ -95,11 +95,13 @@ public class SquadReport implements Report, WithContext {
 
       w.format("%2d %8s ", p.getAge(), skills);
 
-      NowValue now = NowValue.bestVsReplacement(ctx, p);
+      NowValue now = NowValue.bestByWeighted(ctx, p);
 
       w.format("| %20s ", now.format());
-      w.format("| %3d ", Maths.round(OverallValue.getVsAge(now)));
-      w.format(" %1.1f", OverallValue.getAbilities(now));
+      w.format(
+          "| %3d %3d ",
+          Maths.round(NowValue.weightedScore(ctx, p)), Maths.round(OverallValue.getVsAge(ctx, p)));
+      w.format(" %1.1f", OverallValue.getAbilities(ctx, p));
 
       Double ovr = value.getValue(p);
       Double vsRepl = repl.getValueVsReplacement(p);
