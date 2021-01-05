@@ -10,6 +10,7 @@ import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
 import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.player.Squad;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import com.ljs.ifootballmanager.ai.selection.FirstXI;
 import java.util.List;
 
@@ -42,15 +43,20 @@ public class ReplacementLevel {
   }
 
   public Double getReplacementLevel(Role role, Tactic t) {
+    return Player.byRating(role, t).max(getReplacements(t)).getRating(role, t);
+  }
+
+  public Double getReplacementLevel(Rating skill, Tactic t) {
+    return Player.bySkill(skill).max(getReplacements(t)).getSkill(skill);
+  }
+
+  private ImmutableSet getReplacements(Tactic t) {
     Formation f =
         firstXI
             .getFormation(t)
             .orElseThrow(() -> new IllegalStateException("No formation for tactic " + t));
 
-    ImmutableSet<Player> replacements =
-        ImmutableSet.copyOf(Sets.difference(squad.players(), ImmutableSet.copyOf(f.players())));
-
-    return Player.byRating(role, t).max(replacements).getRating(role, t);
+    return ImmutableSet.copyOf(Sets.difference(squad.players(), ImmutableSet.copyOf(f.players())));
   }
 
   public static ReplacementLevel create(Squad squad, FirstXI firstXI) {

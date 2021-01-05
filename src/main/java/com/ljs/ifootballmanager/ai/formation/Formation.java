@@ -4,6 +4,7 @@ import com.github.lstephen.ai.search.HillClimbing;
 import com.github.lstephen.ai.search.RepeatedHillClimbing;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -27,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 /** @author lstephen */
@@ -274,22 +276,26 @@ public final class Formation implements Report {
     return byScore(scorer).reverse().immutableSortedCopy(formations);
   }
 
+  private static ImmutableMap<Formation, Integer> getFormationWeightings(
+      League league, SelectionCriteria criteria, FormationScorer scorer) {
+
+    var candidates = select(league, criteria, scorer);
+
+    var base = candidates.get(0).score() * .95 - 1;
+
+    return candidates.stream()
+        .collect(
+            ImmutableMap.toImmutableMap(
+                Function.identity(), f -> Math.max((int) Math.round(f.score() - base), 1)));
+  }
+
   public static Formation selectOne(
       League league, SelectionCriteria criteria, FormationScorer scorer) {
-    ImmutableList<Formation> candidates = select(league, criteria, scorer);
 
-    Double base = candidates.get(0).score() * .95 - 1;
-
-    List<Formation> weighted = Lists.newArrayList();
-    for (Formation f : candidates) {
-      int weighting = Math.max((int) Math.round(f.score() - base), 1);
-      for (int i = 0; i < weighting; i++) {
-        weighted.add(f);
-      }
-      System.out.print(f.getTactic().getCode() + ":" + weighting + " ");
-    }
-
-    List<Formation> weightedList = Lists.newArrayList(weighted);
+    var weightedList =
+        getFormationWeightings(league, criteria, scorer).entrySet().stream()
+            .flatMap(e -> Stream.generate(() -> e.getKey()).limit(e.getValue()))
+            .collect(ImmutableList.toImmutableList());
 
     Double seed = 0.0;
 

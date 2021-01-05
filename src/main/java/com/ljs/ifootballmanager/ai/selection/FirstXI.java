@@ -1,6 +1,7 @@
 package com.ljs.ifootballmanager.ai.selection;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.formation.Formation;
@@ -36,6 +37,15 @@ public final class FirstXI {
 
   public Stream<Tactic> getTactics() {
     return getFormations().map(Formation::getTactic);
+  }
+
+  public ImmutableMap<Tactic, Integer> getTacticWeightings() {
+    var base = best().score() * .95 - 1;
+
+    return getFormations()
+        .collect(
+            ImmutableMap.toImmutableMap(
+                Formation::getTactic, f -> Math.max((int) Math.round(f.score() - base), 1)));
   }
 
   public Set<Player> getPlayers() {

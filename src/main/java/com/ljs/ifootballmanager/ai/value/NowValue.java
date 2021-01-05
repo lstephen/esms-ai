@@ -1,12 +1,16 @@
 package com.ljs.ifootballmanager.ai.value;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Ordering;
 import com.ljs.ifootballmanager.ai.Context;
 import com.ljs.ifootballmanager.ai.Role;
 import com.ljs.ifootballmanager.ai.Tactic;
 import com.ljs.ifootballmanager.ai.player.Player;
+import com.ljs.ifootballmanager.ai.rating.Rating;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class NowValue {
@@ -47,7 +51,17 @@ public final class NowValue {
   }
 
   public Double getVsReplacement() {
-    return getAbility() - ctx.getReplacementLevel().getReplacementLevel(role, tactic);
+    var rl = ctx.getReplacementLevel();
+
+    var shooting =
+        player.getSkill(Rating.SHOOTING) - rl.getReplacementLevel(Rating.SHOOTING, tactic);
+    var keeping =
+        player.getSkill(Rating.STOPPING) - rl.getReplacementLevel(Rating.STOPPING, tactic);
+
+    return getAbility()
+        - ctx.getReplacementLevel().getReplacementLevel(role, tactic)
+        + Math.max(shooting, 0)
+        + Math.max(keeping, 0);
   }
 
   public Double getScore() {
@@ -84,12 +98,36 @@ public final class NowValue {
     return byScore().max(all(ctx, p));
   }
 
-  public static NowValue bestVsReplacement(Context ctx, Player p) {
-    return byVsReplacement().compound(byScore()).max(all(ctx, p));
-  }
-
   public static NowValue bestVsReplacement(Context ctx, Player p, Tactic t) {
     return byVsReplacement().compound(byScore()).max(all(ctx, p, t));
+  }
+
+  public static NowValue bestByWeighted(Context ctx, Player p) {
+    var values = allBestByTactic(ctx, p);
+    var weightings = ctx.getFirstXI().getTacticWeightings();
+
+    var tactic =
+        Arrays.stream(Tactic.values())
+            .max(Comparator.comparing(t -> values.get(t).getScore() * weightings.get(t)))
+            .orElseThrow(IllegalStateException::new);
+
+    return values.get(tactic);
+  }
+
+  public static ImmutableMap<Tactic, NowValue> allBestByTactic(Context ctx, Player p) {
+    return Arrays.stream(Tactic.values())
+        .map(t -> byScore().max(all(ctx, p, t)))
+        .collect(ImmutableMap.toImmutableMap(NowValue::getTactic, Function.identity()));
+  }
+
+  public static Double weightedScore(Context ctx, Player p) {
+    var values = NowValue.allBestByTactic(ctx, p);
+    var weightings = ctx.getFirstXI().getTacticWeightings();
+
+    return Arrays.stream(Tactic.values())
+            .mapToDouble(t -> values.get(t).getScore() * weightings.get(t))
+            .sum()
+        / weightings.values().stream().mapToLong(v -> v).sum();
   }
 
   private static Ordering<NowValue> byScore() {
