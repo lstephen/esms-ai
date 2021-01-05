@@ -4,7 +4,6 @@ import com.github.lstephen.ai.search.HillClimbing;
 import com.github.lstephen.ai.search.RepeatedHillClimbing;
 import com.github.lstephen.ai.search.action.Action;
 import com.github.lstephen.ai.search.action.ActionGenerator;
-import com.github.lstephen.ai.search.action.SequencedAction;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -357,14 +356,9 @@ public final class ChangePlan implements Report {
           ImmutableSet<RemoveChange> removes = ImmutableSet.copyOf(removes(cp));
           ImmutableSet<Action<ChangePlan>> adds = ImmutableSet.copyOf(adds(cp));
 
-          actions.addAll(adds);
-          actions.addAll(removes);
+          actions.addAll(adds(cp));
+          actions.addAll(removes(cp));
 
-          actions.addAll(SequencedAction.merged(removes, adds).collect(Collectors.toList()));
-
-          actions.addAll(combines(cp));
-
-          // To avoid timeout on Travis for no stdout
           if (Math.random() < 0.05) {
             System.out.print(".");
             System.out.flush();
@@ -386,30 +380,6 @@ public final class ChangePlan implements Report {
             .sorted(Ordering.natural().onResultOf((Player p) -> getValue(p)).reverse())
             .limit(5)
             .collect(Collectors.toSet());
-
-        /*Double endOfGameScore = f.score();
-
-        for (Player sub : criteria.getAll()) {
-          if (f.contains(sub)) {
-            continue;
-          }
-
-          values.put(sub, 0.0);
-
-          for (Player starter : f.players()) {
-            Double value = f.substitute(sub, f.findRole(starter), starter).score() - endOfGameScore;
-
-            values.put(sub, Math.max(value, values.get(sub)));
-          }
-        }
-
-        return values
-          .entrySet()
-          .stream()
-          .sorted(Ordering.natural().onResultOf((Map.Entry<Player, Double> e) -> e.getValue()).reverse())
-          .limit(3)
-          .map(Map.Entry::getKey)
-          .collect(Collectors.toSet());*/
       }
 
       private Set<Substitution> availableSubstitutions(ChangePlan cp) {
@@ -495,43 +465,6 @@ public final class ChangePlan implements Report {
         }
 
         return adds;
-      }
-
-      private Set<Action<ChangePlan>> combines(ChangePlan cp) {
-        Set<Action<ChangePlan>> actions = Sets.newHashSet();
-
-        ImmutableList<Substitution> subs = ImmutableList.copyOf(cp.changes(Substitution.class));
-
-        for (int i = 0; i < subs.size(); i++) {
-          for (int j = i + 1; j < subs.size(); j++) {
-            Substitution lhs = subs.get(i);
-            Substitution rhs = subs.get(j);
-
-            if (lhs.getIn().equals(rhs.getOut())) {
-              SequencedAction<ChangePlan> removes =
-                  SequencedAction.create(new RemoveChange(lhs), new RemoveChange(rhs));
-
-              Substitution atLhs =
-                  Substitution.builder()
-                      .in(rhs.getIn(), rhs.getRole())
-                      .out(lhs.getOut())
-                      .minute(lhs.getMinute())
-                      .build();
-
-              Substitution atRhs =
-                  Substitution.builder()
-                      .in(rhs.getIn(), rhs.getRole())
-                      .out(rhs.getOut())
-                      .minute(rhs.getMinute())
-                      .build();
-
-              actions.add(SequencedAction.create(removes, new AddChange(atLhs)));
-              actions.add(SequencedAction.create(removes, new AddChange(atRhs)));
-            }
-          }
-        }
-
-        return actions;
       }
     };
   }
