@@ -326,6 +326,7 @@ public final class ChangePlan implements Report {
 
   public static ChangePlan select(
       Context ctx, League league, final Formation f, final SelectionCriteria criteria) {
+
     HillClimbing<ChangePlan> hc =
         HillClimbing.<ChangePlan>builder()
             .validator(ChangePlan::isValid)
@@ -353,16 +354,7 @@ public final class ChangePlan implements Report {
         List<Action<ChangePlan>> actions = Lists.newArrayList();
 
         if (cp != null) {
-          ImmutableSet<RemoveChange> removes = ImmutableSet.copyOf(removes(cp));
-          ImmutableSet<Action<ChangePlan>> adds = ImmutableSet.copyOf(adds(cp));
-
           actions.addAll(adds(cp));
-          actions.addAll(removes(cp));
-
-          if (Math.random() < 0.05) {
-            System.out.print(".");
-            System.out.flush();
-          }
         }
 
         return actions.stream();
@@ -432,14 +424,6 @@ public final class ChangePlan implements Report {
         return ss;
       }
 
-      private Set<RemoveChange> removes(ChangePlan cp) {
-        Set<RemoveChange> removes = Sets.newHashSet();
-        for (Change c : cp.changes()) {
-          removes.add(new RemoveChange(c));
-        }
-        return removes;
-      }
-
       private Set<Action<ChangePlan>> adds(ChangePlan cp) {
         Set<Action<ChangePlan>> adds = Sets.newHashSet();
 
@@ -500,41 +484,6 @@ public final class ChangePlan implements Report {
 
     public int hashCode() {
       return Objects.hash(add);
-    }
-  }
-
-  private static class RemoveChange implements Action<ChangePlan> {
-    private final Change remove;
-
-    public RemoveChange(Change remove) {
-      super();
-      this.remove = remove;
-    }
-
-    public ChangePlan apply(ChangePlan cp) {
-      return cp.remove(remove);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (obj == null) {
-        return false;
-      }
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof RemoveChange)) {
-        return false;
-      }
-
-      RemoveChange rhs = RemoveChange.class.cast(obj);
-
-      return Objects.equals(remove, rhs.remove);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(remove);
     }
   }
 }

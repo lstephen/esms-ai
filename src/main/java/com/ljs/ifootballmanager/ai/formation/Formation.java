@@ -292,8 +292,11 @@ public final class Formation implements Report {
   public static Formation selectOne(
       League league, SelectionCriteria criteria, FormationScorer scorer) {
 
+    var weightings = getFormationWeightings(league, criteria, scorer);
+    System.out.println("Weightings: " + weightings);
+
     var weightedList =
-        getFormationWeightings(league, criteria, scorer).entrySet().stream()
+        weightings.entrySet().stream()
             .flatMap(e -> Stream.generate(() -> e.getKey()).limit(e.getValue()))
             .collect(ImmutableList.toImmutableList());
 
