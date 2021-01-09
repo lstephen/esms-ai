@@ -28,15 +28,12 @@ public class SquadReport implements Report, WithContext {
 
   private Ordering<Player> ordering;
 
-  private Value value;
-
   private SquadReport(Context ctx, Tactic tactic, Iterable<Player> squad) {
     this.ctx = ctx;
     this.tactic = tactic;
     this.squad = squad;
 
     ordering = Player.byOverall(tactic).reverse().compound(Player.byTieBreak());
-    value = getLeague().getPlayerValue();
   }
 
   public Context getContext() {
@@ -62,7 +59,6 @@ public class SquadReport implements Report, WithContext {
   }
 
   public SquadReport sortByValue(Value value) {
-    this.value = value;
     ordering = Player.byValue(value).reverse();
     return this;
   }
@@ -103,7 +99,6 @@ public class SquadReport implements Report, WithContext {
           Maths.round(NowValue.weightedScore(ctx, p)), Maths.round(OverallValue.getVsAge(ctx, p)));
       w.format(" %1.1f", OverallValue.getAbilities(ctx, p));
 
-      Double ovr = value.getValue(p);
       Double vsRepl = repl.getValueVsReplacement(p);
 
       w.format(

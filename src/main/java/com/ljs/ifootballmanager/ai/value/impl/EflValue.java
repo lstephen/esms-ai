@@ -4,11 +4,7 @@ import com.ljs.ifootballmanager.ai.player.Player;
 import com.ljs.ifootballmanager.ai.value.Value;
 
 /** @author lstephen */
-public class EflValue implements Value {
-
-  public Double getValue(Player p) {
-    return p.getOverall().getRating() + getYearsLeft(p) + Math.max(22 - p.getAge(), 0);
-  }
+public class EflValue {
 
   private Integer getYearsLeft(Player p) {
     return getRetirementAge(p) - p.getAge();

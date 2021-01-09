@@ -74,10 +74,6 @@ public class Ssl implements League {
     return p.getAge() <= 21;
   }
 
-  public Value getPlayerValue() {
-    return SslValue.create();
-  }
-
   public Value getAgeValue() {
     return SslValue.create().getAgeValue();
   }
