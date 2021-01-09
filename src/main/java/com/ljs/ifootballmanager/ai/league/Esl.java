@@ -50,10 +50,6 @@ public final class Esl implements League {
     return false;
   }
 
-  public Value getPlayerValue() {
-    return EslValue.create();
-  }
-
   public Value getAgeValue() {
     return EslValue.create().getAgeValue();
   }

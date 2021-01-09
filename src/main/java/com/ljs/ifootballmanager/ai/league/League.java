@@ -26,8 +26,6 @@ public interface League {
 
   Boolean isReserveEligible(Player p);
 
-  Value getPlayerValue();
-
   Value getAgeValue();
 
   Optional<Double> getSeniorSkillsCap();

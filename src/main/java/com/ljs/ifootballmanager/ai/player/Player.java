@@ -293,10 +293,6 @@ public final class Player {
     return Ordering.natural().onResultOf((Player p) -> p.evaluate(r, t).getRating());
   }
 
-  public static Ordering<Player> byValue(final League league) {
-    return byValue(league.getPlayerValue());
-  }
-
   public static Ordering<Player> byValue(final Value value) {
     return Ordering.natural().onResultOf(value::getValue).compound(byTieBreak());
   }
