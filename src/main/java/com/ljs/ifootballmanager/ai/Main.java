@@ -294,7 +294,7 @@ public class Main {
               p -> squad.findPlayer(p.getName()).getFitness() >= 90),
           forced,
           rsheet,
-          DefaultScorer.get());
+          DefaultScorer.attacking());
       Files.copy(
           rsheetFile, new File(Config.get().getDataDirectory(), "shts/" + rsheetFile.getName()));
     }
