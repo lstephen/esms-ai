@@ -16,7 +16,15 @@ public final class DefaultScorer implements FormationScorer {
 
   private static final DefaultScorer INSTANCE = new DefaultScorer();
 
-  private DefaultScorer() {}
+  private final int attackFactor;
+
+  private DefaultScorer() {
+    this(1);
+  }
+
+  private DefaultScorer(int attackFactor) {
+    this.attackFactor = attackFactor;
+  }
 
   public double score(Formation f, Tactic tactic) {
 
@@ -30,7 +38,7 @@ public final class DefaultScorer implements FormationScorer {
 
     double pct = 1 + aterm - dterm;
 
-    return (a + d) * pct + gkBonus(f, tactic) + shootingBonus(f, tactic);
+    return (attackFactor * a + d) * pct + gkBonus(f, tactic) + shootingBonus(f, tactic);
   }
 
   public double scoring(Formation f, Tactic tactic) {
@@ -248,5 +256,9 @@ public final class DefaultScorer implements FormationScorer {
 
   public static DefaultScorer get() {
     return INSTANCE;
+  }
+
+  public static DefaultScorer attacking() {
+    return new DefaultScorer(2);
   }
 }
