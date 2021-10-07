@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        site: [ EFL_TTH, ESL_WBA, SSL_MIS ]
+        site: [ EFL_TTH, SSL_MIS ]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
