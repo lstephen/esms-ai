@@ -17,7 +17,7 @@
   <lib.assertj-core.version>3.1.0</lib.assertj-core.version>
   <lib.commons-lang3.version>3.4</lib.commons-lang3.version>
   <lib.commons-math3.version>3.5</lib.commons-math3.version>
-  <lib.guava.version>30.0-jre</lib.guava.version>
+  <lib.guava.version>32.0.0-jre</lib.guava.version>
 
   <plugin.exec.version>1.2.1</plugin.exec.version>
   <plugin.javadoc.version>3.0.1</plugin.javadoc.version>
